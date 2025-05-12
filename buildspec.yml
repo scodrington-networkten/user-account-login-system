@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+    install:
+        runtime-versions:
+            nodejs: 18
+        commands:
+            - echo Installing dependencies...
+            - npm install
+    build:
+        commands:
+            - echo Packaging Lambda function...
+            - zip function.zip lambda/index.js
+            - echo Deploying Lambda function...
+            - aws lambda update-function-code --function-name myNodeFunction --zip-file fileb://function.zip
