@@ -1,4 +1,8 @@
-# user-account-login-system
+# User Account Login System
+
+System uses a Vite React single page app system + uses serverless functions at /api/* which will be served by Vercel on deployment 
+
+System interacts with these serverless functions for various functions
 
 ##commands to run in dev
 
