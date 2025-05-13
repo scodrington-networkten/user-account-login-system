@@ -1,8 +1,3 @@
-
-export default function test(request, response){
-    return response.status(200).json({
-        message: "Hello world!"
-    })
+export default function handler(request, response) {
+    response.status(200).json({ message: 'Hello from test function!' });
 }
-
-
