@@ -4,16 +4,20 @@ System uses a Vite React single page app system + uses serverless functions at /
 
 System interacts with these serverless functions for various functions
 
-##commands to run in dev
+## Development Commands
+Execute these commands locally to get the system working
 
 **Terminal 1**
-npm run dev 
+```
+npm run dev
+```
 
 (runs the dev server for vite's frontend) - Runs on http://localhost:5500/
 
 **Terminal 2**
+```
 npx vercel dev --listen 3001 
-
+```
 (runs vercel to make the serverless functions inside of /api work)
 
 
