@@ -8,7 +8,7 @@ function App() {
 
     const fetchData = () => {
 
-        fetch('http://localhost:5500/api/test')
+        fetch('/api/test')
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -17,7 +17,8 @@ function App() {
                 }
             })
             .then((data) => {
-                alert(data);
+                let mydata = data.message;
+                alert(`the data is: ${mydata}`)
             })
             .catch((error) => {
                 alert(error);
