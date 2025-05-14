@@ -1,20 +1,20 @@
 
 import dotenv from 'dotenv';
+import {Client, Pool} from "pg";
 
-import {Client} from "pg";
+//use pooling
+let pool;
+if(!pool){
+    pool = new Pool();
+}
 
 export default async function createUser(request, response) {
 
     const result = dotenv.config();
-   // console.log(result);
-    //console.log(process.env);
-
-   // return response.status(200).json({message: "hello"});
-
     const client = new Client();
     try {
         await client.connect();
-        const result = await client.query('SELECT NOW()');
+        const result = await pool.query('SELECT NOW()');
         await client.end();
         return response.status(200).json({ now: result.rows[0].now });
     } catch (error) {
