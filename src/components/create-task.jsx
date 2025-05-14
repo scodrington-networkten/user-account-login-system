@@ -55,7 +55,7 @@ const CreateTask = () => {
                 }
             })
 
-            //set the new stepdata
+            //set the new step data
             setFormData((prevData) => {
                 return {...formData, steps: newSteps}
             })
@@ -63,13 +63,28 @@ const CreateTask = () => {
         })
     }
 
-    const processSubmit = (e) => {
+    const processSubmit = async (e) => {
         e.preventDefault()
-
-        alert(`title: ${formData.title} description: ${formData.description}`);
-
+        //alert(`title: ${formData.title} description: ${formData.description} steps: ${formData.steps}`);
         //create a fetch request to the DB
 
+        const response = await fetch('/api/create-task', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: formData.title,
+                description: formData.description,
+                steps: formData.steps
+            })
+        })
+
+        const data = await response.json();
+
+        if(response.ok){
+            alert(`Response: ${data}`);
+        }else{
+            alert(`Error submitting data: ${data.error}`);
+        }
 
     }
 
@@ -114,7 +129,6 @@ const CreateTask = () => {
                     </div>
                 ))}
                 <button onClick={addStep}>Add Step</button>
-
 
                 <input type="submit" value="submit"/>
             </form>
