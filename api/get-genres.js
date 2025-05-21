@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import HttpError from "./httpError";
-import httpError from "./httpError";
 
 export default async function Genres(request, response) {
 
