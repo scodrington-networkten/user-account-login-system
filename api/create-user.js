@@ -1,12 +1,18 @@
-
 import "reflect-metadata";
 import dotenv from "dotenv";
 import {DataSource} from "typeorm";
 import UserSchema from "./entity/User";
+import UserMetdataSchema from "./entity/UserMetdata";
 
-export default async function createUser(request, response){
+/**
+ * Create a user via incoming form data and push it into postgres db via typeorm
+ * @param request
+ * @param response
+ * @returns {Promise<*>}
+ */
+export default async function createUser(request, response) {
 
-    const result = dotenv.config();
+    dotenv.config();
     const AppDataSource = new DataSource({
         type: "postgres",
         host: process.env.PGHOST,
@@ -14,38 +20,44 @@ export default async function createUser(request, response){
         username: process.env.PGUSER,
         password: process.env.PGPASSWORD,
         database: process.env.PGDATABASE,
-        entities: [UserSchema],
-        migrations: [__dirname + "/../migration/*.js"],
-        synchronize: false,        // use migrations instead
+        entities: [UserSchema, UserMetdataSchema],
+        synchronize: true,
         logging: ["error", "query", "schema"]
     })
 
 
     // initialise the app data source
-    if(!AppDataSource.isInitialized){
+    if (!AppDataSource.isInitialized) {
         await AppDataSource.initialize();
     }
 
     //get repository for the user schema
     const userRepo = AppDataSource.getRepository(UserSchema.options.name);
 
-    try{
-
-        const newUserData = {
-            name: "john",
-            email: "test@gmail.com",
-            isActive: true
-        }
-
-        const newUserEntity = userRepo.create(newUserData);
+    try {
+        const newUserEntity = userRepo.create({
+            first_name: "john",
+            last_name: "Smith",
+            is_active: true,
+            created_at: new Date(),
+            metadata: {
+                email: "test@gmail.com",
+                bio: "This is a sample bio",
+                avatar_url: null
+            }
+        });
 
         const savedUserEntity = await userRepo.save(newUserEntity);
+        console.log("User Created!");
+        return response.status(200).json({
+            status: 200,
+            message: "successfully created user",
+            user: savedUserEntity
+        });
 
-        return response.status(200).json(savedUserEntity);
-
-    }catch(err){
+    } catch (err) {
         console.error("Error inserting user:", err);
-        return response.status(500).json({ error: "Failed to insert user" });
+        return response.status(500).json({error: "Failed to insert user"});
     }
 
 }
