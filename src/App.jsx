@@ -1,11 +1,39 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import CreateTask from "./components/create-task.jsx";
+import GenreList from "./components/genre-list.jsx";
+import MovieSearch from "./components/movie-search.jsx";
 
 function App() {
     const [count, setCount] = useState(0)
+
+    const [genres, setGenres] = useState([]);
+    /**
+     * Collect genre data from our backend API
+     * @returns {Promise<void>}
+     */
+    const setGenreData = async () => {
+
+        const response = await fetch('/api/get-genres');
+        const result = await response.json();
+
+        //collect data about genres
+        let genreData = result.data.genres.map((item, index) => {
+            return item.name;
+        });
+
+        setGenres((prevData) => {
+            return genreData;
+        })
+    }
+
+    useEffect(() => {
+        setGenreData();
+    }, [])
+
+
 
     const fetchData = () => {
 
@@ -30,28 +58,7 @@ function App() {
 
     return (
         <>
-            <div>
-                <a href="https://vite.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo"/>
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo"/>
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <button onClick={fetchData}>Fetch Data!</button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
-            </div>
-            <CreateTask/>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more test
-            </p>
+            <MovieSearch genres={genres}/>
         </>
     )
 }
