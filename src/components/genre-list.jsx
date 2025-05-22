@@ -6,9 +6,9 @@ const GenreList = ({genres, onGenreClick}) => {
     return (
         <>
             <div>
-                <div className="genres">
+                <div className="genres flex gap-2 flex-wrap">
                     {genres.map((item, index) => (
-                        <span onClick={() => { onGenreClick(item) }} className="genre text-4xl" key={index}>{item}</span>
+                        <span onClick={() => { onGenreClick(item) }} className="genre text-xl rounded border border-gray-400 px-3 py-1" key={index}>{item}</span>
                     ))}
                 </div>
 
