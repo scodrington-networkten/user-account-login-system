@@ -8,7 +8,7 @@ const GenreList = ({genres, onGenreClick}) => {
             <div>
                 <div className="genres">
                     {genres.map((item, index) => (
-                        <span onClick={() => { onGenreClick(item) }} className="genre" key={index}>{item}</span>
+                        <span onClick={() => { onGenreClick(item) }} className="genre text-4xl" key={index}>{item}</span>
                     ))}
                 </div>
 
