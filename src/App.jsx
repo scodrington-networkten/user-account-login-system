@@ -22,7 +22,12 @@ function App() {
 
         //collect data about genres
         let genreData = result.data.genres.map((item, index) => {
-            return item.name;
+
+            return {
+                name: item.name,
+                id: item.id
+            }
+
         });
 
         setGenres((prevData) => {
@@ -33,8 +38,6 @@ function App() {
     useEffect(() => {
         setGenreData();
     }, [])
-
-
 
     const fetchData = () => {
 

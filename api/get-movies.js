@@ -26,6 +26,6 @@ export default async function getMovies(request, response) {
     }
 
     let json = await result.json();
-    return response.status(200).json({data: json});
+    return response.status(200).json({json});
 
 }
