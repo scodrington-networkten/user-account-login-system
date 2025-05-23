@@ -13,22 +13,15 @@ const MovieSearch = ({genres}) => {
         let result = await fetch(`/api/get-movies?genre_id=${id}`);
         let data = await result.json();
 
-
-        // console.log(data.json.results);
         let newMovies = data.json.results.map((item, index) => {
             return new Movie(item);
         })
 
+        //newMovies = newMovies.pop();
+
+        //console.log(newMovies);
 
         setMovies(newMovies);
-
-        /*
-       setMovies((prevData) => {
-            return newMovies;
-       });*/
-
-
-        //search for movies with that genre as the query
     }
 
     return (

@@ -11,7 +11,7 @@ const MoviesList = ({movies}) => {
 
         if (movies.length > 0) {
             return (
-                <section className="movies">
+                <section className="movies grid grid-cols-4 gap-4 p-4">
                     {movies.map((item, index) => (
                         <MovieCard movie={item} className="movie" key={`movie-${index}`}/>
                     ))}
