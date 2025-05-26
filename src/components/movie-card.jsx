@@ -1,10 +1,9 @@
 import '../assets/scss/movie.scss';
 
-import {faCoffee, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
-import {faStar as faStarFull} from '@fortawesome/free-solid-svg-icons';
+import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
 import {faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
-import {faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import _ from 'lodash';
 
 const MovieCard = ({movie}) => {
 
@@ -38,6 +37,22 @@ const MovieCard = ({movie}) => {
             }
         });
         return result;
+    }
+
+    const formatDate = (dateString) => {
+
+        if (_.isEmpty(dateString)) {
+            console.log('an empty date string was passed');
+            return '';
+        }
+
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth()).padStart(2, '0');
+        const year = date.getFullYear();
+
+        return `${day}/${month}/${year}`;
+
     }
 
     const getRatingSection = (voteAverage) => {
@@ -78,7 +93,7 @@ const MovieCard = ({movie}) => {
                         <h3 className="truncate text-2xl mb-2" title={movie.title}>
                             {movie.title}
                         </h3>
-                        <p className="release-date">{movie.release_date}</p>
+                        <p className="release-date">{formatDate(movie.release_date)}</p>
                         {getRatingSection(movie.vote_average)}
                     </section>
                     <section className="summary-section multiline-clamp">
