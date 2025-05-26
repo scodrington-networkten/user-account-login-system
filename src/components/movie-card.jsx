@@ -39,6 +39,11 @@ const MovieCard = ({movie}) => {
         return result;
     }
 
+    /**
+     * Format the date into something more useful
+     * @param dateString
+     * @returns {string}
+     */
     const formatDate = (dateString) => {
 
         if (_.isEmpty(dateString)) {
@@ -106,10 +111,7 @@ const MovieCard = ({movie}) => {
                         })}
                     </section>
                 </div>
-
             </section>
-
-
         </article>
     )
 }
