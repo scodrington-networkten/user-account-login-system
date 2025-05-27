@@ -7,10 +7,11 @@ import HttpError from "./httpError";
 export default async function getMovies(request, response) {
 
 
-    //extract genre id from query
-    let {genre_id: genreId } = request.query;
+    //extract query data to customise the request
+    let {genre_id: genreId} = request.query;
+    let {page} = request.query;
 
-    let url = `${process.env.MOVIE_API_URL_BASE}/discover/movie?with_genres=${genreId}&page=1`;
+    let url = `${process.env.MOVIE_API_URL_BASE}/discover/movie?with_genres=${genreId}&page=${page}`;
 
     const options = {
         method: 'GET',
