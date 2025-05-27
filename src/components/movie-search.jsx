@@ -28,7 +28,7 @@ const MovieSearch = ({genres}) => {
 
         setMoviesLoading(true);
 
-        console.log(`/api/get-movies?genre_id=${genre_id}&page=${page}`);
+       // console.log(`/api/get-movies?genre_id=${genre_id}&page=${page}`);
         let result = await fetch(`/api/get-movies?genre_id=${genre_id}&page=${page}`);
         let data = await result.json();
 
@@ -46,10 +46,16 @@ const MovieSearch = ({genres}) => {
         setMoviesLoading(false);
     }
 
+    /**
+     * Move to the next page of results
+     */
     const onNextButton = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     }
 
+    /**
+     * Move to the previous page of results for movies
+     */
     const onPreviousButton = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     }
@@ -57,7 +63,10 @@ const MovieSearch = ({genres}) => {
     return (
         <div className="movie-search-section">
             <p>Search for a movie below in the following genres!</p>
-            <GenreList genres={genres} onGenreClick={onGenreClick}/>
+            <GenreList
+                genres={genres}
+                onGenreClick={onGenreClick}
+            />
             <MoviesList
                 movies={movies}
                 onNextButton={onNextButton}

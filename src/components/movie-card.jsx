@@ -2,6 +2,7 @@ import '../assets/scss/movie.scss';
 
 import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
 import {faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
+import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import _ from 'lodash';
 
@@ -60,7 +61,33 @@ const MovieCard = ({movie}) => {
 
     }
 
-    const getRatingSection = (voteAverage) => {
+    /**
+     * Shows the total number of people giving this a thumbs up
+     * @param votes
+     * @returns {JSX.Element}
+     */
+    const getVotesSection = (votes) => {
+
+        return (
+            <section className="vote-information flex gap-2 justify-center">
+                <span className="vote-icon">
+                    <FontAwesomeIcon icon={faThumbsUp}/>
+                </span>
+                <span className="vote-score">
+                    {votes}
+                </span>
+
+            </section>
+        )
+
+    }
+
+    /**
+     * gets the rating section, showing the movie score out of 5 stars
+     * @param voteAverage
+     * @returns {JSX.Element}
+     */
+    const getStarsSection = (voteAverage) => {
 
         //convert from a score of 0-10 to 0-5
         let baseScore = (voteAverage / 2);
@@ -70,10 +97,10 @@ const MovieCard = ({movie}) => {
         let iconsArray = getStarIcons(newScore);
 
         return (
-            <section className="rating-information">
+            <section className="stars-information">
                 {
                     iconsArray.map((item, index) => {
-                        return <span className="vote-count"><FontAwesomeIcon icon={item}/></span>
+                        return <span className="item"><FontAwesomeIcon icon={item}/></span>
                     })
                 }
 
@@ -81,29 +108,48 @@ const MovieCard = ({movie}) => {
         );
     }
 
-    return (
-        <article className="movie-card flex relative">
+    /**
+     * Displays both the vote count section and the rating stars
+     * @param movie
+     * @returns {JSX.Element}
+     */
+    const getRatingSection = (movie) => {
+        return (
+            <section className="rating-information flex gap-2 mb-3 justify-between">
+                {getStarsSection(movie.vote_average)}
+                {getVotesSection(movie.vote_count)}
+            </section>
+        )
+    }
 
-            <section className="image-section">
+    return (
+        <article className="movie-card flex relative group">
+
+            <section className="group image-section overflow-hidden">
                 <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt={movie.title}
-                    className="object-cover"
+                    className="object-cover transform  transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
                 />
             </section>
             <section
-                className="main-section flex flex-col h-full w-full absolute bg-black text-white opacity-50 hover:opacity-80 transition-opacity">
-                <div className="flex flex-col flex-grow justify-between px-4 py-4 box-content leading-tight">
-                    <section className="movie-information-section">
-                        <h3 className="truncate text-2xl mb-2" title={movie.title}>
+                className="main-section group flex flex-col h-full w-full absolute bg-black text-white opacity-0 hover:opacity-80 transition-opacity">
+                <div
+                    className="flex flex-col flex-grow justify-between px-4 py-4 box-content leading-tight overflow-hidden">
+                    <section
+                        className="movie-information-section -translate-y-10 group-hover:translate-y-0 transform transition duration-250 ease-in-out">
+                        <h3 className=" text-3xl mb-2" title={movie.title}>
                             {movie.title}
                         </h3>
-                        <p className="release-date">{formatDate(movie.release_date)}</p>
-                        {getRatingSection(movie.vote_average)}
                     </section>
-                    <section className="summary-section multiline-clamp">
-                        <p className="summary text-base">{movie.overview}</p>
+                    <section
+                        className="bottom-section transform transition duration-300 ease-in-out group-hover:translate-y-0 translate-y-10">
+                        {getRatingSection(movie)}
+                        <section className="summary-section multiline-clamp">
+                            <p className="summary text-base">{movie.overview}</p>
+                        </section>
                     </section>
+
 
                     <section className="genre-section hidden">
                         {movie.genre_ids.map((item, index) => {
