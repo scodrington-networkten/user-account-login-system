@@ -32,6 +32,17 @@ export default async function createMovie(request, response) {
 
     const movieRepo = AppDataSource.getRepository(MovieSchema.options.name)
 
+    //collect movie data from our API for a nominated genre ID
+    const baseUrl = process.env.API_BASE_URL || 'http://localhost:3001';
+    const movies = await fetch(`${baseUrl}/api/get-movies?genre_id=12`);
+    const movieData = await movies.json();
+    const records = movieData.json.results;
+
+    //save all records into the db
+    const newRecordIds = await processRecords(records, movieRepo);
+
+    /*
+
     const newEntity = movieRepo.create({
         is_adult: false,
         portrait_image: '/z53D72EAOxGRqdr7KXXWp9dJiDe.jpg',
@@ -47,13 +58,44 @@ export default async function createMovie(request, response) {
         popularity: 349.707,
         genre_ids: [28, 12, 53]
     })
-
-    const savedEntity = await movieRepo.save(newEntity);
+    */
     return response.status(200).json({
-        status: 200,
-        message: "successfully created movie",
-        movie: savedEntity
+        message: "added movies to db",
+        ids: newRecordIds
     });
 
+}
 
+/**
+ * Given an array of records, push them into the DB as new entries
+ * @param records
+ * @param movieRepo
+ * @returns {Promise<*[]>}
+ */
+async function processRecords(records, movieRepo) {
+
+    let recordIds = [];
+    for (const item of records) {
+
+        const newEntity = movieRepo.create({
+            is_adult: item.adult,
+            portrait_image: item.backdrop_path,
+            landscape_image: item.poster_path,
+            title: item.title,
+            language: item.original_language,
+            release_date: item.release_date,
+            is_video: item.video,
+            vote_score: item.vote_average,
+            vote_count: item.vote_count,
+            uid: item.id,
+            overview: item.overview,
+            popularity: item.popularity,
+            genre_ids: item.genre_ids
+        })
+
+        const savedEntity = await movieRepo.save(newEntity);
+        recordIds.push(savedEntity.id);
+    }
+
+    return recordIds;
 }
