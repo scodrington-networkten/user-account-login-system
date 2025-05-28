@@ -8,11 +8,7 @@ import Utilities from "../utilities.jsx";
  */
 const SingleMovie = ({movie}) => {
 
-    console.log(movie);
-
     const utilities = new Utilities();
-
-    console.log(movie.genre_ids);
 
     return (
         <article className="single-movie flex gap-3 p-12 relative">
@@ -27,8 +23,8 @@ const SingleMovie = ({movie}) => {
                 <div className="review-count-section">{utilities.getVotesSection(movie.vote_count)}</div>
 
                 <section className="genre-section mt-8 flex gap-4">
-                    {movie.genre_ids.map((item, index) => (
-                        <span key={index} className="button bg-white rounded py-2 px-4 text-gray-800">{item}</span>
+                    {movie.genres.map((item, index) => (
+                        <span key={index} className="button bg-white rounded py-2 px-4 text-gray-800">{item.name}</span>
                     ))}
                 </section>
             </section>
