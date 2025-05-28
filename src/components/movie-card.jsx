@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import '../assets/scss/movie.scss';
 import {Link} from "react-router-dom";
 
@@ -5,21 +6,11 @@ import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/fr
 import {faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
 import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import _ from 'lodash';
+
+import Utilities from "../utilities.js";
 
 const MovieCard = ({movie}) => {
 
-    /*
-     * Round a number to a given step
-     * @param value
-     * @param step
-     * @returns {number}
-     */
-    function round(value, step) {
-        step || (step = 1.0);
-        let inv = 1.0 / step;
-        return Math.round(value * inv) / inv;
-    }
 
     /**
      * Given a rating out of 5, determine if it should be a full, empty or half star based on its value
@@ -41,26 +32,6 @@ const MovieCard = ({movie}) => {
         return result;
     }
 
-    /**
-     * Format the date into something more useful
-     * @param dateString
-     * @returns {string}
-     */
-    const formatDate = (dateString) => {
-
-        if (_.isEmpty(dateString)) {
-            console.log('an empty date string was passed');
-            return '';
-        }
-
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth()).padStart(2, '0');
-        const year = date.getFullYear();
-
-        return `${day}/${month}/${year}`;
-
-    }
 
     /**
      * Shows the total number of people giving this a thumbs up
@@ -93,7 +64,7 @@ const MovieCard = ({movie}) => {
         //convert from a score of 0-10 to 0-5
         let baseScore = (voteAverage / 2);
         //round to the nearest 0.5
-        let newScore = round(baseScore, 0.5);
+        let newScore = new Utilities().round(baseScore, 0.5);
         //determine what icons to use
         let iconsArray = getStarIcons(newScore);
 
