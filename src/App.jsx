@@ -5,7 +5,16 @@ import './tailwind.css';
 import CreateTask from "./components/create-task.jsx";
 import GenreList from "./components/genre-list.jsx";
 import MovieSearch from "./components/movie-search.jsx";
-import SingleMovie from "./pages/SingleMovie.jsx";
+import SingleMoviePage from "./pages/SingleMoviePage.jsx";
+
+//font family imports for inter
+import '@fontsource/inter';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/700.css';
+
 
 import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
 
@@ -47,14 +56,13 @@ function App() {
     }, [])
 
 
-
     return (
         <BrowserRouter>
             <AppLayout>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
-                    <Route path="/movie/:id" element={<SingleMovie/>}/>
+                    <Route path="/movie/:id" element={<SingleMoviePage/>}/>
                 </Routes>
             </AppLayout>
         </BrowserRouter>
