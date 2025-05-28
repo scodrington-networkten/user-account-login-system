@@ -1,4 +1,5 @@
 import '../assets/scss/movie.scss';
+import {Link} from "react-router-dom";
 
 import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
 import {faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
@@ -124,39 +125,45 @@ const MovieCard = ({movie}) => {
 
     return (
         <article className="movie-card flex relative group">
-            <section className="group image-section overflow-hidden">
-                <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    className="object-cover transform  transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
-                />
-            </section>
-            <section
-                className="main-section group flex flex-col h-full w-full absolute bg-black text-white opacity-0 hover:opacity-80 transition-opacity">
-                <div
-                    className="flex flex-col flex-grow justify-between px-4 py-4 box-content leading-tight overflow-hidden">
-                    <section
-                        className="movie-information-section -translate-y-10 group-hover:translate-y-0 transform transition duration-250 ease-in-out">
-                        <h3 className=" text-3xl mb-2" title={movie.title}>
-                            {movie.title}
-                        </h3>
-                    </section>
-                    <section
-                        className="bottom-section transform transition duration-300 ease-in-out group-hover:translate-y-0 translate-y-10">
-                        {getRatingSection(movie)}
-                        <section className="summary-section multiline-clamp">
-                            <p className="summary text-base">{movie.overview}</p>
+            <Link
+                to={`/movie/${movie.id}`}
+                className="block w-full h-full flex"
+            >
+                <section className="image-section overflow-hidden">
+                    <img
+                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                        alt={movie.title}
+                        className="object-cover transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
+                    />
+                </section>
+
+                <section
+                    className="main-section flex flex-col h-full w-full absolute bg-black text-white opacity-0 group-hover:opacity-80 transition-opacity">
+                    <div
+                        className="flex flex-col flex-grow justify-between px-4 py-4 box-content leading-tight overflow-hidden">
+                        <section
+                            className="movie-information-section -translate-y-10 group-hover:translate-y-0 transform transition duration-250 ease-in-out">
+                            <h3 className="text-3xl mb-2" title={movie.title}>
+                                {movie.title}
+                            </h3>
                         </section>
-                    </section>
 
+                        <section
+                            className="bottom-section transform transition duration-300 ease-in-out group-hover:translate-y-0 translate-y-10">
+                            {getRatingSection(movie)}
+                            <section className="summary-section multiline-clamp">
+                                <p className="summary text-base">{movie.overview}</p>
+                            </section>
+                        </section>
 
-                    <section className="genre-section hidden">
-                        {movie.genre_ids.map((item, index) => {
-                            return <p key={index}>{item}</p>
-                        })}
-                    </section>
-                </div>
-            </section>
+                        <section className="genre-section hidden">
+                            {movie.genre_ids.map((item, index) => (
+                                <p key={index}>{item}</p>
+                            ))}
+                        </section>
+                    </div>
+                </section>
+            </Link>
         </article>
     )
 }
