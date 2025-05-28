@@ -124,7 +124,6 @@ const MovieCard = ({movie}) => {
 
     return (
         <article className="movie-card flex relative group">
-
             <section className="group image-section overflow-hidden">
                 <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

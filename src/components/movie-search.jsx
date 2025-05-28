@@ -60,6 +60,8 @@ const MovieSearch = ({genres}) => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     }
 
+
+
     return (
         <div className="movie-search-section">
             <p>Search for a movie below in the following genres!</p>

@@ -35,14 +35,12 @@ const MoviesList = ({movies, onNextButton, onPrevButton, moviesLoading, currentP
                     Loading <FontAwesomeIcon icon={faSpinner} spin/>
                 </span>
             }
-
-            <p>Here are your matched movies</p>
             {displayMovies()}
             <section className="flex align-center">
                 {currentPage > 1 &&
                     <button className="previous-button" onClick={onPrevButton}>Previous</button>
                 }
-                {currentPage <= totalPages &&
+                {currentPage < totalPages &&
                     <button className="next-button" onClick={onNextButton}>Next</button>
                 }
             </section>

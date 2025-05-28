@@ -7,6 +7,11 @@ import CreateTask from "./components/create-task.jsx";
 import GenreList from "./components/genre-list.jsx";
 import MovieSearch from "./components/movie-search.jsx";
 
+import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
+
+import Home from "./pages/Home";
+import MoviesByGenre from "./pages/MoviesByGenre";
+
 function App() {
     const [count, setCount] = useState(0)
 
@@ -61,9 +66,13 @@ function App() {
 
 
     return (
-        <>
-            <MovieSearch genres={genres}/>
-        </>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
+            </Routes>
+        </BrowserRouter>
+
     )
 }
 
