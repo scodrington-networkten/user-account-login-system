@@ -2,6 +2,8 @@ import {useParams} from "react-router-dom";
 import SingleMovie from "../components/single-movie.jsx";
 import { useEffect, useState } from "react";
 
+import LoadingCard from "../components/loading-card.jsx";
+
 const SingleMoviePage = () => {
 
     //use state to manage data
@@ -26,9 +28,10 @@ const SingleMoviePage = () => {
         getMovie();
     }, [id]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <LoadingCard/>;
     if (error) return <p>{error}</p>;
     if (!movie) return <p>No movie found.</p>;
+
 
     return <SingleMovie movie={movie} />;
 }

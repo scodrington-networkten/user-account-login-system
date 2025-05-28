@@ -1,9 +1,6 @@
 
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
 }
 
 body{
@@ -30,6 +27,24 @@ body{
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.loading{
+  animation: loading 2s ease-in-out 0s infinite reverse;
+  -webkit-animation: loading 2s ease-in-out 0s infinite reverse;
+}
+
+@keyframes loading
+{
+  0% {
+    opacity: 0.5;
+  }
+  50%  {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
   }
 }
 
