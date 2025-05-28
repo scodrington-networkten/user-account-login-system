@@ -1,15 +1,18 @@
 import MoviesList from "../components/movies-list.jsx";
 import {useState, useEffect} from "react";
+import LoadingCardList from "../components/loading-card-list.jsx";
 
 const Home = () => {
 
     const [movies, setMovies] = useState([])
+    const [loading, setLoading] = useState(true);
 
     //on page load, ensure we load popular data
     useEffect(() => {
         const apiCall = async () => {
             const movieData = await fetchPopularMovies()
             setMovies(movieData.results);
+            setLoading(false);
         }
         apiCall();
 
@@ -35,19 +38,31 @@ const Home = () => {
     }
 
 
-    return (
-        <>
-            <h1>this is the home template</h1>
-            <MoviesList
-                movies={movies}
-                onNextButton={onNextButton}
-                onPrevButton={onPreviousButton}
-                moviesLoading={false}
-                currentPage={1}
-                totalPages={1}
-            />
-        </>
+    /**
+     * Display either loading list or the movie content when loaded
+     * @returns {JSX.Element}
+     */
+    const displayHome = () => {
+        if (loading) {
+            return (
+                <LoadingCardList/>
+            )
+        } else {
+            return (
+                <MoviesList
+                    movies={movies}
+                    onNextButton={onNextButton}
+                    onPrevButton={onPreviousButton}
+                    moviesLoading={false}
+                    currentPage={1}
+                    totalPages={1}
+                />
+            )
+        }
+    }
 
-    )
+    //return <LoadingCardList/>;
+    return displayHome();
+
 }
 export default Home;

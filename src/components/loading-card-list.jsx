@@ -1,0 +1,26 @@
+import LoadingCard from "./loading-card.jsx";
+
+const LoadingCardList = () => {
+
+
+    const getLoadingCards = () => {
+
+        let i = 0;
+        let loadingCards = [];
+
+        while (i < 20) {
+            loadingCards.push(<LoadingCard/>);
+            i++;
+        }
+
+        return loadingCards;
+
+    }
+
+    return (
+        <section className="loading-list grid grid-cols-4 gap-4 p-4">
+            {getLoadingCards()}
+        </section>
+    )
+}
+export default LoadingCardList;
