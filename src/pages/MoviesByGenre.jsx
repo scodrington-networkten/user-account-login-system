@@ -15,11 +15,22 @@ const MoviesByGenre = () => {
     const [loading, setLoading] = useState(true);
     const [genreId, setGenreId] = useState(null);
 
+
+    /**
+     * When genre changes, ensure movies are reset
+     */
+    useEffect(() => {
+        setMovies([]);
+        setLoading(true);
+    }, [genre])
+
     /**
      * Given the genre name (from the url), determine the internal ID to use to fetch movies with
      * that genre ID
      */
     useEffect(() => {
+
+
         const getGenreData = async () => {
 
             const result = await fetch('/api/get-genres');
@@ -80,9 +91,9 @@ const MoviesByGenre = () => {
      */
     const displayMovies = () => {
 
-        if(loading){
+        if (loading) {
             return <LoadingCardList/>
-        }else{
+        } else {
             return <MoviesList
                 movies={movies}
                 onNextButton={onNextButton}
