@@ -1,11 +1,13 @@
 import MoviesList from "../components/movies-list.jsx";
 import {useState, useEffect} from "react";
 import LoadingCardList from "../components/loading-card-list.jsx";
+import GenreList from "../components/genre-list.jsx";
 
 const Home = () => {
 
     const [movies, setMovies] = useState([])
     const [loading, setLoading] = useState(true);
+
 
     //on page load, ensure we load popular data
     useEffect(() => {
@@ -17,6 +19,10 @@ const Home = () => {
         apiCall();
 
     }, []);
+
+
+
+
 
 
     const fetchPopularMovies = async () => {
@@ -49,14 +55,18 @@ const Home = () => {
             )
         } else {
             return (
-                <MoviesList
-                    movies={movies}
-                    onNextButton={onNextButton}
-                    onPrevButton={onPreviousButton}
-                    moviesLoading={false}
-                    currentPage={1}
-                    totalPages={1}
-                />
+                <>
+                    <GenreList/>
+                    <MoviesList
+                        movies={movies}
+                        onNextButton={onNextButton}
+                        onPrevButton={onPreviousButton}
+                        moviesLoading={false}
+                        currentPage={1}
+                        totalPages={1}
+                    />
+                </>
+
             )
         }
     }

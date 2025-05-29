@@ -24,37 +24,6 @@ import MoviesByGenre from "./pages/MoviesByGenre";
 import AppLayout from "./AppLayout.jsx";
 
 function App() {
-    const [count, setCount] = useState(0)
-    const [genres, setGenres] = useState([]);
-
-    /**
-     * Collect genre data from our backend API
-     * @returns {Promise<void>}
-     */
-    const setGenreData = async () => {
-
-        const response = await fetch('/api/get-genres');
-        const result = await response.json();
-
-        //collect data about genres
-        let genreData = result.data.genres.map((item, index) => {
-
-            return {
-                name: item.name,
-                id: item.id
-            }
-
-        });
-
-        setGenres((prevData) => {
-            return genreData;
-        })
-    }
-
-    useEffect(() => {
-        setGenreData();
-    }, [])
-
 
     return (
         <BrowserRouter>

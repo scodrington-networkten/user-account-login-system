@@ -2,14 +2,13 @@ import LoadingCard from "./loading-card.jsx";
 
 const LoadingCardList = () => {
 
-
     const getLoadingCards = () => {
 
         let i = 0;
         let loadingCards = [];
 
         while (i < 20) {
-            loadingCards.push(<LoadingCard/>);
+            loadingCards.push(<LoadingCard key={`loading-card-${i}`}/>);
             i++;
         }
 

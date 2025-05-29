@@ -1,9 +1,4 @@
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSpinner} from '@fortawesome/free-solid-svg-icons';
-
-// <FontAwesomeIcon icon={faSpinner} spin/>
-
 /**
  * Loading card, used to show that content is loading
  * @returns {JSX.Element}

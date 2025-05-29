@@ -10,9 +10,6 @@ const MovieCard = ({movie}) => {
 
     const utilities = new Utilities();
 
-
-
-
     /**
      * Displays both the vote count section and the rating stars
      * @param movie
@@ -28,7 +25,7 @@ const MovieCard = ({movie}) => {
     }
 
     return (
-        <article className="movie-card flex relative group">
+        <article className="movie-card flex relative group drop-shadow-lg border-gray-300 border-1">
             <Link
                 to={`/movie/${movie.id}`}
                 className="block w-full h-full flex"
