@@ -51,7 +51,7 @@ const Home = () => {
      */
     const displayHome = () => {
 
-        return <LatestMovies/>
+        //return <LatestMovies/>
 
         if (loading) {
             return (

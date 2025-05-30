@@ -2,8 +2,11 @@ import {useState, useEffect} from "react";
 import MoviesList from "./movies-list.jsx";
 import CarouselCard from "./carousel-card.jsx";
 import useEmblaCarousel from "embla-carousel-react";
-import SampleData from "../sampleData.js";
+
 import sampleData from "../sampleData.js";
+import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
+import {faAngleRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const LatestMovies = () => {
 
@@ -64,24 +67,28 @@ const LatestMovies = () => {
             return <p>Loading in content</p>
         }
         return (
-            <section className="embla latest-movies-carousel" ref={emblaRef}>
-                <div className="embla__container">
-                    {movies.map((item, index) => {
-                        return (
-                            <div className="embla__slide" key={`carousel-${index}`}>
-                                <CarouselCard movie={item}/>
-                            </div>
-                        )
-                    })}
+            <section className="latest-movies-carousel container flex w-full mx-auto mb-10">
+                <div className="embla relative w-full" ref={emblaRef}>
+                    <div className="embla__container relative">
+                        {movies.map((item, index) => {
+                            return (
+                                <div className="embla__slide" key={`carousel-${index}`}>
+                                    <CarouselCard movie={item}/>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div onClick={() => emblaApi?.scrollPrev()} className="embla__prev absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-white"><FontAwesomeIcon
+                        icon={faAngleLeft}/></div>
+                    <div onClick={() => emblaApi?.scrollNext()} className="embla__next absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-white"><FontAwesomeIcon
+                        icon={faAngleRight}/></div>
                 </div>
-                <button onClick={() => emblaApi?.scrollPrev()} className="embla__prev button">Prev</button>
-                <button onClick={() => emblaApi?.scrollNext()} className="embla__next button">Next</button>
             </section>
         )
     }
 
     return (
-        <div className="latest-movies">{getOutput()}</div>
+        <div className="latest-movies  bg-gray-600">{getOutput()}</div>
     )
 }
 export default LatestMovies
