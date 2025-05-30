@@ -2,6 +2,8 @@ import {useState, useEffect} from "react";
 import MoviesList from "./movies-list.jsx";
 import CarouselCard from "./carousel-card.jsx";
 import useEmblaCarousel from "embla-carousel-react";
+import SampleData from "../sampleData.js";
+import sampleData from "../sampleData.js";
 
 const LatestMovies = () => {
 
@@ -15,6 +17,14 @@ const LatestMovies = () => {
     const [emblaRef, emblaApi] = useEmblaCarousel({loop: false})
 
     useEffect(() => {
+
+        //use temporary data for now!
+        setMovies(sampleData.results);
+        setStartDate(sampleData.dates.minimum);
+        setEndDate(sampleData.dates.maximum);
+        setPage(sampleData.page);
+
+        return;
 
         //Connect to the API to pull in data
         const callApi = async () => {
@@ -64,8 +74,8 @@ const LatestMovies = () => {
                         )
                     })}
                 </div>
-                <button onClick={() => emblaApi?.scrollPrev()} className="embla__prev"></button>
-                <button onClick={() => emblaApi?.scrollNext()} className="embla__next">Next</button>
+                <button onClick={() => emblaApi?.scrollPrev()} className="embla__prev button">Prev</button>
+                <button onClick={() => emblaApi?.scrollNext()} className="embla__next button">Next</button>
             </section>
         )
     }
