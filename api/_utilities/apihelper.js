@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import HttpError from "../httpError";
+import HttpError from "./httpError";
 
 /**
  * Used to interact with the underlying API

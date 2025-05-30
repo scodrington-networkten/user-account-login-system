@@ -44,7 +44,7 @@ const MovieCard = ({movie}) => {
                         className="flex flex-col flex-grow justify-between px-4 py-4 box-content leading-tight overflow-hidden">
                         <section
                             className="movie-information-section -translate-y-10 group-hover:translate-y-0 transform transition duration-250 ease-in-out">
-                            <h3 className="text-3xl mb-2" title={movie.title}>
+                            <h3 className="text-3xl mb-2 font-semibold" title={movie.title}>
                                 {movie.title}
                             </h3>
                         </section>
