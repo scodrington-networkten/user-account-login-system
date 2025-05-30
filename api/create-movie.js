@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import dotenv from "dotenv";
 import {DataSource} from "typeorm";
-import MovieSchema from "./entity/Movie";
+import MovieSchema from "../src/schemas/entities/Movie";
 
 /**
  * Creates a single movie and puts it in the DB

@@ -59,7 +59,7 @@ class Utilities {
             <section className="stars-information">
                 {
                     iconsArray.map((item, index) => {
-                        return <span className="item"><FontAwesomeIcon icon={item} key={`star-${index}`}/></span>
+                        return <span className="item" key={`star-${index}`}><FontAwesomeIcon icon={item}/></span>
                     })
                 }
             </section>

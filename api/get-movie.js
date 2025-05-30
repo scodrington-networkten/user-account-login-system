@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import HttpError from "./httpError";
+import HttpError from "../src/httpError";
 
 /**
  * Get movie information based on a set genre

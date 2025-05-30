@@ -1,7 +1,6 @@
 import {useParams} from "react-router-dom";
-import SingleMovie from "../components/single-movie.jsx";
 import { useEffect, useState } from "react";
-
+import SingleMovie from "../components/single-movie.jsx";
 import LoadingCard from "../components/loading-card.jsx";
 
 const SingleMoviePage = () => {

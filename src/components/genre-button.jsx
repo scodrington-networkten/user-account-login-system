@@ -23,7 +23,7 @@ const GenreButton = ({genre}) => {
 
     return (
         <Link to={`/movies/${genreName}`}
-              className="text-md bg-white text-gray-700 rounded border border-gray-400 px-3 py-1 inline-block hover:bg-gray-800 hover:text-white">
+              className="text-md bg-white text-gray-700 rounded border border-gray-400 px-3 py-1 inline-block hover:bg-gray-800 hover:text-white transition-all duration-200 ease-in-out">
             {genre.name}
         </Link>
     )

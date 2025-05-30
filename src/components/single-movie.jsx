@@ -1,4 +1,5 @@
 import Utilities from "../utilities.jsx";
+import GenreButton from "./genre-button.jsx";
 
 /**
  * Used to show a single movie on it's own page
@@ -24,7 +25,7 @@ const SingleMovie = ({movie}) => {
 
                 <section className="genre-section mt-8 flex gap-4">
                     {movie.genres.map((item, index) => (
-                        <span key={index} className="button bg-white rounded py-2 px-4 text-gray-800">{item.name}</span>
+                        <GenreButton genre={item}/>
                     ))}
                 </section>
             </section>

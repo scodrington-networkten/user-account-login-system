@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import dotenv from "dotenv";
 import {DataSource} from "typeorm";
-import UserSchema from "./entity/User";
-import UserMetdataSchema from "./entity/UserMetdata";
+import UserSchema from "../src/schemas/entities/User";
+import UserMetdataSchema from "../src/schemas/entities/UserMetdata";
 
 /**
  * Create a user via incoming form data and push it into postgres db via typeorm

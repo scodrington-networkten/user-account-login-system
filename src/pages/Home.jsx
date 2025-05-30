@@ -27,6 +27,10 @@ const Home = () => {
 
     const fetchPopularMovies = async () => {
         const result = await fetch('/api/get-popular-movies');
+        if(!result.ok){
+            alert("Error connecting to '/api/get-popular-movies' ");
+            return;
+        }
         const data = await result.json();
         return data.json;
     }
