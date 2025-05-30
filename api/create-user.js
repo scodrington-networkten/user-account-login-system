@@ -10,7 +10,7 @@ import UserMetdataSchema from "../src/schemas/entities/UserMetdata";
  * @param response
  * @returns {Promise<*>}
  */
-export default async function createUser(request, response) {
+export async function createUser(request, response) {
 
     dotenv.config();
     const AppDataSource = new DataSource({
