@@ -2,6 +2,7 @@ import MoviesList from "../components/movies-list.jsx";
 import {useState, useEffect} from "react";
 import LoadingCardList from "../components/loading-card-list.jsx";
 import GenreList from "../components/genre-list.jsx";
+import LatestMovies from "../components/latest-movies.jsx";
 
 const Home = () => {
 
@@ -21,13 +22,9 @@ const Home = () => {
     }, []);
 
 
-
-
-
-
     const fetchPopularMovies = async () => {
         const result = await fetch('/api/get-popular-movies');
-        if(!result.ok){
+        if (!result.ok) {
             alert("Error connecting to '/api/get-popular-movies' ");
             return;
         }
@@ -53,13 +50,21 @@ const Home = () => {
      * @returns {JSX.Element}
      */
     const displayHome = () => {
+
+        return <LatestMovies/>
+
         if (loading) {
             return (
-                <LoadingCardList/>
+                <>
+                    <LatestMovies/>
+                    <LoadingCardList/>
+                </>
+
             )
         } else {
             return (
                 <>
+                    <LatestMovies/>
                     <GenreList/>
                     <MoviesList
                         movies={movies}
