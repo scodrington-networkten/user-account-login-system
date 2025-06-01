@@ -2,7 +2,7 @@ import GenreButton from "./genre-button.jsx";
 
 const CarouselCard = ({movie}) => {
     return (
-        <article className="carousel-card h-[250px] md:h-[400px] bg-gray-600 ">
+        <article className="carousel-card h-[250px] md:h-[450px] bg-gray-600 ">
             <div
                 style={{
                     backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
@@ -11,7 +11,7 @@ const CarouselCard = ({movie}) => {
                 }}
                 className="absolute w-full h-full top-0 z-0 opacity-10"
             ></div>
-            <div className="main-container flex relative z-1 p-12 gap-10">
+            <div className="main-container container flex relative z-1 p-12 gap-10">
                 <section className="right flex-grow-0 hidden md:block">
                     <div className="image-section shadow-xl">
                         <img
