@@ -30,15 +30,12 @@ const GenreList = () => {
 
 
     return (
-        <>
-            <div>
-                <div className="genres flex gap-2 flex-wrap">
-                    {genres.map((item, index) => (
-                        <GenreButton key={index} genre={item}/>
-                    ))}
-                </div>
-            </div>
-        </>
+
+        <div className="genres justify-center container mg-auto flex gap-2 flex-wrap">
+            {genres.map((item, index) => (
+                <GenreButton key={index} genre={item}/>
+            ))}
+        </div>
     )
 }
 export default GenreList;

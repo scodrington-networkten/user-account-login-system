@@ -1,99 +1,123 @@
 @import "tailwindcss";
 
-:root{
-  --color-primary: #100c24;
-  --color-secondary: #323266;
+:root {
+    --color-primary: #100c24;
+    --color-secondary: #323266;
 
-  --color-primary-rgb: 16,12,36;
-  --color-secondary-rgb: 50, 50, 102;
+    --color-primary-rgb: 16, 12, 36;
+    --color-secondary-rgb: 50, 50, 102;
+
+    --color-highlight-primary: #fd004c;
+    --color-highlight-secondary: #e84b88;
 
 }
 
 .embla {
-  overflow: hidden;
+    overflow: hidden;
 }
+
 .embla__container {
-  display: flex;
+    display: flex;
 }
+
 .embla__slide {
-  flex: 0 0 100%;
-  min-width: 0;
+    flex: 0 0 100%;
+    min-width: 0;
 }
+
 .embla__dots {
-  @apply flex w-full absolute justify-center m-2 bottom-1 left-0
+    @apply flex w-full absolute justify-center m-2 bottom-1 left-0
 }
-.embla__dots_inner{
-  @apply container flex gap-2
+
+.embla__dots_inner {
+    @apply container flex gap-3 justify-center
 }
+
 .embla__dot {
-  @apply w-[8px] h-[8px] p-[10px] bg-transparent border-2 rounded-full border-gray-400 outline-none box-border
+    @apply w-[7px] h-[7px] p-[7px] border-2 rounded-full bg-gray-400 box-border opacity-90
 }
+
 .embla__dot.is-selected {
-  @apply bg-white
+    @apply bg-white outline-2 outline-offset-3 outline-white opacity-100;
 }
-.embla__dot:focus{
-  @apply  outline-none
+
+.embla__dot:focus {
+    @apply outline-none
+}
+
+.embla__next,
+.embla__prev {
+    @apply flex justify-center items-center absolute text-2xl text-white cursor-pointer outline-white outline-2 rounded-full text-center h-[40px] w-[40px] justify-center;
+}
+
+.embla__next {
+    @apply right-4 top-1/2 -translate-y-1/2;
+}
+
+.embla__prev {
+    @apply left-4 top-1/2 -translate-y-1/2;
 }
 
 #root {
 }
 
-body{
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
 }
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+    filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.loading{
-  animation: loading 2s ease-in-out 0s infinite reverse;
-  -webkit-animation: loading 2s ease-in-out 0s infinite reverse;
+.loading {
+    animation: loading 2s ease-in-out 0s infinite reverse;
+    -webkit-animation: loading 2s ease-in-out 0s infinite reverse;
 }
 
-@keyframes loading
-{
-  0% {
-    opacity: 0.5;
-  }
-  50%  {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.5;
-  }
+@keyframes loading {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
 }
 
 .card {
-  padding: 2em;
+    padding: 2em;
 }
 
 .read-the-docs {
-  color: #888;
+    color: #888;
 }
 

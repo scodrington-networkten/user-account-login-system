@@ -1,5 +1,4 @@
-import {useState, useEffect, useCallback, useRef} from "react";
-import MoviesList from "./movies-list.jsx";
+import {useState, useEffect, useCallback} from "react";
 import CarouselCard from "./carousel-card.jsx";
 import useEmblaCarousel from "embla-carousel-react";
 
@@ -65,7 +64,6 @@ const LatestMovies = () => {
             const request = await fetch('/api/get-current-movies');
             if (!request.ok) {
 
-
             } else {
                 const json = await request.json();
 
@@ -95,7 +93,7 @@ const LatestMovies = () => {
             return <p>Loading in content</p>
         }
         return (
-            <section className="latest-movies-carousel flex w-full mx-auto mb-10 -mt-[60px]">
+            <section className="latest-movies-carousel flex w-full mx-auto -mt-[60px]">
                 <div className="embla relative w-full" ref={emblaRef}>
                     <div className="embla__container relative">
                         {movies.map((item, index) => {
@@ -107,11 +105,11 @@ const LatestMovies = () => {
                         })}
                     </div>
                     <div onClick={() => emblaApi?.scrollPrev()}
-                         className="embla__prev absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-white">
+                         className="embla__prev ">
                         <FontAwesomeIcon
                             icon={faAngleLeft}/></div>
                     <div onClick={() => emblaApi?.scrollNext()}
-                         className="embla__next absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-white">
+                         className="embla__next ">
                         <FontAwesomeIcon
                             icon={faAngleRight}/></div>
                     <div className="embla__dots">

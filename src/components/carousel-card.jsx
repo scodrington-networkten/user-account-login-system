@@ -2,7 +2,7 @@ import GenreButton from "./genre-button.jsx";
 
 const CarouselCard = ({movie}) => {
     return (
-        <article className="carousel-card relative h-[250px] md:h-[450px] bg-gray-600 ">
+        <article className="carousel-card relative h-[250px] md:h-[450px] lg:h-[550px] bg-gray-600">
             <div className="background-hero-image-overlay"></div>
             <div
                 style={{
@@ -12,7 +12,7 @@ const CarouselCard = ({movie}) => {
                 }}
                 className="background-hero-image absolute w-full h-full top-0 z-0"
             ></div>
-            <div className="main-container m-auto container flex relative z-1 p-12 gap-10">
+            <div className="main-container m-auto container flex relative z-1 p-16 gap-10">
                 <section className="right mt-10 flex-grow-0 hidden md:block">
                     <div className="image-section shadow-xl">
                         <img
