@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback, useRef} from "react";
 import MoviesList from "./movies-list.jsx";
 import CarouselCard from "./carousel-card.jsx";
 import useEmblaCarousel from "embla-carousel-react";
@@ -7,6 +7,10 @@ import sampleData from "../sampleData.js";
 import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
 import {faAngleRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+import './latest-movies.css';
+
+import _ from "lodash";
 
 const LatestMovies = () => {
 
@@ -17,12 +21,36 @@ const LatestMovies = () => {
     const [page, setPage] = useState(1);
     const [error, setError] = useState(false);
 
-    const [emblaRef, emblaApi] = useEmblaCarousel({loop: false})
+    //slider elements here
+    const [emblaRef, emblaApi] = useEmblaCarousel({loop: true})
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [scrollSnaps, setScrollSnaps] = useState([]);
+
+    const onSelect = useCallback(() => {
+        if (!emblaApi) return;
+        setSelectedIndex(emblaApi.selectedScrollSnap());
+    }, [emblaApi]);
+
+    const scrollTo = useCallback((index) => {
+        if (!emblaApi) return;
+        emblaApi.scrollTo(index);
+    })
+
+    useEffect(() => {
+        if (!emblaApi) return;
+
+        setScrollSnaps(emblaApi.scrollSnapList());
+        emblaApi.on('select', onSelect);
+        onSelect(); // Set initial selected dot
+    }, [emblaApi, onSelect]);
+
 
     useEffect(() => {
 
+
+        let smallData = _.take(sampleData.results, 5);
         //use temporary data for now!
-        setMovies(sampleData.results);
+        setMovies(smallData);
         setStartDate(sampleData.dates.minimum);
         setEndDate(sampleData.dates.maximum);
         setPage(sampleData.page);
@@ -78,10 +106,25 @@ const LatestMovies = () => {
                             )
                         })}
                     </div>
-                    <div onClick={() => emblaApi?.scrollPrev()} className="embla__prev absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-white"><FontAwesomeIcon
-                        icon={faAngleLeft}/></div>
-                    <div onClick={() => emblaApi?.scrollNext()} className="embla__next absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-white"><FontAwesomeIcon
-                        icon={faAngleRight}/></div>
+                    <div onClick={() => emblaApi?.scrollPrev()}
+                         className="embla__prev absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-white">
+                        <FontAwesomeIcon
+                            icon={faAngleLeft}/></div>
+                    <div onClick={() => emblaApi?.scrollNext()}
+                         className="embla__next absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-white">
+                        <FontAwesomeIcon
+                            icon={faAngleRight}/></div>
+                    <div className="embla__dots">
+                        <div className="embla__dots_inner">
+                            {scrollSnaps.map((item, index) => (
+                                <button
+                                    key={index}
+                                    className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
+                                    onClick={() => scrollTo(index)}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </section>
         )

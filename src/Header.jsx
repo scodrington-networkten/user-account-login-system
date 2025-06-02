@@ -2,11 +2,12 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-regular-svg-icons';
 import {faVideo} from "@fortawesome/free-solid-svg-icons";
+import './components/header.css';
 
 
 const Header = () => {
     return (
-        <header className="text-white p-4 shadow-md bg-gray-900">
+        <header className="page-header">
             <div className="container mx-auto flex justify-between items-center">
                 <section className="header-title">
                     <Link to={"/"} className="flex items-center gap-2" title="Home">

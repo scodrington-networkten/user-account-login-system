@@ -2,14 +2,15 @@ import GenreButton from "./genre-button.jsx";
 
 const CarouselCard = ({movie}) => {
     return (
-        <article className="carousel-card h-[250px] md:h-[450px] bg-gray-600 ">
+        <article className="carousel-card relative h-[250px] md:h-[450px] bg-gray-600 ">
+            <div className="background-hero-image-overlay"></div>
             <div
                 style={{
                     backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}
-                className="absolute w-full h-full top-0 z-0 opacity-10"
+                className="background-hero-image absolute w-full h-full top-0 z-0"
             ></div>
             <div className="main-container container flex relative z-1 p-12 gap-10">
                 <section className="right flex-grow-0 hidden md:block">

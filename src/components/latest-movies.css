@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+.background-hero-image-overlay{
+    @apply absolute z-0 inset-0 bg-cover bg-center left-0 top-0 w-full h-full z-1;
+    background-blend-mode: multiply;
+
+    background: linear-gradient(
+        rgba(var(--color-primary-rgb), 0.5),
+        rgba(var(--color-secondary-rgb), 0.8)
+    );
+
+}

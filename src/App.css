@@ -1,4 +1,13 @@
+@import "tailwindcss";
 
+:root{
+  --color-primary: #100c24;
+  --color-secondary: #323266;
+
+  --color-primary-rgb: 16,12,36;
+  --color-secondary-rgb: 50, 50, 102;
+
+}
 
 .embla {
   overflow: hidden;
@@ -9,6 +18,21 @@
 .embla__slide {
   flex: 0 0 100%;
   min-width: 0;
+}
+.embla__dots {
+  @apply flex w-full absolute justify-center m-2 bottom-1 left-0
+}
+.embla__dots_inner{
+  @apply container flex gap-2
+}
+.embla__dot {
+  @apply w-[8px] h-[8px] p-[10px] bg-transparent border-2 rounded-full border-gray-400 outline-none box-border
+}
+.embla__dot.is-selected {
+  @apply bg-white
+}
+.embla__dot:focus{
+  @apply  outline-none
 }
 
 #root {
@@ -72,3 +96,4 @@ body{
 .read-the-docs {
   color: #888;
 }
+

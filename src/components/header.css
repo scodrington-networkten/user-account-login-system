@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.page-header{
+    @apply text-white p-4 shadow-md bg-[var(--color-primary)]
+}
