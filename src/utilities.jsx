@@ -59,7 +59,7 @@ class Utilities {
             <section className="stars-information">
                 {
                     iconsArray.map((item, index) => {
-                        return <span className="item" key={`star-${index}`}><FontAwesomeIcon icon={item}/></span>
+                        return <span className="item text-[var(--color-highlight-primary)]" key={`star-${index}`}><FontAwesomeIcon icon={item}/></span>
                     })
                 }
             </section>
@@ -95,7 +95,7 @@ class Utilities {
 
         return (
             <section className="vote-information flex gap-2 justify-center">
-                <span className="vote-icon">
+                <span className="vote-icon text-[var(--color-highlight-primary)]">
                     <FontAwesomeIcon icon={faThumbsUp}/>
                 </span>
                 <span className="vote-score">
