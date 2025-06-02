@@ -1,8 +1,14 @@
 import GenreButton from "./genre-button.jsx";
+import {Link} from "react-router-dom";
+
+import {faPlay, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+import './carousel-card.css';
 
 const CarouselCard = ({movie}) => {
     return (
-        <article className="carousel-card relative h-[250px] md:h-[450px] lg:h-[550px] bg-gray-600">
+        <article className="carousel-card relative h-[250px] md:h-[450px] lg:h-[600px] bg-gray-600">
             <div className="background-hero-image-overlay"></div>
             <div
                 style={{
@@ -26,6 +32,17 @@ const CarouselCard = ({movie}) => {
                     <section className="primary flex flex-col justify-start flex-start items-start z-1">
                         <h1 className="font-bold md:text-6xl text-3xl mb-4">{movie.title}</h1>
                         <div className="overview md:mb-8 text-2xl text-lg items-start font-light">{movie.overview}</div>
+
+                        <div className="flex gap-2">
+                            <Link className="action-button watch-button" to={`/movie/${movie.id}`}>
+                                <FontAwesomeIcon icon={faPlay}/><p>Watch Now</p>
+                            </Link>
+                            <Link className="action-button add-to-list-button" to={`/movie/${movie.id}`}>
+                                <FontAwesomeIcon icon={faPlus}/><p>Watchlist</p>
+                            </Link>
+
+                        </div>
+
                     </section>
                 </section>
             </div>

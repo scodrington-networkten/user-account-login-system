@@ -22,5 +22,10 @@
             @apply object-cover transform transition-transform duration-200 ease-in-out scale-100 group-hover:scale-110;
         }
 
+        .bottom-accent {
+            @apply h-[2px];
+            color: var(--color-highlight-secondary);
+            background-color: var(--color-highlight-secondary);
+        }
     }
 }

@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+
+.action-button{
+    @apply flex items-center justify-center gap-3 font-semibold py-3 px-5 rounded-3xl ;
+}
+
+.action-secondary{
+    @apply bg-[var(--color-secondary)] border-0 text-white;
+}
+
+.watch-button{
+    @apply bg-[var(--color-highlight-secondary)] border-0;
+}
+
+.add-to-list-button{
+    @apply  border-1 border-white;
+}
+

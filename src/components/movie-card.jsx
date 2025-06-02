@@ -43,7 +43,7 @@ const MovieCard = ({movie}) => {
                     <div className="main-section-inner">
                         <section
                             className="movie-information-section -translate-y-10 transform transition duration-250 ease-in-out">
-                            <h3 className="text-3xl mb-2 font-semibold text-[var(--color-highlight-secondary)]" title={movie.title}>
+                            <h3 className="text-3xl mb-2 font-semibold " title={movie.title}>
                                 {movie.title}
                             </h3>
                         </section>
@@ -61,6 +61,8 @@ const MovieCard = ({movie}) => {
                                 <p key={index}>{item}</p>
                             ))}
                         </section>
+
+                        <hr className="bottom-accent"/>
                     </div>
                 </section>
             </Link>
