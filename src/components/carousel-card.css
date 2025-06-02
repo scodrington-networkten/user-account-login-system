@@ -17,3 +17,15 @@
     @apply  border-1 border-white;
 }
 
+.button-small{
+    @apply py-2 px-3 rounded-3xl text-sm cursor-pointer;
+
+}
+.button-transparent{
+
+    background-color: rgba(0,0,0,0.2);
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}

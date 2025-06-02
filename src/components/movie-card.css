@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .movie-card {
-    @apply flex relative drop-shadow-lg border-gray-300 border-1 overflow-hidden;
+    @apply flex relative drop-shadow-lg border-gray-300 border-1 overflow-hidden transition-all duration-200 ease-in-out cursor-pointer;
 
     .main-section {
         @apply flex flex-col h-full w-full absolute bg-black/75 text-white opacity-0 transition-opacity group-hover:opacity-100;
@@ -28,4 +28,8 @@
             background-color: var(--color-highlight-secondary);
         }
     }
+}
+
+.movie-card:hover{
+    transform: translateY(-5px) scale(1.02);
 }

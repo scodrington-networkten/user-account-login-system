@@ -47,15 +47,15 @@
 
 .embla__next,
 .embla__prev {
-    @apply flex justify-center items-center absolute text-2xl text-white cursor-pointer outline-white outline-2 rounded-full text-center h-[40px] w-[40px] justify-center;
+    @apply flex justify-center items-center absolute lg:text-2xl text-white cursor-pointer outline-white outline-2 rounded-full text-center h-[20px] w-[20px]  md:h-[40px] md:w-[40px] justify-center;
 }
 
 .embla__next {
-    @apply right-4 top-1/2 -translate-y-1/2;
+    @apply top-[80px] right-1 md:right-2 md:top-1/2 -translate-y-1/2;
 }
 
 .embla__prev {
-    @apply left-4 top-1/2 -translate-y-1/2;
+    @apply top-[80px]  right-8  md:left-2 md:top-1/2 -translate-y-1/2;
 }
 
 #root {
