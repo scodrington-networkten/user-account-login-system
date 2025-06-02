@@ -12,8 +12,8 @@ const CarouselCard = ({movie}) => {
                 }}
                 className="background-hero-image absolute w-full h-full top-0 z-0"
             ></div>
-            <div className="main-container container flex relative z-1 p-12 gap-10">
-                <section className="right flex-grow-0 hidden md:block">
+            <div className="main-container m-auto container flex relative z-1 p-12 gap-10">
+                <section className="right mt-10 flex-grow-0 hidden md:block">
                     <div className="image-section shadow-xl">
                         <img
                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -22,7 +22,7 @@ const CarouselCard = ({movie}) => {
                         />
                     </div>
                 </section>
-                <section className="left flex-grow-1 text-white md:max-w-[70%]">
+                <section className="left mt-10 flex-grow-1 text-white md:max-w-[70%]">
                     <section className="primary flex flex-col justify-start flex-start items-start z-1">
                         <h1 className="font-bold md:text-6xl text-3xl mb-4">{movie.title}</h1>
                         <div className="overview md:mb-8 text-2xl text-lg items-start font-light">{movie.overview}</div>

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
 .page-header{
-    @apply text-white p-4 shadow-md bg-[var(--color-primary)]
+    @apply text-white p-4 shadow-md h-[60px] z-1;
+    background-color: rgba(var(--color-primary-rgb), 0.7);
 }

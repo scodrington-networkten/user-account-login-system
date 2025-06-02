@@ -95,7 +95,7 @@ const LatestMovies = () => {
             return <p>Loading in content</p>
         }
         return (
-            <section className="latest-movies-carousel flex w-full mx-auto mb-10">
+            <section className="latest-movies-carousel flex w-full mx-auto mb-10 -mt-[60px]">
                 <div className="embla relative w-full" ref={emblaRef}>
                     <div className="embla__container relative">
                         {movies.map((item, index) => {
