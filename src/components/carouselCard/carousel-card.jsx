@@ -1,4 +1,4 @@
-import GenreButton from "./genre-button.jsx";
+
 import {Link} from "react-router-dom";
 
 import {faPlay, faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import './carousel-card.css';
 
-import {GenreContext} from "../contexts/GenreContext.jsx";
+import {GenreContext} from "../../contexts/GenreContext.jsx";
 import {useContext} from "react";
 
 import _ from "lodash";
