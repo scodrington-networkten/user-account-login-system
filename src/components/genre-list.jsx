@@ -1,6 +1,8 @@
 import React from "react";
-import {useState, useEffect} from "react";
 import GenreButton from "./genre-button.jsx";
+
+import {useContext} from "react";
+import {GenreContext} from "../contexts/GenreContext.jsx";
 
 /**
  * Shows a list of genres, pulled from the API
@@ -9,25 +11,16 @@ import GenreButton from "./genre-button.jsx";
  */
 const GenreList = () => {
 
-    const [genres, setGenres] = useState([]);
-    useEffect(() => {
 
-        const getGenreData = async () => {
-            const response = await fetch('/api/get-genres');
-            const result = await response.json();
+    const {genres} = useContext(GenreContext);
 
-            //collect data about genres
-            let genreData = result.data.genres.map((item, index) => {
-                return {name: item.name, id: item.id}
-            });
+    console.log(genres);
 
-            setGenres(genreData);
-        }
-        getGenreData();
-
-
-    }, [])
-
+    if (!genres) {
+        return (
+            <div>Loading Genres</div>
+        )
+    }
 
     return (
 

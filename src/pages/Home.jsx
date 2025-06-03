@@ -57,6 +57,7 @@ const Home = () => {
             return (
                 <>
                     <LatestMovies/>
+                    <GenreList/>
                     <LoadingCardList/>
                 </>
 
