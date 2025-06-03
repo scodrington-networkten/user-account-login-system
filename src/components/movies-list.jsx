@@ -14,10 +14,10 @@ const MoviesList = ({movies, onNextButton, onPrevButton, moviesLoading, currentP
      */
     const displayMovies = () => {
 
-
         if (movies.length > 0) {
             return (
-                <section className={`movies grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4  ${moviesLoading ? 'loading' : ''}`}>
+                <section
+                    className={`movies grid grid-cols-2 container m-auto md:grid-cols-3 lg:grid-cols-5 gap-4  ${moviesLoading ? 'loading' : ''}`}>
                     {movies.map((item, index) => (
                         <MovieCard movie={item} className="movie" key={`movie-${index}`}/>
                     ))}

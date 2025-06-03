@@ -6,7 +6,36 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import './carousel-card.css';
 
+import {GenreContext} from "../contexts/GenreContext.jsx";
+import {useContext} from "react";
+
+import _ from "lodash";
+
 const CarouselCard = ({movie}) => {
+
+    const {genres} = useContext(GenreContext);
+
+    /**
+     * Given an  ID (representing a genre id), return a button component with its correct name
+     * @param id
+     * @returns {JSX.Element}
+     */
+    const getGenreButton = (id) => {
+
+        //find the associated genre given the id
+        let genre = _.find(genres, (item) => {
+            return item.id === id;
+        })
+
+        if (!genre) {
+            genre = {id: item, name: 'undefined'}
+        }
+
+        return (
+            <p className="button-small button-transparent" key={`genre-button-${genre.id}`}>{genre.name}</p>
+        )
+    }
+
     return (
         <article className="carousel-card relative h-[400px] md:h-[450px] lg:h-[600px] bg-gray-600">
             <div className="background-hero-image-overlay"></div>
@@ -31,11 +60,12 @@ const CarouselCard = ({movie}) => {
                 <section className="left mt-[50px] md:mt-4 lg:mt-10 flex-grow-1 text-white md:max-w-[70%]">
                     <section className="primary flex flex-col justify-start flex-start items-start z-1">
                         <h1 className="font-bold md:text-3xl lg-text-6xl text-3xl sm:mb-2 md:mb-4 lg:mb-6">{movie.title}</h1>
-                        <div className="overview sm:mb-2 md:mb-4 lg:mb-6 md:text-lg lg:text-xl items-start font-light">{movie.overview}</div>
+                        <div
+                            className="overview sm:mb-2 md:mb-4 lg:mb-6 md:text-lg lg:text-xl items-start font-light">{movie.overview}</div>
 
                         <section className="genre-section button-list flex gap-1 sm:mb-2 md:mb-4 lg:mb-6">
                             {movie.genre_ids.map((item, index) => (
-                                <p className="button-small button-transparent" key={index}>{item}</p>
+                                getGenreButton(item)
                             ))}
                         </section>
 

@@ -54,6 +54,7 @@ const MovieCard = ({movie}) => {
                             <section className="summary-section multiline-clamp">
                                 <p className="summary text-base">{movie.overview}</p>
                             </section>
+                            <hr className="bottom-accent mt-2"/>
                         </section>
 
                         <section className="genre-section hidden">
@@ -62,7 +63,7 @@ const MovieCard = ({movie}) => {
                             ))}
                         </section>
 
-                        <hr className="bottom-accent"/>
+
                     </div>
                 </section>
             </Link>
