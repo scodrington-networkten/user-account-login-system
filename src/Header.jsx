@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-regular-svg-icons';
 import {faVideo} from "@fortawesome/free-solid-svg-icons";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import './components/header.css';
 
 
@@ -9,11 +10,12 @@ const Header = () => {
     return (
         <header className="page-header">
             <div className="container mx-auto flex justify-between items-center">
-                <section className="header-title">
+                <section className="header-title flex gap-4 justify-center items-center">
                     <Link to={"/"} className="flex items-center gap-2" title="Home">
                         <FontAwesomeIcon icon={faVideo}/>
                         <span className="logo-text ">MovieSearch</span>
                     </Link>
+                    <FontAwesomeIcon className="search-icon" title="Lets have a search!" icon={faSearch}/>
                 </section>
                 <section className="header-links flex gap-4 items-center">
                     <nav className="space-x-4">
