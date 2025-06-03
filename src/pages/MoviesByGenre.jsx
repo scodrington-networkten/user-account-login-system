@@ -92,25 +92,34 @@ const MoviesByGenre = () => {
     const displayMovies = () => {
 
         if (loading) {
-            return <LoadingCardList/>
+            return (
+                <div className="container m-auto">
+                    <LoadingCardList/>
+                </div>
+            )
+
         } else {
-            return <MoviesList
-                movies={movies}
-                onNextButton={onNextButton}
-                onPrevButton={onPreviousButton}
-                moviesLoading={loading}
-                currentPage={page}
-                totalPages={1}
-            />
+            return (
+                <div className="container m-auto">
+                    <MoviesList
+                        movies={movies}
+                        onNextButton={onNextButton}
+                        onPrevButton={onPreviousButton}
+                        moviesLoading={loading}
+                        currentPage={page}
+                        totalPages={1}
+                    />
+                </div>
+            )
         }
     }
 
     return (
-        <>
-            <h1 className="mb-8 text-4xl">{genre}</h1>
+        <div className="container m-auto gap-2 flex flex-col">
+            <h1 className="text-4xl py-4">{genre}</h1>
             <GenreList/>
             {displayMovies()}
-        </>
+        </div>
 
     )
 }

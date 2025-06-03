@@ -1,11 +1,20 @@
 @import "tailwindcss";
 
-.page-header{
+.page-header {
     @apply text-white p-4 shadow-md h-[60px] z-1;
     background-color: rgba(var(--color-primary-rgb), 0.7);
 }
 
-.user-icon{
+.user-icon {
     background-color: var(--color-highlight-secondary);
     @apply text-white;
+}
+
+.logo-text {
+    @apply text-xl font-bold;
+    background: linear-gradient(to left, #fff, var(--color-highlight-secondary));
+    background-clip: text;
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

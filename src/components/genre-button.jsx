@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {useState, useEffect} from "react";
 import slugify from "slugify";
+import './genre-button.css';
 
 /**
  * Single Genre button, linking to the dedicated genre page
@@ -9,7 +10,7 @@ import slugify from "slugify";
  * @returns {JSX.Element}
  * @constructor
  */
-const GenreButton = ({genre}) => {
+const GenreButton = ({genre, isActive}) => {
 
     const [genreName, setGenreName] = useState('');
 
@@ -23,7 +24,7 @@ const GenreButton = ({genre}) => {
 
     return (
         <Link to={`/movies/${genreName}`}
-              className="text-md bg-white text-gray-700 rounded border border-gray-400 px-3 py-1 inline-block hover:bg-gray-800 hover:text-white transition-all duration-200 ease-in-out">
+              className={`genre-button ${isActive ? 'active' : ''}`}>
             {genre.name}
         </Link>
     )

@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+.genre-button {
+    @apply bg-white text-gray-800 rounded border border-gray-400 px-3 py-1 inline-block transition-all duration-200 ease-in-out;
+
+    &.active {
+        background-color: var(--color-highlight-secondary);
+        color: var(--color-white);
+        border-color: var(--color-white);
+    }
+
+    &:hover {
+        background-color: var(--color-secondary);
+        color: var(--color-white);
+    }
+}

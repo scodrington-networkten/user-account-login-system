@@ -1,10 +1,9 @@
 import _ from 'lodash';
-import '../assets/scss/movie.scss';
 import {Link} from "react-router-dom";
-
+import Utilities from "../../utilities.jsx";
 
 import './movie-card.css';
-import Utilities from "../utilities.jsx";
+
 
 const MovieCard = ({movie}) => {
 
@@ -21,6 +20,12 @@ const MovieCard = ({movie}) => {
                 {utilities.getStarsSection(movie.vote_average)}
                 {utilities.getVotesSection(10)}
             </section>
+        )
+    }
+
+    const getSummarySection = (movie) => {
+        return (
+            <p className="summary text-base">{movie.overview}</p>
         )
     }
 
@@ -52,7 +57,7 @@ const MovieCard = ({movie}) => {
                             className="bottom-section ">
                             {getRatingSection(movie)}
                             <section className="summary-section multiline-clamp">
-                                <p className="summary text-base">{movie.overview}</p>
+                                {getSummarySection(movie)}
                             </section>
                             <hr className="bottom-accent mt-2"/>
                         </section>

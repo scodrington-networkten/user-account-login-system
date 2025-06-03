@@ -1,5 +1,5 @@
 import {useState} from "react";
-import MovieCard from "./movie-card.jsx";
+import MovieCard from "./movieCard/movie-card.jsx";
 import '../assets/scss/movie-list.scss';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

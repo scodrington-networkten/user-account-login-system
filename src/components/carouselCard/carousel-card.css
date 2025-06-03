@@ -2,7 +2,7 @@
 
 
 .action-button{
-    @apply flex items-center justify-center gap-3 font-semibold py-3 px-5 rounded-3xl ;
+    @apply flex items-center justify-center gap-3 font-semibold  py-1 px-3 md:py-3 md:px-5 rounded-3xl ;
 }
 
 .action-secondary{
@@ -21,6 +21,19 @@
     @apply py-2 px-3 rounded-3xl text-sm cursor-pointer;
 
 }
+
+.movie-summary{
+    @apply text-xl font-light;
+
+    &.movie-summary-short{
+        @apply md:hidden text-base;
+    }
+
+    &.movie-summary-long{
+        @apply hidden md:block md:mb-4 lg:mb-6 md:text-lg lg:text-xl items-start;
+    }
+}
+
 .button-transparent{
 
     background-color: rgba(0,0,0,0.2);

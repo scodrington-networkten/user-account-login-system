@@ -12,7 +12,7 @@ const Header = () => {
                 <section className="header-title">
                     <Link to={"/"} className="flex items-center gap-2" title="Home">
                         <FontAwesomeIcon icon={faVideo}/>
-                        <span className="text-xl font-bold">MovieSearch</span>
+                        <span className="logo-text ">MovieSearch</span>
                     </Link>
                 </section>
                 <section className="header-links flex gap-4 items-center">
