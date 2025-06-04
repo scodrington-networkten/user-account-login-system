@@ -3,6 +3,7 @@ import GenreButton from "../genre-button.jsx";
 import {useEffect, useState} from "react";
 
 import './single-movie.css';
+import _ from "lodash";
 
 /**
  * @typedef {Object} MovieDetails
@@ -33,6 +34,31 @@ const SingleMovie = ({movie}) => {
     /** @type {MovieDetails | null} */
     const [movieDetails, setMovieDetails] = useState(null);
 
+    useEffect(() => {
+
+        //setup cached data
+        let cache = (sessionStorage.getItem('movie_details_cache') !== null) ? JSON.parse(sessionStorage.getItem('movie_details_cache')) : null;
+        if (cache !== null) {
+            if (cache[movie.id] !== undefined) {
+                setMovieDetails(/** @type {MovieDetails} */ cache[movie.id]);
+                return;
+            }
+        }
+
+        const getMovieDetails = async () => {
+            const response = await fetch(`/api/get-movie-details?id=${movie.id}`);
+            return response.json();
+        }
+        getMovieDetails().then(json => {
+            setMovieDetails(/** @type {MovieDetails} */ json);
+
+            let newCache = (cache !== null) ? {...cache, [movie.id]: json} : {[movie.id]: json};
+            sessionStorage.setItem('movie_details_cache', JSON.stringify(newCache));
+
+        });
+
+    }, [movie.id])
+
     const getProductionCompanies = () => {
 
         let baseUrl = `https://image.tmdb.org/t/p/w200`;
@@ -43,6 +69,7 @@ const SingleMovie = ({movie}) => {
                     return (
                         item.logo_path && (
                             <img
+                                className="production-company"
                                 key={`production-company-${index}`}
                                 src={`${baseUrl}/${item.logo_path}`}
                                 alt={item.name || "Logo"}
@@ -55,18 +82,6 @@ const SingleMovie = ({movie}) => {
 
     }
 
-
-    useEffect(() => {
-
-        const getMovieDetails = async () => {
-            const response = await fetch(`/api/get-movie-details?id=${movie.id}`);
-            return response.json();
-        }
-        getMovieDetails().then(json => {
-            setMovieDetails(/** @type {MovieDetails} */ json);
-        });
-
-    }, [])
 
     return (
         <article className="single-movie flex gap-3 p-12 relative">
@@ -89,19 +104,14 @@ const SingleMovie = ({movie}) => {
                     </section>
 
                     {movieDetails &&
-
                         <>
                             <div className="production-companies">
                                 {getProductionCompanies()}
                             </div>
-
-                            <p>{movieDetails.revenue}</p>
+                            <p>Revenue: {movieDetails.revenue}</p>
                         </>
 
                     }
-
-
-
 
 
                 </section>

@@ -1,1 +1,9 @@
+@import "tailwindcss";
 
+.production-companies{
+    @apply flex gap-2 mt-3;
+
+    .production-company{
+
+    }
+}
