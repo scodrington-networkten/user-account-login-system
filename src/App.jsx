@@ -21,6 +21,7 @@ import AppLayout from "./AppLayout.jsx";
 
 import {GenreProvider} from "./contexts/GenreContext.jsx";
 
+import RouteProgressTracker from "./RouteProgressTracker.jsx";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <BrowserRouter>
             <GenreProvider>
                 <AppLayout>
+                    <RouteProgressTracker/>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/movies/:genre" element={<MoviesByGenre/>}/>

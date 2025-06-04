@@ -21,6 +21,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "lodash": "^4.17.21",
+    "nprogress": "^0.2.0",
     "pg": "^8.16.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

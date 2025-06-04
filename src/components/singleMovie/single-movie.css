@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
 .production-companies{
-    @apply flex gap-2 mt-3;
+    @apply flex gap-2 mt-3 flex-wrap items-center;
 
     .production-company{
+        max-height: 100px;
+    }
+}
 
+.single-movie{
+
+    .top-gradient{
+        position: absolute;
+        top: -60px;
+        left: 0px;
+        width: 100%;
+        height: 80px;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
     }
 }

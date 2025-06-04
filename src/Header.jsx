@@ -19,7 +19,6 @@ const Header = () => {
                 </section>
                 <section className="header-links flex gap-4 items-center">
                     <nav className="space-x-4">
-                        <Link to="/" className="hover:underline">Home</Link>
                         <Link to="/movies" className="hover:underline">Movies</Link>
                     </nav>
                     <span

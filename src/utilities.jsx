@@ -106,6 +106,14 @@ class Utilities {
         )
 
     }
+
+    getTrimmedString(string, maxCharacters = 200){
+
+        return _.truncate(string, {
+            length: maxCharacters
+        });
+
+    }
 }
 
 export default Utilities;

@@ -25,7 +25,7 @@ const MovieCard = ({movie}) => {
 
     const getSummarySection = (movie) => {
         return (
-            <p className="summary text-base">{movie.overview}</p>
+            <p className="summary text-base">{utilities.getTrimmedString(movie.overview, 150)}</p>
         )
     }
 

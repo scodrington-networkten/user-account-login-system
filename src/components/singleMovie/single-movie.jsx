@@ -85,6 +85,7 @@ const SingleMovie = ({movie}) => {
 
     return (
         <article className="single-movie flex gap-3 flex-grow p-12 relative">
+            <div className="top-gradient"></div>
             <img
                 src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                 className="absolute object-cover z-0 opacity-5 top-0 left-0 h-full"
