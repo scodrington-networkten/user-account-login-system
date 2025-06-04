@@ -84,14 +84,14 @@ const SingleMovie = ({movie}) => {
 
 
     return (
-        <article className="single-movie flex gap-3 p-12 relative">
+        <article className="single-movie flex gap-3 flex-grow p-12 relative">
             <img
                 src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                className="absolute object-cover z-0 opacity-5 top-0 left-0"
+                className="absolute object-cover z-0 opacity-5 top-0 left-0 h-full"
                 alt="background-image"
             />
-            <div className="container m-auto flex">
-                <section className="primary flex flex-col justify-start flex-start items-start z-1">
+            <div className="container m-auto flex mt-0 flex-wrap gap-4">
+                <section className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1">
                     <h1 className="font-bold text-4xl mb-8">{movie.title}</h1>
                     <div className="overview mb-8 text-1xl items-start font-light">{movie.overview}</div>
                     <div className="review-stars-section">{utilities.getStarsSection(movie.vote_average)}</div>
@@ -103,6 +103,19 @@ const SingleMovie = ({movie}) => {
                         ))}
                     </section>
 
+                </section>
+
+                <section className="secondary w-1/3">
+                    <div className="image-section shadow-xl">
+                        <img
+                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                            alt={movie.title}
+                            className="object-cover rounded-lg transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
+                        />
+                    </div>
+                </section>
+
+                <section className="bottom-section w-full mt-2">
                     {movieDetails &&
                         <>
                             <div className="production-companies">
@@ -112,18 +125,6 @@ const SingleMovie = ({movie}) => {
                         </>
 
                     }
-
-
-                </section>
-
-                <section className="secondary">
-                    <div className="image-section shadow-xl">
-                        <img
-                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                            alt={movie.title}
-                            className="object-cover rounded-lg transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
-                        />
-                    </div>
                 </section>
             </div>
 
