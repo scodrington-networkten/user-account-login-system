@@ -4,7 +4,7 @@ import MoviesList from "../components/movies-list.jsx";
 
 const SearchResults = () => {
 
-    const [movieResults, setMovieResults] = useState(null);
+    const [searchResults, setSearchResults] = useState(null);
     const [searchParams] = useSearchParams();
     const q = searchParams.get("q");
 
@@ -33,7 +33,7 @@ const SearchResults = () => {
                 totalPages: json.json.total_pages,
             };
 
-            setMovieResults(dataObject);
+            setSearchResults(dataObject);
 
             console.log(json);
             console.log(dataObject);
@@ -44,21 +44,20 @@ const SearchResults = () => {
 
     const displayMovieResults = () => {
 
-        if (movieResults === null) {
+        if (searchResults === null) {
             return (
                 <p>Movie results loading..</p>
             )
         } else {
             return (
                 <div className="movie-results">
-                    <p>Here are your results</p>
                     <MoviesList
-                        movies={movieResults.movies}
+                        movies={searchResults.movies}
                         moviesLoading={false}
                         onNextButton={null}
                         onPrevButton={null}
-                        currentPage={movieResults.currentPage}
-                        totalPages={movieResults.totalPages}
+                        currentPage={searchResults.currentPage}
+                        totalPages={searchResults.totalPages}
                     />
                 </div>
             )
@@ -67,8 +66,8 @@ const SearchResults = () => {
 
     return (
 
-        <div className="search-results m-auto container">
-            <h1 className="text-2xl">Search Results</h1>
+        <div className="search-results m-auto container flex flex-col gap-4">
+            <h1 className="text-3xl mt-4">Search Results: <span className="italic">{q}</span></h1>
             {displayMovieResults()}
         </div>
     )
