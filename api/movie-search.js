@@ -1,16 +1,20 @@
 import dotenv from "dotenv";
-import HttpError from "./_utilities/httpError";
+import {HttpError} from "./_utilities/httpError";
 
 
 /**
- * Get movie information based on a set genre
+ * Searches for movies given a query
  */
-export default async function getMovie(request, response) {
+export default async function movieSearch(request, response) {
+
+    let {q} = request.query;
+
+    if(typeof q !== 'string' || q.trim() === ''){
+        return response.status(400).json(new HttpError(`search query was not provided`));
+    }
 
 
-    //extract query data to customise the request
-    let {id} = request.query;
-    let url = `${process.env.MOVIE_API_URL_BASE}movie/${id}`;
+    let url = `${process.env.MOVIE_API_URL_BASE}search/movie?query=${q}`;
 
     const options = {
         method: 'GET',

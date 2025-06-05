@@ -1,6 +1,7 @@
 import './App.css'
 import './tailwind.css';
 import SingleMoviePage from "./pages/SingleMoviePage.jsx";
+import SearchResults from "./pages/SearchResults.jsx";
 
 //font family imports for inter
 import '@fontsource/inter';
@@ -34,6 +35,7 @@ function App() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
                         <Route path="/movie/:id" element={<SingleMoviePage/>}/>
+                        <Route path="/search" element={<SearchResults/>}/>
                     </Routes>
                 </AppLayout>
             </GenreProvider>

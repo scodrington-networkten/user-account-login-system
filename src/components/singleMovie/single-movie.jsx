@@ -3,8 +3,6 @@ import GenreButton from "../genre-button.jsx";
 import {useEffect, useState} from "react";
 
 import './single-movie.css';
-import _ from "lodash";
-import js from "@eslint/js";
 
 import ActorProfile from "../actorProfile/actorProfile.jsx";
 
