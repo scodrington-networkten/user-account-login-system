@@ -24,9 +24,9 @@
 }
 
 .mini-search-form{
-    display: none;
+
 
     &.active{
-        display: block;
+
     }
 }
