@@ -37,7 +37,7 @@ const MovieCard = ({movie}) => {
             >
                 <section className="overflow-hidden">
                     <img
-                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                        src={ Utilities.getApiImageUrl( movie.poster_path, 'backdrop', 'w300')}
                         alt={movie.title}
                         className="image-section"
                     />

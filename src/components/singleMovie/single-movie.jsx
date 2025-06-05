@@ -130,7 +130,7 @@ const SingleMovie = ({movie}) => {
                     <h3>Cast & Crew</h3>
                     <div className="actors">
                         {actors.map((item, key) => {
-                            return <ActorProfile actor={item} key={`actor-profile-${key}`} />;
+                            return <ActorProfile actor={item} key={`actor-profile-${key}`}/>;
                         })}
                     </div>
                 </div>
@@ -146,8 +146,8 @@ const SingleMovie = ({movie}) => {
         <article className="single-movie flex gap-3 flex-grow p-12 relative">
             <div className="top-gradient"></div>
             <img
-                src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                className="absolute object-cover z-0 opacity-5 top-0 left-0 h-full"
+                src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
+                className="absolute object-cover z-0 opacity-5 top-0 left-0 h-full w-full"
                 alt="background-image"
             />
             <div className="container m-auto flex mt-0 flex-wrap gap-4">
@@ -170,11 +170,11 @@ const SingleMovie = ({movie}) => {
                 </section>
 
                 <section className="secondary w-1/3">
-                    <div className="image-section shadow-xl">
+                    <div className="image-section s">
                         <img
-                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                            src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
                             alt={movie.title}
-                            className="object-cover rounded-lg transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
+                            className="shadow-xl object-cover rounded-lg transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
                         />
                     </div>
                 </section>
