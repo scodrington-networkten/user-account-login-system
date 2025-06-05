@@ -61,17 +61,19 @@ const SingleMovie = ({movie}) => {
 
     const getProductionCompanies = () => {
 
+
         let baseUrl = `https://image.tmdb.org/t/p/w200`;
         return (
             <div className="production-companies">
                 {movieDetails.production_companies.map((item, index) => {
 
+                    let finalUrl = Utilities.getApiImageUrl(item.logo_path, 'logo', 'w154');
                     return (
                         item.logo_path && (
                             <img
                                 className="production-company"
                                 key={`production-company-${index}`}
-                                src={`${baseUrl}/${item.logo_path}`}
+                                src={`${finalUrl}`}
                                 alt={item.name || "Logo"}
                             />
                         )
@@ -80,6 +82,10 @@ const SingleMovie = ({movie}) => {
             </div>
         );
 
+    }
+
+    const getActors = () => {
+        return <p>Actors</p>
     }
 
 
@@ -104,6 +110,10 @@ const SingleMovie = ({movie}) => {
                         ))}
                     </section>
 
+                    <section className="actors-section w-full mt-2">
+                        {getActors()}
+                    </section>
+
                 </section>
 
                 <section className="secondary w-1/3">
@@ -115,6 +125,7 @@ const SingleMovie = ({movie}) => {
                         />
                     </div>
                 </section>
+
 
                 <section className="bottom-section w-full mt-2">
                     {movieDetails &&

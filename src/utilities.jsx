@@ -59,7 +59,8 @@ class Utilities {
             <section className="stars-information">
                 {
                     iconsArray.map((item, index) => {
-                        return <span className="item text-[var(--color-highlight-primary)]" key={`star-${index}`}><FontAwesomeIcon icon={item}/></span>
+                        return <span className="item text-[var(--color-highlight-primary)]"
+                                     key={`star-${index}`}><FontAwesomeIcon icon={item}/></span>
                     })
                 }
             </section>
@@ -107,11 +108,55 @@ class Utilities {
 
     }
 
-    getTrimmedString(string, maxCharacters = 200){
+    getTrimmedString(string, maxCharacters = 200) {
 
         return _.truncate(string, {
             length: maxCharacters
         });
+
+    }
+
+    /**
+     * Builds a TMDB image URL using the provided image type and size.
+     *
+     * @param {string} url - The path of the image (e.g., "/abc123.jpg").
+     * @param {"backdrop"|"logo"|"poster"|"profile"|"still"} type - The category of the image.
+     * @param {string} size - The size of the image (e.g., "w185", "original"). Must be a valid size for the given type.
+     * @returns {string} A fully qualified image URL.
+     */
+    static getApiImageUrl(url, type, size) {
+
+        //defines the values the API expects
+        const imagesSizes = {
+            backdrop: ["w300", "w780", "w1280", "original"],
+            logo: ["w45", "w92", "w154", "w185", "w300", "w500", "original"],
+            poster: ["w92", "w154", "w185", "w342", "w500", "w780", "original"],
+            profile: ["w45", "w185", "h632", "original"],
+            still: ["w92", "w185", "w300", "original"]
+        }
+
+        if (typeof url !== 'string' || url.trim() === '') {
+            throw new Error(`url provided must be non empty and a string`);
+        }
+
+        //verify the type value passed
+        if (!imagesSizes.hasOwnProperty(type)) {
+            let allowedTypes = Object.keys(imagesSizes).map((item) => {
+                return item
+            });
+            throw new Error(`Invalid type of image supplied: ${type}. Allowed values include: ${allowedTypes}`);
+        }
+
+        //verify the size value passed for the given type
+        if (!imagesSizes[type].includes(size)) {
+            let allowedSizes = imagesSizes[type].map((item) => {
+                return item
+            });
+            throw new Error(`Invalid size of image supplied: ${size}. Allowed values include: ${allowedSizes}`);
+        }
+
+        //get the URL based on values
+        return `https://image.tmdb.org/t/p/${size}${url}`;
 
     }
 }
