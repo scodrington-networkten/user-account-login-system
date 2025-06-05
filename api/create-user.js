@@ -1,3 +1,4 @@
+
 import "reflect-metadata";
 import dotenv from "dotenv";
 import {DataSource} from "typeorm";
@@ -9,7 +10,7 @@ import UserMetdataSchema from "../src/schemas/entities/UserMetdata";
  * @param request
  * @param response
  * @returns {Promise<*>}
- */
+
 export async function createUser(request, response) {
 
     dotenv.config();
@@ -61,3 +62,4 @@ export async function createUser(request, response) {
     }
 
 }
+*/
