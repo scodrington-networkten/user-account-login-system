@@ -4,6 +4,9 @@ import {useEffect, useState} from "react";
 
 import './single-movie.css';
 import _ from "lodash";
+import js from "@eslint/js";
+
+import ActorProfile from "../actorProfile/actorProfile.jsx";
 
 /**
  * @typedef {Object} MovieDetails
@@ -34,6 +37,8 @@ const SingleMovie = ({movie}) => {
     /** @type {MovieDetails | null} */
     const [movieDetails, setMovieDetails] = useState(null);
 
+    const [actors, setActors] = useState(null);
+
     useEffect(() => {
 
         //setup cached data
@@ -59,10 +64,45 @@ const SingleMovie = ({movie}) => {
 
     }, [movie.id])
 
+
+    //get information about the actors
+    useEffect(() => {
+
+        const getActorInformation = async () => {
+
+            try {
+                const apiUrl = `/api/get-movie-credits?id=${movie.id}`;
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`could not fetch credit information from: ${apiUrl}, error: ${errorText}`);
+                }
+
+                //collect useful information about actors and return
+                const json = await response.json();
+
+                const sortedCast = [...json.cast].sort((a, b) => {
+                    return b.popularity - a.popularity;
+                })
+
+
+                setActors(sortedCast.slice(0, 5));
+                //console.log(sortedCast.slice(0, 5));
+
+
+            } catch (error) {
+                console.error('Fetch error:', error.message);
+            }
+
+        }
+        getActorInformation().then(json => {
+
+        });
+
+    }, [movie.id]);
+
     const getProductionCompanies = () => {
 
-
-        let baseUrl = `https://image.tmdb.org/t/p/w200`;
         return (
             <div className="production-companies">
                 {movieDetails.production_companies.map((item, index) => {
@@ -84,8 +124,23 @@ const SingleMovie = ({movie}) => {
 
     }
 
-    const getActors = () => {
-        return <p>Actors</p>
+    const getActorsSection = () => {
+
+        if (actors !== null) {
+            return (
+                <div className="actors-list">
+                    <h3>Cast & Crew</h3>
+                    <div className="actors">
+                        {actors.map((item, key) => {
+                            return <ActorProfile actor={item} key={`actor-profile-${key}`} />;
+                        })}
+                    </div>
+                </div>
+            )
+
+        } else {
+            return <p>Actors Loading..</p>
+        }
     }
 
 
@@ -111,7 +166,7 @@ const SingleMovie = ({movie}) => {
                     </section>
 
                     <section className="actors-section w-full mt-2">
-                        {getActors()}
+                        {getActorsSection()}
                     </section>
 
                 </section>
