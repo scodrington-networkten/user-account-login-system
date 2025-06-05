@@ -136,6 +136,9 @@ class Utilities {
         }
 
         if (typeof url !== 'string' || url.trim() === '') {
+
+            //set a default image here
+            return '/profile_image_blank.webp';
             throw new Error(`url provided must be non empty and a string`);
         }
 

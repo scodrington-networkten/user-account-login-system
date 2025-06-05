@@ -4,9 +4,44 @@ import {faUser} from '@fortawesome/free-regular-svg-icons';
 import {faVideo} from "@fortawesome/free-solid-svg-icons";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import './components/header.css';
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import slugify from "slugify";
 
 
 const Header = () => {
+
+    const [searchInput, setSearchInput] = useState('');
+    const [searchVisible, setSearchVisible] = useState(false);
+
+    const navigate = useNavigate();
+
+    const onSearchIconClick = () => {
+
+        setSearchVisible((prevState) => {
+            return !prevState;
+        });
+
+    }
+
+    /**
+     * Handle search submit and move
+     * @param e
+     */
+    const handleSearchSubmit = (e) => {
+
+        e.preventDefault();
+
+        if (searchInput.trim() !== '') {
+
+            let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
+            navigate(`/search?q=${urlEncodedQuery}`);
+            setSearchInput('');
+
+        }
+
+    }
+
     return (
         <header className="page-header">
             <div className="container mx-auto flex justify-between items-center">
@@ -15,7 +50,28 @@ const Header = () => {
                         <FontAwesomeIcon icon={faVideo}/>
                         <span className="logo-text ">MovieSearch</span>
                     </Link>
-                    <FontAwesomeIcon className="search-icon" title="Lets have a search!" icon={faSearch}/>
+                    <FontAwesomeIcon className="search-icon" title="Lets have a search!" icon={faSearch}
+                                     onClick={onSearchIconClick}/>
+                    {searchVisible &&
+                        <div className="mini-search-form">
+                            <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
+                                <input
+                                    type="text"
+                                    className="border p-1 px-2 rounded"
+                                    placeholder="Search movies..."
+                                    value={searchInput}
+                                    onChange={(e) => {
+                                        setSearchInput(e.target.value);
+                                    }}
+                                />
+                                <button
+                                    type="submit"
+                                    className=" button button-small "
+                                >Search
+                                </button>
+                            </form>
+                        </div>
+                    }
                 </section>
                 <section className="header-links flex gap-4 items-center">
                     <nav className="space-x-4">

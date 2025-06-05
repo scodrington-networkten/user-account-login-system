@@ -22,3 +22,11 @@
 .search-icon {
     cursor: pointer;
 }
+
+.mini-search-form{
+    display: none;
+
+    &.active{
+        display: block;
+    }
+}
