@@ -37,7 +37,7 @@ const MovieCard = ({movie}) => {
             >
                 <section className="overflow-hidden">
                     <img
-                        src={ Utilities.getApiImageUrl( movie.poster_path, 'backdrop', 'w300')}
+                        src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
                         alt={movie.title}
                         className="image-section"
                     />
@@ -63,7 +63,7 @@ const MovieCard = ({movie}) => {
                         </section>
 
                         <section className="genre-section hidden">
-                            {movie.genre_ids.map((item, index) => (
+                            {movie.genre_ids?.map((item, index) => (
                                 <p key={index}>{item}</p>
                             ))}
                         </section>

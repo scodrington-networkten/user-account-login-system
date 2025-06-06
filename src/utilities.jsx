@@ -135,13 +135,6 @@ class Utilities {
             still: ["w92", "w185", "w300", "original"]
         }
 
-        if (typeof url !== 'string' || url.trim() === '') {
-
-            //set a default image here
-            return '/profile_image_blank.webp';
-            throw new Error(`url provided must be non empty and a string`);
-        }
-
         //verify the type value passed
         if (!imagesSizes.hasOwnProperty(type)) {
             let allowedTypes = Object.keys(imagesSizes).map((item) => {
@@ -156,6 +149,18 @@ class Utilities {
                 return item
             });
             throw new Error(`Invalid size of image supplied: ${size}. Allowed values include: ${allowedSizes}`);
+        }
+
+        //determine the url
+        if (typeof url !== 'string' || url.trim() === '') {
+
+            if( ['poster', 'profile'].includes(type)){
+                return '/portrait_default_image.svg';
+            }else{
+                return '/profile_image_blank.webp';
+            }
+
+            throw new Error(`url provided must be non empty and a string`);
         }
 
         //get the URL based on values

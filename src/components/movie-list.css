@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+.movies-list {
+
+    .results-nav {
+        @apply mt-2 mb-2 flex gap-2;
+
+        .prev, .next {
+            @apply text-white;
+            background-color: var(--color-highlight-secondary);
+
+        }
+
+
+    }
+
+    .page-numbers {
+        @apply flex gap-2 mt-2 mb-2;
+
+        .page {
+          @apply flex items-center justify-center p-2 bg-gray-800 rounded-sm text-white w-[30px] h-[30px] text-center;
+
+          &.active{
+            @apply bg-gray-600;
+          }
+        }
+    }
+}

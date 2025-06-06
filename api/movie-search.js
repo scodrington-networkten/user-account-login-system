@@ -8,13 +8,14 @@ import {HttpError} from "./_utilities/httpError";
 export default async function movieSearch(request, response) {
 
     let {q} = request.query;
+    let {page} = request.query;
 
     if(typeof q !== 'string' || q.trim() === ''){
         return response.status(400).json(new HttpError(`search query was not provided`));
     }
 
 
-    let url = `${process.env.MOVIE_API_URL_BASE}search/movie?query=${q}`;
+    let url = `${process.env.MOVIE_API_URL_BASE}search/movie?query=${q}&page=${page}`;
 
     const options = {
         method: 'GET',
