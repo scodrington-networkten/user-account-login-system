@@ -56,7 +56,7 @@ const GenreList = () => {
         return (
             <div className="embla overflow-hidden md:hidden" ref={emblaRef}>
                 <div className="embla__container flex gap-2 genres genre-slider">
-                    {genres.map((item, index) => (
+                    {genres?.map((item, index) => (
                         <div className="embla__slide flex-none !basis-auto">
                             {getGenreButton(item, index)}
                         </div>
@@ -77,7 +77,7 @@ const GenreList = () => {
         if (genres !== null) {
             return (
                 <div className="hidden md:flex genres justify-center flex gap-2 flex-wrap">
-                    {genres.map((item, index) => (
+                    {genres?.map((item, index) => (
                         getGenreButton(item, index)
                     ))}
                 </div>
