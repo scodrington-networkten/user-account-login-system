@@ -5,24 +5,27 @@ import {useContext} from "react";
 import {GenreContext} from "../contexts/GenreContext.jsx";
 import {useLocation} from "react-router-dom";
 
-import _ from "lodash";
+import useEmblaCarousel from "embla-carousel-react";
+
 import slugify from "slugify";
 
 /**
- * Shows a list of genres, pulled from the API
+ * Shows a list of genres, used for users to select a genre to see movies
+ *
  * @returns {JSX.Element}
  * @constructor
  */
 const GenreList = () => {
 
-
     const {genres} = useContext(GenreContext);
+    const [emblaRef, emblaApi] = useEmblaCarousel(
+        {
+            loop: false,
+            align: 'start',
+            containScroll: 'trimSnaps'
+        }
+    );
 
-    if (!genres) {
-        return (
-            <div>Loading Genres</div>
-        )
-    }
 
     /**
      * Output the genre button, factoring in the URL to determine if this genre is currently active
@@ -31,7 +34,6 @@ const GenreList = () => {
      * @returns {Element}
      */
     const getGenreButton = (genre, index) => {
-
 
         const location = useLocation();
         const pathSegments = location.pathname.split("/").filter(Boolean);
@@ -44,13 +46,55 @@ const GenreList = () => {
     }
 
 
+    /**
+     * Horitzontal slider with embla
+     * @returns {Element}
+     */
+    const getMobileGenreSlider = () => {
+
+        return (
+            <div className="embla overflow-hidden md:hidden" ref={emblaRef}>
+                <div className="embla__container flex gap-2 genres genre-slider">
+                    {genres.map((item, index) => (
+                        <div className="embla__slide flex-none !basis-auto">
+                            {getGenreButton(item, index)}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+        )
+
+    }
+
+    /**
+     * Desktop genre items, in a flex wrapped listing
+     * @returns {Element}
+     */
+    const getDesktopGenres = () => {
+
+        if (genres !== null) {
+            return (
+                <div className="hidden md:flex genres justify-center flex gap-2 flex-wrap">
+                    {genres.map((item, index) => (
+                        getGenreButton(item, index)
+                    ))}
+                </div>
+            )
+        } else {
+            return <p>Loading Genres..</p>
+        }
+
+
+    }
+
     return (
 
-        <div className="genres justify-center container m-auto flex gap-2 flex-wrap">
-            {genres.map((item, index) => (
-                getGenreButton(item, index)
-            ))}
+        <div className="genre-container container m-auto px-4">
+            {getMobileGenreSlider()}
+            {getDesktopGenres()}
         </div>
+
     )
 }
 export default GenreList;

@@ -74,7 +74,7 @@ const MoviesList = ({
     const displayNavigation = (location) => {
 
         return (
-            <div className="navigation">
+            <div className="navigation container m-auto">
                 <section className="results-nav flex align-center">
                     {currentPage > 1 &&
                         <button
@@ -104,15 +104,17 @@ const MoviesList = ({
 
         if (searchQuery !== null) {
             return (
-                <>
+                <div className="results-header container m-auto">
                     <h1 className="text-3xl mt-4 mb-2">Search Results: <span
                         className="italic font-semibold">{searchQuery}</span></h1>
                     <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
-                </>
+                </div>
             )
         } else {
             return (
-                <h1 className="text-3xl mt-4">Movie Results</h1>
+                <div className="results-header container m-auto">
+                    <h1 className="text-3xl mt-4">Movie Results</h1>
+                </div>
             )
         }
     }
