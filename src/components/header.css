@@ -21,12 +21,60 @@
 
 .search-icon {
     cursor: pointer;
+
+    &:hover, &:focus {
+        @apply transition-all;
+        color: var(--color-highlight-secondary);
+    }
 }
 
-.mini-search-form{
+.mini-search-form {
 
+    @apply md:relative absolute top-[60px] md:top-0 left-0 w-full bg-gray-800 md:bg-transparent p-2 md:p-0;
 
-    &.active{
+    form {
+        @apply flex justify-stretch items-stretch;
 
+        &:focus-within {
+
+            input {
+                border-color: var(--color-highlight-secondary);
+            }
+
+            button {
+                border-color: var(--color-highlight-secondary);
+            }
+        }
+
+    }
+
+    /** search input box**/
+
+    input {
+        @apply border p-1 px-2 rounded rounded-tr-none rounded-br-none transition-all flex-grow text-white;
+
+        &::placeholder {
+            @apply text-white;
+        }
+
+        &:focus, &:hover, &:focus-visible {
+            @apply border outline-none;
+
+        }
+    }
+
+    /** search button with icon**/
+
+    button {
+        @apply flex text-sm justify-center bg-transparent items-center border-white text-white outline-none p-0 px-2 rounded rounded-tl-none rounded-bl-none border-l-0;
+
+        &:focus, &:hover {
+            background-color: var(--color-highlight-secondary);
+        }
+    }
+
+    input {
+        @apply text-sm font-light;
+        max-height: 30px;
     }
 }

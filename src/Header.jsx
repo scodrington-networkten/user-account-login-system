@@ -11,11 +11,14 @@ import slugify from "slugify";
 
 const Header = () => {
 
+    const navigate = useNavigate();
+
     const [searchInput, setSearchInput] = useState('');
     const [searchVisible, setSearchVisible] = useState(false);
 
-    const navigate = useNavigate();
-
+    /**
+     * When search icon clicked, toggle the form visability state
+     */
     const onSearchIconClick = () => {
 
         setSearchVisible((prevState) => {
@@ -32,6 +35,8 @@ const Header = () => {
 
         e.preventDefault();
 
+        setSearchVisible(false);
+
         if (searchInput.trim() !== '') {
 
             let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
@@ -45,7 +50,7 @@ const Header = () => {
     return (
         <header className="page-header">
             <div className="container mx-auto flex justify-between items-center">
-                <section className="header-title flex gap-4 justify-center items-center">
+                <section className="header-title flex gap-4  justify-stretch items-center">
                     <Link to={"/"} className="flex items-center gap-2" title="Home">
                         <FontAwesomeIcon icon={faVideo}/>
                         <span className="logo-text ">MovieSearch</span>
@@ -54,20 +59,20 @@ const Header = () => {
                                      onClick={onSearchIconClick}/>
                     {searchVisible &&
                         <div className="mini-search-form">
-                            <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
+                            <form onSubmit={handleSearchSubmit} className="">
                                 <input
+                                    name="search-text-inpit"
                                     type="text"
-                                    className="border p-1 px-2 rounded"
-                                    placeholder="Search movies..."
+                                    className=""
+                                    placeholder="Find a movie"
                                     value={searchInput}
                                     onChange={(e) => {
                                         setSearchInput(e.target.value);
                                     }}
                                 />
-                                <button
-                                    type="submit"
-                                    className=" button button-small "
-                                >Search
+                                <button type="submit" className="">
+                                    <FontAwesomeIcon className="search-submit-icon" title="movie search"
+                                                     icon={faSearch}/>
                                 </button>
                             </form>
                         </div>

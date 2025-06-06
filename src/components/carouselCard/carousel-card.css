@@ -22,6 +22,12 @@
 
 }
 
+.carousel-card{
+    .title{
+        @apply font-bold md:text-3xl lg:text-6xl text-3xl sm:mb-2 md:mb-4 lg:mb-6 mt-2;
+    }
+}
+
 .movie-summary{
     @apply text-xl font-light;
 
