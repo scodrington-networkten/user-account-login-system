@@ -22,7 +22,8 @@ const GenreList = () => {
         {
             loop: false,
             align: 'start',
-            containScroll: 'trimSnaps'
+            containScroll: 'trimSnaps',
+            dragFree: true
         }
     );
 
@@ -90,7 +91,7 @@ const GenreList = () => {
 
     return (
 
-        <div className="genre-container container m-auto px-4">
+        <div className="genre-container">
             {getMobileGenreSlider()}
             {getDesktopGenres()}
         </div>

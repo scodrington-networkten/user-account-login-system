@@ -48,7 +48,7 @@ const ActorProfile = ({actor}) => {
 
     return (
         <div
-            className="actor-profile-card"
+            className={`actor-profile-card ${isHovered ? 'active' : ''}`}
             onMouseEnter={() => setIsHoveredState(true)}
             onMouseLeave={() => setIsHoveredState(false)}
             onClick={onProfileCardClicked}
@@ -56,7 +56,7 @@ const ActorProfile = ({actor}) => {
             {getActorProfileImage()}
 
 
-            <div className={`actor-hover-card ${isHovered ? 'active' : ''}`}>
+            <div className={`actor-hover-card`}>
                 <div className="triangle " />
                 <p className="name">{actor.original_name}</p>
                 <p className="character">({actor.character})</p>

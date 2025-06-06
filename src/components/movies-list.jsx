@@ -2,6 +2,9 @@ import {useState} from "react";
 import MovieCard from "./movieCard/movie-card.jsx";
 import './movie-list.css';
 
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronLeft, faChevronRight, faSearch} from "@fortawesome/free-solid-svg-icons";
+
 
 const MoviesList = ({
                         movies,
@@ -14,6 +17,7 @@ const MoviesList = ({
                         onPagesButton,
                         loading
                     }) => {
+
 
     /***
      * Display all movies for the user
@@ -73,6 +77,8 @@ const MoviesList = ({
      */
     const displayNavigation = (location) => {
 
+        if(totalPages === 1) return null;
+
         return (
             <div className="navigation container m-auto">
                 <section className="results-nav flex align-center">
@@ -80,13 +86,15 @@ const MoviesList = ({
                         <button
                             className="prev"
                             title="Previous Page"
-                            onClick={onPrevButton}>Previous</button>
+                            onClick={onPrevButton}>
+                            <FontAwesomeIcon className="" icon={faChevronLeft}/>
+                        </button>
                     }
                     {currentPage < totalPages &&
                         <button
                             className="next"
                             title="Next Page"
-                            onClick={onNextButton}>Next</button>
+                            onClick={onNextButton}><FontAwesomeIcon className="" icon={faChevronRight}/></button>
                     }
                 </section>
                 <div className="page-numbers">
@@ -107,13 +115,16 @@ const MoviesList = ({
                 <div className="results-header container m-auto">
                     <h1 className="text-3xl mt-4 mb-2">Search Results: <span
                         className="italic font-semibold">{searchQuery}</span></h1>
-                    <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
+                    <div className="results-data">
+                        <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
+                        <p>(Page <span className="font-semibold">{currentPage}</span>  of <span className="font-semibold">{totalPages})</span></p>
+                    </div>
                 </div>
             )
         } else {
             return (
                 <div className="results-header container m-auto">
-                    <h1 className="text-3xl mt-4">Movie Results</h1>
+                    <h1 className="text-3xl mt-4 mb-2">Movie Results</h1>
                 </div>
             )
         }

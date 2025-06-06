@@ -93,14 +93,14 @@ const MoviesByGenre = () => {
 
         if (loading) {
             return (
-                <div className="container m-auto">
+                <div className="container">
                     <LoadingCardList/>
                 </div>
             )
 
         } else {
             return (
-                <div className="container m-auto">
+                <div className="container">
                     <MoviesList
                         movies={movies}
                         onNextButton={onNextButton}
@@ -115,7 +115,7 @@ const MoviesByGenre = () => {
     }
 
     return (
-        <div className="container m-auto gap-2 flex flex-col">
+        <div className="container m-auto gap-2 flex flex-col p-4">
             <h1 className="text-4xl py-4">{genre}</h1>
             <GenreList/>
             {displayMovies()}

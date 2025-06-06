@@ -4,7 +4,7 @@ import {faUser} from '@fortawesome/free-regular-svg-icons';
 import {faVideo} from "@fortawesome/free-solid-svg-icons";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import './components/header.css';
-import {useState} from "react";
+import {useState, useRef, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import slugify from "slugify";
 
@@ -12,9 +12,20 @@ import slugify from "slugify";
 const Header = () => {
 
     const navigate = useNavigate();
+    const inputRef = useRef(null);
 
     const [searchInput, setSearchInput] = useState('');
     const [searchVisible, setSearchVisible] = useState(false);
+
+
+    //when search form visability changes, ensure if its visible we set focus
+    useEffect(() => {
+
+        if (searchVisible) {
+            inputRef.current.focus();
+        }
+
+    }, [searchVisible]);
 
     /**
      * When search icon clicked, toggle the form visability state
@@ -24,7 +35,6 @@ const Header = () => {
         setSearchVisible((prevState) => {
             return !prevState;
         });
-
     }
 
     /**
@@ -61,6 +71,7 @@ const Header = () => {
                         <div className="mini-search-form">
                             <form onSubmit={handleSearchSubmit} className="">
                                 <input
+                                    ref={inputRef}
                                     name="search-text-inpit"
                                     type="text"
                                     className=""

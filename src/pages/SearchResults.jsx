@@ -2,6 +2,8 @@ import {useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import MoviesList from "../components/movies-list.jsx";
 
+import LoadingCardList from "../components/loading-card-list.jsx";
+
 
 const SearchResults = () => {
 
@@ -73,6 +75,12 @@ const SearchResults = () => {
 
     const displayMovieResults = () => {
 
+        //show the loading list while we wait
+        if (loading) {
+            return (
+                <LoadingCardList/>
+            )
+        }
 
         return (
             <div className="movie-results">

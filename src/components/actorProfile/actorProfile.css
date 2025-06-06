@@ -5,12 +5,30 @@
     @apply flex flex-col gap-2;
 
     .actors {
-        @apply flex flex-wrap gap-2;
+        @apply flex flex-wrap gap-2 mt-2;
     }
 
     h3 {
         @apply text-2xl font-light;
     }
+}
+
+.production-companies-section{
+
+    @apply flex flex-col gap-2;
+
+    .companies{
+        @apply flex flex-wrap gap-2 mt-2 align-middle items-center;
+
+        .company{
+            @apply max-h-[150px];
+        }
+    }
+
+    h3 {
+        @apply text-2xl font-light;
+    }
+
 }
 
 /** single card for each actor**/
@@ -19,18 +37,14 @@
 
     .actor-image {
         @apply rounded-full w-[100px] h-[100px] object-cover drop-shadow-lg border-gray-300 border scale-100 ;
-
-        &:hover {
-            @apply transform transition-all scale-110;
-        }
     }
 
     .actor-hover-card {
-        @apply bg-gray-200 rounded p-3 shadow-xl absolute top-full mt-3 left-1/2 -translate-x-1/2 min-w-[150px] border-b-gray-300 border-b-1;
-        display: none;
+        @apply hidden bg-gray-200 rounded p-3 shadow-xl absolute top-full mt-3 left-1/2 -translate-x-1/2 min-w-[150px] border-b-gray-300 border-b-1 z-3;
+
 
         &.active {
-            display: block;
+            @apply block;
         }
 
         .name {
@@ -45,4 +59,12 @@
             @apply absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-gray-200;
         }
     }
+}
+
+.actor-profile-card.active .actor-image {
+    @apply transform transition-all scale-110 ;
+}
+
+.actor-profile-card.active .actor-hover-card {
+    @apply block;
 }

@@ -102,21 +102,27 @@ const SingleMovie = ({movie}) => {
     const getProductionCompanies = () => {
 
         return (
-            <div className="production-companies">
-                {movieDetails.production_companies.map((item, index) => {
+            <div className="production-companies-section">
+                <h3>Production Companies</h3>
 
-                    let finalUrl = Utilities.getApiImageUrl(item.logo_path, 'logo', 'w154');
-                    return (
-                        item.logo_path && (
-                            <img
-                                className="production-company"
-                                key={`production-company-${index}`}
-                                src={`${finalUrl}`}
-                                alt={item.name || "Logo"}
-                            />
-                        )
-                    );
-                })}
+                <div className="companies">
+
+                    {movieDetails.production_companies.map((item, index) => {
+
+                        let finalUrl = Utilities.getApiImageUrl(item.logo_path, 'logo', 'w154');
+                        return (
+                            item.logo_path && (
+                                <img
+                                    className="company"
+                                    key={`production-company-${index}`}
+                                    src={`${finalUrl}`}
+                                    alt={item.name || "Logo"}
+                                />
+                            )
+                        );
+                    })}
+                </div>
+
             </div>
         );
 
@@ -126,7 +132,7 @@ const SingleMovie = ({movie}) => {
 
         if (actors !== null) {
             return (
-                <div className="actors-list">
+                <div className="actors-list mt-2">
                     <h3>Cast & Crew</h3>
                     <div className="actors">
                         {actors.map((item, key) => {
@@ -143,17 +149,13 @@ const SingleMovie = ({movie}) => {
 
 
     return (
-        <article className="single-movie flex gap-3 flex-grow p-12 relative">
+        <article className="single-movie flex gap-4 flex-grow relative p-4">
             <div className="top-gradient"></div>
-            <img
-                src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
-                className="absolute object-cover z-0 opacity-5 top-0 left-0 h-full w-full"
-                alt="background-image"
-            />
-            <div className="container m-auto flex mt-0 flex-wrap gap-4">
-                <section className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1">
-                    <h1 className="font-bold text-4xl mb-8">{movie.title}</h1>
-                    <div className="overview mb-8 text-1xl items-start font-light">{movie.overview}</div>
+
+            <div className="container m-auto flex mt-0 flex-wrap">
+                <section className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-4 md:gap-y-6">
+                    <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
+                    <div className="overview text-1xl items-start font-light">{movie.overview}</div>
                     <div className="review-stars-section">{utilities.getStarsSection(movie.vote_average)}</div>
                     <div className="review-count-section">{utilities.getVotesSection(movie.vote_count)}</div>
 
@@ -169,7 +171,7 @@ const SingleMovie = ({movie}) => {
 
                 </section>
 
-                <section className="secondary w-1/3">
+                <section className="secondary hidden md:flex w-1/3 md:mt-4">
                     <div className="image-section s">
                         <img
                             src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
@@ -183,16 +185,17 @@ const SingleMovie = ({movie}) => {
                 <section className="bottom-section w-full mt-2">
                     {movieDetails &&
                         <>
-                            <div className="production-companies">
-                                {getProductionCompanies()}
-                            </div>
-                            <p>Revenue: {movieDetails.revenue}</p>
+                            {getProductionCompanies()}
                         </>
 
                     }
                 </section>
             </div>
-
+            <img
+                src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
+                className="absolute object-cover z-0 opacity-5 top-0 left-0 h-full w-full -z-1"
+                alt="background-image"
+            />
 
         </article>
 
