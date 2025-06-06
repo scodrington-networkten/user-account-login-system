@@ -2,13 +2,17 @@
 
 .movies-list {
 
+
+    .navigation{
+        @apply flex justify-between;
+    }
+
     .results-nav {
         @apply mt-2 mb-2 flex gap-2;
 
         .prev, .next {
             @apply text-white;
             background-color: var(--color-highlight-secondary);
-
         }
 
 

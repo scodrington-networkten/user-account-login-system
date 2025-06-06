@@ -13,7 +13,8 @@ const SearchResults = () => {
 
     const [loading, setLoading] = useState(false);
     const [movies, setMovies] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
+    const [totalPages, setTotalPages] = useState(null);
+    const [totalResults, setTotalResults] = useState(null);
 
 
     useEffect(() => {
@@ -41,6 +42,7 @@ const SearchResults = () => {
             setMovies(json.json.results);
             setTotalPages(json.json.total_pages);
             setLoading(false);
+            setTotalResults(json.json.total_results);
         });
 
 
@@ -71,30 +73,27 @@ const SearchResults = () => {
 
     const displayMovieResults = () => {
 
-        if (loading) {
-            return (
-                <p>Movie results loading..</p>
-            )
-        } else {
-            return (
-                <div className="movie-results">
-                    <MoviesList
-                        movies={movies}
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPrevButton={onPrevButton}
-                        onNextButton={onNextButton}
-                        loading={loading}
-                        onPagesButton={onPageButton}
-                    />
-                </div>
-            )
-        }
+
+        return (
+            <div className="movie-results">
+                <MoviesList
+                    movies={movies}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalResults={totalResults}
+                    onPrevButton={onPrevButton}
+                    onNextButton={onNextButton}
+                    loading={loading}
+                    onPagesButton={onPageButton}
+                    searchQuery={q}
+                />
+            </div>
+        )
+
     }
 
     return (
-        <div className="search-results m-auto container flex flex-col gap-4">
-            <h1 className="text-3xl mt-4">Search Results: <span className="italic">{q}</span></h1>
+        <div className="search-results m-auto container flex flex-col gap-4 p-4">
             {displayMovieResults()}
         </div>
     )

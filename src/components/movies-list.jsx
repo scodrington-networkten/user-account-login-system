@@ -3,7 +3,17 @@ import MovieCard from "./movieCard/movie-card.jsx";
 import './movie-list.css';
 
 
-const MoviesList = ({movies, onNextButton, onPrevButton, currentPage, totalPages, loading, onPagesButton}) => {
+const MoviesList = ({
+                        movies,
+                        onNextButton,
+                        onPrevButton,
+                        currentPage,
+                        totalPages,
+                        totalResults,
+                        searchQuery = null,
+                        onPagesButton,
+                        loading
+                    }) => {
 
     /***
      * Display all movies for the user
@@ -23,8 +33,13 @@ const MoviesList = ({movies, onNextButton, onPrevButton, currentPage, totalPages
         }
     }
 
-    const getPageNumbers = () => {
 
+    /**
+     * Get page numbers, factoring in the current page and prev / next pages
+     * @param location
+     * @returns {JSX.Element}
+     */
+    const getPageNumbers = (location) => {
 
         const range = 2; // Number of pages to show before and after current
         let pages = [];
@@ -38,36 +53,85 @@ const MoviesList = ({movies, onNextButton, onPrevButton, currentPage, totalPages
         return (
             <>
                 {pages.map((item, index) => {
-                    return <span
-                        onClick={() => {  onPagesButton(item); }}
-                        key={index}
-                        className={`page ${item === currentPage ? 'active' : ''}`}>{item}</span>
+                    return <button
+                        onClick={() => {
+                            onPagesButton(item);
+                        }}
+                        title={`Page ${item}`}
+                        key={`${location}-${index}`}
+                        className={` page ${item === currentPage ? 'active' : ''}`}>{item}</button>
                 })}
             </>
 
         )
     }
 
+    /**
+     * Display the navigation elements, page numbers and next/prev
+     * @param location
+     * @returns {JSX.Element}
+     */
+    const displayNavigation = (location) => {
+
+        return (
+            <div className="navigation">
+                <section className="results-nav flex align-center">
+                    {currentPage > 1 &&
+                        <button
+                            className="prev"
+                            title="Previous Page"
+                            onClick={onPrevButton}>Previous</button>
+                    }
+                    {currentPage < totalPages &&
+                        <button
+                            className="next"
+                            title="Next Page"
+                            onClick={onNextButton}>Next</button>
+                    }
+                </section>
+                <div className="page-numbers">
+                    {getPageNumbers(location)}
+                </div>
+            </div>
+        )
+    }
+
+    /**
+     * Displays the title and the number of overall items found
+     * @returns {JSX.Element}
+     */
+    const displayHeader = () => {
+
+        if (searchQuery !== null) {
+            return (
+                <>
+                    <h1 className="text-3xl mt-4 mb-2">Search Results: <span
+                        className="italic font-semibold">{searchQuery}</span></h1>
+                    <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
+                </>
+            )
+        } else {
+            return (
+                <h1 className="text-3xl mt-4">Movie Results</h1>
+            )
+        }
+    }
+
     return (
         <div className="movies-list relative">
 
-            {displayMovies()}
-            <section className="results-nav flex align-center">
-                {currentPage > 1 &&
-                    <button className="prev" onClick={onPrevButton}>Previous</button>
-                }
-                {currentPage < totalPages &&
-                    <button className="next" onClick={onNextButton}>Next</button>
-                }
-            </section>
-
-            <div className="page-numbers">
-                {getPageNumbers()}
-            </div>
-
+            {loading &&
+                <p>Results loading</p>
+            }
+            {!loading && (
+                <>
+                    {displayHeader()}
+                    {displayNavigation('header')}
+                    {displayMovies()}
+                    {displayNavigation('footer')}
+                </>
+            )}
         </div>
-
-
     )
 }
 export default MoviesList;
