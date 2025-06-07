@@ -1,5 +1,6 @@
 import {useState, useEffect, useCallback} from "react";
 import CarouselCard from "./carouselCard/carousel-card.jsx";
+import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 
 import sampleData from "../sampleData.js";
@@ -21,7 +22,13 @@ const LatestMovies = () => {
     const [error, setError] = useState(false);
 
     //slider elements here
-    const [emblaRef, emblaApi] = useEmblaCarousel({loop: true})
+    const [emblaRef, emblaApi] = useEmblaCarousel(
+        {loop: true},
+        [Autoplay({
+            delay: 4000,
+            stopOnInteraction: true
+        })]
+    )
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [scrollSnaps, setScrollSnaps] = useState([]);
 
@@ -33,7 +40,7 @@ const LatestMovies = () => {
     const scrollTo = useCallback((index) => {
         if (!emblaApi) return;
         emblaApi.scrollTo(index);
-    })
+    }, [])
 
     useEffect(() => {
         if (!emblaApi) return;
