@@ -12,7 +12,11 @@ import _ from "lodash";
 
 const CarouselCard = ({movie}) => {
 
-    const {genres} = useContext(GenreContext);
+    /**
+     * @type {{ genres: { id: number, name: string }[] }}
+     */
+    const context = useContext(GenreContext);
+    const {genres} = context;
 
     /**
      * Given an  ID (representing a genre id), return a button component with its correct name
@@ -27,7 +31,7 @@ const CarouselCard = ({movie}) => {
         })
 
         if (!genre) {
-            genre = {id: item, name: 'undefined'}
+            genre = {id: 0, name: 'undefined'}
         }
 
         return (
@@ -43,7 +47,7 @@ const CarouselCard = ({movie}) => {
     const getSummarySection = (movie) => {
 
         let fullSummary = movie.overview;
-        let mobileSummary =  _.truncate(movie.overview, {length: 200});
+        let mobileSummary = _.truncate(movie.overview, {length: 200});
 
         return (
             <>
