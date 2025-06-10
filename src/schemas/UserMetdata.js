@@ -1,6 +1,6 @@
-import {EntitySchema}  from "typeorm";
+import {EntitySchema} from "typeorm";
 
-const entitySchema = new EntitySchema({
+const UserMetadataSchema = new EntitySchema({
     name: "user_metadata",
     tableName: "user_metadata",
     columns: {
@@ -21,6 +21,10 @@ const entitySchema = new EntitySchema({
             name: "avatar_url",
             type: "varchar",
             nullable: true
+        },
+        country: {
+            type: "varchar",
+            nullable: true
         }
     },
     relations: {
@@ -33,4 +37,4 @@ const entitySchema = new EntitySchema({
     }
 })
 
-export default entitySchema;
+export default UserMetadataSchema;

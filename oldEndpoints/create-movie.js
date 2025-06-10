@@ -21,7 +21,7 @@ export default async function createMovie(request, response) {
         password: process.env.PGPASSWORD,
         database: process.env.PGDATABASE,
         entities: [MovieSchema],
-        synchronize: true,
+        synchronize: process.env.NODE_ENV !== 'production',
         logging: ["error", "query", "schema"]
     })
 
