@@ -9,9 +9,10 @@ const testDbConnection = async (request, response) => {
     const client = new Client({
         host: process.env.PGHOST,
         port: +(process.env.PGPORT || 5432),
-        username: process.env.PGUSER,
+        user: process.env.PGUSER,
         password: process.env.PGPASSWORD,
         database: process.env.PGDATABASE,
+        ssl: process.env.NODE_ENV === 'production' ? {rejectUnauthorized: false} : false
     })
 
     try {
