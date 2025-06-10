@@ -23,6 +23,7 @@ import AppLayout from "./AppLayout.jsx";
 import {GenreProvider} from "./contexts/GenreContext.jsx";
 
 import RouteProgressTracker from "./RouteProgressTracker.jsx";
+import Dashboard from "./pages/dashboard.jsx";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
                         <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
                         <Route path="/movie/:id" element={<SingleMoviePage/>}/>
                         <Route path="/search" element={<SearchResults/>}/>
+                        <Route path="/dashboard" element={<Dashboard/>}/>
                     </Routes>
                 </AppLayout>
             </GenreProvider>

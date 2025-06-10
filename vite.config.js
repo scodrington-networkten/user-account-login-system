@@ -9,6 +9,7 @@ export default defineConfig({
         tailwindcss()
     ],
     server: {
+        host: 'movie-search.test',
         port: 5500,
         proxy: {
             '/api': {
