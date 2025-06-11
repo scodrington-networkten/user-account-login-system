@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import HttpError from "./_utilities/httpError";
+import { HttpError } from "../utils/httpError.js";
 
 
 /**

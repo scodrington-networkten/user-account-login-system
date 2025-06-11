@@ -1,5 +1,5 @@
 import('dotenv').then(dotenv => dotenv.config());
-import HttpError from "./_utilities/httpError";
+import { HttpError } from "../utils/httpError.js";
 
 export default async function Genres(request, response) {
 

@@ -1,4 +1,4 @@
-import {HttpError} from "./_utilities/httpError";
+import { HttpError } from "../utils/httpError.js";
 
 /**
  * Gets credit information about the moving, providing information about the cast

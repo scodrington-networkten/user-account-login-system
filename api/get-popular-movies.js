@@ -1,3 +1,5 @@
+import { HttpError } from "../utils/httpError.js";
+
 /**
  * get a list of the most popular 20 movies
  * @param request

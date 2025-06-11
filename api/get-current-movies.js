@@ -1,3 +1,5 @@
+import { HttpError } from "../utils/httpError.js";
+
 /**
  * Gets the latest movies currently being shown in cinemas
  * @param request

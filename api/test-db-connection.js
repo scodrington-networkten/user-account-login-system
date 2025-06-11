@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import {Client} from "pg";
+import { HttpError } from "../utils/httpError.js";
 
 const testDbConnection = async (request, response) => {
 

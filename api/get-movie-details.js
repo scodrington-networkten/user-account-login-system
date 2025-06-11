@@ -1,4 +1,4 @@
-import {HttpError} from "./_utilities/httpError";
+import { HttpError } from "../utils/httpError.js";
 
 /**
  * Gets additional information about a given specific movie
