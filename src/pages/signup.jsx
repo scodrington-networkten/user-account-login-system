@@ -1,12 +1,16 @@
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import ApiHelper from "../../utils/apihelper.js";
 
 const Signup = () => {
 
     const [formData, setFormData] = useState({
-        email: 'test@gmail.com',
+        email: `test${ApiHelper.generateRandomString(5)}@gmail.com`,
         username: 'someguy',
         password: 'password'
     })
+
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -30,8 +34,9 @@ const Signup = () => {
             setError(null);
             setSuccessMessage(data.message);
             console.log(data);
+            navigate('/dashboard');
         }
-        //catch the error and set it to our local state variable
+            //catch the error and set it to our local state variable
         catch (e) {
             setError(e.message);
             setSuccessMessage(null);

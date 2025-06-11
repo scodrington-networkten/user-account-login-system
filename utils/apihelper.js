@@ -1,10 +1,22 @@
 
 import { HttpError } from "../utils/httpError.js";
+import _ from "lodash";
 
 /**
  * Used to interact with the underlying API
  */
 class ApiHelper{
+
+
+    /**
+     * use lodash to generate a random string
+     * @param length
+     * @returns {string}
+     */
+    static generateRandomString = (length = 10) => {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        return _.times(length, () => _.sample(chars)).join('');
+    };
 
     /**
      *

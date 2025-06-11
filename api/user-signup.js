@@ -3,6 +3,12 @@ import validator from "validator";
 import UserSchema from "../src/schemas/User.js";
 
 
+/**
+ * Processes the signup to the system from formdata
+ * @param request
+ * @param response
+ * @returns {Promise<*>}
+ */
 export default async function userSignup(request, response) {
 
     if (request.method !== 'POST') {
@@ -28,6 +34,9 @@ export default async function userSignup(request, response) {
     }
     if (validator.isEmpty(password)) {
         return response.status(400).json({message: "The provided password was invalid or empty"});
+    }
+    if (!validator.isStrongPassword(password)) {
+        return response.status(400).json({message: "The provided password is not strong enough"})
     }
 
     if (!AppDataSource.isInitialized) {
