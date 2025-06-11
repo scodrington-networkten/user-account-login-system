@@ -28,6 +28,11 @@ const UserSchema = new EntitySchema({
             default: true,
             nullable: false
         },
+        email: {
+            type: String,
+            length: 100,
+            nullable: false
+        }
     },
     relations: {
         metadata: {

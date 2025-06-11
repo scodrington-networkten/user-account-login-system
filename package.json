@@ -5,7 +5,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "prebuild": "npx typeorm migration:run -d src/data-source.js",
+        "prebuild": "npx typeorm migration:run -d src/data-source.js && node src/seed.js",
+        "seed": "node src/seed.js",
         "build": "vite build",
         "lint": "eslint .",
         "preview": "vite preview"
@@ -18,6 +19,7 @@
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@tailwindcss/cli": "^4.1.7",
         "@tailwindcss/vite": "^4.1.7",
+        "bcrypt": "^6.0.0",
         "dotenv": "^16.5.0",
         "embla-carousel": "^8.6.0",
         "embla-carousel-autoplay": "^8.6.0",
