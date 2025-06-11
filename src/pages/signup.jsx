@@ -10,10 +10,10 @@ const Signup = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null)
 
     const onFormSubmit = async (e) => {
         e.preventDefault();
-       
         setLoading(true);
 
         try {
@@ -23,28 +23,21 @@ const Signup = () => {
                 body: JSON.stringify(formData)
             });
             let data = await response.json();
-
             if (!response.ok) {
                 throw new Error(data.message);
             }
 
             setError(null);
-
-            //move user onto dashboard
-
+            setSuccessMessage(data.message);
+            console.log(data);
         }
-            //catch the error and set it to our local state variable
+        //catch the error and set it to our local state variable
         catch (e) {
-            setError(e);
+            setError(e.message);
+            setSuccessMessage(null);
         }
-
-
-        //try and sign the user up via api
-
 
         setLoading(false);
-
-
     }
 
     /**
@@ -63,8 +56,11 @@ const Signup = () => {
 
     return (
         <div className="signup-form">
+            {setSuccessMessage !== null &&
+                <p>{successMessage}</p>
+            }
             {error !== null &&
-                <p>There was an error creating your account: {error.message}</p>
+                <p>There was an error creating your account: {error}</p>
             }
             <form id="signup" onSubmit={onFormSubmit} className="border container m-auto">
                 <div>

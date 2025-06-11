@@ -1,7 +1,6 @@
 import {AppDataSource} from "../src/data-source.js";
-import _ from "lodash";
-
 import validator from "validator";
+import UserSchema from "../src/schemas/User.js";
 
 
 export default async function userSignup(request, response) {
@@ -11,7 +10,7 @@ export default async function userSignup(request, response) {
     }
 
     //collect and verify body exists and has values passed
-    const body =  request.body;
+    const body = request.body;
 
     if (!body || Object.keys(body).length === 0) {
         return response.status(500).json({message: "The request body is either empty or undefined"})
@@ -20,34 +19,45 @@ export default async function userSignup(request, response) {
     //destructure into variables for processing
     let {email = '', username = '', password = ''} = body;
 
-
     //validate user data
-    if(!validator.isEmail(email) || validator.isEmpty(email)){
+    if (!validator.isEmail(email) || validator.isEmpty(email)) {
         return response.status(400).json({message: "The provided email was either empty or invalid"});
     }
+    if (validator.isEmpty(username)) {
+        return response.status(400).json({message: "The provided username was invalid or empty"});
+    }
+    if (validator.isEmpty(password)) {
+        return response.status(400).json({message: "The provided password was invalid or empty"});
+    }
 
-    /*
-   if(validator.isEmpty(username)){
-       return response.status(400).json({message: "The provided username was invalid or empty"});
-   }
+    if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+    }
 
-   if(validator.isEmpty(password)){
-       return response.status(400).json({message: "The provided password was invalid or empty"});
-   }
-*/
+    const userRepo = AppDataSource.getRepository(UserSchema);
 
-    return response.status(200).json({message: 'all is good!'});
+    const existingUser = await userRepo.findOneBy({email: email});
+    if (existingUser) {
+        return response.status(400).json({message: `An account already exists using ${email}`});
+    }
 
+    //try and create the user account
+    try {
 
-    //check for existing records
+        const newUser = userRepo.create({
+            email: email,
+            password: password,
+            first_name: "John",
+            last_name: "Smith",
+            is_active: true,
+            created_at: new Date()
+        });
 
-    //no user exists, create it
+        await userRepo.save(newUser);
+        return response.status(200).json({...newUser, message: 'User account created'});
 
-    //user exists, pass back an error
-
-    //return success back to the front-end
-
-    return response.status(200).json({message: 'woo'});
-
+    } catch (error) {
+        return response.status(400).json({message: error.message});
+    }
 
 }

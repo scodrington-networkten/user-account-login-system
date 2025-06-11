@@ -32,6 +32,10 @@ const UserSchema = new EntitySchema({
             type: String,
             length: 100,
             nullable: false
+        },
+        password: {
+            type: "varchar",
+            nullable: false,
         }
     },
     relations: {
