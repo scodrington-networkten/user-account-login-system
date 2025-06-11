@@ -31,6 +31,9 @@ const Signup = () => {
                 throw new Error(data.message);
             }
 
+            //collect the jwt from the payload and put it in sessions
+            sessionStorage.setItem('jwt', data.token);
+
             setError(null);
             setSuccessMessage(data.message);
             console.log(data);

@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "vite",
         "prebuild": "npx typeorm migration:run -d src/data-source.js && node src/seed.js",
+        "migrate": "npx typeorm migration:run -d",
         "seed": "node src/seed.js",
         "build": "vite build",
         "lint": "eslint .",
@@ -24,6 +25,8 @@
         "embla-carousel": "^8.6.0",
         "embla-carousel-autoplay": "^8.6.0",
         "embla-carousel-react": "^8.6.0",
+        "jsonwebtoken": "^9.0.2",
+        "jwt-decode": "^4.0.0",
         "lodash": "^4.17.21",
         "nprogress": "^0.2.0",
         "pg": "^8.16.0",

@@ -1,6 +1,7 @@
 import {AppDataSource} from "../src/data-source.js";
 import validator from "validator";
 import UserSchema from "../src/schemas/User.js";
+import jwt from "jsonwebtoken";
 
 
 /**
@@ -32,12 +33,20 @@ export default async function userSignup(request, response) {
     if (validator.isEmpty(username)) {
         return response.status(400).json({message: "The provided username was invalid or empty"});
     }
+    if (!validator.isLength(username, {min: 1, max: 100})) {
+        return response.status(400).json({message: "The provided username was not the right length"});
+    }
+
     if (validator.isEmpty(password)) {
         return response.status(400).json({message: "The provided password was invalid or empty"});
     }
+    if (!validator.isLength(password, {min: 1, max: 100})) {
+        return response.status(400).json({message: "The provided password was not the right length"});
+    }
+    /*
     if (!validator.isStrongPassword(password)) {
         return response.status(400).json({message: "The provided password is not strong enough"})
-    }
+    }*/
 
     if (!AppDataSource.isInitialized) {
         await AppDataSource.initialize();
@@ -63,7 +72,18 @@ export default async function userSignup(request, response) {
         });
 
         await userRepo.save(newUser);
-        return response.status(200).json({...newUser, message: 'User account created'});
+
+        //create the JWT to send back to the user
+        const token = jwt.sign(newUser, process.env.JWT_SECRET_KEY,  { expiresIn: '1m' })
+
+        const data = {
+            token: token,
+            user: newUser,
+            message: 'User account created'
+        }
+
+
+        return response.status(200).json(data);
 
     } catch (error) {
         return response.status(400).json({message: error.message});
