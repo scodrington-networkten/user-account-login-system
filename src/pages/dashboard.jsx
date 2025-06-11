@@ -16,7 +16,6 @@ const Dashboard = () => {
         }
 
         const json = await apiResult.json();
-        console.log(apiResult);
         console.log(json);
         setTestRequest(json);
 

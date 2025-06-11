@@ -1,42 +1,33 @@
-import dotenv from "dotenv";
-import {Client} from "pg";
-import { HttpError } from "../utils/httpError.js";
+import {HttpError} from "../utils/httpError.js";
+import {AppDataSource} from "../src/data-source.js";
+import UserSchema from "../src/schemas/User.js";
 
 const testDbConnection = async (request, response) => {
 
-    let payload = {};
-    dotenv.config();
+    // initialise the app data source
+    if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+    }
 
-    const client = new Client({
-        host: process.env.PGHOST,
-        port: +(process.env.PGPORT || 5432),
-        user: process.env.PGUSER,
-        password: process.env.PGPASSWORD,
-        database: process.env.PGDATABASE,
-        ssl: process.env.NODE_ENV === 'production' ? {rejectUnauthorized: false} : false
-    })
+    const userRepo = AppDataSource.getRepository(UserSchema);
 
     try {
 
-        await client.connect();
+        const email = 'admin@example.com';
+        const user = await userRepo.findOneBy({email: email});
 
-        const result = await client.query('SELECT NOW()');
-        if (result.rows.length > 0) {
-            payload.db = {message: `Connected to DB, time now ${result.rows[0].now}`};
+        if (user !== null) {
+            return response.status(200).json(user);
+        } else {
+            return response.status(500).json({error: `user with email ${email} could not be found`});
         }
-
-        payload.env = process.env;
-
-        return response.status(200).json(payload);
 
 
     } catch (error) {
-        payload.error = error;
-        payload.env = process.env;
-        return response.status(500).json(payload);
+        return response.status(500).json(error);
 
     } finally {
-        await client.end();
+        await AppDataSource.destroy();
     }
 
 }

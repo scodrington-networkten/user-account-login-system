@@ -24,6 +24,7 @@ import {GenreProvider} from "./contexts/GenreContext.jsx";
 
 import RouteProgressTracker from "./RouteProgressTracker.jsx";
 import Dashboard from "./pages/dashboard.jsx";
+import Signup from "./pages/signup.jsx";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
                         <Route path="/movie/:id" element={<SingleMoviePage/>}/>
                         <Route path="/search" element={<SearchResults/>}/>
                         <Route path="/dashboard" element={<Dashboard/>}/>
+                        <Route path="/signup" element={<Signup/>}/>
                     </Routes>
                 </AppLayout>
             </GenreProvider>

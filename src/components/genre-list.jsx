@@ -41,7 +41,7 @@ const GenreList = () => {
         const lastSegment = pathSegments[pathSegments.length - 1];
 
         let slugifiedGenre = slugify(genre.name, {lower: true});
-        let isActive = (lastSegment === slugifiedGenre ? true : false);
+        let isActive = (lastSegment === slugifiedGenre);
 
         return <GenreButton key={index} genre={genre} isActive={isActive}/>
     }
@@ -57,15 +57,13 @@ const GenreList = () => {
             <div className="embla overflow-hidden md:hidden" ref={emblaRef}>
                 <div className="embla__container flex gap-2 genres genre-slider">
                     {genres?.map((item, index) => (
-                        <div className="embla__slide flex-none !basis-auto">
+                        <div key={`genre-item-${index}`} className="embla__slide flex-none !basis-auto">
                             {getGenreButton(item, index)}
                         </div>
                     ))}
                 </div>
             </div>
-
         )
-
     }
 
     /**
@@ -76,7 +74,7 @@ const GenreList = () => {
 
         if (genres !== null) {
             return (
-                <div className="hidden md:flex genres justify-center flex gap-2 flex-wrap">
+                <div className="hidden md:flex genres justify-center gap-2 flex-wrap">
                     {genres?.map((item, index) => (
                         getGenreButton(item, index)
                     ))}
@@ -85,8 +83,6 @@ const GenreList = () => {
         } else {
             return <p>Loading Genres..</p>
         }
-
-
     }
 
     return (
