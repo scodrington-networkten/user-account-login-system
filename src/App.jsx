@@ -25,24 +25,29 @@ import {GenreProvider} from "./contexts/GenreContext.jsx";
 import RouteProgressTracker from "./RouteProgressTracker.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import Signup from "./pages/signup.jsx";
+import Login from "./pages/login.jsx";
+import {UserProvider} from "./contexts/UserContext.jsx";
 
 function App() {
 
     return (
         <BrowserRouter>
-            <GenreProvider>
-                <AppLayout>
-                    <RouteProgressTracker/>
-                    <Routes>
-                        <Route path="/" element={<Home/>}/>
-                        <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
-                        <Route path="/movie/:id" element={<SingleMoviePage/>}/>
-                        <Route path="/search" element={<SearchResults/>}/>
-                        <Route path="/dashboard" element={<Dashboard/>}/>
-                        <Route path="/signup" element={<Signup/>}/>
-                    </Routes>
-                </AppLayout>
-            </GenreProvider>
+            <UserProvider>
+                <GenreProvider>
+                    <AppLayout>
+                        <RouteProgressTracker/>
+                        <Routes>
+                            <Route path="/" element={<Home/>}/>
+                            <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
+                            <Route path="/movie/:id" element={<SingleMoviePage/>}/>
+                            <Route path="/search" element={<SearchResults/>}/>
+                            <Route path="/dashboard" element={<Dashboard/>}/>
+                            <Route path="/signup" element={<Signup/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                        </Routes>
+                    </AppLayout>
+                </GenreProvider>
+            </UserProvider>
         </BrowserRouter>
 
     )

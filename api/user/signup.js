@@ -10,7 +10,7 @@ import jwt from "jsonwebtoken";
  * @param response
  * @returns {Promise<*>}
  */
-export default async function userSignup(request, response) {
+export default async function signup(request, response) {
 
     if (request.method !== 'POST') {
         return response.status(405).json({message: "GET requests not allowed here, must be a POST request"});
@@ -81,7 +81,6 @@ export default async function userSignup(request, response) {
             user: newUser,
             message: 'User account created'
         }
-
 
         return response.status(200).json(data);
 
