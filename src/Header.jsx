@@ -8,6 +8,8 @@ import {useState, useRef, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import slugify from "slugify";
 
+import {useUser} from "./contexts/UserContext.jsx";
+
 
 const Header = () => {
 
@@ -17,6 +19,7 @@ const Header = () => {
     const [searchInput, setSearchInput] = useState('');
     const [searchVisible, setSearchVisible] = useState(false);
 
+    const {user} = useUser();
 
     //when search form visability changes, ensure if its visible we set focus
     useEffect(() => {
@@ -57,6 +60,29 @@ const Header = () => {
 
     }
 
+    //display header section based on logged in user
+    const displayUserIconSection = () => {
+
+        if (user !== null) {
+            return (
+                <div className="flex items-center gap-2">
+                    <p className="user-name">{user.first_name}</p>
+                    <div
+                        className="user-icon flex justify-center items-center bg-white rounded-full w-[30px] h-[30px] text-gray-800">
+                        <Link to="/dashboard" className="hover:underline"><FontAwesomeIcon icon={faUser}/></Link>
+                    </div>
+                    <Link to={"/logout"}>Logout</Link>
+                </div>
+            )
+        } else {
+            return (
+                <Link to="/login">
+                    <p>Login</p>
+                </Link>
+            )
+        }
+    }
+
     return (
         <header className="page-header">
             <div className="container mx-auto flex justify-between items-center">
@@ -90,15 +116,7 @@ const Header = () => {
                     }
                 </section>
                 <section className="header-links flex gap-4 items-center">
-                    <nav className="space-x-4">
-                        <Link to="/movies" className="hover:underline">Movies</Link>
-                    </nav>
-                    <span
-                        className="user-icon flex justify-center items-center bg-white rounded-full w-[30px] h-[30px] text-gray-800">
-                        <Link to="/dashboard" className="hover:underline">
-                            <FontAwesomeIcon icon={faUser}/>
-                        </Link>
-                    </span>
+                    {displayUserIconSection()}
                 </section>
             </div>
         </header>

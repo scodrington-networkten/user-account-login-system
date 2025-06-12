@@ -26,6 +26,7 @@ import RouteProgressTracker from "./RouteProgressTracker.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import Signup from "./pages/signup.jsx";
 import Login from "./pages/login.jsx";
+import Logout from "./pages/logout.jsx";
 import {UserProvider} from "./contexts/UserContext.jsx";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
                             <Route path="/dashboard" element={<Dashboard/>}/>
                             <Route path="/signup" element={<Signup/>}/>
                             <Route path="/login" element={<Login/>}/>
+                            <Route path="/logout" element={<Logout/>}/>
                         </Routes>
                     </AppLayout>
                 </GenreProvider>

@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
-
+import {useNavigate} from "react-router-dom";
 
 //this context is a placeholder
 const UserContext = createContext({
@@ -13,6 +13,7 @@ const UserContext = createContext({
 export const UserProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     /**
      * Triggered on initial load, collect JWT and log user in if applicable
@@ -57,14 +58,14 @@ export const UserProvider = ({children}) => {
         //token is good, await the user
         const data = await userResponse.json();
         setUser(data.user);
-
-        console.log("Ive set the user in state!");
+        navigate("/dashboard");
 
     }
 
     const logout = () => {
         sessionStorage.removeItem('jwt');
         setUser(null);
+        navigate("/");
     }
 
 
