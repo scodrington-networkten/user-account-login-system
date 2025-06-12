@@ -1,36 +1,64 @@
-
 import {createContext, useContext, useEffect, useState} from "react";
 
 
+//this context is a placeholder
 const UserContext = createContext({
     user: null,
-    loading: true,
-    login: async () => {},
-    logout: () => {}
+    login: async () => {
+    },
+    logout: () => {
+    }
 })
 
 export const UserProvider = ({children}) => {
 
-    const [loading, setLoading] = useState(null);
     const [user, setUser] = useState(null);
 
-    const login = async (token) => {
+    /**
+     * Triggered on initial load, collect JWT and log user in if applicable
+     */
+    useEffect(() => {
+        const loginUser = async () => {
 
-        console.log(`Set jwt token ${token}`);
-        sessionStorage.setItem('jwt', token);
-        const userResponse = await fetch('api/user/validate', {
-            headers: { Authorization: `Bearer ${token}` }
-        })
+            const token = sessionStorage.getItem('jwt');
+            if (token != null) {
 
-        if(!userResponse.ok){
-            throw new Error('Invalid or expired token');
+                try {
+                    await login(token);
+                } catch (error) {
+                    console.error(error.message);
+                    logout();
+                }
+
+            }
         }
 
+        loginUser();
+
+    }, []);
+
+    /**
+     * Given a JWT from the user, validate it and collect the user object if valid
+     * @param token the jwt returned from BE associated with current user
+     * @returns {Promise<void>}
+     */
+    const login = async (token) => {
+
+        sessionStorage.setItem('jwt', token);
+        const userResponse = await fetch('api/user/validate', {
+            headers: {Authorization: `Bearer ${token}`}
+        })
+
+        //on failed response, throw error that token cant be used
+        if (!userResponse.ok) {
+            throw new Error('Invalid or expired token, can not log user in');
+        }
+
+        //token is good, await the user
         const data = await userResponse.json();
         setUser(data.user);
 
         console.log("Ive set the user in state!");
-        setLoading(false);
 
     }
 
@@ -41,7 +69,7 @@ export const UserProvider = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={{ user, loading, login, logout }}>
+        <UserContext.Provider value={{user, login, logout}}>
             {children}
         </UserContext.Provider>
     );

@@ -11,7 +11,7 @@ const Login = () => {
     })
 
     const navigate = useNavigate();
-    const {login} = useUser();
+    const {user, login} = useUser();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -21,6 +21,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setSuccessMessage(null)
 
         try {
             const response = await fetch('api/user/login', {
@@ -35,20 +36,18 @@ const Login = () => {
                 throw new Error(data.message);
             }
 
-
-            //collect token and call the login function
+            //collect token data and attempt login
             const token = data.token;
             await login(token);
-
-
         }
-            //catch the error and set it to our local state variable
+            //catch any errors
         catch (e) {
+            console.error(e.message);
             setError(e.message);
             setSuccessMessage(null);
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     }
 
     /**
@@ -67,6 +66,9 @@ const Login = () => {
 
     return (
         <div className="signup-form">
+            {loading &&
+                <p>Logging you into your account</p>
+            }
             {setSuccessMessage !== null &&
                 <p>{successMessage}</p>
             }
@@ -74,35 +76,38 @@ const Login = () => {
                 <p>There was an error logging in to your account: {error}</p>
             }
             <form id="login" onSubmit={onFormSubmit} className="border container m-auto">
-                <div>
-                    <label>Email:</label><br/>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={uploadFormChange}
+                <fieldset disabled={loading}>
+                    <div>
+                        <label>Email:</label><br/>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={uploadFormChange}
 
-                        autoComplete="email"
-                        className="border"
-                    />
-                </div>
+                            autoComplete="email"
+                            className="border"
+                        />
+                    </div>
 
-                <div>
-                    <label>Password:</label><br/>
-                    <input
-                        type="text"
-                        name="password"
-                        value={formData.password}
-                        onChange={uploadFormChange}
+                    <div>
+                        <label>Password:</label><br/>
+                        <input
+                            type="text"
+                            name="password"
+                            value={formData.password}
+                            onChange={uploadFormChange}
 
-                        autoComplete="new-password"
-                        className="border"
-                    />
-                </div>
-                <button type="submit" disabled={loading} className="text-white">
-                    {loading ? 'Logging In...' : 'Login'}
-                </button>
+                            autoComplete="new-password"
+                            className="border"
+                        />
+                    </div>
+                    <button type="submit" className="text-white">Login</button>
+                </fieldset>
             </form>
+            {user !== null &&
+                <p>{JSON.stringify(user)}</p>
+            }
         </div>
     )
 }

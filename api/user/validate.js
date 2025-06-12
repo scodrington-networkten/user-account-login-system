@@ -5,11 +5,8 @@ import UserSchema from "../../src/schemas/User.js";
 
 export default async function validate(request, response) {
 
-
-    //collect and verify body exists and has values passed
-
+    //collect auth header to extract auth
     const authHeader = request.headers['authorization'];
-
     console.log(authHeader);
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -21,12 +18,8 @@ export default async function validate(request, response) {
     console.log(token);
 
     //validate the token
-
     try {
-
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-
         if (!AppDataSource.isInitialized) {
             await AppDataSource.initialize();
         }
