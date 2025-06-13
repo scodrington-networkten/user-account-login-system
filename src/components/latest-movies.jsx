@@ -16,9 +16,7 @@ const LatestMovies = () => {
 
     const [movies, setMovies] = useState([]);
     const [moviesLoading, setMoviesLoading] = useState(false);
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [page, setPage] = useState(1);
+
     const [error, setError] = useState(false);
 
     //slider elements here
@@ -38,9 +36,10 @@ const LatestMovies = () => {
     }, [emblaApi]);
 
     const scrollTo = useCallback((index) => {
+
         if (!emblaApi) return;
         emblaApi.scrollTo(index);
-    }, [])
+    }, [emblaApi])
 
     useEffect(() => {
         if (!emblaApi) return;
@@ -57,9 +56,7 @@ const LatestMovies = () => {
         let smallData = _.take(sampleData.results, 5);
         //use temporary data for now!
         setMovies(smallData);
-        setStartDate(sampleData.dates.minimum);
-        setEndDate(sampleData.dates.maximum);
-        setPage(sampleData.page);
+
 
         return;
 
@@ -75,9 +72,7 @@ const LatestMovies = () => {
                 const json = await request.json();
 
                 setMovies(json.data.results);
-                setStartDate(json.data.dates.minimum);
-                setEndDate(json.data.dates.maximum);
-                setPage(json.data.page);
+
 
             }
             setMoviesLoading(false);
@@ -86,9 +81,6 @@ const LatestMovies = () => {
 
     }, []);
 
-    const getLatestMoviesData = () => {
-
-    }
 
     const getOutput = () => {
 
