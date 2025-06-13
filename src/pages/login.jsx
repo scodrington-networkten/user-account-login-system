@@ -6,7 +6,7 @@ import {useUser} from "../contexts/UserContext.jsx";
 const Login = () => {
 
     const [formData, setFormData] = useState({
-        email: 'tesasdasdt@gmail.com',
+        email: 'admin@example.com',
         password: 'password'
     })
 
@@ -93,7 +93,7 @@ const Login = () => {
                     <div>
                         <label>Password:</label><br/>
                         <input
-                            type="password"
+                            type="text"
                             name="password"
                             value={formData.password}
                             onChange={uploadFormChange}

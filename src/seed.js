@@ -16,7 +16,8 @@ const seed = async () => {
 
     const userRepo = AppDataSource.getRepository(UserSchema);
     const adminEmail = "admin@example.com";
-    const adminPassword = await bcrypt.hash("password", 10);
+    //const adminPassword = await bcrypt.hash("password", 10);
+    const adminPassword = "password";
 
     const existing = await userRepo.findOneBy({email: adminEmail});
     if (existing) {
