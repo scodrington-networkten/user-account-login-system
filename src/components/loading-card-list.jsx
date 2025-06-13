@@ -17,9 +17,12 @@ const LoadingCardList = () => {
     }
 
     return (
-        <section className="loading-list grid grid-cols-2 md:grid-cols-5 gap-4 p-4">
-            {getLoadingCards()}
+        <section className="container m-auto">
+            <section className="loading-list grid grid-cols-2 md:grid-cols-5 gap-4 p-4">
+                {getLoadingCards()}
+            </section>
         </section>
+
     )
 }
 export default LoadingCardList;

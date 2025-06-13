@@ -25,7 +25,7 @@ const LatestMovies = () => {
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {loop: true},
         [Autoplay({
-            delay: 4000,
+            delay: 20000,
             stopOnInteraction: true
         })]
     )
@@ -100,7 +100,7 @@ const LatestMovies = () => {
             return <p>Loading in content</p>
         }
         return (
-            <section className="latest-movies-carousel flex w-full mx-auto -mt-[60px]">
+            <section className="latest-movies-carousel flex w-full  -mt-[60px]">
                 <div className="embla relative w-full" ref={emblaRef}>
                     <div className="embla__container relative">
                         {movies.map((item, index) => {
@@ -111,32 +111,35 @@ const LatestMovies = () => {
                             )
                         })}
                     </div>
-                    <div onClick={() => emblaApi?.scrollPrev()}
-                         className="embla__prev ">
-                        <FontAwesomeIcon
-                            icon={faAngleLeft}/></div>
-                    <div onClick={() => emblaApi?.scrollNext()}
-                         className="embla__next ">
-                        <FontAwesomeIcon
-                            icon={faAngleRight}/></div>
-                    <div className="embla__dots">
-                        <div className="embla__dots_inner">
-                            {scrollSnaps.map((item, index) => (
-                                <button
-                                    key={index}
-                                    className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
-                                    onClick={() => scrollTo(index)}
-                                />
-                            ))}
+                    <div className="embla__navigation-container">
+                        <div onClick={() => emblaApi?.scrollPrev()}
+                             className="embla__prev ">
+                            <FontAwesomeIcon
+                                icon={faAngleLeft}/></div>
+                        <div onClick={() => emblaApi?.scrollNext()}
+                             className="embla__next ">
+                            <FontAwesomeIcon
+                                icon={faAngleRight}/></div>
+                        <div className="embla__dots">
+                            <div className="embla__dots_inner">
+                                {scrollSnaps.map((item, index) => (
+                                    <button
+                                        key={index}
+                                        className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
+                                        onClick={() => scrollTo(index)}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </section>
         )
     }
 
     return (
-        <div className="latest-movies  bg-gray-600">{getOutput()}</div>
+        <div className="latest-movies max-w-full bg-gray-600">{getOutput()}</div>
     )
 }
 export default LatestMovies

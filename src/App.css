@@ -30,8 +30,12 @@
     cursor: grab;
 }
 
+.embla__navigation-container{
+    @apply container m-auto h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none;
+}
+
 .embla__dots {
-    @apply flex w-full absolute justify-center m-2 bottom-2 left-0
+    @apply flex w-full absolute justify-center m-2 bottom-2 left-0 pointer-events-auto;
 }
 
 .embla__dots_inner {
@@ -39,7 +43,7 @@
 }
 
 .embla__dot {
-    @apply w-[7px] h-[7px] p-[7px] border-2 rounded-full bg-gray-400 box-border opacity-90 outline-none;
+    @apply w-[7px] h-[7px] p-[7px] border-2 rounded-full bg-gray-400 box-border opacity-90 outline-none pointer-events-auto;
 
     &:hover {
         background-color: var(--color-white);
@@ -65,7 +69,7 @@
 
 .embla__next,
 .embla__prev {
-    @apply transition-all flex justify-center items-center absolute lg:text-2xl text-white cursor-pointer outline-white outline-2 rounded-full text-center h-[20px] w-[20px]  md:h-[40px] md:w-[40px] justify-center;
+    @apply transition-all flex justify-center items-center absolute lg:text-2xl text-white cursor-pointer outline-white outline-2 rounded-full text-center h-[20px] w-[20px]  md:h-[40px] md:w-[40px] justify-center pointer-events-auto;
 
     &:hover {
         background-color: var(--color-highlight-secondary);
@@ -144,5 +148,29 @@ body {
 
 .read-the-docs {
     color: #888;
+}
+
+
+/**message styling**/
+.message,
+.message-error,
+.message-success,
+.message-loading{
+    @apply py-2 px-2 border text-white;
+}
+
+.message{
+    @apply bg-gray-800;
+}
+.message-error{
+    @apply bg-red-600;
+}
+.message-success{
+
+    @apply bg-green-600;
+}
+.message-loading{
+
+    @apply bg-yellow-400;
 }
 

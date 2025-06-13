@@ -30,7 +30,6 @@ export const UserProvider = ({children}) => {
                     console.error(error.message);
                     logout();
                 }
-
             }
         }
 
@@ -62,6 +61,9 @@ export const UserProvider = ({children}) => {
 
     }
 
+    /**
+     * Log the user out and redirect them to the homepage
+     */
     const logout = () => {
         sessionStorage.removeItem('jwt');
         setUser(null);

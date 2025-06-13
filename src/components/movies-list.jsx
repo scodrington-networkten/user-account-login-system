@@ -131,7 +131,7 @@ const MoviesList = ({
     }
 
     return (
-        <div className="movies-list relative">
+        <div className="movies-list relative container m-auto">
 
             {loading &&
                 <p>Results loading</p>

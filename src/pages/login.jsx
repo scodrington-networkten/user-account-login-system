@@ -39,6 +39,7 @@ const Login = () => {
             //collect token data and attempt login
             const token = data.token;
             await login(token);
+            setSuccessMessage("Successfully logged into your account");
         }
             //catch any errors
         catch (e) {
@@ -65,17 +66,17 @@ const Login = () => {
     }
 
     return (
-        <div className="signup-form">
+        <div className="signup-form flex gap-2 flex-col mx-auto container my-2">
             {loading &&
-                <p>Logging you into your account</p>
+                <p className="message-loading">Logging you into your account</p>
             }
-            {setSuccessMessage !== null &&
-                <p>{successMessage}</p>
+            {successMessage !== null &&
+                <p className="message-success">{successMessage}</p>
             }
             {error !== null &&
-                <p>There was an error logging in to your account: {error}</p>
+                <p className="message-error">There was an error logging in to your account: {error}</p>
             }
-            <form id="login" onSubmit={onFormSubmit} className="border container m-auto">
+            <form id="login" onSubmit={onFormSubmit} className=" container m-auto">
                 <fieldset disabled={loading}>
                     <div>
                         <label>Email:</label><br/>
@@ -84,7 +85,6 @@ const Login = () => {
                             name="email"
                             value={formData.email}
                             onChange={uploadFormChange}
-
                             autoComplete="email"
                             className="border"
                         />
@@ -93,11 +93,10 @@ const Login = () => {
                     <div>
                         <label>Password:</label><br/>
                         <input
-                            type="text"
+                            type="password"
                             name="password"
                             value={formData.password}
                             onChange={uploadFormChange}
-
                             autoComplete="new-password"
                             className="border"
                         />

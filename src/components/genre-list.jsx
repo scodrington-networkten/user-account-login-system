@@ -87,7 +87,7 @@ const GenreList = () => {
 
     return (
 
-        <div className="genre-container">
+        <div className="genre-container container m-auto">
             {getMobileGenreSlider()}
             {getDesktopGenres()}
         </div>

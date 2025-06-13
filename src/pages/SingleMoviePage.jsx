@@ -29,7 +29,7 @@ const SingleMoviePage = () => {
 
     if (loading) return (
 
-        <div className="container m-auto">
+        <div className="container mx-auto">
             <LoadingCard/>
         </div>
 

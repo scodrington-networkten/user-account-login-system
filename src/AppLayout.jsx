@@ -5,7 +5,7 @@ const AppLayout = ({children}) => {
     return (
         <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-grow flex flex-col mx-auto w-full gap-4">
+            <main className="flex-grow flex flex-col mx-auto w-full gap-4 items-start">
                 {children}
             </main>
             <Footer />
