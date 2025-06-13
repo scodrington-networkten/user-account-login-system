@@ -21,7 +21,22 @@ const seed = async () => {
 
     const existing = await userRepo.findOneBy({email: adminEmail});
     if (existing) {
-        console.log("Admin account exists in DB already, skipping seeding");
+        console.log("Admin account exists in DB already, updating record");
+
+        existing.password = adminPassword; // You might want to hash this if needed
+        existing.first_name = "John";
+        existing.last_name = "Smith";
+        existing.is_active = true;
+        existing.updated_at = new Date(); // If you're tracking updates
+
+        try {
+            await userRepo.save(existing);
+            console.log(`Successfully updated the user: ${adminEmail}`);
+        } catch (error) {
+            console.error("There was an error updating the admin account", error);
+            throw error;
+        }
+
     } else {
         console.log("Admin account doesnt exist in the DB, creating");
 
