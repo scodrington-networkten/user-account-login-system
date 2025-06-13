@@ -33,7 +33,8 @@ export const UserProvider = ({children}) => {
 
     // Use useCallback to get fresh state inside the function
     const handleTokenInvalidation = useCallback(async () => {
-        // use the ref to get current user
+
+        //if the current user is null, no point handling token invalidation checks
         if(userRef.current === null) return;
 
         try {
@@ -58,7 +59,7 @@ export const UserProvider = ({children}) => {
             if (userExpiredRef.current) return; // use ref here for latest value
 
             handleTokenInvalidation();
-        }, 3000);
+        }, 5000);
 
         return () => clearInterval(intervalId);
 
