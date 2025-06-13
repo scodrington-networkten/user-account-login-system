@@ -15,21 +15,60 @@ export const UserProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
+    const getToken = () => {
+        return sessionStorage.getItem('jwt');
+    }
+
+    const deleteToken = () => {
+        sessionStorage.removeItem('jwt');
+    }
+
+    /**
+     * Periodically check the users token to ensure validation.
+     * Hook into the 'visibilitychange' document event triggered when the website gains/loses focus
+     */
+    useEffect(() => {
+
+        /**
+         * When focusing, check the validity of the JWT just in case
+         */
+        const handleVisibilityChange = async () => {
+
+            //only trigger on focus visible
+            if (document.visibilityState !== "visible") return;
+
+            try {
+                const token = getToken();
+                const validatedUser = await validate(token);
+                setUser(validatedUser.user);
+            }
+                //error in validating the jwt, invalidate the user immediately
+            catch (error) {
+                setUser(null);
+                deleteToken();
+            }
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+
+        return (() => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        });
+    }, []);
+
+
     /**
      * Triggered on initial load, collect JWT and log user in if applicable
      */
     useEffect(() => {
         const loginUser = async () => {
 
-            const token = sessionStorage.getItem('jwt');
-            if (token != null) {
-
-                try {
-                    await login(token);
-                } catch (error) {
-                    console.error(error.message);
-                    logout();
-                }
+            const token = getToken();
+            try {
+                await login(token);
+            } catch (error) {
+                console.error(error.message);
+                logout();
             }
         }
 
@@ -38,13 +77,31 @@ export const UserProvider = ({children}) => {
     }, []);
 
     /**
-     * Given a JWT from the user, validate it and collect the user object if valid
+     * Given a JWT from the user, validate it and collect the user object, loggin the user in
+     *
      * @param token the jwt returned from BE associated with current user
      * @returns {Promise<void>}
      */
     const login = async (token) => {
 
         sessionStorage.setItem('jwt', token);
+
+        try {
+            const validatedUser = await validate(token);
+            setUser(validatedUser.user);
+            navigate("/dashboard");
+
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    const validate = async (token) => {
+
+        if (token === null) {
+            throw new Error('Token can not be null');
+        }
+
         const userResponse = await fetch('api/user/validate', {
             headers: {Authorization: `Bearer ${token}`}
         })
@@ -55,9 +112,7 @@ export const UserProvider = ({children}) => {
         }
 
         //token is good, await the user
-        const data = await userResponse.json();
-        setUser(data.user);
-        navigate("/dashboard");
+        return await userResponse.json();
 
     }
 
@@ -65,11 +120,10 @@ export const UserProvider = ({children}) => {
      * Log the user out and redirect them to the homepage
      */
     const logout = () => {
-        sessionStorage.removeItem('jwt');
+        deleteToken();
         setUser(null);
         navigate("/");
     }
-
 
     return (
         <UserContext.Provider value={{user, login, logout}}>

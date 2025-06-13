@@ -3,6 +3,13 @@ import jwt from "jsonwebtoken";
 import {AppDataSource} from "../../src/data-source.js";
 import UserSchema from "../../src/schemas/User.js";
 
+/**
+ * extract a JWT from an incoming requests header and validate it
+ * Will return the user object for the associated jwt
+ * @param request
+ * @param response
+ * @returns {Promise<*>}
+ */
 export default async function validate(request, response) {
 
     //collect auth header to extract auth
@@ -15,7 +22,6 @@ export default async function validate(request, response) {
 
     //extract jwt
     const token = authHeader.split(' ')[1];
-    console.log(token);
 
     //validate the token
     try {
@@ -34,7 +40,6 @@ export default async function validate(request, response) {
         return response.status(200).json({user: user})
 
     } catch (error) {
-
         return response.status(401).json({message: 'Invalid Token supplied'});
     }
 

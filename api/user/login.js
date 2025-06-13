@@ -41,12 +41,11 @@ export default async function login(request, response) {
     //user exists with that email, verify against db
     const validUser = await userRepo.findOneBy({email: email, password: password});
     if (!validUser) {
-        return response.status(400).json({message: "Username or email invalid "});
+        return response.status(400).json({message: "Username or email invalid, unable to sign in"});
     }
 
     //good response, generate JWT for it
-    const token = jwt.sign({id: validUser.id}, process.env.JWT_SECRET_KEY, {expiresIn: '5m'})
+    const token = jwt.sign({id: validUser.id}, process.env.JWT_SECRET_KEY, {expiresIn: '1m'})
     return response.status(200).json({token: token});
-
 
 }
