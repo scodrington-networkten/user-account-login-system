@@ -28,28 +28,32 @@ import Signup from "./pages/signup.jsx";
 import Login from "./pages/login.jsx";
 import Logout from "./pages/logout.jsx";
 import {UserProvider} from "./contexts/UserContext.jsx";
+import UserExpiredPopup from "./components/userExpiredPopup/user-expired-popup.jsx";
 
 function App() {
 
     return (
         <BrowserRouter>
-            <UserProvider>
-                <GenreProvider>
-                    <AppLayout>
-                        <RouteProgressTracker/>
-                        <Routes>
-                            <Route path="/" element={<Home/>}/>
-                            <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
-                            <Route path="/movie/:id" element={<SingleMoviePage/>}/>
-                            <Route path="/search" element={<SearchResults/>}/>
-                            <Route path="/dashboard" element={<Dashboard/>}/>
-                            <Route path="/signup" element={<Signup/>}/>
-                            <Route path="/login" element={<Login/>}/>
-                            <Route path="/logout" element={<Logout/>}/>
-                        </Routes>
-                    </AppLayout>
-                </GenreProvider>
-            </UserProvider>
+            <div className="relative">
+                <UserProvider>
+                    <GenreProvider>
+                        <AppLayout>
+                            <RouteProgressTracker/>
+                            <Routes>
+                                <Route path="/" element={<Home/>}/>
+                                <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
+                                <Route path="/movie/:id" element={<SingleMoviePage/>}/>
+                                <Route path="/search" element={<SearchResults/>}/>
+                                <Route path="/dashboard" element={<Dashboard/>}/>
+                                <Route path="/signup" element={<Signup/>}/>
+                                <Route path="/login" element={<Login/>}/>
+                                <Route path="/logout" element={<Logout/>}/>
+                            </Routes>
+                        </AppLayout>
+                    </GenreProvider>
+                    <UserExpiredPopup/>
+                </UserProvider>
+            </div>
         </BrowserRouter>
 
     )

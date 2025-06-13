@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 //this context is a placeholder
 const UserContext = createContext({
     user: null,
+    userExpired: false,
+    setUserExpired: () => {},
     login: async () => {
     },
     logout: () => {
@@ -13,6 +15,7 @@ const UserContext = createContext({
 export const UserProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
+    const [userExpired, setUserExpired] = useState(false);
     const navigate = useNavigate();
 
     const getToken = () => {
@@ -34,6 +37,8 @@ export const UserProvider = ({children}) => {
          */
         const handleVisibilityChange = async () => {
 
+            setUserExpired(false);
+
             //only trigger on focus visible
             if (document.visibilityState !== "visible") return;
 
@@ -45,6 +50,7 @@ export const UserProvider = ({children}) => {
                 //error in validating the jwt, invalidate the user immediately
             catch (error) {
                 setUser(null);
+                setUserExpired(true);
                 deleteToken();
             }
         }
@@ -76,6 +82,7 @@ export const UserProvider = ({children}) => {
 
     }, []);
 
+
     /**
      * Given a JWT from the user, validate it and collect the user object, loggin the user in
      *
@@ -96,6 +103,11 @@ export const UserProvider = ({children}) => {
         }
     }
 
+    /**
+     * Ensure the given token is valid against api
+     * @param token jwt to check against
+     * @returns {Promise<any>}
+     */
     const validate = async (token) => {
 
         if (token === null) {
@@ -126,7 +138,7 @@ export const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value={{user, login, logout}}>
+        <UserContext.Provider value={{user, userExpired, setUserExpired, login, logout}}>
             {children}
         </UserContext.Provider>
     );

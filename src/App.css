@@ -174,3 +174,8 @@ body {
     @apply bg-yellow-400;
 }
 
+
+
+.button{
+    @apply bg-white text-gray-800 rounded border border-gray-400 px-3 py-1 inline-block transition-all duration-200 ease-in-out;
+}
