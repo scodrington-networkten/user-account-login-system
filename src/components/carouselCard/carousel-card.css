@@ -1,48 +1,63 @@
 @import "tailwindcss";
 
 
-.action-button{
+.action-button {
     @apply flex items-center justify-center gap-3 font-semibold  py-1 px-3 md:py-3 md:px-5 rounded-3xl ;
 }
 
-.action-secondary{
-    @apply bg-[var(--color-secondary)] border-0 text-white;
+.action-secondary {
+    @apply border-0 text-white;
+    background-color: var(--color-secondary);
+
+    &:hover {
+
+    }
 }
 
-.watch-button{
-    @apply bg-[var(--color-highlight-secondary)] border-0;
+.watch-button {
+    @apply border-0 transition-all;
+    background-color: var(--color-highlight-secondary);
+
+    &:hover {
+        background-color: var(--color-highlight-ternary);
+    }
 }
 
-.add-to-list-button{
-    @apply  border-1 border-white;
+.add-to-list-button {
+    @apply border-1 border-white transition-all;
+
+    &:hover {
+        background-color: white;
+        @apply text-gray-800;
+    }
 }
 
-.button-small{
+.button-small {
     @apply py-2 px-3 rounded-3xl text-sm cursor-pointer;
 
 }
 
-.carousel-card{
-    .title{
+.carousel-card {
+    .title {
         @apply font-bold md:text-3xl lg:text-6xl text-3xl sm:mb-2 md:mb-4 lg:mb-6 mt-2;
     }
 }
 
-.movie-summary{
+.movie-summary {
     @apply text-xl font-light;
 
-    &.movie-summary-short{
+    &.movie-summary-short {
         @apply md:hidden text-base;
     }
 
-    &.movie-summary-long{
+    &.movie-summary-long {
         @apply hidden md:block md:mb-4 lg:mb-6 md:text-lg lg:text-xl items-start;
     }
 }
 
-.button-transparent{
+.button-transparent {
 
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.6);
