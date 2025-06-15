@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import ApiHelper from "../../utils/apihelper.js";
 import {useUser} from "../contexts/UserContext.jsx";
+import '../components/forms.css';
 
 const Login = () => {
 
@@ -78,8 +79,8 @@ const Login = () => {
             }
             <form id="login" onSubmit={onFormSubmit} className=" container m-auto">
                 <fieldset disabled={loading}>
-                    <div>
-                        <label>Email:</label><br/>
+                    <div className="form-group">
+                        <label>Email:</label>
                         <input
                             type="email"
                             name="email"
@@ -89,9 +90,8 @@ const Login = () => {
                             className="border"
                         />
                     </div>
-
-                    <div>
-                        <label>Password:</label><br/>
+                    <div className="form-group">
+                        <label>Password:</label>
                         <input
                             type="text"
                             name="password"
