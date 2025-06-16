@@ -15,7 +15,7 @@ const FavoriteMovieSchema = new EntitySchema({
         movie_id: {
             type: Number,
             nullable: false
-        }
+        },
     },
     relations: {
         user: {

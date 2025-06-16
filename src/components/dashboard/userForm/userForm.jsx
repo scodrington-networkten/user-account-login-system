@@ -10,6 +10,25 @@ import {useState, useEffect} from "react";
  */
 const UserForm = () => {
 
+    const testSubmit = async (e) => {
+        e.preventDefault();
+
+        const jwt = localStorage.getItem('jwt');
+
+        const response = await fetch('api/user/actions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${jwt}`,
+                'x-user-action': 'add-to-favorite'
+            },
+            body: JSON.stringify({movie_id: 1}),
+        })
+
+    }
+
+
+
     const {user} = useUser();
 
     // Local form state initialized with user values
@@ -107,6 +126,9 @@ const UserForm = () => {
                 </div>
 
                 <button type="submit">Save</button>
+            </form>
+            <form onSubmit={testSubmit}>
+                <button type="submit">TEST</button>
             </form>
         </section>
 

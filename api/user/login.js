@@ -45,7 +45,7 @@ export default async function login(request, response) {
     }
 
     //good response, generate JWT for it
-    const token = jwt.sign({id: validUser.id}, process.env.JWT_SECRET_KEY, {expiresIn: '30m'})
+    const token = jwt.sign({id: validUser.id}, process.env.JWT_SECRET_KEY, {expiresIn: '6h'})
     return response.status(200).json({token: token});
 
 }
