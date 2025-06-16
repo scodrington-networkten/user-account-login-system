@@ -1,6 +1,4 @@
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import ApiHelper from "../../utils/apihelper.js";
 import {useUser} from "../contexts/UserContext.jsx";
 import '../components/forms.css';
 
@@ -11,7 +9,6 @@ const Login = () => {
         password: 'password'
     })
 
-    const navigate = useNavigate();
     const {user, login} = useUser();
 
     const [loading, setLoading] = useState(false);
@@ -106,9 +103,6 @@ const Login = () => {
                     <button type="submit" className="text-white">Login</button>
                 </fieldset>
             </form>
-            {user !== null &&
-                <p>{JSON.stringify(user)}</p>
-            }
         </div>
     )
 }

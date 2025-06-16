@@ -58,14 +58,11 @@ const UserForm = () => {
 
 
     if (user == null) {
-        return (
-            <p>User account loading..</p>
-        )
+        return null;
     }
 
     return (
         <section className={"user-account-section my-2"}>
-            <h1 className={"text-3xl mb-2"}>User Account</h1>
             <p className={"mb-2"}>Your account information is listed below</p>
             <form>
                 <div className="form-group">

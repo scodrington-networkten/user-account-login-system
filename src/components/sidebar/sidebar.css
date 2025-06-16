@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+.user-dashboard-sidebar{
+
+   @apply flex flex-col rounded border-gray-400 border-1;
+
+    .nav-item{
+        @apply flex px-2 py-2 border-b-1 border-gray-400 transition-all;
+
+
+        .icon{
+
+        }
+
+        &:focus{
+            @apply bg-[var(--color-highlight-secondary)];
+        }
+
+        &.active{
+            @apply text-white bg-[var(--color-highlight-secondary)];
+        }
+
+        &:last-of-type{
+            @apply border-b-0;
+        }
+    }
+}

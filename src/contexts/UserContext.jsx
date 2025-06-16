@@ -32,7 +32,7 @@ export const UserProvider = ({children}) => {
     }, [userExpired]);
 
     const getToken = () => {
-        return sessionStorage.getItem('jwt');
+        return localStorage.getItem('jwt');
     }
 
     const deleteToken = () => {
@@ -57,20 +57,23 @@ export const UserProvider = ({children}) => {
         }
     }, []);
 
-    // Interval effect watching userExpired state
-    useEffect(() => {
-        if (userExpiredRef.current) return;
+    /**
+     // Interval effect watching userExpired state
+     useEffect(() => {
+     if (userExpiredRef.current) return;
 
-        const intervalId = setInterval(() => {
-            if (document.visibilityState !== "visible") return;
-            if (userExpiredRef.current) return; // use ref here for latest value
+     const intervalId = setInterval(() => {
+     if (document.visibilityState !== "visible") return;
+     if (userExpiredRef.current) return; // use ref here for latest value
 
-            handleTokenInvalidation();
-        }, 10000);
+     handleTokenInvalidation();
+     }, 10000);
 
-        return () => clearInterval(intervalId);
+     return () => clearInterval(intervalId);
 
-    }, [userExpired, handleTokenInvalidation]);
+     }, [userExpired, handleTokenInvalidation]);
+
+     */
 
     // Visibility change event listener
     useEffect(() => {
@@ -107,8 +110,14 @@ export const UserProvider = ({children}) => {
 
     }, []);
 
+    /**
+     * Given a JWT, try and authenticate the user against the backend and if validated, set user and redirect them
+     * to the dashboard
+     * @param token - jwt
+     * @returns {Promise<void>}
+     */
     const login = async (token) => {
-        sessionStorage.setItem('jwt', token);
+        localStorage.setItem('jwt', token);
 
         try {
             const validatedUser = await validate(token);
@@ -143,10 +152,13 @@ export const UserProvider = ({children}) => {
         setUser(null);
         setUserExpired(false);
 
+        navigate("/login");
+
+        /*
         //navigate back to home unless we're on the login page
         if (location.pathname === "/login") {
             navigate("/");
-        }
+        }*/
 
     }
 

@@ -23,12 +23,17 @@ import AppLayout from "./AppLayout.jsx";
 import {GenreProvider} from "./contexts/GenreContext.jsx";
 
 import RouteProgressTracker from "./RouteProgressTracker.jsx";
-import Dashboard from "./pages/dashboard.jsx";
+
 import Signup from "./pages/signup.jsx";
 import Login from "./pages/login.jsx";
 import Logout from "./pages/logout.jsx";
 import {UserProvider} from "./contexts/UserContext.jsx";
 import UserExpiredPopup from "./components/userExpiredPopup/user-expired-popup.jsx";
+
+//user dashboard pages
+import Dashboard from "./pages/dashboard/dashboard.jsx";
+import WatchLater from "./pages/dashboard/watchLater.jsx";
+import Favorites from "./pages/dashboard/favorites.jsx";
 
 function App() {
 
@@ -44,10 +49,16 @@ function App() {
                                 <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
                                 <Route path="/movie/:id" element={<SingleMoviePage/>}/>
                                 <Route path="/search" element={<SearchResults/>}/>
-                                <Route path="/dashboard" element={<Dashboard/>}/>
+
                                 <Route path="/signup" element={<Signup/>}/>
                                 <Route path="/login" element={<Login/>}/>
                                 <Route path="/logout" element={<Logout/>}/>
+
+
+                                <Route path="/dashboard" element={<Dashboard/>}/>
+                                <Route path="/dashboard/watch-later" element={<WatchLater/>}/>
+                                <Route path="/dashboard/favorites" element={<Favorites/>}/>
+
                             </Routes>
                         </AppLayout>
                     </GenreProvider>
