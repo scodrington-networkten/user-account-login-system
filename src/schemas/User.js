@@ -48,6 +48,12 @@ const UserSchema = new EntitySchema({
                 name: "metadata_id",
                 referencedColumnName: "id"
             },
+        },
+        favorite_movies: {
+            type: "one-to-many",
+            target: "favorite_movie",
+            inverseSide: "user",
+            cascade: true
         }
     }
 })

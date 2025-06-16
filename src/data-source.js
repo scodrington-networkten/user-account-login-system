@@ -5,6 +5,7 @@ dotenv.config();
 import {DataSource} from "typeorm";
 import UserSchema from "./schemas/User.js";
 import UserMetdata from "./schemas/UserMetdata.js";
+import FavoriteMovieSchema from "./schemas/FavoriteMovie.js";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -15,6 +16,6 @@ export const AppDataSource = new DataSource({
     database: process.env.PGDATABASE,
     synchronize: false,
     logging: true,
-    entities: [UserSchema, UserMetdata],
+    entities: [UserSchema, UserMetdata, FavoriteMovieSchema],
     migrations: ["src/migrations/*.cjs"],  // <---- notice .cjs extension here
 });
