@@ -77,11 +77,12 @@ const Login = () => {
             {error !== null &&
                 <p className="message-error">There was an error logging in to your account: {error}</p>
             }
-            <form id="login" onSubmit={onFormSubmit} className=" container m-auto">
+            <form id="login" onSubmit={onFormSubmit} className={`container m-auto ${loading ? 'waiting' : ''}`}>
                 <fieldset disabled={loading}>
                     <div className="form-group">
-                        <label>Email:</label>
+                        <label htmlFor="user-email">Email</label>
                         <input
+                            id="user-email"
                             type="email"
                             name="email"
                             value={formData.email}
@@ -91,8 +92,9 @@ const Login = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Password:</label>
+                        <label htmlFor="user-password">Password</label>
                         <input
+                            id="user-password"
                             type="text"
                             name="password"
                             value={formData.password}

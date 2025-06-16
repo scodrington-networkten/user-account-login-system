@@ -1,18 +1,22 @@
 import {createContext, useContext, useEffect, useState, useRef, useCallback} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 
 //this context is a placeholder
 const UserContext = createContext({
     user: null,
     userExpired: false,
-    setUserExpired: () => {},
-    login: async () => {},
-    logout: () => {}
+    setUserExpired: () => {
+    },
+    login: async () => {
+    },
+    logout: () => {
+    }
 })
 
 export const UserProvider = ({children}) => {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [user, setUser] = useState(null);
     const [userExpired, setUserExpired] = useState(false);
@@ -20,8 +24,12 @@ export const UserProvider = ({children}) => {
     const userExpiredRef = useRef(userExpired); // <-- ref to keep latest userExpired
 
     // keep refs in sync
-    useEffect(() => { userRef.current = user; }, [user]);
-    useEffect(() => { userExpiredRef.current = userExpired; }, [userExpired]);
+    useEffect(() => {
+        userRef.current = user;
+    }, [user]);
+    useEffect(() => {
+        userExpiredRef.current = userExpired;
+    }, [userExpired]);
 
     const getToken = () => {
         return sessionStorage.getItem('jwt');
@@ -35,15 +43,14 @@ export const UserProvider = ({children}) => {
     const handleTokenInvalidation = useCallback(async () => {
 
         //if the current user is null, no point handling token invalidation checks
-        if(userRef.current === null) return;
+        if (userRef.current === null) return;
 
         try {
             const token = getToken();
             const validatedUser = await validate(token);
             setUser(validatedUser.user);
             setUserExpired(false);
-        }
-        catch (error) {
+        } catch (error) {
             setUser(null);
             setUserExpired(true);
             deleteToken();
@@ -59,7 +66,7 @@ export const UserProvider = ({children}) => {
             if (userExpiredRef.current) return; // use ref here for latest value
 
             handleTokenInvalidation();
-        }, 5000);
+        }, 10000);
 
         return () => clearInterval(intervalId);
 
@@ -77,19 +84,26 @@ export const UserProvider = ({children}) => {
 
     }, [handleTokenInvalidation]);
 
-    // On initial load: attempt login
+    // On initial load, try and load the user
     useEffect(() => {
-        const loginUser = async () => {
+
+        const loadUser = async () => {
+
             const token = getToken();
+            if (!token) return;
+
             try {
-                await login(token);
+                const validatedUser = await validate(token);
+                setUser(validatedUser.user);
+                setUserExpired(false);
+
             } catch (error) {
                 console.error(error.message);
                 logout();
             }
         }
 
-        loginUser();
+        loadUser();
 
     }, []);
 
@@ -124,10 +138,16 @@ export const UserProvider = ({children}) => {
     }
 
     const logout = () => {
+
         deleteToken();
         setUser(null);
         setUserExpired(false);
-        navigate("/");
+
+        //navigate back to home unless we're on the login page
+        if (location.pathname === "/login") {
+            navigate("/");
+        }
+
     }
 
     return (

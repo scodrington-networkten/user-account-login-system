@@ -14,7 +14,7 @@ form {
         select,
         textarea {
 
-            @apply w-full py-2 px-2 border-gray-300 rounded transition-all mb-1 outline-none;
+            @apply w-full py-2 px-2 border-1 border-gray-300 rounded transition-all mb-1 outline-none;
 
             &:focus {
                 border-color: var(--color-highlight-secondary);
@@ -47,9 +47,13 @@ form {
     input[type="submit"] {
         @apply border-none rounded px-5 py-3 text-white transition-all bg-[var(--color-highlight-ternary)];
 
-
         &:hover {
             @apply bg-[var(--color-highlight-secondary)];
         }
+    }
+
+    /**when form is loading**/
+    &.waiting{
+        @apply opacity-50 pointer-events-none;
     }
 }

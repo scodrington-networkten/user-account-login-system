@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import {useState} from "react";
+import UserForm from "@components/dashboard/userForm/userForm.jsx";
 
 const Dashboard = () => {
 
@@ -23,22 +24,28 @@ const Dashboard = () => {
 
     return (
         <div className="container mx-auto mt-2 mb-2">
-            <p>Check the connection to the Postgres DB below</p>
-            <button
-                className={"text-white"}
-                onClick={checkDbConnection}>
-                Check DB connection
-            </button>
-            {testRequest != null &&
-                <div className="response-section">
-                    <p>The response is as such</p>
-                    <pre>
-                        {JSON.stringify(testRequest, null, 2)}
-                    </pre>
-                </div>
-            }
+            <UserForm/>
         </div>
     )
 }
+
+/**
+ *
+ * <p>Check the connection to the Postgres DB below</p>
+ *             <button
+ *                 className={"text-white"}
+ *                 onClick={checkDbConnection}>
+ *                 Check DB connection
+ *             </button>
+ *             {testRequest != null &&
+ *                 <div className="response-section">
+ *                     <p>The response is as such</p>
+ *                     <pre>
+ *                         {JSON.stringify(testRequest, null, 2)}
+ *                     </pre>
+ *                 </div>
+ *             }
+ *
+ */
 export default Dashboard;
 
