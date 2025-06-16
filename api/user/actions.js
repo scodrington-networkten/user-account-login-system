@@ -48,8 +48,8 @@ export default async function actions(request, response) {
                     return response.status(401).json({message: 'movie_id was not passed'});
                 }
 
-                const result = await addToFavorite(user, movieId);
-                return response.status(200).json({message: 'successfully added item to favorite'});
+                await addToFavorite(user, movieId);
+                return response.status(200).json({message: 'successfully added that movie to your favorite list'});
             } catch (error) {
                 return response.status(400).json({message: 'there was an error adding item to favorite'});
             }

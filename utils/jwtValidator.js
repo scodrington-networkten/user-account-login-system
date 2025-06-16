@@ -33,7 +33,12 @@ export async function validateJwtFromRequest(request) {
     }
 
     const userRepo = AppDataSource.getRepository(UserSchema);
-    const user = await userRepo.findOneBy({id: decodedToken.id});
+    const user = await userRepo.findOne({
+        where: {id: decodedToken.id},
+        relations: ['favorite_movies']
+    });
+
+    console.log(user);
 
     if (!user) {
         throw new Error(`No user found for token ID: ${decodedToken.id}`);

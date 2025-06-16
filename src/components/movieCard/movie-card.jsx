@@ -1,13 +1,22 @@
 import _ from 'lodash';
 import {Link} from "react-router-dom";
 import Utilities from "../../utilities.jsx";
+import {useUser} from "@contexts/UserContext.jsx";
 
 import './movie-card.css';
 
 
+import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
+import  {faBookmark as faBookmarkEmpty} from "@fortawesome/free-regular-svg-icons";
+import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 const MovieCard = ({movie}) => {
 
     const utilities = new Utilities();
+
+    const {user} = useUser();
+
 
     /**
      * Displays both the vote count section and the rating stars
@@ -19,8 +28,25 @@ const MovieCard = ({movie}) => {
             <section className="rating-information flex gap-2 mb-3 justify-between">
                 {utilities.getStarsSection(movie.vote_average)}
                 {utilities.getVotesSection(10)}
+
             </section>
         )
+    }
+
+    const getBookmarkSection = (movie) => {
+
+        if(!user){ return}
+
+        const match = user.favorite_movies.find( item => {
+            return item.movie_id === movie.id;
+        })
+
+        if(match !== undefined){
+            return  <FontAwesomeIcon icon={faBookmarkFull}/>
+        }else{
+            return <FontAwesomeIcon icon={faBookmarkEmpty}/>;
+        }
+
     }
 
     const getSummarySection = (movie) => {
@@ -56,6 +82,7 @@ const MovieCard = ({movie}) => {
                         <section
                             className="bottom-section ">
                             {getRatingSection(movie)}
+                            {getBookmarkSection(movie)}
                             <section className="summary-section multiline-clamp">
                                 {getSummarySection(movie)}
                             </section>

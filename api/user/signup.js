@@ -1,6 +1,6 @@
-import {AppDataSource} from "../src/data-source.js";
+import {AppDataSource} from "../../src/data-source.js";
 import validator from "validator";
-import UserSchema from "../src/schemas/User.js";
+import UserSchema from "../../src/schemas/User.js";
 import jwt from "jsonwebtoken";
 
 

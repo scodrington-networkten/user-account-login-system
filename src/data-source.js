@@ -9,6 +9,8 @@ import FavoriteMovieSchema from "./schemas/FavoriteMovie.js";
 
 const isProd = process.env.NODE_ENV === "production";
 
+const logging = false;
+
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: process.env.PGHOST,
@@ -17,7 +19,7 @@ export const AppDataSource = new DataSource({
     password: process.env.PGPASSWORD,
     database: process.env.PGDATABASE,
     synchronize: false,
-    logging: isProd ? ["error"] : ["query", "error"],
+    logging: isProd,
     entities: [UserSchema, UserMetdata, FavoriteMovieSchema],
     migrations: ["src/migrations/*.cjs"],  // <---- notice .cjs extension here
 });
