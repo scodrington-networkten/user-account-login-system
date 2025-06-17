@@ -22,6 +22,21 @@ const MovieCard = ({movie}) => {
     const [touched, setTouched] = useState(false);
     const {user} = useUser();
 
+    const [isFavorited, setIsFavorited] = useState(null);
+
+    //determine if this movie is a users fav
+    useEffect(() => {
+
+        if(user === null) return;
+
+        //determine if currently favorite
+        const isFavorite = user.favorite_movies.some(item => {
+            return item.movie_id === movie.id;
+        });
+
+        setIsFavorited(isFavorite);
+
+    }, [user]);
 
     // When user touches inside the card
     const handleTouchStartInside = () => {
@@ -54,12 +69,14 @@ const MovieCard = ({movie}) => {
      * @returns {JSX.Element}
      */
     const getRatingSection = (movie) => {
+
+
         return (
             <section className="rating-information flex gap-2 mb-3 justify-between">
                 {utilities.getStarsSection(movie.vote_average)}
                 {utilities.getVotesSection(10)}
                 <div className="flex flex-1 justify-end">
-                    <FavoriteMovieButton movie={movie}/>
+                    <FavoriteMovieButton movie={movie} isFavorited={isFavorited}/>
                 </div>
             </section>
         )
@@ -72,13 +89,24 @@ const MovieCard = ({movie}) => {
         )
     }
 
+    const getFavoritedBadge = (movie) => {
+
+        if(!isFavorited) return;
+
+        return (
+            <div className="favorite-badge">
+                <FontAwesomeIcon icon={faBookmarkFull}/>
+                <p>Favorite</p>
+            </div>
+        )
+    }
     return (
         <article
             className={`movie-card group ${touched ? 'touched' : ''}`}
             onTouchStart={handleTouchStartInside}
             ref={cardRef}
         >
-
+            {getFavoritedBadge()}
             <section className="overflow-hidden w-full">
                 <img
                     src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
@@ -89,6 +117,7 @@ const MovieCard = ({movie}) => {
 
             <section
                 className="main-section">
+
                 <div className="main-section-inner">
                     <section
                         className="movie-information-section -translate-y-10 transform transition duration-250 ease-in-out">

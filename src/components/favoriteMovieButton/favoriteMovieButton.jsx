@@ -7,7 +7,7 @@ import {faBookmark as faBookmarkEmpty} from "@fortawesome/free-regular-svg-icons
 /**
  * Button for adding and removing the associated movie from the users favorites
  */
-const FavoriteMovieButton = ({movie}) => {
+const FavoriteMovieButton = ({movie, isFavorited = false}) => {
 
 
     const {user, toggleFavoriteMovie} = useUser();
@@ -16,10 +16,6 @@ const FavoriteMovieButton = ({movie}) => {
     if (!user) return;
     if (!movie) return;
 
-    //determine if currently favorite
-    const isFavorite = user.favorite_movies.some(item => {
-        return item.movie_id === movie.id;
-    });
 
     /**
      * Either add or remove movie from users fav list
@@ -37,7 +33,7 @@ const FavoriteMovieButton = ({movie}) => {
         setLoading(false);
     }
 
-    const label = isFavorite ? 'Remove from favorites' : 'Add to favorites';
+    const label = isFavorited ? 'Remove from favorites' : 'Add to favorites';
 
     return (
         <button
@@ -48,7 +44,7 @@ const FavoriteMovieButton = ({movie}) => {
             title={label}
             style={{background: 'none', border: 'none', padding: 0, cursor: 'pointer'}}
         >
-            <FontAwesomeIcon icon={isFavorite ? faBookmarkFull : faBookmarkEmpty}/>
+            <FontAwesomeIcon icon={isFavorited ? faBookmarkFull : faBookmarkEmpty}/>
         </button>
     )
 

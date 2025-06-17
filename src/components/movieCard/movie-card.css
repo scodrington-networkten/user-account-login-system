@@ -7,6 +7,38 @@
         @apply w-full object-cover transform transition-transform duration-200 ease-in-out scale-100 group-hover:scale-110 group-[.touched]:scale-110 h-full;
     }
 
+    .favorite-badge {
+        @apply
+        transition-all
+        flex
+        absolute
+        items-center
+        gap-2
+        top-0
+        left-0
+        text-white
+        z-10
+        px-4
+        md:px-3
+        py-3
+        md:py-2
+        text-xl
+        md:text-lg
+        opacity-100
+        translate-y-0;
+        background-color: var(--color-highlight-primary);
+    }
+
+    /* hover and touched styles from parent */
+
+    .favorite-badge {
+        @apply
+        group-hover:opacity-0
+        group-[.touched]:opacity-0
+        group-hover:-translate-y-15
+        group-[.touched]:-translate-y-15;
+    }
+
     .main-section {
         @apply flex flex-col h-full w-full absolute bg-black/75 text-white opacity-0 transition-opacity group-hover:opacity-100 group-[.touched]:opacity-100;
 
@@ -31,6 +63,6 @@
 
 }
 
-.movie-card:hover{
+.movie-card:hover {
     transform: translateY(-5px) scale(1.02);
 }
