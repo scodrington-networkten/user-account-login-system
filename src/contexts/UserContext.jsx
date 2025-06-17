@@ -10,6 +10,9 @@ const UserContext = createContext({
     login: async () => {
     },
     logout: () => {
+    },
+    toggleFavoriteMovie: () => {
+
     }
 })
 
@@ -30,6 +33,44 @@ export const UserProvider = ({children}) => {
     useEffect(() => {
         userExpiredRef.current = userExpired;
     }, [userExpired]);
+
+
+    const toggleFavoriteMovie = async (movieId) => {
+
+        const isFavorite = user.favorite_movies.some(item => {
+            return item.movie_id === movieId;
+        })
+
+        const action = isFavorite ? 'remove-favorite' : 'add-favorite';
+
+        const jwt = getToken();
+        const response = await fetch('api/user/actions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`,
+                'x-user-action': action
+            },
+            body: JSON.stringify({movie_id: movieId}),
+        })
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                message: data.message
+            }
+        } else {
+
+            setUser(data.user);
+
+            return {
+                success: true,
+                message: data.message
+            }
+        }
+    }
 
     const getToken = () => {
         return localStorage.getItem('jwt');
@@ -153,17 +194,10 @@ export const UserProvider = ({children}) => {
         setUserExpired(false);
 
         navigate("/login");
-
-        /*
-        //navigate back to home unless we're on the login page
-        if (location.pathname === "/login") {
-            navigate("/");
-        }*/
-
     }
 
     return (
-        <UserContext.Provider value={{user, userExpired, setUserExpired, login, logout}}>
+        <UserContext.Provider value={{user, userExpired, setUserExpired, login, logout, toggleFavoriteMovie}}>
             {children}
         </UserContext.Provider>
     );

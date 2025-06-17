@@ -11,7 +11,7 @@ export default async function actions(request, response) {
     }
 
     //verify method allowed
-    const allowedMethods = ['add-to-favorite', 'add-to-wishlist'];
+    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-wishlist'];
     if (!allowedMethods.includes(action)) {
         let methodMessage = `the provided action: ${action} is not a valid method, allowed methods are: ${allowedMethods.join(', ')}`;
         return response.status(400).json({error: methodMessage});
@@ -39,7 +39,7 @@ export default async function actions(request, response) {
 
     switch (action) {
 
-        case 'add-to-favorite':
+        case 'add-favorite':
 
             try {
 
@@ -48,15 +48,42 @@ export default async function actions(request, response) {
                     return response.status(401).json({message: 'movie_id was not passed'});
                 }
 
-                await addToFavorite(user, movieId);
-                return response.status(200).json({message: 'successfully added that movie to your favorite list'});
+                //add to favorite & return updated user
+                await addFavorite(user, movieId);
+                user = await validateJwtFromRequest(request);
+
+                return response.status(200).json({
+                    message: 'successfully added this movie to your favorite list',
+                    user: user
+                });
             } catch (error) {
-                return response.status(400).json({message: 'there was an error adding item to favorite'});
+                return response.status(400).json({message: 'there was an error adding this item to your favorite list'});
             }
 
-            break;
+        case 'remove-favorite':
 
-        case 'add-to-wishlist':
+
+            try {
+
+                const {movie_id: movieId} = body;
+                if (movieId === undefined || movieId === null) {
+                    return response.status(401).json({message: 'movie_id was not passed, could not remove from your favorite list'});
+                }
+
+                //remove matched movies & get the updated user
+                await removeFavorite(user, movieId);
+                user = validateJwtFromRequest(request);
+
+                return response.status(200).json({
+                    message: 'successfully removed this movie from your favorite list',
+                    user: user
+                });
+            } catch (error) {
+                return response.status(400).json({message: 'there was an error removing this item from your favorite list'});
+            }
+
+
+        case 'add-wishlist':
 
             try {
 
@@ -69,8 +96,6 @@ export default async function actions(request, response) {
 
     }
 
-
-    return response.status(200).json({message: "wooo"});
 }
 
 async function addToWishlist(user, movieId) {
@@ -79,7 +104,7 @@ async function addToWishlist(user, movieId) {
     console.log("Adding to list list");
 }
 
-async function addToFavorite(user, movieId) {
+async function addFavorite(user, movieId) {
 
 
     try {
@@ -91,12 +116,30 @@ async function addToFavorite(user, movieId) {
 
         await favoriteMovieRepo.save(newRecord);
 
-
     } catch (error) {
         throw error;
     }
 
-
-    console.log("Adding to fav");
-
 }
+
+async function removeFavorite(user, movieId) {
+
+    try {
+        const favoriteMovieRepo = AppDataSource.getRepository(FavoriteMovieSchema);
+        const favRecords = await favoriteMovieRepo.find({
+            where: {
+                user: {id: user.id},
+                movie_id: movieId
+            }
+        });
+
+        if (favRecords) {
+            await favoriteMovieRepo.remove(favRecords);
+        } else {
+            throw new Error(`Couldnt remove movie ${movieId} from the user`);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+

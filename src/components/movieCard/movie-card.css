@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .movie-card {
-    @apply flex relative drop-shadow-lg border-gray-300 border-1 overflow-hidden transition-all duration-200 ease-in-out cursor-pointer;
+    @apply flex relative drop-shadow-lg border-gray-300 border-1 overflow-hidden transition-all duration-200 ease-in-out;
 
     .image-section {
         @apply object-cover transform transition-transform duration-200 ease-in-out scale-100 group-hover:scale-110 h-full object-cover;

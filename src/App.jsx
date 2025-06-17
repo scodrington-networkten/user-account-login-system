@@ -34,6 +34,7 @@ import UserExpiredPopup from "./components/userExpiredPopup/user-expired-popup.j
 import Dashboard from "./pages/dashboard/dashboard.jsx";
 import WatchLater from "./pages/dashboard/watchLater.jsx";
 import Favorites from "./pages/dashboard/favorites.jsx";
+import ToastNotification from "@components/toastNotiification/toastNotification.jsx";
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
                         </AppLayout>
                     </GenreProvider>
                     <UserExpiredPopup/>
+                    <ToastNotification/>
                 </UserProvider>
             </div>
         </BrowserRouter>

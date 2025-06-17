@@ -1,8 +1,8 @@
 import _ from "lodash";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
+import {faBookmark as faBookmarkFull, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
-import {faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
+import {faBookmark as faBookmarkEmpty, faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
 
 
 class Utilities {
@@ -108,6 +108,7 @@ class Utilities {
 
     }
 
+
     getTrimmedString(string, maxCharacters = 200) {
 
         return _.truncate(string, {
@@ -154,9 +155,9 @@ class Utilities {
         //determine the url
         if (typeof url !== 'string' || url.trim() === '') {
 
-            if( ['poster', 'profile'].includes(type)){
+            if (['poster', 'profile'].includes(type)) {
                 return '/portrait_default_image.svg';
-            }else{
+            } else {
                 return '/profile_image_blank.webp';
             }
 
