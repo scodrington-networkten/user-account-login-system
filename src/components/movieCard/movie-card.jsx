@@ -13,12 +13,39 @@ import {faBookmark as faBookmarkEmpty} from "@fortawesome/free-regular-svg-icons
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as util from "node:util";
+import {useEffect, useState, useRef} from "react";
 
 const MovieCard = ({movie}) => {
 
+    const cardRef = useRef(null);
     const utilities = new Utilities();
-
+    const [touched, setTouched] = useState(false);
     const {user} = useUser();
+
+
+    // When user touches inside the card
+    const handleTouchStartInside = () => {
+        setTouched(true);
+    };
+
+    useEffect(() => {
+        if (!touched) return;
+
+        // Handler for any touch on the document
+        const handleTouchOutside = (e) => {
+            if (cardRef.current && !cardRef.current.contains(e.target)) {
+                setTouched(false);
+            }
+        };
+
+        // Add listener when touched = true
+        document.addEventListener('touchstart', handleTouchOutside);
+
+        // Cleanup when touched changes or component unmounts
+        return () => {
+            document.removeEventListener('touchstart', handleTouchOutside);
+        };
+    }, [touched]);
 
 
     /**
@@ -29,10 +56,11 @@ const MovieCard = ({movie}) => {
     const getRatingSection = (movie) => {
         return (
             <section className="rating-information flex gap-2 mb-3 justify-between">
-
                 {utilities.getStarsSection(movie.vote_average)}
                 {utilities.getVotesSection(10)}
-                <FavoriteMovieButton movie={movie}/>
+                <div className="flex flex-1 justify-end">
+                    <FavoriteMovieButton movie={movie}/>
+                </div>
             </section>
         )
     }
@@ -45,9 +73,13 @@ const MovieCard = ({movie}) => {
     }
 
     return (
-        <article className="movie-card group">
+        <article
+            className={`movie-card group ${touched ? 'touched' : ''}`}
+            onTouchStart={handleTouchStartInside}
+            ref={cardRef}
+        >
 
-            <section className="overflow-hidden">
+            <section className="overflow-hidden w-full">
                 <img
                     src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
                     alt={movie.title}
@@ -67,8 +99,7 @@ const MovieCard = ({movie}) => {
                         </Link>
                     </section>
 
-                    <section
-                        className="bottom-section ">
+                    <section className="bottom-section ">
                         {getRatingSection(movie)}
                         <section className="summary-section multiline-clamp">
                             {getSummarySection(movie)}

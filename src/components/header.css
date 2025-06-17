@@ -7,7 +7,12 @@
 
 .user-icon {
     background-color: var(--color-highlight-secondary);
-    @apply text-white;
+    @apply text-white transition-all;
+
+    &:hover,
+    &:focus{
+        background-color: var(--color-highlight-ternary);
+    }
 }
 
 .logo-text {

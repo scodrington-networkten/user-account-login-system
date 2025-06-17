@@ -4,25 +4,23 @@
     @apply flex relative drop-shadow-lg border-gray-300 border-1 overflow-hidden transition-all duration-200 ease-in-out;
 
     .image-section {
-        @apply object-cover transform transition-transform duration-200 ease-in-out scale-100 group-hover:scale-110 h-full object-cover;
+        @apply w-full object-cover transform transition-transform duration-200 ease-in-out scale-100 group-hover:scale-110 group-[.touched]:scale-110 h-full;
     }
 
     .main-section {
-        @apply flex flex-col h-full w-full absolute bg-black/75 text-white opacity-0 transition-opacity group-hover:opacity-100;
+        @apply flex flex-col h-full w-full absolute bg-black/75 text-white opacity-0 transition-opacity group-hover:opacity-100 group-[.touched]:opacity-100;
 
         .main-section-inner {
             @apply flex flex-col flex-grow justify-between px-4 py-4 box-content leading-tight overflow-hidden;
         }
 
         .movie-information-section {
-            @apply group-hover:translate-y-0;
+            @apply group-hover:translate-y-0 group-[.touched]:translate-y-0;
         }
 
         .bottom-section {
-            @apply transform transition duration-300 ease-in-out translate-y-10 group-hover:translate-y-0;
+            @apply transform transition duration-300 ease-in-out translate-y-10 group-hover:translate-y-0 group-[.touched]:translate-y-0;
         }
-
-
 
         .bottom-accent {
             @apply h-[2px];
@@ -30,6 +28,7 @@
             background-color: var(--color-highlight-secondary);
         }
     }
+
 }
 
 .movie-card:hover{

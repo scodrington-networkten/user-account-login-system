@@ -2,6 +2,12 @@ import {Link} from "react-router-dom";
 import './sidebar.css';
 import {useLocation} from "react-router-dom";
 
+import {faUser, faBookmark} from "@fortawesome/free-regular-svg-icons";
+import {faTv} from "@fortawesome/free-solid-svg-icons";
+
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+
 const Sidebar = () => {
 
     const location = useLocation();
@@ -14,9 +20,12 @@ const Sidebar = () => {
     return (
 
         <aside className="user-dashboard-sidebar">
-            <Link to={"/dashboard"} className={navItemClass("/dashboard")}>Dashboard</Link>
-            <Link to={"/dashboard/watch-later"} className={navItemClass("/dashboard/watch-later")}>Watch Later</Link>
-            <Link to={"/dashboard/favorites"} className={navItemClass("/dashboard/favorites")}>Favorites</Link>
+            <Link to={"/dashboard"} className={navItemClass("/dashboard")}>
+                <FontAwesomeIcon className="icon" icon={faUser}/>Dashboard</Link>
+            <Link to={"/dashboard/watch-later"} className={navItemClass("/dashboard/watch-later")}>
+                <FontAwesomeIcon className="icon" icon={faTv}/>Watch Later</Link>
+            <Link to={"/dashboard/favorites"} className={navItemClass("/dashboard/favorites")}>
+                <FontAwesomeIcon className="icon" icon={faBookmark}/>Favorites</Link>
         </aside>
     )
 }

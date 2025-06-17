@@ -55,24 +55,28 @@ const Home = () => {
             return (
                 <>
                     <LatestMovies/>
-                    <GenreList/>
-                    <LoadingCardList/>
+                    <div className={"px-4 w-full"}>
+                        <GenreList/>
+                        <LoadingCardList/>
+                    </div>
                 </>
-
             )
         } else {
             return (
                 <>
                     <LatestMovies/>
-                    <GenreList/>
-                    <MoviesList
-                        movies={movies}
-                        onNextButton={onNextButton}
-                        onPrevButton={onPreviousButton}
-                        moviesLoading={false}
-                        currentPage={1}
-                        totalPages={1}
-                    />
+                    <div className={"px-4 w-full"}>
+                        <GenreList/>
+                        <MoviesList
+                            movies={movies}
+                            onNextButton={onNextButton}
+                            onPrevButton={onPreviousButton}
+                            moviesLoading={false}
+                            currentPage={1}
+                            totalPages={1}
+                        />
+                    </div>
+
                 </>
 
             )

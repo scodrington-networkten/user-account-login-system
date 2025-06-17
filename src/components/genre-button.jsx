@@ -10,7 +10,7 @@ import './genre-button.css';
  * @returns {JSX.Element}
  * @constructor
  */
-const GenreButton = ({genre, isActive}) => {
+const GenreButton = ({genre, isActive, classes = 'genre-button'}) => {
 
     const [genreName, setGenreName] = useState('');
 
@@ -24,7 +24,7 @@ const GenreButton = ({genre, isActive}) => {
 
     return (
         <Link to={`/movies/${genreName}`}
-              className={`genre-button ${isActive ? 'active' : ''}`}>
+              className={`${classes} ${isActive ? 'active' : ''}`}>
             {genre.name}
         </Link>
     )

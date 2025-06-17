@@ -9,6 +9,7 @@ import {GenreContext} from "../../contexts/GenreContext.jsx";
 import {useContext} from "react";
 
 import _ from "lodash";
+import GenreButton from "@components/genre-button.jsx";
 
 const CarouselCard = ({movie}) => {
 
@@ -34,8 +35,15 @@ const CarouselCard = ({movie}) => {
             genre = {id: 0, name: 'undefined'}
         }
 
+        //leverage the existing genre button to show these genres
         return (
-            <p className="button-small button-transparent" key={`genre-button-${genre.id}`}>{genre.name}</p>
+            <GenreButton
+                classes={'button-small button-transparent'}
+                genre={genre}
+                isActive={false}
+                key={`genre-button-${genre.id}`}
+            />
+
         )
     }
 

@@ -3,7 +3,7 @@ import MovieCard from "./movieCard/movie-card.jsx";
 import './movie-list.css';
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronLeft, faChevronRight, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 
 
 const MoviesList = ({
@@ -28,7 +28,7 @@ const MoviesList = ({
         if (movies.length > 0) {
             return (
                 <section
-                    className={`movies grid grid-cols-2 container m-auto md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4`}>
+                    className={`movies grid grid-cols-1 container m-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4`}>
                     {movies.map((item, index) => (
                         <MovieCard movie={item} className="movie" key={`movie-${index}`}/>
                     ))}
@@ -77,7 +77,7 @@ const MoviesList = ({
      */
     const displayNavigation = (location) => {
 
-        if(totalPages === 1) return null;
+        if (totalPages === 1) return null;
 
         return (
             <div className="navigation container m-auto">
@@ -117,7 +117,8 @@ const MoviesList = ({
                         className="italic font-semibold">{searchQuery}</span></h1>
                     <div className="results-data">
                         <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
-                        <p>(Page <span className="font-semibold">{currentPage}</span>  of <span className="font-semibold">{totalPages})</span></p>
+                        <p>(Page <span className="font-semibold">{currentPage}</span> of <span
+                            className="font-semibold">{totalPages})</span></p>
                     </div>
                 </div>
             )

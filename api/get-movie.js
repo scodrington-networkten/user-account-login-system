@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { HttpError } from "../utils/httpError.js";
+import {HttpError} from "../utils/httpError.js";
 
 
 /**
@@ -12,21 +12,27 @@ export default async function getMovie(request, response) {
     let {id} = request.query;
     let url = `${process.env.MOVIE_API_URL_BASE}movie/${id}`;
 
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+
+    try {
+        if (id === undefined) throw new Error('ID must be defined');
+
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
         }
+
+        let result = await fetch(url, options);
+        if (!result.ok) {
+            const errorText = await result.text();
+            throw new Error(`HTTP error hitting the ${url} endpoint, error: ${errorText}`);
+        }
+
+        let json = await result.json();
+        return response.status(200).json({json});
+    } catch (error) {
+        return response.status(500).json({error: error.message});
     }
-
-    let result = await fetch(url, options);
-    if (!result.ok) {
-        const errorText = await result.text();
-        throw new HttpError(`HTTP error hitting the ${url} endpoint, error: ${errorText}`, 500);
-    }
-
-    let json = await result.json();
-    return response.status(200).json({json});
-
 }

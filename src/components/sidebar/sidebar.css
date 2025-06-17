@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
-.user-dashboard-sidebar{
+.user-dashboard-sidebar {
 
-   @apply flex flex-col rounded border-gray-400 border-1;
+    @apply flex flex-col rounded border-gray-400 border-1;
 
-    .nav-item{
-        @apply flex px-2 py-2 border-b-1 border-gray-400 transition-all;
+    .nav-item {
+        @apply flex px-2 py-2 border-b-1 border-gray-400 transition-all justify-start items-center;
 
-
-        .icon{
-
+        .icon {
+            @apply w-[20px] mr-2;
         }
 
-        &:focus{
-            @apply bg-[var(--color-highlight-secondary)];
-        }
-
-        &.active{
+        &:focus,
+        &:hover {
             @apply text-white bg-[var(--color-highlight-secondary)];
         }
 
-        &:last-of-type{
+        &.active {
+            @apply text-white bg-[var(--color-highlight-secondary)];
+        }
+
+        &:last-of-type {
             @apply border-b-0;
         }
     }
