@@ -8,6 +8,8 @@ const FavoriteMovieButton = ({movie}) => {
 
 
     const {user, toggleFavoriteMovie} = useUser();
+    const [loading, setLoading] = useState(false);
+
     if (!user) return;
     if (!movie) return;
 
@@ -22,22 +24,27 @@ const FavoriteMovieButton = ({movie}) => {
      */
     const handleClick = async () => {
 
+        setLoading(true);
         const result = await toggleFavoriteMovie(movie.id);
         if (result.success) {
             window.showToastNotification(result.message, 'success');
         } else {
             window.showToastNotification(result.message, 'error');
         }
-
+        setLoading(false);
     }
 
-    // console.log(user);
-
-    if (isFavorite) {
-        return <FontAwesomeIcon icon={faBookmarkFull} onClick={handleClick}/>
-    } else {
-        return <FontAwesomeIcon icon={faBookmarkEmpty} onClick={handleClick}/>;
-    }
+    return (
+        <button
+            onClick={handleClick}
+            className={loading ? 'inactive' : ''}
+            aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            disabled={loading}
+            style={{background: 'none', border: 'none', padding: 0, cursor: 'pointer'}}
+        >
+            <FontAwesomeIcon icon={isFavorite ? faBookmarkFull : faBookmarkEmpty}/>
+        </button>
+    )
 
 
 }

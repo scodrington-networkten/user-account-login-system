@@ -35,6 +35,13 @@ export const UserProvider = ({children}) => {
     }, [userExpired]);
 
 
+    /**
+     * Add or remove a favorite movie from a user, also setting the updated user reference as
+     * the associated data has changed
+     *
+     * @param movieId
+     * @returns {Promise<{success: boolean, message}>}
+     */
     const toggleFavoriteMovie = async (movieId) => {
 
         const isFavorite = user.favorite_movies.some(item => {
