@@ -3,6 +3,7 @@ import {useUser} from "@contexts/UserContext.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
 import {faBookmark as faBookmarkEmpty} from "@fortawesome/free-regular-svg-icons";
+import './favorite-movie-button.css';
 
 /**
  * Button for adding and removing the associated movie from the users favorites
@@ -38,7 +39,7 @@ const FavoriteMovieButton = ({movie, isFavorited = false}) => {
     return (
         <button
             onClick={handleClick}
-            className={loading ? 'inactive' : ''}
+            className={`favorite-button ${loading ? 'inactive' : ''}`}
             aria-label={label}
             disabled={loading}
             title={label}

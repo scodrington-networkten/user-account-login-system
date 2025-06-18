@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+.favorite-button {
+    @apply transition-all;
+
+    &:focus,
+    &:hover {
+        color: var(--color-highlight-secondary);
+    }
+}
