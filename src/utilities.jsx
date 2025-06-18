@@ -21,10 +21,12 @@ class Utilities {
 
     /**
      * Format the date into something more useful
-     * @param dateString
+     *
+     * @param dateString - raw datetime string to be converted
+     * @param showTime - append the time info such as 12:35PM
      * @returns {string}
      */
-    formatDate = (dateString) => {
+    formatDate = (dateString, showTime = false) => {
 
         if (_.isEmpty(dateString)) {
             console.log('an empty date string was passed');
@@ -36,8 +38,27 @@ class Utilities {
         const month = String(date.getMonth()).padStart(2, '0');
         const year = date.getFullYear();
 
-        return `${day}/${month}/${year}`;
+        //factor in time aspects
+        let hours = date.getHours();
+        const hour = date.getHours();
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const ampm = (hours >= 12) ? 'PM' : 'AM';
+        const timeComponent = showTime ? `${hour}:${minutes}${ampm}` : '';
 
+        return `${day}/${month}/${year} ${timeComponent}`;
+
+    }
+
+    /**
+     * Given two dates, return the number of hours between them
+     * @param date1
+     * @param date2
+     * @returns {number}
+     */
+    getDateDifferenceHours(date1, date2) {
+
+        const difference = (new Date(date2)).getTime() - (new Date(date1)).getTime();
+        return difference / (1000 * 60 * 60);
     }
 
     /**

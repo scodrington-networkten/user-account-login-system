@@ -51,7 +51,7 @@ export const UserProvider = ({children}) => {
         const action = isFavorite ? 'remove-favorite' : 'add-favorite';
 
         const jwt = getToken();
-        const response = await fetch('api/user/actions', {
+        const response = await fetch('/api/user/actions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ export const UserProvider = ({children}) => {
             throw new Error('Token can not be null');
         }
 
-        const userResponse = await fetch('api/user/validate', {
+        const userResponse = await fetch('/api/user/validate', {
             headers: {Authorization: `Bearer ${token}`}
         })
 
@@ -200,7 +200,7 @@ export const UserProvider = ({children}) => {
         setUser(null);
         setUserExpired(false);
 
-        navigate("/login");
+        //navigate("/login");
     }
 
     return (

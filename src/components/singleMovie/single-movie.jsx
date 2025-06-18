@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import './single-movie.css';
 
 import ActorProfile from "../actorProfile/actorProfile.jsx";
+import ReviewCards from "@components/reviews/reviewCards/reviewCards.jsx";
 
 /**
  * @typedef {Object} MovieDetails
@@ -186,10 +187,14 @@ const SingleMovie = ({movie}) => {
 
                     }
                 </section>
+
+                <section className="reviews-section">
+                    <ReviewCards movie={movie}/>
+                </section>
             </div>
             <img
                 src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
-                className="absolute object-cover z-0 opacity-5 top-0 left-0 h-full w-full -z-1"
+                className="absolute object-cover -z-100 opacity-5 top-0 left-0 h-full w-full -z-1"
                 alt="background-image"
             />
 

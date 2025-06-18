@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+.review-card{
+
+    @apply shadow-md border border-gray-200 rounded bg-white px-3 py-3;
+
+    .image{
+        @apply shadow mr-2 mb-2 w-[100px] h-[100px] object-cover rounded-full float-left;
+    }
+
+    .author{
+        @apply font-semibold;
+    }
+
+    .date{
+        @apply text-sm text-gray-600;
+    }
+
+    .rating{
+        @apply mb-2;
+    }
+
+    .review{
+        @apply leading-relaxed mt-2;
+    }
+
+}
