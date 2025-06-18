@@ -2,8 +2,7 @@ import {Link} from "react-router-dom";
 import './sidebar.css';
 import {useLocation} from "react-router-dom";
 
-import {faUser, faBookmark} from "@fortawesome/free-regular-svg-icons";
-import {faTv,faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import {faTv, faRightFromBracket, faUser, faBookmark} from "@fortawesome/free-solid-svg-icons";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 

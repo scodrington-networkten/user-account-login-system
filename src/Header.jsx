@@ -1,13 +1,13 @@
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUser} from '@fortawesome/free-regular-svg-icons';
-import {faVideo} from "@fortawesome/free-solid-svg-icons";
-import {faSearch} from "@fortawesome/free-solid-svg-icons";
+
+import {faSearch, faVideo, faUser} from "@fortawesome/free-solid-svg-icons";
+
 import './components/header.css';
 import {useState, useRef, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import slugify from "slugify";
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
 import {useUser} from "./contexts/UserContext.jsx";
 import Sidebar from "@components/sidebar/sidebar.jsx";
@@ -38,7 +38,7 @@ const Header = () => {
     //handle when we change loction, close the nav
     useEffect(() => {
         setUserSubmenuOpen(false);
-    },[location.pathname]);
+    }, [location.pathname]);
 
 
     /**
@@ -90,7 +90,7 @@ const Header = () => {
                             className="user-icon cursor-pointer"
                             onClick={() => setUserSubmenuOpen(!userSubmenuOpen)}  // toggle on click (mobile)
                         >
-                            <FontAwesomeIcon icon={faUser} />
+                            <FontAwesomeIcon icon={faUser}/>
                         </div>
 
                         <nav
@@ -98,7 +98,7 @@ const Header = () => {
                                 userSubmenuOpen ? "block" : "hidden"
                             }`}
                         >
-                            <Sidebar closeMenu={() => setUserSubmenuOpen(false)} />
+                            <Sidebar closeMenu={() => setUserSubmenuOpen(false)}/>
                         </nav>
                     </div>
                 </div>

@@ -98,19 +98,29 @@ const SingleMovie = ({movie}) => {
 
     }, [movie.id]);
 
+    const getRelatedMoviesByGenre = () => {
+
+        return (
+            <div className="related-movies-section mt-4">
+                <h3 className="text-3xl font-light">You might also like..</h3>
+
+            </div>
+        )
+    }
+
     const getProductionCompanies = () => {
 
         if (movieDetails === null) {
 
             return (
-                <div className="production-companies-section">
+                <div className="production-companies-section mt-4">
                     <h3 className="">Production Companies</h3>
                     <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
                 </div>
             )
         } else {
             return (
-                <div className="production-companies-section">
+                <div className="production-companies-section mt-4">
                     <h3 className="">Production Companies</h3>
                     <div className="companies">
                         {movieDetails.production_companies.map((item, index) => {
@@ -139,7 +149,7 @@ const SingleMovie = ({movie}) => {
 
         if (actors !== null) {
             return (
-                <div className="actors-list mt-2">
+                <div className="actors-list mt-4">
                     <h3>Cast & Crew</h3>
                     <div className="actors">
                         {actors.map((item, key) => {
@@ -152,7 +162,7 @@ const SingleMovie = ({movie}) => {
         } else {
 
             return (
-                <div className="actors-list mt-2">
+                <div className="actors-list mt-4">
                     <h3>Cast & Crew</h3>
                     <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
                 </div>
@@ -179,7 +189,7 @@ const SingleMovie = ({movie}) => {
                         ))}
                     </section>
 
-                    <section className="actors-section w-full mt-2">
+                    <section className="actors-section w-full">
                         {getActorsSection()}
                     </section>
 
@@ -196,13 +206,18 @@ const SingleMovie = ({movie}) => {
                 </section>
 
 
-                <section className="bottom-section w-full mt-2">
+                <section className="bottom-section w-full">
                     {getProductionCompanies()}
                 </section>
 
-                <section className="reviews-section">
+                <section className="reviews-section w-full">
                     <ReviewCards movie={movie}/>
                 </section>
+
+                <section className="same-genre-movie-section w-full">
+                    {getRelatedMoviesByGenre()}
+                </section>
+
             </div>
             <img
                 src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
