@@ -47,8 +47,6 @@ const ReviewCard = ({review}) => {
         //if updated date, ensure proper delta between update and creation and show it next to the date
         if (updatedDate) {
             let hoursDifference = utilities.getDateDifferenceHours(review.created_at, review.updated_at);
-
-            console.log(hoursDifference);
             if (hoursDifference >= 1) {
                 return `${createdDate} (Updated at ${updatedDate})`;
             }
@@ -56,6 +54,20 @@ const ReviewCard = ({review}) => {
 
         //else just show normal date
         return createdDate
+    }
+
+    /**
+     * Get the review stars section
+     */
+    const getStarsContent = () => {
+
+        if (review.author_details.rating === null) return;
+
+        return (
+            <div className="rating">
+                {utilities.getStarsSection(review.author_details.rating)}
+            </div>
+        )
     }
 
     return (
@@ -66,9 +78,7 @@ const ReviewCard = ({review}) => {
                 src={Utilities.getApiImageUrl(review.author_details.avatar_path, 'poster', 'w154')}
             />
             <div className="main-context">
-                <div className="rating">
-                    {utilities.getStarsSection(review.author_details.rating)}
-                </div>
+                {getStarsContent()}
                 <section className="author">
                     <p>{getAuthorName()}</p>
                 </section>

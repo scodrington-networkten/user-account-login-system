@@ -7,17 +7,22 @@ import './components/header.css';
 import {useState, useRef, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import slugify from "slugify";
+import { useLocation } from 'react-router-dom';
 
 import {useUser} from "./contexts/UserContext.jsx";
+import Sidebar from "@components/sidebar/sidebar.jsx";
 
 
 const Header = () => {
 
     const navigate = useNavigate();
+    const location = useLocation();
     const inputRef = useRef(null);
 
     const [searchInput, setSearchInput] = useState('');
     const [searchVisible, setSearchVisible] = useState(false);
+
+    const [userSubmenuOpen, setUserSubmenuOpen] = useState(false);
 
     const {user} = useUser();
 
@@ -29,6 +34,12 @@ const Header = () => {
         }
 
     }, [searchVisible]);
+
+    //handle when we change loction, close the nav
+    useEffect(() => {
+        setUserSubmenuOpen(false);
+    },[location.pathname]);
+
 
     /**
      * When search icon clicked, toggle the form visability state
@@ -60,20 +71,39 @@ const Header = () => {
 
     }
 
+
     //display header section based on logged in user
     const displayUserIconSection = () => {
 
         if (user !== null) {
             return (
-                <div className="flex items-center gap-2">
-                    <p className="user-name">{user.first_name}</p>
-                    <div
-                        className="user-icon flex justify-center items-center bg-white rounded-full w-[30px] h-[30px] text-gray-800">
-                        <Link to="/dashboard" className="hover:underline"><FontAwesomeIcon icon={faUser}/></Link>
+                <div class="flex items-center justify-center gap-3">
+                    <div className="first-name">
+                        <p>{user.first_name}</p>
                     </div>
-                    <Link to={"/logout"}>Logout</Link>
+                    <div
+                        className="relative"
+                        onMouseEnter={() => setUserSubmenuOpen(true)}   // open submenu on hover (desktop)
+                        onMouseLeave={() => setUserSubmenuOpen(false)}  // close submenu on hover out
+                    >
+                        <div
+                            className="user-icon cursor-pointer"
+                            onClick={() => setUserSubmenuOpen(!userSubmenuOpen)}  // toggle on click (mobile)
+                        >
+                            <FontAwesomeIcon icon={faUser} />
+                        </div>
+
+                        <nav
+                            className={`header-user-submenu absolute top-full right-0 mt-2 z-50 ${
+                                userSubmenuOpen ? "block" : "hidden"
+                            }`}
+                        >
+                            <Sidebar closeMenu={() => setUserSubmenuOpen(false)} />
+                        </nav>
+                    </div>
                 </div>
-            )
+
+            );
         } else {
             return (
                 <Link to="/login">

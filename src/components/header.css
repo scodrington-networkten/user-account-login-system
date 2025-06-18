@@ -6,11 +6,12 @@
 }
 
 .user-icon {
+    @apply text-white transition-all relative cursor-pointer w-[30px] h-[30px] flex items-center justify-center rounded-full;
     background-color: var(--color-highlight-secondary);
-    @apply text-white transition-all;
+
 
     &:hover,
-    &:focus{
+    &:focus {
         background-color: var(--color-highlight-ternary);
     }
 }
@@ -82,4 +83,29 @@
         @apply text-sm font-light;
         max-height: 30px;
     }
+}
+
+
+.page-header .header-user-submenu {
+    @apply absolute top-full pt-2 mt-0 right-0 max-w-md min-w-52 rounded overflow-hidden;
+
+    aside {
+        @apply rounded flex-grow;
+        border: 0;
+    }
+
+    .nav-item {
+        background-color: var(--color-secondary);
+        border-bottom-color: var(--color-primary);
+
+        &:hover,
+        &:focus {
+            background-color: var(--color-primary);
+        }
+
+        &.active {
+
+        }
+    }
+
 }

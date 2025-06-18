@@ -3,9 +3,10 @@ import './sidebar.css';
 import {useLocation} from "react-router-dom";
 
 import {faUser, faBookmark} from "@fortawesome/free-regular-svg-icons";
-import {faTv} from "@fortawesome/free-solid-svg-icons";
+import {faTv,faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 
 
 const Sidebar = () => {
@@ -26,6 +27,8 @@ const Sidebar = () => {
                 <FontAwesomeIcon className="icon" icon={faTv}/>Watch Later</Link>
             <Link to={"/dashboard/favorites"} className={navItemClass("/dashboard/favorites")}>
                 <FontAwesomeIcon className="icon" icon={faBookmark}/>Favorites</Link>
+            <Link to={"/logout"} className={navItemClass("/logout")}>
+                <FontAwesomeIcon icon={faRightFromBracket} className="icon"/>Logout</Link>
         </aside>
     )
 }

@@ -74,7 +74,7 @@ const MovieCard = ({movie}) => {
         return (
             <section className="rating-information flex gap-2 mb-3 justify-between">
                 {utilities.getStarsSection(movie.vote_average)}
-                {utilities.getVotesSection(10)}
+                {utilities.getVotesSection(movie.vote_count)}
                 <div className="flex flex-1 justify-end">
                     <FavoriteMovieButton movie={movie} isFavorited={isFavorited}/>
                 </div>

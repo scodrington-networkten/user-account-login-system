@@ -5,7 +5,7 @@
     @apply shadow-md border border-gray-200 rounded bg-white px-3 py-3;
 
     .image{
-        @apply shadow mr-2 mb-2 w-[100px] h-[100px] object-cover rounded-full float-left;
+        @apply shadow mr-4 mb-2 w-[100px] h-[100px] object-cover rounded-full float-left;
     }
 
     .author{
