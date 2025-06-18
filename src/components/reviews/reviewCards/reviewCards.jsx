@@ -4,27 +4,61 @@ import ReviewCard from "@components/reviews/reviewCard/reviewCard.jsx";
 import './review-cards.css';
 
 const ReviewCards = ({movie}) => {
-    
+
     const [reviews, setReviews] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setReviews(exampleReviews.results);
-    }, [])
 
-    if (reviews.length === 0) {
-        return (
-            <p>There are no reviews for this movie yet</p>
-        )
+        (async () => {
+
+            setLoading(true);
+            const result = await fetch(`/api/get-reviews?movie_id=${movie.id}`);
+            if (!result.ok) {
+                window.showToastNotification('There was an error getting the reviews for this movie', 'error');
+            } else {
+                const data = await result.json();
+                console.log(data.results);
+                setReviews(data.results);
+            }
+            setLoading(false);
+        })();
+
+    }, [movie])
+
+
+    /**
+     * Show review section based on current status
+     * @returns {JSX.Element}
+     */
+    const showReviews = () => {
+
+        if (reviews.length === 0) {
+            return (
+                <p>There are no reviews for this movie, check back later</p>
+            )
+        }
+
+        if (loading) {
+            return (
+                <p>Reviews loading</p>
+            )
+        } else {
+            return (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {reviews.map((review, index) => {
+                        return <ReviewCard review={review} key={`review-card-${index}`}/>
+                    })}
+                </div>
+            )
+        }
+
     }
 
     return (
         <div className="review-cards mt-4">
             <h3 className="mb-4 text-3xl">Reviews</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {reviews.map((review, index) => {
-                    return <ReviewCard review={review} key={`review-card-${index}`}/>
-                })}
-            </div>
+            {showReviews()}
         </div>
     )
 }

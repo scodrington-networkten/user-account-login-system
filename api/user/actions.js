@@ -11,7 +11,7 @@ export default async function actions(request, response) {
     }
 
     //verify method allowed
-    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-wishlist'];
+    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-wishlist', 'remove-wishlist'];
     if (!allowedMethods.includes(action)) {
         let methodMessage = `the provided action: ${action} is not a valid method, allowed methods are: ${allowedMethods.join(', ')}`;
         return response.status(400).json({error: methodMessage});
@@ -123,6 +123,7 @@ export default async function actions(request, response) {
 
             break;
 
+        case 'remove-wishlist':
     }
 
 }
