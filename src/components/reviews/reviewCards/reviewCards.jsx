@@ -2,6 +2,8 @@ import exampleReviews from "@components/reviews/reviewCard/exampleReviews.js";
 import {useEffect, useState} from "react";
 import ReviewCard from "@components/reviews/reviewCard/reviewCard.jsx";
 import './review-cards.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 const ReviewCards = ({movie}) => {
 
@@ -41,7 +43,7 @@ const ReviewCards = ({movie}) => {
 
         if (loading) {
             return (
-                <p>Reviews loading</p>
+                <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
             )
         } else {
             return (
@@ -57,7 +59,7 @@ const ReviewCards = ({movie}) => {
 
     return (
         <div className="review-cards mt-4">
-            <h3 className="mb-4 text-3xl">Reviews</h3>
+            <h3 className="mb-4 text-3xl font-light">Reviews</h3>
             {showReviews()}
         </div>
     )

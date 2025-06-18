@@ -77,7 +77,7 @@ const Header = () => {
 
         if (user !== null) {
             return (
-                <div class="flex items-center justify-center gap-3">
+                <div className="flex items-center justify-center gap-3">
                     <div className="first-name">
                         <p>{user.first_name}</p>
                     </div>

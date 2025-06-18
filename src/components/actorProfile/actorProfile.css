@@ -9,7 +9,7 @@
     }
 
     h3 {
-        @apply text-2xl font-light;
+        @apply text-3xl font-light;
     }
 }
 
@@ -26,7 +26,7 @@
     }
 
     h3 {
-        @apply text-2xl font-light;
+        @apply text-3xl font-light;
     }
 
 }

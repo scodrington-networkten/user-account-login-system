@@ -6,6 +6,8 @@ import './single-movie.css';
 
 import ActorProfile from "../actorProfile/actorProfile.jsx";
 import ReviewCards from "@components/reviews/reviewCards/reviewCards.jsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * @typedef {Object} MovieDetails
@@ -98,30 +100,38 @@ const SingleMovie = ({movie}) => {
 
     const getProductionCompanies = () => {
 
-        return (
-            <div className="production-companies-section">
-                <h3>Production Companies</h3>
+        if (movieDetails === null) {
 
-                <div className="companies">
-
-                    {movieDetails.production_companies.map((item, index) => {
-
-                        let finalUrl = Utilities.getApiImageUrl(item.logo_path, 'logo', 'w154');
-                        return (
-                            item.logo_path && (
-                                <img
-                                    className="company"
-                                    key={`production-company-${index}`}
-                                    src={`${finalUrl}`}
-                                    alt={item.name || "Logo"}
-                                />
-                            )
-                        );
-                    })}
+            return (
+                <div className="production-companies-section">
+                    <h3 className="">Production Companies</h3>
+                    <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
                 </div>
+            )
+        } else {
+            return (
+                <div className="production-companies-section">
+                    <h3 className="">Production Companies</h3>
+                    <div className="companies">
+                        {movieDetails.production_companies.map((item, index) => {
+                            let finalUrl = Utilities.getApiImageUrl(item.logo_path, 'logo', 'w154');
+                            return (
+                                item.logo_path && (
+                                    <img
+                                        className="company"
+                                        key={`production-company-${index}`}
+                                        src={`${finalUrl}`}
+                                        alt={item.name || "Logo"}
+                                    />
+                                )
+                            );
+                        })}
+                    </div>
 
-            </div>
-        );
+                </div>
+            );
+        }
+
 
     }
 
@@ -140,7 +150,13 @@ const SingleMovie = ({movie}) => {
             )
 
         } else {
-            return <p>Actors Loading..</p>
+
+            return (
+                <div className="actors-list mt-2">
+                    <h3>Cast & Crew</h3>
+                    <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
+                </div>
+            )
         }
     }
 
@@ -150,7 +166,8 @@ const SingleMovie = ({movie}) => {
             <div className="top-gradient"></div>
 
             <div className="container m-auto flex mt-0 flex-wrap">
-                <section className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-4 md:gap-y-6">
+                <section
+                    className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-4 md:gap-y-6">
                     <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
                     <div className="overview text-1xl items-start font-light">{movie.overview}</div>
                     <div className="review-stars-section">{utilities.getStarsSection(movie.vote_average)}</div>
@@ -180,12 +197,7 @@ const SingleMovie = ({movie}) => {
 
 
                 <section className="bottom-section w-full mt-2">
-                    {movieDetails &&
-                        <>
-                            {getProductionCompanies()}
-                        </>
-
-                    }
+                    {getProductionCompanies()}
                 </section>
 
                 <section className="reviews-section">

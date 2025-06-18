@@ -1,6 +1,8 @@
 import MoviesList from "@components/movies-list.jsx";
 import {useState, useEffect} from "react";
 import {useUser} from "@contexts/UserContext.jsx";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 /**
@@ -12,7 +14,7 @@ const FavoriteList = () => {
     const [movies, setMovies] = useState([]);
     const {user} = useUser();
 
-    if (user === null) return;
+
 
     //fetch movie data based on user favorited items
     //TODO: make it a single call not multiple
@@ -42,6 +44,9 @@ const FavoriteList = () => {
 
     }, [user]);
 
+    if (user === null) return;
+
+
     //no movies yet
     if (user.favorite_movies.length === 0) {
         return (
@@ -51,7 +56,7 @@ const FavoriteList = () => {
 
     if (movies.length === 0) {
         return (
-            <p>Your favorites are loading</p>
+            <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
         )
     }
 
