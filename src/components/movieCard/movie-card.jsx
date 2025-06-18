@@ -6,13 +6,8 @@ import {useUser} from "@contexts/UserContext.jsx";
 import './movie-card.css';
 
 import FavoriteMovieButton from "@components/favoriteMovieButton/favoriteMovieButton.jsx";
-
-
-import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
-import {faBookmark as faBookmarkEmpty} from "@fortawesome/free-regular-svg-icons";
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import * as util from "node:util";
 import {useEffect, useState, useRef} from "react";
 
 const MovieCard = ({movie}) => {
@@ -96,7 +91,6 @@ const MovieCard = ({movie}) => {
         return (
             <div className="favorite-badge">
                 <FontAwesomeIcon icon={faBookmarkFull}/>
-                <p>Favorite</p>
             </div>
         )
     }

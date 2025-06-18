@@ -104,7 +104,7 @@
         }
 
         &.active {
-
+            background-color: var(--color-primary);
         }
     }
 
