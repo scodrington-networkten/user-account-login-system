@@ -139,6 +139,15 @@ class Utilities {
     }
 
     /**
+     * Converts a word such as tv-movie to Tv Movie ensuring proper case
+     * @param initalString
+     * @returns {string}
+     */
+    static getProperCaseString(initalString) {
+        return _.startCase(_.toLower(initalString));
+    }
+
+    /**
      * Builds a TMDB image URL using the provided image type and size.
      *
      * @param {string} url - The path of the image (e.g., "/abc123.jpg").

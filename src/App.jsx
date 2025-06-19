@@ -35,6 +35,7 @@ import Dashboard from "./pages/dashboard/dashboard.jsx";
 import WatchLater from "./pages/dashboard/watchLater.jsx";
 import Favorites from "./pages/dashboard/favorites.jsx";
 import ToastNotification from "@components/toastNotiification/toastNotification.jsx";
+import MoviesByKeyword from "./pages/MoviesByKeyword..jsx";
 
 
 function App() {
@@ -55,6 +56,8 @@ function App() {
                                 <Route path="/signup" element={<Signup/>}/>
                                 <Route path="/login" element={<Login/>}/>
                                 <Route path="/logout" element={<Logout/>}/>
+
+                                <Route path="/keyword/:keyword" element={<MoviesByKeyword/>}/>
 
 
                                 <Route path="/dashboard" element={<Dashboard/>}/>

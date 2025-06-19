@@ -34,9 +34,16 @@
             @apply flex items-center justify-center p-2 bg-gray-800 rounded-sm text-white w-[30px] h-[30px] text-center;
             background-color: var(--color-highlight-ternary);
 
+            &:hover,
+            &:focus{
+                background-color: var(--color-highlight-secondary);
+            }
+
             &.active {
                 background-color: var(--color-highlight-secondary);
             }
+
+
         }
     }
 }

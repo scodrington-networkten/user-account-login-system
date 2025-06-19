@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import _ from 'lodash';
 import slugify from "slugify";
 import LoadingCardList from "../components/loading-card-list.jsx";
+import Utilities from "../utilities.jsx";
 
 const MoviesByGenre = () => {
 
@@ -132,7 +133,7 @@ const MoviesByGenre = () => {
 
     return (
         <div className="container m-auto gap-2 flex flex-col p-4">
-            <h1 className="text-4xl py-4">{genre}</h1>
+            <h1 className="text-4xl py-4">{Utilities.getProperCaseString(genre)}</h1>
             <GenreList/>
             {displayMovies()}
         </div>

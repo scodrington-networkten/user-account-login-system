@@ -11,6 +11,7 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
 
 import MovieActors from "@components/actorProfile/movie-actors.jsx";
+import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
 
 /**
  * @typedef {Object} MovieDetails
@@ -141,6 +142,8 @@ const SingleMovie = ({movie}) => {
                 </section>
 
                 <section className="bottom-section w-full">
+
+                    <MovieKeywords movie={movie}/>
 
                     <SimilarMovies movie={movie}/>
 

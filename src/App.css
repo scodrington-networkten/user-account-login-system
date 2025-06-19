@@ -180,6 +180,19 @@ body {
 
 
 
+/** Generic button styles*/
 .button{
     @apply bg-white text-gray-800 rounded border border-gray-400 px-3 py-1 inline-block transition-all duration-200 ease-in-out;
+
+
+    &:focus,
+    &:hover{
+        @apply text-white;
+        background-color: var(--color-secondary);
+    }
+
+    &.active{
+        @apply text-white;
+        background-color: var(--color-primary);
+    }
 }

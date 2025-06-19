@@ -7,6 +7,7 @@ import './movie-card.css';
 
 import FavoriteMovieButton from "@components/favoriteMovieButton/favoriteMovieButton.jsx";
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
+import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useState, useRef} from "react";
 
@@ -113,7 +114,7 @@ const MovieCard = ({movie}) => {
                     <section
                         className="movie-information-section -translate-y-10 transform transition duration-250 ease-in-out">
                         <Link to={`/movie/${movie.id}`}>
-                            <h3 className="text-3xl mb-2 font-semibold " title={movie.title}>
+                            <h3 className="text-3xl mb-2 font-semibold" title={movie.title}>
                                 {movie.title}
                             </h3>
                         </Link>
@@ -124,8 +125,9 @@ const MovieCard = ({movie}) => {
                         <section className="summary-section multiline-clamp">
                             {getSummarySection(movie)}
                         </section>
-
-                        <Link className="watch-button action-button mt-2" to={`/movie/${movie.id}`}>Watch Now</Link>
+                        <Link className="watch-button action-button mt-2" to={`/movie/${movie.id}`}>
+                            <FontAwesomeIcon icon={faPlay}/> Watch Now
+                        </Link>
                     </section>
                 </div>
             </section>

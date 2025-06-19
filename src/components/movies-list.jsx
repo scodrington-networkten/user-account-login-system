@@ -17,6 +17,7 @@ const MoviesList = ({
                         searchQuery = null,
                         onPagesButton,
                         loading,
+                        showPagination  = true,
                         showHeader = false,
                         cssClasses = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
                     }) => {
@@ -80,6 +81,8 @@ const MoviesList = ({
      */
     const displayNavigation = (location) => {
 
+        if(!showPagination) return null;
+
         if (totalPages === 1) return null;
 
         return (
@@ -132,6 +135,11 @@ const MoviesList = ({
                 return (
                     <div className="results-header container m-auto">
                         <h1 className="text-3xl mt-4 mb-2">Movie Results</h1>
+                        <div className="results-data">
+                            <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
+                            <p>(Page <span className="font-semibold">{currentPage}</span> of <span
+                                className="font-semibold">{totalPages})</span></p>
+                        </div>
                     </div>
                 )
             } else {
