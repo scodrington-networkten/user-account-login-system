@@ -1,0 +1,67 @@
+import {useEffect, useState} from "react";
+import ActorProfile from "@components/actorProfile/actorProfile.jsx";
+import LoadingCardList from "@components/loading-card-list.jsx";
+
+/**
+ * Gets a list of the movie actors for display for an associated movie
+ * @param movie
+ * @returns {JSX.Element}
+ */
+export default function movieActors({movie}){
+
+    const [loading, setLoading] = useState(false);
+    const [actors, setActors] = useState([])
+
+    //get information about the actors
+    useEffect(() => {
+
+        const getActorInformation = async () => {
+
+            setLoading(true);
+            try {
+                const apiUrl = `/api/get-movie-credits?id=${movie.id}`;
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`could not fetch credit information from: ${apiUrl}, error: ${errorText}`);
+                }
+
+                //collect useful information about actors and return
+                const json = await response.json();
+
+                const sortedCast = [...json.cast].sort((a, b) => {
+                    return b.popularity - a.popularity;
+                })
+
+                setActors(sortedCast.slice(0, 5));
+            } catch (error) {
+                console.error('Fetch error:', error.message);
+            }
+
+            setLoading(false);
+
+        }
+        getActorInformation();
+
+    }, [movie.id]);
+
+    if(loading){
+        return (
+            <div className="actors-list mt-4">
+                <h3>Cast & Crew</h3>
+                <LoadingCardList items={4}/>
+            </div>
+        )
+    }else{
+        return (
+            <div className="actors-list mt-4">
+                <h3>Cast & Crew</h3>
+                <div className="actors">
+                    {actors.map((item, key) => {
+                        return <ActorProfile actor={item} key={`actor-profile-${key}`}/>;
+                    })}
+                </div>
+            </div>
+        )
+    }
+}

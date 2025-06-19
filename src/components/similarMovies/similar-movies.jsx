@@ -39,7 +39,6 @@ export default function SimilarMovies({movie}) {
         })()
     }, [movie]);
 
-
     return (
         <section className="similar-movies mt-4">
             <h3 className="text-3xl font-light mb-2">You might also like</h3>

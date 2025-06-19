@@ -74,6 +74,7 @@ const Home = () => {
                             moviesLoading={false}
                             currentPage={1}
                             totalPages={1}
+                            showHeader={true}
                         />
                     </div>
 

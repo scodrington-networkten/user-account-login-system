@@ -10,6 +10,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
 
+import MovieActors from "@components/actorProfile/movie-actors.jsx";
+
 /**
  * @typedef {Object} MovieDetails
  * @property {boolean} adult
@@ -67,47 +69,6 @@ const SingleMovie = ({movie}) => {
     }, [movie.id])
 
 
-    //get information about the actors
-    useEffect(() => {
-
-        const getActorInformation = async () => {
-
-            try {
-                const apiUrl = `/api/get-movie-credits?id=${movie.id}`;
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`could not fetch credit information from: ${apiUrl}, error: ${errorText}`);
-                }
-
-                //collect useful information about actors and return
-                const json = await response.json();
-
-                const sortedCast = [...json.cast].sort((a, b) => {
-                    return b.popularity - a.popularity;
-                })
-
-                setActors(sortedCast.slice(0, 5));
-            } catch (error) {
-                console.error('Fetch error:', error.message);
-            }
-
-        }
-        getActorInformation().then(json => {
-
-        });
-
-    }, [movie.id]);
-
-    const getRelatedMoviesByGenre = () => {
-
-        return (
-            <div className="related-movies-section mt-4">
-                <h3 className="text-3xl font-light">You might also like..</h3>
-
-            </div>
-        )
-    }
 
     const getProductionCompanies = () => {
 
@@ -146,32 +107,6 @@ const SingleMovie = ({movie}) => {
 
     }
 
-    const getActorsSection = () => {
-
-        if (actors !== null) {
-            return (
-                <div className="actors-list mt-4">
-                    <h3>Cast & Crew</h3>
-                    <div className="actors">
-                        {actors.map((item, key) => {
-                            return <ActorProfile actor={item} key={`actor-profile-${key}`}/>;
-                        })}
-                    </div>
-                </div>
-            )
-
-        } else {
-
-            return (
-                <div className="actors-list mt-4">
-                    <h3>Cast & Crew</h3>
-                    <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
-                </div>
-            )
-        }
-    }
-
-
     return (
         <article className="single-movie flex gap-4 flex-grow relative p-4 w-full">
             <div className="top-gradient"></div>
@@ -186,14 +121,13 @@ const SingleMovie = ({movie}) => {
 
                     <section className="genre-section mt-8 flex gap-4">
                         {movie.genres.map((item, index) => (
-                            <GenreButton genre={item}/>
+                            <GenreButton genre={item} key={`genre-button-${index}`}/>
                         ))}
                     </section>
 
                     <section className="actors-section w-full">
-                        {getActorsSection()}
+                        <MovieActors movie={movie}/>
                     </section>
-
                 </section>
 
                 <section className="secondary hidden md:flex w-1/3 md:mt-4">
@@ -212,13 +146,7 @@ const SingleMovie = ({movie}) => {
 
                     {getProductionCompanies()}
 
-                    <section className="reviews-section w-full">
-                        <ReviewCards movie={movie}/>
-                    </section>
-
-                    <section className="same-genre-movie-section w-full">
-                        {getRelatedMoviesByGenre()}
-                    </section>
+                    <ReviewCards movie={movie}/>
 
                 </section>
             </div>

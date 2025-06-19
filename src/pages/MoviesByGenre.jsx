@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import GenreList from "../components/genre-list.jsx";
 import MoviesList from "../components/movies-list.jsx";
 import {useEffect, useState} from "react";
@@ -11,9 +11,13 @@ const MoviesByGenre = () => {
     //extract genre token from the url
     const {genre} = useParams();
     const [movies, setMovies] = useState([]);
-    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [genreId, setGenreId] = useState(null);
+
+    //collect search data
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentPage = parseInt(searchParams.get('page') ?? '1', 10) || 1;
 
 
     /**
@@ -61,28 +65,38 @@ const MoviesByGenre = () => {
 
             setLoading(true);
 
-            const result = await fetch(`/api/get-movies?genre_id=${genreId}&page=1`);
+            const result = await fetch(`/api/get-movies?genre_id=${genreId}&page=${currentPage}`);
             const json = await result.json();
 
+
+            console.log(json.json);
             setMovies(json.json.results);
+            setTotalPages(json.json.total_pages)
+
             setLoading(false);
         }
         apiCall();
 
-    }, [genreId]);
+    }, [genreId, searchParams]);
 
-    /**
-     * @TODO - add in button functionality!
-     */
     const onNextButton = () => {
 
+        setSearchParams({
+            page: String(currentPage + 1)
+        })
     }
 
-    /**
-     * @TODO - add in button functionality!
-     */
-    const onPreviousButton = () => {
+    const onPrevButton = () => {
+        setSearchParams({
+            page: String(currentPage - 1)
+        })
+    }
 
+    const onPageButton = (page) => {
+
+        setSearchParams({
+            page: String(page)
+        });
     }
 
     /**
@@ -104,10 +118,12 @@ const MoviesByGenre = () => {
                     <MoviesList
                         movies={movies}
                         onNextButton={onNextButton}
-                        onPrevButton={onPreviousButton}
+                        onPrevButton={onPrevButton}
+                        onPagesButton={onPageButton}
                         moviesLoading={loading}
-                        currentPage={page}
-                        totalPages={1}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        showHeader={true}
                     />
                 </div>
             )
