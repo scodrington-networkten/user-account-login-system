@@ -4,7 +4,10 @@ import './movie-list.css';
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
+
+import LoadingCardList from "@components/loading-card-list.jsx";
 
 const MoviesList = ({
                         movies,
@@ -15,7 +18,9 @@ const MoviesList = ({
                         totalResults,
                         searchQuery = null,
                         onPagesButton,
-                        loading
+                        loading,
+                        showHeader = false,
+                        cssClasses = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
                     }) => {
 
 
@@ -28,7 +33,7 @@ const MoviesList = ({
         if (movies.length > 0) {
             return (
                 <section
-                    className={`movies grid grid-cols-1 container m-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4`}>
+                    className={`movies container m-auto grid gap-4 ${cssClasses}`}>
                     {movies.map((item, index) => (
                         <MovieCard movie={item} className="movie" key={`movie-${index}`}/>
                     ))}
@@ -123,29 +128,36 @@ const MoviesList = ({
                 </div>
             )
         } else {
-            return (
-                <div className="results-header container m-auto">
-                    <h1 className="text-3xl mt-4 mb-2">Movie Results</h1>
-                </div>
-            )
+
+            if (showHeader) {
+                return (
+                    <div className="results-header container m-auto">
+                        <h1 className="text-3xl mt-4 mb-2">Movie Results</h1>
+                    </div>
+                )
+            } else {
+                return <div className="results-header container m-auto"></div>
+            }
         }
     }
 
-    return (
-        <div className="movies-list relative container m-auto">
+    if (loading) {
+        return (
+            <div className="movies-list relative container m-auto">
+                <LoadingCardList cssClass={cssClasses} items={4}/>
+            </div>
+        )
+    } else {
+        return (
+            <div className="movies-list relative container m-auto">
+                {displayHeader()}
+                {displayNavigation('header')}
+                {displayMovies()}
+                {displayNavigation('footer')}
+            </div>
+        )
+    }
 
-            {loading &&
-                <p>Results loading</p>
-            }
-            {!loading && (
-                <>
-                    {displayHeader()}
-                    {displayNavigation('header')}
-                    {displayMovies()}
-                    {displayNavigation('footer')}
-                </>
-            )}
-        </div>
-    )
+
 }
 export default MoviesList;

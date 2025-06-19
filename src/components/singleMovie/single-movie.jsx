@@ -8,6 +8,7 @@ import ActorProfile from "../actorProfile/actorProfile.jsx";
 import ReviewCards from "@components/reviews/reviewCards/reviewCards.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
 
 /**
  * @typedef {Object} MovieDetails
@@ -205,19 +206,21 @@ const SingleMovie = ({movie}) => {
                     </div>
                 </section>
 
-
                 <section className="bottom-section w-full">
+
+                    <SimilarMovies movie={movie}/>
+
                     {getProductionCompanies()}
-                </section>
 
-                <section className="reviews-section w-full">
-                    <ReviewCards movie={movie}/>
-                </section>
+                    <section className="reviews-section w-full">
+                        <ReviewCards movie={movie}/>
+                    </section>
 
-                <section className="same-genre-movie-section w-full">
-                    {getRelatedMoviesByGenre()}
-                </section>
+                    <section className="same-genre-movie-section w-full">
+                        {getRelatedMoviesByGenre()}
+                    </section>
 
+                </section>
             </div>
             <img
                 src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
