@@ -17,7 +17,7 @@ const MoviesList = ({
                         searchQuery = null,
                         onPagesButton,
                         loading,
-                        showPagination  = true,
+                        showPagination = true,
                         showHeader = false,
                         cssClasses = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
                     }) => {
@@ -36,6 +36,12 @@ const MoviesList = ({
                     {movies.map((item, index) => (
                         <MovieCard movie={item} className="movie" key={`movie-${index}`}/>
                     ))}
+                </section>
+            )
+        } else {
+            return (
+                <section className={`movies container m-auto grid gap-4`}>
+                    <p>There are no movies to show</p>
                 </section>
             )
         }
@@ -81,7 +87,9 @@ const MoviesList = ({
      */
     const displayNavigation = (location) => {
 
-        if(!showPagination) return null;
+        if (!showPagination) return null;
+
+        if (movies.length === 0) return null;
 
         if (totalPages === 1) return null;
 

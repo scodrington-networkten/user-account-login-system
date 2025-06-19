@@ -34,10 +34,6 @@ const MovieCard = ({movie}) => {
 
     }, [user]);
 
-    // When user touches inside the card
-    const handleTouchStartInside = () => {
-        setTouched(true);
-    };
 
     useEffect(() => {
         if (!touched) return;
@@ -96,8 +92,11 @@ const MovieCard = ({movie}) => {
     }
     return (
         <article
+            tabIndex="0"
+            onFocus={() => setTouched(true)}
+            onBlur={() => setTouched(false)}
             className={`movie-card group ${touched ? 'touched' : ''}`}
-            onTouchStart={handleTouchStartInside}
+            onTouchStart={() => setTouched(true)}
             ref={cardRef}
         >
             {getFavoritedBadge()}
