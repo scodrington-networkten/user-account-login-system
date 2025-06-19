@@ -22,7 +22,7 @@ const MovieCard = ({movie}) => {
     //determine if this movie is a users fav
     useEffect(() => {
 
-        if(user === null) return;
+        if (user === null) return;
 
         //determine if currently favorite
         const isFavorite = user.favorite_movies.some(item => {
@@ -65,7 +65,6 @@ const MovieCard = ({movie}) => {
      */
     const getRatingSection = (movie) => {
 
-
         return (
             <section className="rating-information flex gap-2 mb-3 justify-between">
                 {utilities.getStarsSection(movie.vote_average)}
@@ -86,7 +85,7 @@ const MovieCard = ({movie}) => {
 
     const getFavoritedBadge = (movie) => {
 
-        if(!isFavorited) return;
+        if (!isFavorited) return;
 
         return (
             <div className="favorite-badge">
@@ -109,9 +108,7 @@ const MovieCard = ({movie}) => {
                 />
             </section>
 
-            <section
-                className="main-section">
-
+            <section className="main-section">
                 <div className="main-section-inner">
                     <section
                         className="movie-information-section -translate-y-10 transform transition duration-250 ease-in-out">
@@ -127,19 +124,13 @@ const MovieCard = ({movie}) => {
                         <section className="summary-section multiline-clamp">
                             {getSummarySection(movie)}
                         </section>
-                        <hr className="bottom-accent mt-2"/>
+
+                        <Link className="watch-button action-button mt-2" to={`/movie/${movie.id}`}>Watch Now</Link>
                     </section>
-
-                    <section className="genre-section hidden">
-                        {movie.genre_ids?.map((item, index) => (
-                            <p key={index}>{item}</p>
-                        ))}
-                    </section>
-
-
                 </div>
             </section>
         </article>
     )
+    //<hr className="bottom-accent mt-2"/>
 }
 export default MovieCard

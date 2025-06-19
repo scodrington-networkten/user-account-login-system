@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 .movies-list {
-
-
     .navigation {
         @apply flex justify-between;
     }
@@ -12,7 +10,16 @@
 
         .prev, .next {
             @apply text-white p-0 w-[30px] h-[30px] align-middle justify-center;
-            background-color: var(--color-highlight-secondary);
+            background-color: var(--color-highlight-ternary);
+
+            &:disabled {
+                @apply opacity-50;
+            }
+
+            &:hover,
+            &:focus {
+                background-color: var(--color-highlight-secondary);
+            }
         }
     }
 
@@ -25,9 +32,10 @@
 
         .page {
             @apply flex items-center justify-center p-2 bg-gray-800 rounded-sm text-white w-[30px] h-[30px] text-center;
+            background-color: var(--color-highlight-ternary);
 
             &.active {
-                @apply bg-gray-600;
+                background-color: var(--color-highlight-secondary);
             }
         }
     }

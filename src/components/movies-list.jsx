@@ -1,10 +1,8 @@
 import {useState} from "react";
 import MovieCard from "./movieCard/movie-card.jsx";
-import './movie-list.css';
-
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import './movie-list.css';
 
 
 import LoadingCardList from "@components/loading-card-list.jsx";
@@ -87,20 +85,21 @@ const MoviesList = ({
         return (
             <div className="navigation container m-auto">
                 <section className="results-nav flex align-center">
-                    {currentPage > 1 &&
-                        <button
-                            className="prev"
-                            title="Previous Page"
-                            onClick={onPrevButton}>
-                            <FontAwesomeIcon className="" icon={faChevronLeft}/>
-                        </button>
-                    }
-                    {currentPage < totalPages &&
-                        <button
-                            className="next"
-                            title="Next Page"
-                            onClick={onNextButton}><FontAwesomeIcon className="" icon={faChevronRight}/></button>
-                    }
+                    <button
+                        disabled={currentPage === 1}
+                        className="prev"
+                        title="Previous Page"
+                        aria-label="Previous Page"
+                        onClick={onPrevButton}>
+                        <FontAwesomeIcon className="" icon={faChevronLeft}/>
+                    </button>
+                    <button
+                        disabled={currentPage > totalPages}
+                        className="next"
+                        title="Next Page"
+                        aria-label="Next Page"
+                        onClick={onNextButton}><FontAwesomeIcon className="" icon={faChevronRight}/></button>
+
                 </section>
                 <div className="page-numbers">
                     {getPageNumbers(location)}
