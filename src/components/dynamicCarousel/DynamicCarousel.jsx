@@ -1,5 +1,4 @@
-
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import MovieCard from "@components/movieCard/movie-card.jsx";
 import useEmblaCarousel from "embla-carousel-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -16,12 +15,15 @@ const DynamicCarousel = ({movies}) => {
 
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [scrollSnaps, setScrollSnaps] = useState([]);
+    const isDragging = useRef(false);
 
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true
         }
     )
+
+
     const prevButton = () => {
         emblaApi?.scrollPrev();
     }
@@ -36,14 +38,29 @@ const DynamicCarousel = ({movies}) => {
      */
     const onSelect = (index) => {
 
+        if (!emblaApi) return;
         //dont scroll to self
         if (index === selectedIndex) return;
         emblaApi?.scrollTo(index);
     }
 
-
     useEffect(() => {
         if (!emblaApi) return;
+
+        emblaApi.on('pointerDown', () => {
+            isDragging.current = false;
+        });
+
+        emblaApi.on('pointerMove', () => {
+            isDragging.current = true;
+        });
+
+        emblaApi.on('pointerUp', () => {
+            setTimeout(() => {
+                isDragging.current = false;
+            }, 0);
+        });
+
 
         //collect scroll snaps
         setScrollSnaps(emblaApi.scrollSnapList());
@@ -99,8 +116,11 @@ const DynamicCarousel = ({movies}) => {
                 <div className="embla__container">
                     {movies.map((item, index) => {
                         return (
-                            <div className="embla__slide">
-                                <div className="embla__inner" key={index} onClick={() => onSelect(index)}>
+                            <div className="embla__slide" key={`slider-${index}`}>
+                                <div className="embla__inner" onClick={() => {
+                                    if (isDragging.current) return;
+                                    onSelect(index)
+                                }}>
                                     <MovieCard movie={item}/>
                                 </div>
                             </div>
@@ -125,7 +145,10 @@ const DynamicCarousel = ({movies}) => {
                                 <button
                                     key={index}
                                     className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
-                                    onClick={() => onSelect(index)}
+                                    onClick={() => {
+                                        if (isDragging.current) return;
+                                        onSelect(index)
+                                    }}
                                 />
                             ))}
                         </div>
