@@ -56,7 +56,12 @@ const SingleMovie = ({movie}) => {
         }
 
         const getMovieDetails = async () => {
-            const response = await fetch(`/api/get-movie-details?id=${movie.id}`);
+            const response = await fetch(`/api/get`, {
+                headers: {
+                    'x-action': 'get-movie',
+                    'movie-id': movie.id
+                }
+            });
             return response.json();
         }
         getMovieDetails().then(json => {

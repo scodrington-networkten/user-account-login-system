@@ -18,7 +18,11 @@ export const GenreProvider = ({children}) => {
         if (genres === null) {
             const fetchGenreData = async () => {
                 try {
-                    const response = await fetch("/api/get-genres");
+                    const response = await fetch("/api/get", {
+                        headers: {
+                            'x-action': 'get-genres'
+                        }
+                    });
                     if (!response.ok) {
                         throw new Error(`Fetch error: ${response.status} ${response.statusText}`);
                     }

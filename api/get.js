@@ -14,7 +14,11 @@ export default async function get(request, response) {
         'get-recommended-movies': getRecommendedMovies,
         'get-movie-keywords': getMovieKeywords,
         'get-movies-by-keyword': getMoviesByKeyword,
-        'get-keyword': getKeyword
+        'get-keyword': getKeyword,
+        'get-movie-credits': getMovieCredits,
+        'get-reviews-for-movie': getReviewsForMovie,
+        'get-genres': getGenres,
+        'get-movie': getMovie,
     }
 
     const handler = actionHandler[action];
@@ -120,7 +124,7 @@ const getMoviesByKeyword = async (request) => {
 
     try {
         const {'keyword-id': keywordId} = request.headers;
-        const {page = 1 } = request.headers;
+        const {page = 1} = request.headers;
         if (!keywordId) {
             throw new Error('A keyword-id headers key must be sent for this method');
         }
@@ -184,4 +188,131 @@ const getKeyword = async (request) => {
     }
 
 }
+
+/**
+ * Get all credits for an associated movie
+ * @param request
+ * @returns {Promise<any>}
+ */
+const getMovieCredits = async (request) => {
+
+    try {
+        const {'movie-id': movieId} = request.headers;
+        if (!movieId) {
+            throw new Error('A movie-id header key must be sent for this method');
+        }
+
+        let url = `${process.env.MOVIE_API_URL_BASE}movie/${movieId}/credits`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+const getReviewsForMovie = async (request) => {
+
+    try {
+        const {'movie-id': movieId} = request.headers;
+        if (!movieId) {
+            throw new Error('A movie-id header key must be sent for this method');
+        }
+
+        let url = `${process.env.MOVIE_API_URL_BASE}movie/${movieId}/reviews`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+
+
+}
+
+/**
+ * Get all genres used by movies
+ * @param request
+ * @returns {Promise<any>}
+ */
+const getGenres = async (request) => {
+    try {
+
+        let url = `${process.env.MOVIE_API_URL_BASE}genre/movie/list`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+/**
+ * Gets a movie via its given ID
+ * @param request
+ * @returns {Promise<any>}
+ */
+const getMovie = async (request) => {
+
+    try {
+        const {'movie-id': movieId} = request.headers;
+        if (!movieId) {
+            throw new Error('A movie-id header key must be sent for this method');
+        }
+
+        let url = `${process.env.MOVIE_API_URL_BASE}movie/${movieId}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+
+}
+
+
 

@@ -77,7 +77,11 @@
         @apply -bottom-[60px] w-full m-0;
 
         .embla__dot {
+            @apply transition-all;
 
+            &.is-selected{
+                @apply scale-120;
+            }
         }
     }
 }

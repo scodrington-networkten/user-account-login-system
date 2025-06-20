@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import MovieCard from "@components/movieCard/movie-card.jsx";
 import useEmblaCarousel from "embla-carousel-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -19,7 +19,8 @@ const DynamicCarousel = ({movies}) => {
 
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
-            loop: true
+            loop: true,
+            speed: 5
         }
     )
 

@@ -15,7 +15,12 @@ const ReviewCards = ({movie}) => {
         (async () => {
 
             setLoading(true);
-            const result = await fetch(`/api/get-reviews?movie_id=${movie.id}`);
+            const result = await fetch(`/api/get`, {
+                headers: {
+                    'x-action': 'get-reviews-for-movie',
+                    'movie-id': movie.id
+                }
+            });
             if (!result.ok) {
                 window.showToastNotification('There was an error getting the reviews for this movie', 'error');
             } else {

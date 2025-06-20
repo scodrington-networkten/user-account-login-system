@@ -14,9 +14,14 @@ const SingleMoviePage = () => {
     useEffect(() => {
         const getMovie = async () => {
             try {
-                const result = await fetch(`/api/get-movie?id=${id}`);
+                const result = await fetch(`/api/get`, {
+                    headers: {
+                        'x-action': 'get-movie',
+                        'movie-id': id
+                    }
+                });
                 const data = await result.json();
-                setMovie(data.json);
+                setMovie(data);
 
             } catch (err) {
                 setError("Failed to fetch movie.");

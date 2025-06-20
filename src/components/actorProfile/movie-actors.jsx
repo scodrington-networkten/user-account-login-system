@@ -7,7 +7,7 @@ import LoadingCardList from "@components/loading-card-list.jsx";
  * @param movie
  * @returns {JSX.Element}
  */
-export default function movieActors({movie}){
+export default function movieActors({movie}) {
 
     const [loading, setLoading] = useState(false);
     const [actors, setActors] = useState([])
@@ -19,8 +19,13 @@ export default function movieActors({movie}){
 
             setLoading(true);
             try {
-                const apiUrl = `/api/get-movie-credits?id=${movie.id}`;
-                const response = await fetch(apiUrl);
+                const apiUrl = `/api/get`;
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        'x-action': 'get-movie-credits',
+                        'movie-id': movie.id
+                    }
+                });
                 if (!response.ok) {
                     const errorText = await response.text();
                     throw new Error(`could not fetch credit information from: ${apiUrl}, error: ${errorText}`);
@@ -45,14 +50,14 @@ export default function movieActors({movie}){
 
     }, [movie.id]);
 
-    if(loading){
+    if (loading) {
         return (
             <div className="actors-list mt-4">
                 <h3>Cast & Crew</h3>
                 <LoadingCardList items={4}/>
             </div>
         )
-    }else{
+    } else {
         return (
             <div className="actors-list mt-4">
                 <h3>Cast & Crew</h3>

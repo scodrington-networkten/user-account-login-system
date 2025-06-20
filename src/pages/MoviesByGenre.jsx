@@ -38,10 +38,13 @@ const MoviesByGenre = () => {
 
         const getGenreData = async () => {
 
-            const result = await fetch('/api/get-genres');
+            const result = await fetch('/api/get', {
+                headers: {
+                    'x-action': 'get-genres'
+                }
+            });
             const json = await result.json();
-
-            let allGenres = json.data.genres;
+            let allGenres = json.genres;
 
             //find the matched genre
             let matchedGenre = _.find(allGenres, (item, index) => {
