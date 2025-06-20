@@ -112,6 +112,7 @@ const DynamicCarousel = ({movies}) => {
 
     return (
         <div className="container mx-auto py-8 overflow-hidden ">
+            <p>content before</p>
             <div className="embla dynamic-width-carousel relative w-full" ref={emblaRef}>
                 <div className="embla__container">
                     {movies.map((item, index) => {
@@ -155,7 +156,7 @@ const DynamicCarousel = ({movies}) => {
                     </div>
                 </div>
             </div>
-
+            <p>content after </p>
         </div>
     )
 }
