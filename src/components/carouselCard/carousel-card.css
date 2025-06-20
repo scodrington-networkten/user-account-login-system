@@ -15,7 +15,7 @@
 }
 
 .watch-button {
-    @apply border-0 transition-all;
+    @apply border-0 transition-all text-white;
     background-color: var(--color-highlight-secondary);
 
     &:hover {

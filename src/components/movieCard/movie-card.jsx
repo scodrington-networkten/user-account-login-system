@@ -11,7 +11,7 @@ import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useState, useRef} from "react";
 
-const MovieCard = ({movie}) => {
+const MovieCard = ({movie, classes = 'movie-card'}) => {
 
     const cardRef = useRef(null);
     const utilities = new Utilities();
@@ -95,12 +95,12 @@ const MovieCard = ({movie}) => {
             tabIndex="0"
             onFocus={() => setTouched(true)}
             onBlur={() => setTouched(false)}
-            className={`movie-card group ${touched ? 'touched' : ''}`}
+            className={` group ${touched ? 'touched' : ''} ${classes}`}
             onTouchStart={() => setTouched(true)}
             ref={cardRef}
         >
             {getFavoritedBadge()}
-            <section className="overflow-hidden w-full">
+            <section className="image-container overflow-hidden w-full">
                 <img
                     src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
                     alt={movie.title}
@@ -111,7 +111,7 @@ const MovieCard = ({movie}) => {
             <section className="main-section">
                 <div className="main-section-inner">
                     <section
-                        className="movie-information-section -translate-y-10 transform transition duration-250 ease-in-out">
+                        className="movie-information-section ">
                         <Link to={`/movie/${movie.id}`}>
                             <h3 className="text-3xl mb-2 font-semibold" title={movie.title}>
                                 {movie.title}

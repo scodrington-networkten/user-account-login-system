@@ -39,6 +39,7 @@ import MoviesByKeyword from "./pages/MoviesByKeyword..jsx";
 import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
 
 import SampleData from "./sampleData.js";
+import Test from "./pages/test.jsx";
 
 function App() {
 
@@ -69,6 +70,8 @@ function App() {
 
                                 <Route path="/test"
                                        element={<DynamicCarousel movies={SampleData.results.slice(6 - 14)}/>}/>
+
+                                <Route path="/new-movie-design" element={<Test/>}/>
 
                             </Routes>
                         </AppLayout>

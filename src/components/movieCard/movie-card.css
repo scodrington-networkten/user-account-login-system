@@ -47,7 +47,7 @@
         }
 
         .movie-information-section {
-            @apply group-hover:translate-y-0 group-[.touched]:translate-y-0;
+            @apply group-hover:translate-y-0 group-[.touched]:translate-y-0 -translate-y-10 transform transition duration-250 ease-in-out;
         }
 
         .bottom-section {
@@ -61,7 +61,43 @@
         }
     }
 
+
+
+
 }
+
+/**Alternate design**/
+.movie-card-alternate{
+
+    @apply flex flex-row gap-2 flex-nowrap  shadow-xl border-gray-200 border-1;
+
+    .image-container{
+        @apply flex-2/5 w-auto border-none;
+    }
+    .image-section{
+        @apply object-cover h-full;
+    }
+
+    .main-section{
+        @apply opacity-100 relative bg-transparent text-current p-2;
+        @apply flex-3/5 w-auto;
+
+
+    }
+    .movie-information-section{
+
+    }
+
+    .bottom-section{
+        @apply flex flex-col justify-start items-start;
+
+        .summary-section{
+            @apply mt-4;
+        }
+    }
+}
+
+
 
 .movie-card:hover {
     transform: translateY(-5px) scale(1.02);

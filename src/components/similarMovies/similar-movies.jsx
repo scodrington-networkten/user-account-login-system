@@ -42,8 +42,12 @@ export default function SimilarMovies({movie}) {
     return (
         <section className="similar-movies mt-4">
             <h3 className="text-3xl font-light mb-2">You might also like</h3>
-            <MoviesList movies={movies} loading={loading}
-                        cssClasses='grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'/>
+            <MoviesList
+                movies={movies}
+                loading={loading}
+                cssClasses='grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
+                showPagination={false}
+            />
         </section>
 
     )
