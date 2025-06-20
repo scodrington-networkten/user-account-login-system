@@ -35,6 +35,10 @@ const LatestMovies = () => {
         setSelectedIndex(emblaApi.selectedScrollSnap());
     }, [emblaApi]);
 
+    /**
+     * Scroll to the given index
+     * @type {(function(*): void)|*}
+     */
     const scrollTo = useCallback((index) => {
 
         if (!emblaApi) return;

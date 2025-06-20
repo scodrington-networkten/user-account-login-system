@@ -1,4 +1,6 @@
 
+@import "tailwindcss";
+
 .embla.dynamic-width-carousel {
 
     overflow: visible !important;
@@ -6,6 +8,16 @@
 
     .embla__container {
 
+    }
+
+    .gradient-left, .gradient-right{
+        @apply absolute h-full w-[40px] pointer-events-none;
+    }
+    .gradient-left{
+        @apply left-0 bottom-0 bg-gradient-to-r from-[rgba(0,0,0,0.3)]  to-transparent;
+    }
+    .gradient-right{
+        @apply right-0 bottom-0  bg-gradient-to-l from-[rgba(0,0,0,0.3)]  to-transparent;
     }
 
     .embla__slide {
@@ -37,11 +49,18 @@
             z-index: 10;
         }
 
-
         article {
             flex-grow: 1;
         }
 
 
+    }
+
+    .embla__navigation{
+
+    }
+
+    .embla__dots{
+        @apply -bottom-[30px] left-0 w-auto;
     }
 }

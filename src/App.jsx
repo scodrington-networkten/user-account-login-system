@@ -36,9 +36,9 @@ import WatchLater from "./pages/dashboard/watchLater.jsx";
 import Favorites from "./pages/dashboard/favorites.jsx";
 import ToastNotification from "@components/toastNotiification/toastNotification.jsx";
 import MoviesByKeyword from "./pages/MoviesByKeyword..jsx";
-import Test from "./pages/dashboard/test.jsx";
-import DynamicCarousel from "./pages/dashboard/test.jsx";
+import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
 
+import SampleData from "./sampleData.js";
 
 function App() {
 
@@ -67,7 +67,8 @@ function App() {
                                 <Route path="/dashboard/favorites" element={<Favorites/>}/>
 
 
-                                <Route path="/test" element={<DynamicCarousel/>}/>
+                                <Route path="/test"
+                                       element={<DynamicCarousel movies={SampleData.results.slice(6 - 14)}/>}/>
 
                             </Routes>
                         </AppLayout>
