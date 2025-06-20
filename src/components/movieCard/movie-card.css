@@ -69,7 +69,7 @@
 /**Alternate design**/
 .movie-card-alternate{
 
-    @apply flex flex-row gap-2 flex-nowrap  shadow-xl border-gray-200 border-1;
+    @apply flex flex-row gap-2 flex-nowrap  bg-white shadow-xl border-gray-200 border-1 transition-all;
 
     .image-container{
         @apply flex-2/5 w-auto border-none;
@@ -92,8 +92,14 @@
         @apply flex flex-col justify-start items-start;
 
         .summary-section{
-            @apply mt-4;
+            @apply mt-4 mb-1;
         }
+    }
+
+    &:focus,
+    &:hover,
+    &.touched{
+        @apply bg-gray-100;
     }
 }
 
