@@ -28,8 +28,8 @@ export const GenreProvider = ({children}) => {
                     }
 
                     const json = await response.json();
-                    setGenres(json.data.genres);
-                    sessionStorage.setItem("genres", JSON.stringify(json.data.genres));
+                    setGenres(json.genres);
+                    sessionStorage.setItem("genres", JSON.stringify(json.genres));
                 } catch (error) {
                     console.error("Failed to fetch genres:", error);
                 }

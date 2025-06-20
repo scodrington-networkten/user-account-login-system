@@ -84,7 +84,7 @@ export const UserProvider = ({children}) => {
     }
 
     const deleteToken = () => {
-        sessionStorage.removeItem('jwt');
+        localStorage.removeItem('jwt');
     }
 
     // Use useCallback to get fresh state inside the function
