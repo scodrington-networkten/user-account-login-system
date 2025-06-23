@@ -55,7 +55,6 @@ const LatestMovies = () => {
 
     useEffect(() => {
 
-
         //Connect to the API to pull in data
         const callApi = async () => {
 

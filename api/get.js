@@ -20,7 +20,8 @@ export default async function get(request, response) {
         'get-genres': getGenres,
         'get-movie': getMovie,
         'get-popular-movies': getPopularMovies,
-        'get-now-playing-movies': getNowPlayingMovies
+        'get-now-playing-movies': getNowPlayingMovies,
+        'get-details-for-person': getDetailsForPerson
     }
 
     const handler = actionHandler[action];
@@ -369,6 +370,42 @@ const getNowPlayingMovies = async (request) => {
         throw new Error(error.message);
     }
 
+
+}
+
+
+/**
+ * Given a person's ID, find information about them, including the movies they've performed in and ther social media links
+ * @param request
+ * @returns {Promise<any>}
+ */
+const getDetailsForPerson = async (request) => {
+
+    try {
+        const {'person-id': personId} = request.headers;
+        if (!personId) {
+            throw new Error('A person-id header key must be sent for this method');
+        }
+
+        //do a muli-response search, collecting the movies they've acted in + their external social media links
+        let url = `${process.env.MOVIE_API_URL_BASE}person/${personId}?append_to_response=movie_credits,external_ids`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
 
 }
 

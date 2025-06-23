@@ -40,6 +40,7 @@ import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
 
 import SampleData from "./sampleData.js";
 import Test from "./pages/test.jsx";
+import SinglePerson from "./pages/SinglePerson.jsx";
 
 function App() {
 
@@ -72,6 +73,8 @@ function App() {
                                        element={<DynamicCarousel movies={SampleData.results.slice(6 - 14)}/>}/>
 
                                 <Route path="/new-movie-design" element={<Test/>}/>
+
+                                <Route path="/person/:id/:name" element={<SinglePerson/>}/>
 
                             </Routes>
                         </AppLayout>
