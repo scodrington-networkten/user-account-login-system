@@ -40,7 +40,7 @@ import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
 
 import SampleData from "./sampleData.js";
 import Test from "./pages/test.jsx";
-import SinglePerson from "./pages/SinglePerson.jsx";
+import SinglePerson from "./pages/singlePerson/index.jsx";
 
 function App() {
 

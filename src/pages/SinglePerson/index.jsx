@@ -1,6 +1,11 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
+
+import SinglePersonMovies from "@components/Pages/SinglePerson/SinglePersonMovies.jsx";
+import SinglePersonSocialLinks from "@components/Pages/SinglePerson/SinglePersonSocialLinks.jsx";
+import SinglePersonDetails from "@components/Pages/SinglePerson/SinglePersonDetails.jsx";
+
 /**
  * Shows information about a single person
  * @returns {JSX.Element}
@@ -11,13 +16,14 @@ const SinglePerson = () => {
     //extract id and name
     const {id, name} = useParams();
 
-
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
     const [person, setPerson] = useState(null);
     const [movies, setMovies] = useState(null);
+    const [images, setImages] = useState(null);
     const [externalLinks, setExternalLinks] = useState(null)
 
+    //load information about
     useEffect(() => {
 
         (async function apiCall() {
@@ -29,7 +35,7 @@ const SinglePerson = () => {
                 const result = await fetch('/api/get', {
                     headers: {
                         'x-action': 'get-details-for-person',
-                        'person-id': 5521983
+                        'person-id': id
                     }
                 })
 
@@ -40,14 +46,13 @@ const SinglePerson = () => {
                 const data = await result.json();
 
                 //extract the base user data (discarding the credits and ids from the object)
-                const {movie_credits, external_ids, ...personData} = data;
+                const {movie_credits, external_ids, images, ...personData} = data;
 
                 setPerson(personData);
                 setMovies(data.movie_credits);
                 setExternalLinks(data.external_ids);
+                setImages(data.images);
 
-                console.log(data);
-                console.log(personData);
 
             } catch (error) {
                 setError(true);
@@ -60,7 +65,7 @@ const SinglePerson = () => {
     }, [id, name]);
 
 
-    if (loading) {
+    if (!person || loading) {
         return (
             <div className="container mx-auto mt-2 mb-2">
                 Loading...
@@ -76,25 +81,12 @@ const SinglePerson = () => {
         )
     }
 
-    const getPersonDetails = () => {
-        return <p>Details</p>
-    }
-
-    const getMovies = () => {
-        return <p>Movies</p>;
-    }
-
-
     return (
         <div className="container mx-auto mt-2 mb-2">
-            <section className="person-details">
-                {getPersonDetails()}
-            </section>
-            <section className="movies">
-                {getMovies()}
-            </section>
+            <SinglePersonMovies movies={movies}/>
+            <SinglePersonDetails details={person} images={images}/>
+            <SinglePersonSocialLinks links={externalLinks}/>
         </div>
-
     )
 }
 export default SinglePerson;

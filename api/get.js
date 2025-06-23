@@ -387,8 +387,15 @@ const getDetailsForPerson = async (request) => {
             throw new Error('A person-id header key must be sent for this method');
         }
 
+
+        let additionalEndpoints = [
+            'images',
+            'movie_credits',
+            'external_ids'
+        ];
+
         //do a muli-response search, collecting the movies they've acted in + their external social media links
-        let url = `${process.env.MOVIE_API_URL_BASE}person/${personId}?append_to_response=movie_credits,external_ids`;
+        let url = `${process.env.MOVIE_API_URL_BASE}person/${personId}?append_to_response=${additionalEndpoints.join(',')}`;
         const options = {
             method: 'GET',
             headers: {

@@ -1,6 +1,6 @@
 import './actorProfile.css';
 import Utilities from "../../utilities.jsx";
-import {useState, useEffect} from "react";
+import {useState, useEffect, act} from "react";
 
 /**
  * Single card for displaying an actor
