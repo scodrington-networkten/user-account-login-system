@@ -3,7 +3,6 @@ import {useState, useEffect} from "react";
 import LoadingCardList from "../components/loading-card-list.jsx";
 import GenreList from "../components/genre-list.jsx";
 import LatestMovies from "../components/latest-movies.jsx";
-
 const Home = () => {
 
     const [movies, setMovies] = useState([])
@@ -13,28 +12,31 @@ const Home = () => {
     //on page load, ensure we load popular data
     useEffect(() => {
         const apiCall = async () => {
-            const movieData = await fetchPopularMovies()
-            setMovies(movieData.results);
-            setLoading(false);
+
+            try {
+                const result = await fetch('/api/get', {
+                    headers: {
+                        'x-action': 'get-popular-movies',
+                        'page': 1
+                    }
+                });
+                if (!result.ok) {
+                    throw new Error("Error connecting to the popular movie feed");
+                }
+                const data = await result.json();
+                setMovies(data.results);
+
+            } catch (error) {
+                window.showToastNotification(error.message);
+            } finally {
+                setLoading(false);
+            }
         }
         apiCall();
 
     }, []);
 
 
-    const fetchPopularMovies = async () => {
-        const result = await fetch('/api/get-popular-movies');
-        if (!result.ok) {
-            alert("Error connecting to '/api/get-popular-movies' ");
-            return;
-        }
-        const data = await result.json();
-        return data.json;
-    }
-
-    const getPopularMovies = () => {
-
-    }
 
     const onNextButton = () => {
 
@@ -74,7 +76,7 @@ const Home = () => {
                             moviesLoading={false}
                             currentPage={1}
                             totalPages={1}
-                            showHeader={true}
+                            showHeader={false}
                         />
                     </div>
 

@@ -19,6 +19,8 @@ export default async function get(request, response) {
         'get-reviews-for-movie': getReviewsForMovie,
         'get-genres': getGenres,
         'get-movie': getMovie,
+        'get-popular-movies': getPopularMovies,
+        'get-now-playing-movies': getNowPlayingMovies
     }
 
     const handler = actionHandler[action];
@@ -31,7 +33,7 @@ export default async function get(request, response) {
         const result = await handler(request);
         return response.status(200).json(result);
     } catch (error) {
-        return response.status(500).error(error.message);
+        return response.status(500).json(error.message);
     }
 
 }
@@ -311,6 +313,62 @@ const getMovie = async (request) => {
     } catch (error) {
         throw new Error(error.message);
     }
+
+}
+
+const getPopularMovies = async (request) => {
+
+    try {
+        const {'page': page} = request.headers;
+        if (!page) {
+            throw new Error('A page header key must be sent for this method');
+        }
+
+        let url = `${process.env.MOVIE_API_URL_BASE}movie/popular?page=${page}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+
+
+}
+
+const getNowPlayingMovies = async (request) => {
+
+    try {
+
+        let url = `${process.env.MOVIE_API_URL_BASE}movie/now_playing`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+
 
 }
 

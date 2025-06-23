@@ -16,14 +16,13 @@ const LatestMovies = () => {
 
     const [movies, setMovies] = useState([]);
     const [moviesLoading, setMoviesLoading] = useState(false);
-
     const [error, setError] = useState(false);
 
     //slider elements here
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {loop: true},
         [Autoplay({
-            delay: 20000,
+            delay: 10000,
             stopOnInteraction: true
         })]
     )
@@ -57,29 +56,28 @@ const LatestMovies = () => {
     useEffect(() => {
 
 
-        let smallData = _.take(sampleData.results, 5);
-        //use temporary data for now!
-        setMovies(smallData);
-
-
-        return;
-
         //Connect to the API to pull in data
         const callApi = async () => {
 
-            setMoviesLoading(true);
-
-            const request = await fetch('/api/get-current-movies');
-            if (!request.ok) {
-
-            } else {
-                const json = await request.json();
-
-                setMovies(json.data.results);
-
-
+            try {
+                setMoviesLoading(true);
+                const request = await fetch('/api/get', {
+                    headers: {
+                        'x-action': 'get-now-playing-movies'
+                    }
+                });
+                if (!request.ok) {
+                    throw new Error("Could not connect to the feed of now playing movies")
+                } else {
+                    const data = await request.json();
+                    const subset = _.take(data.results, 5);
+                    setMovies(subset);
+                }
+            } catch (error) {
+                window.showToastNotification(error.message);
+            } finally {
+                setMoviesLoading(false);
             }
-            setMoviesLoading(false);
         }
         callApi();
 

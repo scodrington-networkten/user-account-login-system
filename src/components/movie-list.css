@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 .movies-list {
+    @apply mt-4;
+
     .navigation {
         @apply flex justify-between;
     }
@@ -35,7 +37,7 @@
             background-color: var(--color-highlight-ternary);
 
             &:hover,
-            &:focus{
+            &:focus {
                 background-color: var(--color-highlight-secondary);
             }
 

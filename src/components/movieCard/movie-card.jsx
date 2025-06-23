@@ -90,6 +90,7 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
             </div>
         )
     }
+
     return (
         <article
             tabIndex="0"
@@ -100,11 +101,13 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
             ref={cardRef}
         >
             {getFavoritedBadge()}
-            <section className="image-container overflow-hidden w-full">
+            <section className="image-container overflow-hidden w-full aspect-[2/3]">
                 <img
                     src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
+                    srcSet={`${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')} 1x ${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w500')} 2x`}
                     alt={movie.title}
                     className="image-section"
+                    loading="lazy"
                 />
             </section>
 

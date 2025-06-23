@@ -69,37 +69,49 @@
 /**Alternate design**/
 .movie-card-alternate{
 
-    @apply flex flex-row gap-2 flex-nowrap  bg-white shadow-xl border-gray-200 border-1 transition-all;
+    @apply flex flex-row gap-2 flex-nowrap  bg-white transition-all;
 
     .image-container{
-        @apply flex-2/5 w-auto border-none;
+        @apply flex-2/5 w-auto border-none pt-2;
     }
     .image-section{
-        @apply object-cover h-full;
+        @apply object-cover rounded;
     }
 
     .main-section{
-        @apply opacity-100 relative bg-transparent text-current p-2;
-        @apply flex-3/5 w-auto;
+        @apply flex-3/5 w-auto text-current p-2 ;
 
 
     }
     .movie-information-section{
-
+        h3{
+            @apply text-xl mb-1 md:text-2xl lg:text-3xl;
+        }
     }
 
     .bottom-section{
         @apply flex flex-col justify-start items-start;
 
+        .rating-information{
+            @apply mb-1 md:mb-2;
+        }
         .summary-section{
-            @apply mt-4 mb-1;
+            @apply mt-1 md:mt-2 lg:mt-4 mb-1;
+
+            .summary{
+                @apply leading-normal font-light text-sm;
+            }
         }
     }
 
     &:focus,
     &:hover,
     &.touched{
-        @apply bg-gray-100;
+        .movie-information-section{
+            h3{
+                color: var(--color-highlight-secondary);
+            }
+        }
     }
 }
 
