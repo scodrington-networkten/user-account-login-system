@@ -83,8 +83,9 @@ const SinglePerson = () => {
 
     return (
         <div className="container mx-auto mt-2 mb-2">
-            <SinglePersonMovies movies={movies}/>
+
             <SinglePersonDetails details={person} images={images}/>
+            <SinglePersonMovies movies={movies}/>
             <SinglePersonSocialLinks links={externalLinks}/>
         </div>
     )
