@@ -1,6 +1,8 @@
 import './actorProfile.css';
 import Utilities from "../../utilities.jsx";
 import {useState, useEffect, act} from "react";
+import {useNavigate} from "react-router-dom";
+import slugify from "slugify";
 
 /**
  * Single card for displaying an actor
@@ -13,15 +15,25 @@ const ActorProfile = ({actor}) => {
 
 
     const [isHovered, setIsHovered] = useState(false);
+    const navigate = useNavigate();
 
     const setIsHoveredState = (state) => {
         setIsHovered(state);
     }
 
     const onProfileCardClicked = () => {
+
+        //redirect person to the dedicated page
+
+        /*
         setIsHovered((prevState) => {
             return !prevState;
         })
+        */
+
+        const slugifiedName = slugify(actor.original_name, {lower: true, strict: true});
+        navigate(`/person/${actor.id}/${slugifiedName}`);
+
     }
 
     /**
@@ -57,7 +69,7 @@ const ActorProfile = ({actor}) => {
 
 
             <div className={`actor-hover-card`}>
-                <div className="triangle " />
+                <div className="triangle "/>
                 <p className="name">{actor.original_name}</p>
                 <p className="character">({actor.character})</p>
             </div>
