@@ -9,6 +9,7 @@ import ReviewCards from "@components/reviews/reviewCards/reviewCards.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
+import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 
 import MovieActors from "@components/actorProfile/movie-actors.jsx";
 import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
@@ -122,7 +123,7 @@ const SingleMovie = ({movie}) => {
                     className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-1 md:gap-y-2">
                     <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
                     <div className="release-date mb-4">
-                        <p>{Utilities.formatDate(movie.release_date)}</p>
+                        <p><FontAwesomeIcon icon={faCalendar}/> {Utilities.formatDate(movie.release_date)}</p>
                     </div>
 
                     <div className="overview text-1xl items-start font-light">{movie.overview}</div>
