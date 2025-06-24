@@ -147,6 +147,77 @@ class Utilities {
         return _.startCase(_.toLower(initalString));
     }
 
+
+    /**
+     * Given a data (e.g 'GerardButler' and type 'facebook_id'), return the full url to the resource such as 'https://www.facebook.com/GerardButler'
+     * @param data - data for the url, appended to the url based on type
+     * @param type {"freebase_mid"|"freebase_id"|"imdb_id"|"tvrage_id"|"wikidata_id"|"facebook_id"|"instagram_id"|"tiktok_id"|"twitter_id"|"youtube_id"}
+     *
+     */
+    static getSocialMediaButton(data, type) {
+
+        if (!data || !type) return null;
+
+        const matrix = {
+            freebase_mid: {
+                url: `https://www.freebase.com${data}`,
+                name: 'Freebase'
+            },
+            freebase_id: {
+                url: `https://www.freebase.com${data}`,
+                name: 'Freebase'
+            },
+            imdb_id: {
+                url: `https://www.imdb.com/name/${data}`,
+                name: 'IMDB'
+            },
+            tvrage_id: {
+                url: `https://www.tvmaze.com/people/${data}`,
+                name: 'TvRage'
+            },
+            wikidata_id: {
+                url: `https://www.wikidata.org/wiki/${data}`,
+                name: 'Wikidata'
+            },
+            facebook_id: {
+                url: `https://www.facebook.com/${data}`,
+                name: 'Facebook'
+            },
+            instagram_id: {
+                url: `https://www.instagram.com/${data}`,
+                name: 'Instagram'
+            },
+            tiktok_id: {
+                url: `https://www.tiktok.com/@${data}`,
+                name: 'TikTok'
+            },
+            twitter_id: {
+                url: `https://twitter.com/${data}`,
+                name: 'Twitter'
+            },
+            youtube_id: {
+                url: `https://www.youtube.com/@${data}`,
+                name: 'Youtube'
+            }
+        };
+
+        const platform = matrix[type];
+        if (!platform) return null;
+
+        return (
+            <a
+                key={type}
+                className="social-media-button button"
+                href={platform.url}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {platform.name}
+            </a>
+        );
+
+    }
+
     /**
      * Builds a TMDB image URL using the provided image type and size.
      *

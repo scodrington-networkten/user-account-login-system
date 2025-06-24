@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import SinglePersonMovies from "@components/Pages/SinglePerson/SinglePersonMovies.jsx";
 import SinglePersonSocialLinks from "@components/Pages/SinglePerson/SinglePersonSocialLinks.jsx";
 import SinglePersonDetails from "@components/Pages/SinglePerson/SinglePersonDetails.jsx";
+import LoadingCard from "@components/loading-card.jsx";
 
 /**
  * Shows information about a single person
@@ -67,26 +68,24 @@ const SinglePerson = () => {
 
     if (!person || loading) {
         return (
-            <div className="container mx-auto mt-2 mb-2">
-                Loading...
+            <div className="container px-4  mx-auto mt-2 mb-2">
+                <LoadingCard/>
             </div>
         )
     }
 
     if (error) {
         return (
-            <div className="container mx-auto mt-2 mb-2">
+            <div className="container px-4  mx-auto mt-2 mb-2">
                 There was an error collecting information about this person
             </div>
         )
     }
 
     return (
-        <div className="container mx-auto mt-2 mb-2">
-
-            <SinglePersonDetails details={person} images={images}/>
+        <div className="container px-4 mx-auto mt-2 mb-2">
+            <SinglePersonDetails details={person} images={images} externalLinks={externalLinks}/>
             <SinglePersonMovies movies={movies}/>
-            <SinglePersonSocialLinks links={externalLinks}/>
         </div>
     )
 }
