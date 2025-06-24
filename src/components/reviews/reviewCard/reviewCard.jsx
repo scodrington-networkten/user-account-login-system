@@ -41,8 +41,8 @@ const ReviewCard = ({review}) => {
      */
     const getReviewDate = () => {
 
-        let createdDate = utilities.formatDate(review.created_at, true);
-        let updatedDate = (review.updated_at) ? utilities.formatDate(review.updated_at, true) : '';
+        let createdDate = Utilities.formatDate(review.created_at, true);
+        let updatedDate = (review.updated_at) ? Utilities.formatDate(review.updated_at, true) : '';
 
         //if updated date, ensure proper delta between update and creation and show it next to the date
         if (updatedDate) {

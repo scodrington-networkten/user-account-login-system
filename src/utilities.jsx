@@ -26,7 +26,7 @@ class Utilities {
      * @param showTime - append the time info such as 12:35PM
      * @returns {string}
      */
-    formatDate = (dateString, showTime = false) => {
+    static formatDate = (dateString, showTime = false) => {
 
         if (_.isEmpty(dateString)) {
             console.log('an empty date string was passed');

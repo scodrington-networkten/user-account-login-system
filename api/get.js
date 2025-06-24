@@ -23,6 +23,7 @@ export default async function get(request, response) {
         'get-now-playing-movies': getNowPlayingMovies,
         'get-details-for-person': getDetailsForPerson,
         'get-upcoming-movies': getUpcomingMovies,
+        'get-latest-movies': getLatestMovies
     }
 
     const handler = actionHandler[action];
@@ -428,6 +429,84 @@ const getUpcomingMovies = async (request) => {
     try {
 
         let url = `${process.env.MOVIE_API_URL_BASE}movie/upcoming`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+const getLatestMovies = async (request) => {
+
+    const getStartDate = () => {
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - 14);
+        return startDate.toISOString().slice(0, 10);
+    }
+
+
+    const getEndDate = () => {
+        const endDate = new Date();
+        return endDate.toISOString().slice(0, 10);
+    }
+
+
+    try {
+
+        let filters = [
+            {
+                key: 'include_adult',
+                value: true
+            },
+            {
+                key: 'include_video',
+                value: true
+            },
+            {
+                key: 'page',
+                value: 1
+            },
+            {
+                key: 'region',
+                value: 'US'
+            },
+            {
+                key: 'release_date.gte',
+                value: getStartDate()
+            },
+            {
+                key: 'release_date.lte',
+                value: getEndDate()
+            },
+            {
+                key: 'sort_by',
+                value: 'primary_release_date.desc'
+            },
+            {
+                key: 'with_release_type',
+                value: ('2|3')
+            }
+        ]
+
+        //combine all arguments to pass to discover to find good movies within the last 14 days
+        let filterString = filters.map(({key, value}) => {
+            return `${key}=${encodeURIComponent(value)}`;
+        }).join('&');
+
+        let url = `${process.env.MOVIE_API_URL_BASE}discover/movie?${filterString}`;
         const options = {
             method: 'GET',
             headers: {

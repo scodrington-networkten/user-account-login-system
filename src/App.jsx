@@ -41,8 +41,9 @@ import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
 import SampleData from "./sampleData.js";
 import Test from "./pages/test.jsx";
 import SinglePerson from "./pages/SinglePerson/index.jsx";
-import LatestMovies from "./pages/LatestMovies/Index.jsx";
+import UpcomingMovies from "./pages/UpcomingMovies/Index.jsx";
 import PopularMovies from "./pages/PopularMovies/index.jsx";
+import LatestMovies from "./pages/LatestMovies/index.jsx";
 
 function App() {
 
@@ -65,23 +66,23 @@ function App() {
 
                                 <Route path="/keyword/:keyword" element={<MoviesByKeyword/>}/>
 
-
                                 <Route path="/dashboard" element={<Dashboard/>}/>
                                 <Route path="/dashboard/watch-later" element={<WatchLater/>}/>
                                 <Route path="/dashboard/favorites" element={<Favorites/>}/>
+
+                                <Route path="/person/:id/:name" element={<SinglePerson/>}/>
+
+
+
+                                <Route path="/movies/upcoming" element={<UpcomingMovies />}/>
+                                <Route path="/movies/popular" element={<PopularMovies />}/>
+                                <Route path="/movies/latest" element={<LatestMovies />}/>
 
 
                                 <Route path="/test"
                                        element={<DynamicCarousel movies={SampleData.results.slice(6 - 14)}/>}/>
 
                                 <Route path="/new-movie-design" element={<Test/>}/>
-
-                                <Route path="/person/:id/:name" element={<SinglePerson/>}/>
-
-
-
-                                <Route path="/movies/latest" element={<LatestMovies />}/>
-                                <Route path="/movies/popular" element={<PopularMovies />}/>
 
                             </Routes>
                         </AppLayout>

@@ -6,9 +6,13 @@ import {faMapPin, faBirthdayCake, faCamera, faClapperboard} from "@fortawesome/f
 
 const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
 
+    /**
+     * Returns multiple images of the person, these are alternative images
+     * @returns {JSX.Element}
+     */
     const getProfileImages = () => {
         return (
-            <div className="profile-images grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-4">
+            <div className="profile-images grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-4 w-full">
                 {images?.profiles?.map((item, index) => {
                     const url = Utilities.getApiImageUrl(item.file_path ?? null, 'profile', 'w185');
                     return <img

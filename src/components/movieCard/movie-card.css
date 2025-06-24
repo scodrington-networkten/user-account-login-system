@@ -46,6 +46,18 @@
             @apply flex flex-col flex-grow justify-between px-4 py-4 box-content leading-tight overflow-hidden;
         }
 
+        .release-date{
+            @apply mb-1 md:mb-2 italic;
+        }
+
+        .rating-information{
+            @apply flex gap-2 mb-1 md:mb-2 justify-between;
+        }
+
+        .summary{
+            @apply text-base;
+        }
+
         .movie-information-section {
             @apply group-hover:translate-y-0 group-[.touched]:translate-y-0 -translate-y-10 transform transition duration-250 ease-in-out;
         }
@@ -80,9 +92,8 @@
 
     .main-section{
         @apply flex-3/5 w-auto text-current p-2 ;
-
-
     }
+
     .movie-information-section{
         h3{
             @apply text-xl mb-1 md:text-2xl lg:text-3xl;
@@ -93,7 +104,7 @@
         @apply flex flex-col justify-start items-start;
 
         .rating-information{
-            @apply mb-1 md:mb-2;
+            @apply mb-1;
         }
         .summary-section{
             @apply mt-1 md:mt-2 lg:mt-4 mb-1;

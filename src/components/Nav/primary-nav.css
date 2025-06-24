@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+.primary-nav{
+
+    a{
+        @apply transition-all;
+        color: var(--color-white);
+    }
+
+    a:hover,
+    a:focus{
+        color: var( --color-highlight-secondary);
+    }
+
+    a.active{
+        color: var(--color-highlight-secondary);
+    }
+}

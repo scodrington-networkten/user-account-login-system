@@ -38,7 +38,19 @@ export default function MovieKeywords({movie}) {
 
     if (loading) {
         return (
-            <p>Loading</p>
+            <section className="movie-keywords">
+                <h3 className="text-3xl font-light mb-4">Keywords</h3>
+                <p>Loading</p>
+            </section>
+
+        )
+    } else if (keywords.length === 0) {
+        return (
+            <section className="movie-keywords">
+                <h3 className="text-3xl font-light mb-4">Keywords</h3>
+                <p>There are no keywords associated with this movie</p>
+            </section>
+
         )
     } else {
         return (
@@ -53,7 +65,6 @@ export default function MovieKeywords({movie}) {
                     }
                 </div>
             </section>
-
 
 
         )

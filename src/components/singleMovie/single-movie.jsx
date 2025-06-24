@@ -40,7 +40,7 @@ const SingleMovie = ({movie}) => {
 
     const utilities = new Utilities();
     /** @type {MovieDetails | null} */
-    const [movieDetails, setMovieDetails] = useState(null);
+    const [movieDetails, setMovieDetails] = useState([]);
 
     const [actors, setActors] = useState(null);
 
@@ -78,12 +78,12 @@ const SingleMovie = ({movie}) => {
 
     const getProductionCompanies = () => {
 
-        if (movieDetails === null) {
+        if (movieDetails.length === 0) {
 
             return (
                 <div className="production-companies-section mt-4">
                     <h3 className="">Production Companies</h3>
-                    <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
+                    <p>There are no production companies associated with this movie</p>
                 </div>
             )
         } else {
@@ -119,11 +119,17 @@ const SingleMovie = ({movie}) => {
 
             <div className="container m-auto flex mt-0 flex-wrap">
                 <section
-                    className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-4 md:gap-y-6">
+                    className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-1 md:gap-y-2">
                     <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
+                    <div className="release-date mb-4">
+                        <p>{Utilities.formatDate(movie.release_date)}</p>
+                    </div>
+
                     <div className="overview text-1xl items-start font-light">{movie.overview}</div>
-                    <div className="review-stars-section">{utilities.getStarsSection(movie.vote_average)}</div>
-                    <div className="review-count-section">{utilities.getVotesSection(movie.vote_count)}</div>
+                    <div className="review-section flex gap-4">
+                        <div className="review-stars-section">{utilities.getStarsSection(movie.vote_average)}</div>
+                        <div className="review-count-section">{utilities.getVotesSection(movie.vote_count)}</div>
+                    </div>
 
                     <section className="genre-section mt-8 flex gap-4">
                         {movie.genres.map((item, index) => (

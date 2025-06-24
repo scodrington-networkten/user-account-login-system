@@ -6,9 +6,6 @@ import StandardLayout from "@components/Layouts/StandardLayout.jsx";
 
 const LatestMovies = () => {
 
-
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(false);
@@ -27,7 +24,8 @@ const LatestMovies = () => {
 
                 const result = await fetch('/api/get', {
                     headers: {
-                        'x-action': 'get-upcoming-movies'
+                        'x-action': 'get-latest-movies',
+                        'page': 1
                     }
                 })
                 if (!result.ok) {
@@ -38,12 +36,11 @@ const LatestMovies = () => {
                 //set latest from API
                 const data = await result.json();
                 setMovies(data.results);
-                setStartDate(data.dates.minimum);
-                setEndDate(data.dates.maximum);
 
             } catch (error) {
                 setError(true);
                 window.showToastNotification(error.message, 'error');
+                console.error(error);
             } finally {
                 setLoading(false);
             }
@@ -66,7 +63,7 @@ const LatestMovies = () => {
 
         if (movies.length === 0) {
             return (
-                <p>There are no upcoming movies to show!</p>
+                <p>There are no latest movies to show!</p>
             )
         }
 
@@ -74,7 +71,8 @@ const LatestMovies = () => {
             <MoviesList
                 movies={movies}
                 showPagination={false}
-                showHeader={false} totalPages={1}
+                showHeader={false}
+                totalPages={1}
             />
         )
     }

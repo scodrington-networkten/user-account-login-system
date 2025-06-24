@@ -63,7 +63,7 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
     const getRatingSection = (movie) => {
 
         return (
-            <section className="rating-information flex gap-2 mb-3 justify-between">
+            <section className="rating-information">
                 {utilities.getStarsSection(movie.vote_average)}
                 {utilities.getVotesSection(movie.vote_count)}
                 <div className="flex flex-1 justify-end">
@@ -76,7 +76,7 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
 
     const getSummarySection = (movie) => {
         return (
-            <p className="summary text-base">{utilities.getTrimmedString(movie.overview, 150)}</p>
+            <p className="summary ">{utilities.getTrimmedString(movie.overview, 150)}</p>
         )
     }
 
@@ -123,6 +123,7 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
                     </section>
 
                     <section className="bottom-section ">
+                        <p className="release-date">{Utilities.formatDate(movie.release_date)}</p>
                         {getRatingSection(movie)}
                         <section className="summary-section multiline-clamp">
                             {getSummarySection(movie)}
