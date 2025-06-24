@@ -104,7 +104,7 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
             <section className="image-container overflow-hidden w-full aspect-[2/3]">
                 <img
                     src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
-                    srcSet={`${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')} 1x ${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w500')} 2x`}
+                    srcSet={`${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')} 1x, ${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w500')} 2x`}
                     alt={movie.title}
                     className="image-section"
                     loading="lazy"

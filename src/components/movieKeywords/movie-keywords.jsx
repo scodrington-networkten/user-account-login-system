@@ -22,7 +22,7 @@ export default function MovieKeywords({movie}) {
             });
 
             if (!result.ok) {
-                window.showToastNotification('There was an issue fetching the keywords for this movie');
+                window.showToastNotification('There was an issue fetching the keywords for this movie', 'error');
                 return;
             }
 

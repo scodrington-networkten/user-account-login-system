@@ -3,11 +3,8 @@ import SinglePersonSocialLinks from "@components/Pages/SinglePerson/SinglePerson
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 import {faMapPin, faBirthdayCake, faCamera, faClapperboard} from "@fortawesome/free-solid-svg-icons";
-import movieCard from "@components/movieCard/movie-card.jsx";
 
 const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
-
-    const profileImage = Utilities.getApiImageUrl(details.profile_path, 'profile', 'w185');
 
     const getProfileImages = () => {
         return (
@@ -26,11 +23,13 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
 
     return (
         <article className="details items-start block">
-
             <h1 className="text-2xl lg:text-5xl mb-2 mb-4">{details.name}</h1>
-
             <aside className="main-profile-image col-span-2 float-left mr-4">
-                <img src={profileImage} className="profile-image w-full mb-2"/>
+                <img
+                    alt={`Photo of ${details.name}`}
+                    src={Utilities.getApiImageUrl(details.profile_path, 'profile', 'w185')}
+                    className="profile-image w-full mb-2"
+                />
             </aside>
 
             <section className="profile-information ">
@@ -42,16 +41,18 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
                     {details.birthday &&
                         <p className="">
                             <FontAwesomeIcon icon={faBirthdayCake}/> {details.birthday}
-                        </p>}
+                        </p>
+                    }
                     {details.deathday &&
                         <p>
                             <FontAwesomeIcon icon={faCalendar}/> {details.deathday}
-                        </p>}
+                        </p>
+                    }
                     {details.homepage &&
                         <p>
                             <a href={details.homepage} className="button">View Website</a>
-                        </p>}
-
+                        </p>
+                    }
                     {movies?.cast?.length > 0 &&
                         <p>
                             <FontAwesomeIcon icon={faCamera}/> Appeared in {movies?.cast?.length} movies

@@ -41,6 +41,8 @@ import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
 import SampleData from "./sampleData.js";
 import Test from "./pages/test.jsx";
 import SinglePerson from "./pages/SinglePerson/index.jsx";
+import LatestMovies from "./pages/LatestMovies/Index.jsx";
+import PopularMovies from "./pages/PopularMovies/index.jsx";
 
 function App() {
 
@@ -75,6 +77,11 @@ function App() {
                                 <Route path="/new-movie-design" element={<Test/>}/>
 
                                 <Route path="/person/:id/:name" element={<SinglePerson/>}/>
+
+
+
+                                <Route path="/movies/latest" element={<LatestMovies />}/>
+                                <Route path="/movies/popular" element={<PopularMovies />}/>
 
                             </Routes>
                         </AppLayout>

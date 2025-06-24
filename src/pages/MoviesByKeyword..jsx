@@ -28,7 +28,7 @@ const MoviesByKeyword = () => {
     useEffect(() => {
 
         (async () => {
-            
+
             try {
                 setLoading(true);
 
@@ -41,7 +41,7 @@ const MoviesByKeyword = () => {
                 })
 
                 if (!keywordResult.ok) {
-                    window.showToastNotification('There was an issue finding the keyword');
+                    window.showToastNotification('There was an issue finding the keyword', 'error');
                     return;
                 }
 
@@ -70,7 +70,7 @@ const MoviesByKeyword = () => {
                 setMovies(movieData.results);
                 setTotalPages(movieData.total_pages);
             } catch (error) {
-                window.showToastNotification(error.message);
+                window.showToastNotification(error.message, 'error');
                 console.error(error.message);
             } finally {
                 setLoading(false);

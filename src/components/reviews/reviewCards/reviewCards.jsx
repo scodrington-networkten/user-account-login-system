@@ -26,7 +26,7 @@ const ReviewCards = ({movie}) => {
             } else {
                 const data = await result.json();
                 console.log(data.results);
-                setReviews(data.results);
+                //setReviews(data.results);
             }
             setLoading(false);
         })();

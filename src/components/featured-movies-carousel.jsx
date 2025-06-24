@@ -12,7 +12,12 @@ import './latest-movies.css';
 
 import _ from "lodash";
 
-const LatestMovies = () => {
+/**
+ * Shows a featured movies carousel hero component
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const FeaturedMoviesCarousel = () => {
 
     const [movies, setMovies] = useState([]);
     const [moviesLoading, setMoviesLoading] = useState(false);
@@ -73,7 +78,7 @@ const LatestMovies = () => {
                     setMovies(subset);
                 }
             } catch (error) {
-                window.showToastNotification(error.message);
+                window.showToastNotification(error.message, 'error');
             } finally {
                 setMoviesLoading(false);
             }
@@ -135,4 +140,4 @@ const LatestMovies = () => {
         <div className="latest-movies max-w-full bg-gray-600">{getOutput()}</div>
     )
 }
-export default LatestMovies
+export default FeaturedMoviesCarousel

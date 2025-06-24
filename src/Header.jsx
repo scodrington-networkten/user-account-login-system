@@ -10,7 +10,8 @@ import slugify from "slugify";
 import {useLocation} from 'react-router-dom';
 
 import {useUser} from "./contexts/UserContext.jsx";
-import Sidebar from "@components/sidebar/sidebar.jsx";
+import UserActionsSidebar from "@components/sidebar/userActionsSidebar.jsx";
+import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
 
 
 const Header = () => {
@@ -98,7 +99,7 @@ const Header = () => {
                                 userSubmenuOpen ? "block" : "hidden"
                             }`}
                         >
-                            <Sidebar closeMenu={() => setUserSubmenuOpen(false)}/>
+                            <UserActionsSidebar closeMenu={() => setUserSubmenuOpen(false)}/>
                         </nav>
                     </div>
                 </div>
@@ -144,6 +145,7 @@ const Header = () => {
                             </form>
                         </div>
                     }
+                    <PrimaryNav/>
                 </section>
                 <section className="header-links flex gap-4 items-center">
                     {displayUserIconSection()}

@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 
-const Sidebar = () => {
+const UserActionsSidebar = () => {
 
     const location = useLocation();
 
@@ -31,5 +31,5 @@ const Sidebar = () => {
         </aside>
     )
 }
-export default Sidebar
+export default UserActionsSidebar
 

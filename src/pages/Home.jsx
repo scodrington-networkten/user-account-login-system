@@ -2,7 +2,7 @@ import MoviesList from "../components/movies-list.jsx";
 import {useState, useEffect} from "react";
 import LoadingCardList from "../components/loading-card-list.jsx";
 import GenreList from "../components/genre-list.jsx";
-import LatestMovies from "../components/latest-movies.jsx";
+import FeaturedMoviesCarousel from "@components/featured-movies-carousel.jsx";
 const Home = () => {
 
     const [movies, setMovies] = useState([])
@@ -27,7 +27,7 @@ const Home = () => {
                 setMovies(data.results);
 
             } catch (error) {
-                window.showToastNotification(error.message);
+                window.showToastNotification(error.message, 'error');
             } finally {
                 setLoading(false);
             }
@@ -56,7 +56,7 @@ const Home = () => {
         if (loading) {
             return (
                 <>
-                    <LatestMovies/>
+                    <FeaturedMoviesCarousel/>
                     <div className={"px-4 w-full"}>
                         <GenreList/>
                         <LoadingCardList/>
@@ -66,7 +66,7 @@ const Home = () => {
         } else {
             return (
                 <>
-                    <LatestMovies/>
+                    <FeaturedMoviesCarousel/>
                     <div className={"px-4 w-full"}>
                         <GenreList/>
                         <MoviesList

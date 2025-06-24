@@ -24,7 +24,7 @@ const SinglePerson = () => {
     const [images, setImages] = useState(null);
     const [externalLinks, setExternalLinks] = useState(null)
 
-    //load information about
+    //load information about the single person
     useEffect(() => {
 
         (async function apiCall() {
@@ -57,7 +57,7 @@ const SinglePerson = () => {
 
             } catch (error) {
                 setError(true);
-                window.showToastNotification(error.message);
+                window.showToastNotification(error.message, 'error');
             } finally {
                 setLoading(false);
             }

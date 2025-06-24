@@ -21,7 +21,8 @@ export default async function get(request, response) {
         'get-movie': getMovie,
         'get-popular-movies': getPopularMovies,
         'get-now-playing-movies': getNowPlayingMovies,
-        'get-details-for-person': getDetailsForPerson
+        'get-details-for-person': getDetailsForPerson,
+        'get-upcoming-movies': getUpcomingMovies,
     }
 
     const handler = actionHandler[action];
@@ -415,6 +416,37 @@ const getDetailsForPerson = async (request) => {
     }
 
 }
+
+/**
+ * Get a list of upcoming (or recent) movies from the API
+ * @see https://developer.themoviedb.org/reference/movie-upcoming-list
+ * @param request
+ * @returns {Promise<any>}
+ */
+const getUpcomingMovies = async (request) => {
+
+    try {
+
+        let url = `${process.env.MOVIE_API_URL_BASE}movie/upcoming`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        const result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
 
 
 
