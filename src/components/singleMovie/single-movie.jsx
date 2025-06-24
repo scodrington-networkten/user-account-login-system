@@ -76,7 +76,6 @@ const SingleMovie = ({movie}) => {
     }, [movie.id])
 
 
-
     const getProductionCompanies = () => {
 
         if (movieDetails.length === 0) {
@@ -126,15 +125,16 @@ const SingleMovie = ({movie}) => {
                         <h3 className="tagline">{movie.tagline}</h3>
                     }
 
-                    <div className="release-date mb-4">
+                    <div className="release-date">
                         <p><FontAwesomeIcon icon={faCalendar}/> {Utilities.formatDate(movie.release_date)}</p>
                     </div>
-
-                    <div className="overview text-1xl items-start font-light">{movie.overview}</div>
-                    <div className="review-section flex gap-4">
+                    <div className="review-section flex gap-4 mb-4">
                         <div className="review-stars-section">{utilities.getStarsSection(movie.vote_average)}</div>
                         <div className="review-count-section">{utilities.getVotesSection(movie.vote_count)}</div>
                     </div>
+
+                    <div className="overview text-1xl items-start font-light">{movie.overview}</div>
+
 
                     <section className="genre-section mt-8 flex gap-4">
                         {movie.genres.map((item, index) => (
