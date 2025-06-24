@@ -145,11 +145,16 @@ const Header = () => {
                             </form>
                         </div>
                     }
-                    <PrimaryNav/>
+                    <div className="desktop-nav-links hidden md:block">
+                        <PrimaryNav/>
+                    </div>
                 </section>
                 <section className="header-links flex gap-4 items-center">
                     {displayUserIconSection()}
                 </section>
+            </div>
+            <div className="mobile-nav-links block md:hidden">
+                <PrimaryNav/>
             </div>
         </header>
     )
