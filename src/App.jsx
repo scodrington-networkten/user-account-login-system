@@ -11,6 +11,11 @@ import '@fontsource/inter/500.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/700.css';
 
+//font family support for inter + italic
+import '@fontsource/inter/400-italic.css';
+import '@fontsource/inter/500-italic.css';
+import '@fontsource/inter/700-italic.css';
+
 
 import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
 import {useState, useEffect} from 'react';

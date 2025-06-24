@@ -122,6 +122,10 @@ const SingleMovie = ({movie}) => {
                 <section
                     className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-1 md:gap-y-2">
                     <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
+                    {movie?.tagline &&
+                        <h3 className="tagline">{movie.tagline}</h3>
+                    }
+
                     <div className="release-date mb-4">
                         <p><FontAwesomeIcon icon={faCalendar}/> {Utilities.formatDate(movie.release_date)}</p>
                     </div>

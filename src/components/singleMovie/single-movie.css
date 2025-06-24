@@ -1,16 +1,25 @@
 @import "tailwindcss";
 
-.production-companies{
+.single-movie {
+
+    .tagline {
+        @apply italic font-light text-xl mb-3 md:mb-4 lg:mb-5;
+        color: var(--color-highlight-secondary);
+    }
+}
+
+
+.production-companies {
     @apply flex gap-2 mt-3 flex-wrap items-center;
 
-    .production-company{
+    .production-company {
         max-height: 100px;
     }
 }
 
-.single-movie{
+.single-movie {
 
-    .top-gradient{
+    .top-gradient {
         position: absolute;
         top: -60px;
         left: 0px;
