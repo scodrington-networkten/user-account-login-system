@@ -84,7 +84,7 @@ const SinglePerson = () => {
 
     return (
         <div className="container px-4 mx-auto mt-2 mb-2">
-            <SinglePersonDetails details={person} images={images} externalLinks={externalLinks}/>
+            <SinglePersonDetails details={person} movies={movies} images={images} externalLinks={externalLinks}/>
             <SinglePersonMovies movies={movies}/>
         </div>
     )

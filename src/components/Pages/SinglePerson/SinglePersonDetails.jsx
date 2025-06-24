@@ -1,7 +1,11 @@
 import Utilities from "../../../utilities.jsx";
 import SinglePersonSocialLinks from "@components/Pages/SinglePerson/SinglePersonSocialLinks.jsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCalendar} from "@fortawesome/free-regular-svg-icons";
+import {faMapPin, faBirthdayCake, faCamera, faClapperboard} from "@fortawesome/free-solid-svg-icons";
+import movieCard from "@components/movieCard/movie-card.jsx";
 
-const SinglePersonDetails = ({details, images, externalLinks}) => {
+const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
 
     const profileImage = Utilities.getApiImageUrl(details.profile_path, 'profile', 'w185');
 
@@ -30,16 +34,34 @@ const SinglePersonDetails = ({details, images, externalLinks}) => {
             </aside>
 
             <section className="profile-information ">
-                <div className="primary mb-4">
-                    {details.place_of_birth && <p className="font-semibold">{details.place_of_birth}</p>}
-                    {details.birthday && <p className="">{details.birthday}</p>}
-                    {details.deathday && <p>{details.deathday}</p>}
-                    {details.homepage && <p>{details.homepage}</p>}
-                    {details.id && (
+                <div className="primary mb-4 flex flex-col gap-1">
+                    {details.place_of_birth &&
+                        <p className="font-semibold">
+                            <FontAwesomeIcon icon={faMapPin}/> {details.place_of_birth}
+                        </p>}
+                    {details.birthday &&
+                        <p className="">
+                            <FontAwesomeIcon icon={faBirthdayCake}/> {details.birthday}
+                        </p>}
+                    {details.deathday &&
                         <p>
-                            <a href={`https://www.imdb.com/name/${details.imdb_id}`}>IMDB Profile</a>
+                            <FontAwesomeIcon icon={faCalendar}/> {details.deathday}
+                        </p>}
+                    {details.homepage &&
+                        <p>
+                            <a href={details.homepage} className="button">View Website</a>
+                        </p>}
+
+                    {movies?.cast?.length > 0 &&
+                        <p>
+                            <FontAwesomeIcon icon={faCamera}/> Appeared in {movies?.cast?.length} movies
                         </p>
-                    )}
+                    }
+                    {movies?.crew?.length > 0 &&
+                        <p>
+                            <FontAwesomeIcon icon={faClapperboard}/> Directed {movies?.crew?.length} movies
+                        </p>
+                    }
                 </div>
                 <section className="social-media-links flex flex-wrap clear-left md:clear-none">
                     <SinglePersonSocialLinks links={externalLinks}/>
