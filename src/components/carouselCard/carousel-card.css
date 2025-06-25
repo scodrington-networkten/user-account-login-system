@@ -1,65 +1,112 @@
 @import "tailwindcss";
 
-
-.action-button {
-    @apply flex items-center justify-center gap-3 font-semibold  py-1 px-3 md:py-3 md:px-5 rounded-3xl ;
-}
-
-.action-secondary {
-    @apply border-0 text-white;
-    background-color: var(--color-secondary);
-
-    &:hover {
-
-    }
-}
-
-.watch-button {
-    @apply border-0 transition-all text-white;
-    background-color: var(--color-highlight-secondary);
-
-    &:hover {
-        background-color: var(--color-highlight-ternary);
-    }
-}
-
-.add-to-list-button {
-    @apply border-1 border-white transition-all;
-
-    &:hover {
-        background-color: white;
-        @apply text-gray-800;
-    }
-}
-
-.button-small {
-    @apply py-2 px-3 rounded-3xl text-sm cursor-pointer;
-
-}
-
+/* Carousel Card Component */
 .carousel-card {
-    .title {
-        @apply font-bold md:text-3xl lg:text-6xl text-3xl lg:mb-6 ;
+    @apply relative h-[450px] md:h-[450px] lg:h-[600px] bg-gray-600;
+
+    /* Overlay layer */
+
+    .background-hero-image-overlay {
+        @apply absolute w-full h-full top-0 left-0;
+        /* add bg-opacity, bg-color, etc. as needed */
     }
+
+    /* Background hero image */
+
+    .background-hero-image {
+        @apply absolute w-full h-full top-0 left-0 z-0 bg-cover bg-center;
+    }
+
+    /* Main content container */
+
+    .main-container {
+        @apply h-full mx-auto container flex relative z-10 p-4 gap-2 md:pt-22 md:gap-4 lg:pt-26 lg:gap-8;
+    }
+
+    /* Poster section */
+
+    .right {
+        @apply flex-grow-0 hidden md:block mt-0;
+    }
+
+    .image-section {
+        @apply shadow-xl;
+    }
+
+    /* Text content section */
+
+    .left {
+        @apply w-full md:w-auto mt-[85px] md:mt-0 flex-grow text-white md:max-w-[70%];
+    }
+
+    /* Primary text wrapper */
+
+    .primary {
+        @apply flex flex-col gap-2 justify-start items-start z-10;
+    }
+
+    /* Title styling */
+
+    .title {
+        @apply font-bold text-3xl md:text-3xl lg:text-6xl lg:mb-6;
+    }
+
+    /* Genre button group */
+
+    .genre-section {
+        @apply flex flex-wrap gap-2 mb-2 md:mb-3 lg:mb-4;
+
+        .button-list {
+            @apply flex flex-wrap gap-2 md:gap-3;
+        }
+
+        .button {
+            @apply text-sm;
+        }
+    }
+
+
+    /** action links **/
+
+    .action-links {
+        @apply flex gap-2;
+
+        .action-button {
+            @apply flex items-center justify-center gap-3 font-semibold py-1 px-3 md:py-3 md:px-5 rounded-3xl transition-all;
+        }
+
+        .watch-button {
+            @apply border-0 text-white;
+            background-color: var(--color-highlight-secondary);
+        }
+
+        .watch-button:hover {
+            background-color: var(--color-highlight-ternary);
+        }
+
+        .add-to-list-button {
+            @apply border border-white;
+        }
+
+        .add-to-list-button:hover {
+            @apply text-gray-800;
+            background-color: white;
+        }
+
+    }
+
+
 }
 
+/* Movie summary text variants */
 .movie-summary {
     @apply text-xl font-light;
-
-    &.movie-summary-short {
-        @apply md:hidden text-base;
-    }
-
-    &.movie-summary-long {
-        @apply hidden md:block md:mb-4 lg:mb-6 md:text-lg lg:text-xl items-start leading-relaxed;
-    }
 }
 
-.button-transparent {
+.movie-summary-short {
+    @apply md:hidden text-base;
+}
 
-    background-color: rgba(0, 0, 0, 0.2);
-
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.6);
-    }
+.movie-summary-long {
+    @apply hidden md:block md:mb-4 lg:mb-6 md:text-lg lg:text-xl leading-relaxed;
 }

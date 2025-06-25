@@ -57,7 +57,7 @@ export default function MovieKeywords({movie}) {
 
             <section className="movie-keywords">
                 <h3 className="text-3xl font-light mb-4">Keywords</h3>
-                <div className="keywords flex flex-wrap gap-2">
+                <div className="keywords flex flex-wrap gap-1 md:gap-2">
                     {
                         keywords.map((item, index) => {
                             return <MovieKeyword keyword={item} key={`movie-keyword-${index}`}/>

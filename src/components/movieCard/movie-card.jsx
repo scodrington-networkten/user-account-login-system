@@ -128,7 +128,7 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
                         <section className="summary-section multiline-clamp">
                             {getSummarySection(movie)}
                         </section>
-                        <Link className="watch-button action-button mt-2" to={`/movie/${movie.id}`}>
+                        <Link className="primary-button action-button mt-2" to={`/movie/${movie.id}`}>
                             <FontAwesomeIcon icon={faPlay}/> Watch Now
                         </Link>
                     </section>

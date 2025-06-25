@@ -136,7 +136,7 @@ const SingleMovie = ({movie}) => {
                     <div className="overview text-1xl items-start font-light">{movie.overview}</div>
 
 
-                    <section className="genre-section mt-8 flex gap-4">
+                    <section className="genre-section mt-8 flex gap-1 md:gap-2">
                         {movie.genres.map((item, index) => (
                             <GenreButton genre={item} key={`genre-button-${index}`}/>
                         ))}

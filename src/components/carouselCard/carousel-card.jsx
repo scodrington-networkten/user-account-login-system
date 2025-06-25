@@ -1,15 +1,12 @@
 import {Link} from "react-router-dom";
-
 import {faPlay, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-import './carousel-card.css';
-
-import {GenreContext} from "../../contexts/GenreContext.jsx";
+import {GenreContext} from "@contexts/GenreContext.jsx";
 import {useContext} from "react";
-
 import _ from "lodash";
 import GenreButton from "@components/genre-button.jsx";
+
+import './carousel-card.css';
 
 const CarouselCard = ({movie}) => {
 
@@ -38,7 +35,7 @@ const CarouselCard = ({movie}) => {
         //leverage the existing genre button to show these genres
         return (
             <GenreButton
-                classes={'button-small button-transparent'}
+                classes={'button button-small button-transparent'}
                 genre={genre}
                 isActive={false}
                 key={`genre-button-${genre.id}`}
@@ -67,7 +64,7 @@ const CarouselCard = ({movie}) => {
     }
 
     return (
-        <article className="carousel-card relative h-[450px] md:h-[450px] lg:h-[600px] bg-gray-600">
+        <article className="carousel-card">
             <div className="background-hero-image-overlay"></div>
             <div
                 style={{
@@ -75,12 +72,12 @@ const CarouselCard = ({movie}) => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                 }}
-                className="background-hero-image absolute w-full h-full top-0 z-0"
+                className="background-hero-image"
             ></div>
             <div
-                className="main-container h-full m-auto container flex flex- relative z-1 p-4 gap-2 md:pt-22 md:gap-4 lg:pt-26 lg:gap-8 ">
-                <section className="right flex-grow-0 hidden md:block mt-0">
-                    <div className="image-section shadow-xl">
+                className="main-container ">
+                <section className="right">
+                    <div className="image-section">
                         <img
                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                             alt={movie.title}
@@ -88,29 +85,27 @@ const CarouselCard = ({movie}) => {
                         />
                     </div>
                 </section>
-                <section className="left w-full md:w-auto mt-[85px] md:mt-0  flex-grow-1 text-white md:max-w-[70%]">
-                    <section className="primary flex gap-2 flex-col justify-start flex-start items-start z-1">
+                <section className="left">
+                    <section className="primary">
                         <Link className="" to={`/movie/${movie.id}`}>
                             <h1 className="title">{movie.title}</h1>
                         </Link>
-
                         {getSummarySection(movie)}
-
-                        <section
-                            className="genre-section button-list flex flex-wrap gap-1 mb-2 md:mb-3 lg:mb-4 mb:gap-2">
-                            {movie.genre_ids.map((item, index) => (
-                                getGenreButton(item)
-                            ))}
+                        <section className="genre-section">
+                            <div className="button-list">
+                                {movie.genre_ids.map((item, index) => (
+                                    getGenreButton(item)
+                                ))}
+                            </div>
                         </section>
 
-                        <div className="flex gap-2">
+                        <div className="action-links">
                             <Link className="action-button watch-button" to={`/movie/${movie.id}`}>
                                 <FontAwesomeIcon icon={faPlay}/><p>Watch Now</p>
                             </Link>
                             <Link className="action-button add-to-list-button" to={`/movie/${movie.id}`}>
                                 <FontAwesomeIcon icon={faPlus}/><p>Watchlist</p>
                             </Link>
-
                         </div>
 
                     </section>
