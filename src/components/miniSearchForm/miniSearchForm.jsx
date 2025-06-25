@@ -4,8 +4,9 @@ import slugify from "slugify";
 import {useState, useRef, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import './mini-search-form.css';
+import {faXmark} from '@fortawesome/free-solid-svg-icons';
 
-import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.jsx";
+import {useSharedState} from "@contexts/SharedStateConext.jsx";
 
 const MiniSearchForm = () => {
 
@@ -88,8 +89,11 @@ const MiniSearchForm = () => {
 
         return (
             <div className="mini-search-form">
+
                 <div className="background-overlay" onClick={onBackgroundOverlayClick}></div>
                 <div className="search-form">
+                    <div className="close-button" onClick={onBackgroundOverlayClick}><FontAwesomeIcon icon={faXmark}/>
+                    </div>
                     <form onSubmit={handleSearchSubmit} className="">
                         <input
                             ref={inputRef}

@@ -24,6 +24,15 @@
 
     }
 
+    .close-button {
+        @apply absolute -top-4 -right-8 text-white rounded-full bg-gray-800 w-[30px] h-[30px] flex items-center justify-center cursor-pointer transition-all;
+
+        &:focus,
+        &:hover{
+            @apply bg-gray-600;
+        }
+    }
+
 
     form {
         @apply flex justify-stretch items-stretch;

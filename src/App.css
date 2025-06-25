@@ -252,9 +252,14 @@ body {
 
 .button.button-transparent{
 
-    @apply text-white rounded-xl bg-transparent px-2 py-1 md:px-3 md:py-2;
+    @apply text-white rounded-xl bg-transparent px-2 py-1 md:px-3 md:py-2 transition-all;
     background-color: rgba(var(--color-primary-rgb), 0.4);
     border: solid 1px rgba(var(--color-white-rgb), 0.4);
+
+    &:focus,
+    &:hover{
+        background-color: rgba(var(--color-primary-rgb), 0.6);
+    }
 }
 
 .primary-button{
