@@ -77,17 +77,18 @@ const CarouselCard = ({movie}) => {
                 }}
                 className="background-hero-image absolute w-full h-full top-0 z-0"
             ></div>
-            <div className="main-container m-auto container flex flex- relative z-1 p-4 md:p-12 lg:p-16 gap-2 md-gap-4 lg:gap-8">
-                <section className="right md:mt-4 lg:mt-10 flex-grow-0 hidden md:block ">
+            <div
+                className="main-container h-full m-auto container flex flex- relative z-1 p-4 gap-2 md:pt-22 md:gap-4 lg:pt-26 lg:gap-8 ">
+                <section className="right flex-grow-0 hidden md:block mt-0">
                     <div className="image-section shadow-xl">
                         <img
                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                             alt={movie.title}
-                            className=" rounded-lg h-full w-auto max-h-[300px]"
+                            className=" rounded-lg h-full w-auto max-h-[300px] lg:max-h-[350px] xl:max-height-[400px]"
                         />
                     </div>
                 </section>
-                <section className="left w-full md:w-auto mt-[85px] md:mt-4 lg:mt-10 flex-grow-1 text-white md:max-w-[70%]">
+                <section className="left w-full md:w-auto mt-[85px] md:mt-0  flex-grow-1 text-white md:max-w-[70%]">
                     <section className="primary flex gap-2 flex-col justify-start flex-start items-start z-1">
                         <Link className="" to={`/movie/${movie.id}`}>
                             <h1 className="title">{movie.title}</h1>
@@ -95,7 +96,8 @@ const CarouselCard = ({movie}) => {
 
                         {getSummarySection(movie)}
 
-                        <section className="genre-section button-list flex gap-1 sm:mb-2 md:mb-4 lg:mb-6">
+                        <section
+                            className="genre-section button-list flex flex-wrap gap-1 mb-2 md:mb-3 lg:mb-4 mb:gap-2">
                             {movie.genre_ids.map((item, index) => (
                                 getGenreButton(item)
                             ))}

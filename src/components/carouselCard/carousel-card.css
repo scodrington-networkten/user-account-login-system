@@ -39,7 +39,7 @@
 
 .carousel-card {
     .title {
-        @apply font-bold md:text-3xl lg:text-6xl text-3xl sm:mb-2 md:mb-4 lg:mb-6 mt-2;
+        @apply font-bold md:text-3xl lg:text-6xl text-3xl lg:mb-6 ;
     }
 }
 
@@ -51,7 +51,7 @@
     }
 
     &.movie-summary-long {
-        @apply hidden md:block md:mb-4 lg:mb-6 md:text-lg lg:text-xl items-start;
+        @apply hidden md:block md:mb-4 lg:mb-6 md:text-lg lg:text-xl items-start leading-relaxed;
     }
 }
 

@@ -139,7 +139,7 @@ const Header = () => {
                             {getTitleSection()}
                             {getUserSection()}
                         </div>
-                        <div className="flex justify-start">
+                        <div className="flex justify-start mt-2">
                             {getLinksSection()}
                         </div>
                     </div>
