@@ -24,6 +24,10 @@
 
     }
 
+    h2{
+        @apply text-xl text-white mb-3;
+    }
+
     .close-button {
         @apply absolute -top-4 -right-8 text-white rounded-full bg-gray-800 w-[30px] h-[30px] flex items-center justify-center cursor-pointer transition-all;
 

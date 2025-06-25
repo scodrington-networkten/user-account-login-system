@@ -29,6 +29,8 @@ const MiniSearchForm = () => {
 
         if (searchInput.trim() !== '') {
 
+            onBackgroundOverlayClick();
+
             let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
             navigate(`/search?q=${urlEncodedQuery}`);
             setSearchInput('');
@@ -92,8 +94,8 @@ const MiniSearchForm = () => {
 
                 <div className="background-overlay" onClick={onBackgroundOverlayClick}></div>
                 <div className="search-form">
-                    <div className="close-button" onClick={onBackgroundOverlayClick}><FontAwesomeIcon icon={faXmark}/>
-                    </div>
+                    <h2>What are you searching for?</h2>
+                    <div className="close-button" onClick={onBackgroundOverlayClick}><FontAwesomeIcon icon={faXmark}/></div>
                     <form onSubmit={handleSearchSubmit} className="">
                         <input
                             ref={inputRef}
