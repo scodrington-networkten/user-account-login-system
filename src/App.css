@@ -16,6 +16,14 @@
 
 }
 
+* {
+    /**outline: 1px solid rgba(0, 255, 0, 0.2); /* light green outlines */
+}
+
+html, body {
+    overflow-x: hidden; /* TEMP: prevent scroll while you debug */
+}
+
 .embla {
     overflow: hidden;
 }

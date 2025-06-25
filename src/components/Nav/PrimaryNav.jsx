@@ -39,7 +39,7 @@ const PrimaryNav = () => {
     }
 
     return (
-        <nav className="primary-nav flex gap-4">
+        <nav className="primary-nav">
             {getNavigationItems()}
         </nav>
     )

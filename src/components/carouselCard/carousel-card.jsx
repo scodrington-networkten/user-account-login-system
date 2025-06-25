@@ -67,7 +67,7 @@ const CarouselCard = ({movie}) => {
     }
 
     return (
-        <article className="carousel-card relative h-[400px] md:h-[450px] lg:h-[600px] bg-gray-600">
+        <article className="carousel-card relative h-[450px] md:h-[450px] lg:h-[600px] bg-gray-600">
             <div className="background-hero-image-overlay"></div>
             <div
                 style={{
@@ -87,7 +87,7 @@ const CarouselCard = ({movie}) => {
                         />
                     </div>
                 </section>
-                <section className="left w-full md:w-auto mt-[50px] md:mt-4 lg:mt-10 flex-grow-1 text-white md:max-w-[70%]">
+                <section className="left w-full md:w-auto mt-[85px] md:mt-4 lg:mt-10 flex-grow-1 text-white md:max-w-[70%]">
                     <section className="primary flex gap-2 flex-col justify-start flex-start items-start z-1">
                         <Link className="" to={`/movie/${movie.id}`}>
                             <h1 className="title">{movie.title}</h1>

@@ -95,10 +95,12 @@ const FeaturedMoviesCarousel = () => {
         }
 
         if (moviesLoading) {
-            return <p>Loading in content</p>
+            return (
+                <section className="aspect-[16/9] bg-gray-800"></section>
+            )
         }
         return (
-            <section className="latest-movies-carousel flex w-full  -mt-[60px]">
+            <section className="latest-movies-carousel flex w-full ">
                 <div className="embla relative w-full" ref={emblaRef}>
                     <div className="embla__container relative">
                         {movies.map((item, index) => {
@@ -137,7 +139,7 @@ const FeaturedMoviesCarousel = () => {
     }
 
     return (
-        <div className="latest-movies max-w-full bg-gray-600">{getOutput()}</div>
+        <div className="latest-movies max-w-full w-full">{getOutput()}</div>
     )
 }
 export default FeaturedMoviesCarousel

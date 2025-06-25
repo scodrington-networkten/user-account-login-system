@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .primary-nav{
-
+    @apply flex gap-4;
     a{
         @apply transition-all;
         color: var(--color-white);

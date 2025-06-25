@@ -115,7 +115,7 @@ const SingleMovie = ({movie}) => {
 
     return (
         <article className="single-movie flex gap-4 flex-grow relative p-4 w-full">
-            <div className="top-gradient"></div>
+            <div className="top-gradient-DELETE"></div>
 
             <div className="container m-auto flex mt-0 flex-wrap">
                 <section

@@ -5,7 +5,7 @@ import {faSearch, faVideo, faUser} from "@fortawesome/free-solid-svg-icons";
 
 import './components/header.css';
 import {useState, useRef, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+
 import slugify from "slugify";
 import {useLocation} from 'react-router-dom';
 
@@ -13,28 +13,20 @@ import {useUser} from "./contexts/UserContext.jsx";
 import UserActionsSidebar from "@components/sidebar/userActionsSidebar.jsx";
 import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
 
+import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.jsx";
+
 
 const Header = () => {
 
-    const navigate = useNavigate();
+
     const location = useLocation();
-    const inputRef = useRef(null);
-
-    const [searchInput, setSearchInput] = useState('');
-    const [searchVisible, setSearchVisible] = useState(false);
-
     const [userSubmenuOpen, setUserSubmenuOpen] = useState(false);
-
     const {user} = useUser();
 
-    //when search form visability changes, ensure if its visible we set focus
-    useEffect(() => {
 
-        if (searchVisible) {
-            inputRef.current.focus();
-        }
+    const {miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
 
-    }, [searchVisible]);
+
 
     //handle when we change loction, close the nav
     useEffect(() => {
@@ -47,30 +39,10 @@ const Header = () => {
      */
     const onSearchIconClick = () => {
 
-        setSearchVisible((prevState) => {
-            return !prevState;
-        });
+        setMiniSearchFormOpen(!miniSearchFormOpen);
     }
 
-    /**
-     * Handle search submit and move
-     * @param e
-     */
-    const handleSearchSubmit = (e) => {
 
-        e.preventDefault();
-
-        setSearchVisible(false);
-
-        if (searchInput.trim() !== '') {
-
-            let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
-            navigate(`/search?q=${urlEncodedQuery}`);
-            setSearchInput('');
-
-        }
-
-    }
 
 
     //display header section based on logged in user
@@ -114,48 +86,82 @@ const Header = () => {
         }
     }
 
+
+
+    const getTitleSection = () => {
+
+        return (
+            <div className="header-title flex items-center gap-2">
+                <Link to={"/"} className="flex items-center gap-2" title="Home">
+                    <FontAwesomeIcon icon={faVideo}/>
+                    <span className="logo-text ">MovieSearch</span>
+                </Link>
+                <FontAwesomeIcon
+                    className="search-icon"
+                    title="Lets have a search!"
+                    icon={faSearch}
+                    onClick={onSearchIconClick}
+                />
+            </div>
+        )
+    }
+
+
+
+    const getLinksSection = () => {
+
+        return (
+            <section className="links items-center">
+                <PrimaryNav/>
+            </section>
+
+        )
+    }
+
+    const getUserSection = () => {
+
+        return (
+            <section className="header-links flex items-center">
+                {displayUserIconSection()}
+            </section>
+        )
+    }
+
+
     return (
-        <header className="page-header">
-            <div className="container mx-auto flex justify-between items-center">
-                <section className="header-title flex gap-4  justify-stretch items-center">
-                    <Link to={"/"} className="flex items-center gap-2" title="Home">
-                        <FontAwesomeIcon icon={faVideo}/>
-                        <span className="logo-text ">MovieSearch</span>
-                    </Link>
-                    <FontAwesomeIcon className="search-icon" title="Lets have a search!" icon={faSearch}
-                                     onClick={onSearchIconClick}/>
-                    {searchVisible &&
-                        <div className="mini-search-form">
-                            <form onSubmit={handleSearchSubmit} className="">
-                                <input
-                                    ref={inputRef}
-                                    name="search-text-inpit"
-                                    type="text"
-                                    className=""
-                                    placeholder="Find a movie"
-                                    value={searchInput}
-                                    onChange={(e) => {
-                                        setSearchInput(e.target.value);
-                                    }}
-                                />
-                                <button type="submit" className="">
-                                    <FontAwesomeIcon className="search-submit-icon" title="movie search"
-                                                     icon={faSearch}/>
-                                </button>
-                            </form>
+        <header className="page-header" id="page-header">
+            <div className="container mx-auto flex items-center">
+
+
+                <section className="flex flex-col md:hidden flex-1 relative">
+                    <div className="inner">
+                        <div className="flex justify-between flex-1">
+                            {getTitleSection()}
+                            {getUserSection()}
                         </div>
-                    }
-                    <div className="desktop-nav-links hidden md:block">
-                        <PrimaryNav/>
+                        <div className="flex justify-start">
+                            {getLinksSection()}
+                        </div>
                     </div>
                 </section>
-                <section className="header-links flex gap-4 items-center">
-                    {displayUserIconSection()}
+
+                <section className="hidden md:flex flex-col flex-1 relative">
+                    <div className="inner">
+                        <div className="flex justify-between flex-1 items-center">
+                            <div className="title-and-links items-center flex md:gap-4 lg:gap-6">
+                                {getTitleSection()}
+                                {getLinksSection()}
+                            </div>
+                            {getUserSection()}
+                        </div>
+                    </div>
                 </section>
+
+
+
+
             </div>
-            <div className="mobile-nav-links block md:hidden">
-                <PrimaryNav/>
-            </div>
+
         </header>
     )
 }

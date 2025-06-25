@@ -49,52 +49,59 @@ import SinglePerson from "./pages/SinglePerson/index.jsx";
 import UpcomingMovies from "./pages/UpcomingMovies/Index.jsx";
 import PopularMovies from "./pages/PopularMovies/index.jsx";
 import LatestMovies from "./pages/LatestMovies/index.jsx";
+import {SharedStateProvider} from "@contexts/SharedStateConext.jsx";
 
 function App() {
 
+
     return (
+
         <BrowserRouter>
             <div className="relative">
-                <UserProvider>
-                    <GenreProvider>
-                        <AppLayout>
+                <SharedStateProvider>
+                    <UserProvider>
+                        <GenreProvider>
                             <RouteProgressTracker/>
                             <Routes>
-                                <Route path="/" element={<Home/>}/>
-                                <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
-                                <Route path="/movie/:id" element={<SingleMoviePage/>}/>
-                                <Route path="/search" element={<SearchResults/>}/>
+                                <Route element={<AppLayout contextOffset={true}/>}>
+                                    <Route path="/" element={<Home/>}/>
+                                </Route>
 
-                                <Route path="/signup" element={<Signup/>}/>
-                                <Route path="/login" element={<Login/>}/>
-                                <Route path="/logout" element={<Logout/>}/>
+                                <Route element={<AppLayout contextOffset={false}/>}>
+                                    <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
+                                    <Route path="/movie/:id" element={<SingleMoviePage/>}/>
+                                    <Route path="/search" element={<SearchResults/>}/>
 
-                                <Route path="/keyword/:keyword" element={<MoviesByKeyword/>}/>
+                                    <Route path="/signup" element={<Signup/>}/>
+                                    <Route path="/login" element={<Login/>}/>
+                                    <Route path="/logout" element={<Logout/>}/>
 
-                                <Route path="/dashboard" element={<Dashboard/>}/>
-                                <Route path="/dashboard/watch-later" element={<WatchLater/>}/>
-                                <Route path="/dashboard/favorites" element={<Favorites/>}/>
+                                    <Route path="/keyword/:keyword" element={<MoviesByKeyword/>}/>
 
-                                <Route path="/person/:id/:name" element={<SinglePerson/>}/>
+                                    <Route path="/dashboard" element={<Dashboard/>}/>
+                                    <Route path="/dashboard/watch-later" element={<WatchLater/>}/>
+                                    <Route path="/dashboard/favorites" element={<Favorites/>}/>
 
-
-
-                                <Route path="/movies/upcoming" element={<UpcomingMovies />}/>
-                                <Route path="/movies/popular" element={<PopularMovies />}/>
-                                <Route path="/movies/latest" element={<LatestMovies />}/>
+                                    <Route path="/person/:id/:name" element={<SinglePerson/>}/>
 
 
-                                <Route path="/test"
-                                       element={<DynamicCarousel movies={SampleData.results.slice(6 - 14)}/>}/>
+                                    <Route path="/movies/upcoming" element={<UpcomingMovies/>}/>
+                                    <Route path="/movies/popular" element={<PopularMovies/>}/>
+                                    <Route path="/movies/latest" element={<LatestMovies/>}/>
 
-                                <Route path="/new-movie-design" element={<Test/>}/>
+                                    <Route path="/test"
+                                           element={<DynamicCarousel movies={SampleData.results.slice(6 - 14)}/>}/>
 
+                                    <Route path="/new-movie-design" element={<Test/>}/>
+                                </Route>
                             </Routes>
-                        </AppLayout>
-                    </GenreProvider>
-                    <UserExpiredPopup/>
-                    <ToastNotification/>
-                </UserProvider>
+
+
+                        </GenreProvider>
+                        <UserExpiredPopup/>
+                        <ToastNotification/>
+                    </UserProvider>
+                </SharedStateProvider>
             </div>
         </BrowserRouter>
 
