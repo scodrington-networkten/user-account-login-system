@@ -3,7 +3,7 @@ import Footer from "./Footer.jsx";
 import {useEffect, useRef} from "react";
 import {Outlet} from 'react-router-dom';
 import {useLocation} from "react-router-dom";
-import MiniSearchForm from "@components/miniSearchForm.jsx";
+import MiniSearchForm from "@components/miniSearchForm/miniSearchForm.jsx";
 
 const AppLayout = ({children, contextOffset = false}) => {
 

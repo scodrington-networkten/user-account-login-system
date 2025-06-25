@@ -70,7 +70,6 @@ const SingleMovie = ({movie}) => {
 
             let newCache = (cache !== null) ? {...cache, [movie.id]: json} : {[movie.id]: json};
             sessionStorage.setItem('movie_details_cache', JSON.stringify(newCache));
-
         });
 
     }, [movie.id])

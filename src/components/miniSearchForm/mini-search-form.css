@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+.mini-search-form {
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0px;
+
+    .background-overlay {
+
+        cursor: pointer;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(38, 38, 38, 0.6);
+
+    }
+
+    .search-form {
+
+        @apply absolute p-4 top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800;
+
+    }
+
+
+    form {
+        @apply flex justify-stretch items-stretch;
+
+        &:focus-within {
+
+            input {
+                border-color: var(--color-highlight-secondary);
+            }
+
+            button {
+                border-color: var(--color-highlight-secondary);
+            }
+        }
+
+    }
+
+    /** search input box**/
+
+    input {
+        @apply border p-1 px-2 rounded rounded-tr-none rounded-br-none transition-all flex-grow text-white;
+
+        &::placeholder {
+            @apply text-white;
+        }
+
+        &:focus, &:hover, &:focus-visible {
+            @apply border outline-none;
+
+        }
+    }
+
+    /** search button with icon**/
+
+    button {
+        @apply flex text-sm justify-center bg-transparent items-center border border-solid border-1 border-white  text-white outline-none p-0 px-2 rounded rounded-tl-none rounded-bl-none border-l-0;
+
+
+        &:focus, &:hover {
+            background-color: var(--color-highlight-secondary);
+        }
+    }
+
+    input {
+        @apply text-sm font-light;
+        max-height: 30px;
+    }
+}

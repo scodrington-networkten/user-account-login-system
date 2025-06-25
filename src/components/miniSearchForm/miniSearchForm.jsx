@@ -3,6 +3,7 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import slugify from "slugify";
 import {useState, useRef, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import './mini-search-form.css';
 
 import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.jsx";
 
@@ -13,7 +14,6 @@ const MiniSearchForm = () => {
     const inputRef = useRef(null);
 
     const [searchInput, setSearchInput] = useState('');
-
     const {miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
 
 
@@ -25,7 +25,6 @@ const MiniSearchForm = () => {
 
         e.preventDefault();
 
-        setMiniSearchFormOpen(false);
 
         if (searchInput.trim() !== '') {
 
@@ -34,18 +33,53 @@ const MiniSearchForm = () => {
             setSearchInput('');
 
         }
+    }
 
+    const onBackgroundOverlayClick = () => {
+        closeMiniSearchForm();
+    }
+
+    const closeMiniSearchForm = () => {
+        setMiniSearchFormOpen(false);
     }
 
     //when search form visability changes, ensure if its visible we set focus
     useEffect(() => {
 
-        /*
         if (miniSearchFormOpen) {
             inputRef.current.focus();
-        }*/
+        }
 
     }, [miniSearchFormOpen]);
+
+    //handle the removal of the search form when uers press 'back' or 'escape', closing the UI
+    useEffect(() => {
+
+        const handlePopState = () => {
+
+            //if open, close it and then jump back 1 state
+            if (miniSearchFormOpen === true) {
+                closeMiniSearchForm();
+                navigate(-1);
+            }
+        }
+
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                closeMiniSearchForm();
+                navigate(-1);
+            }
+        }
+
+        window.addEventListener('popstate', handlePopState);
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+            window.removeEventListener('keydown', handleKeyDown);
+        }
+
+    }, [miniSearchFormOpen, setMiniSearchFormOpen, navigate]);
 
 
     const getSearchFormSection = () => {
@@ -54,7 +88,7 @@ const MiniSearchForm = () => {
 
         return (
             <div className="mini-search-form">
-                <div className="background-overlay"></div>
+                <div className="background-overlay" onClick={onBackgroundOverlayClick}></div>
                 <div className="search-form">
                     <form onSubmit={handleSearchSubmit} className="">
                         <input

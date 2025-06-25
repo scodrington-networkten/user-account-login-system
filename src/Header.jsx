@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {faSearch, faVideo, faUser} from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +20,7 @@ const Header = () => {
 
 
     const location = useLocation();
+    const navigate = useNavigate();
     const [userSubmenuOpen, setUserSubmenuOpen] = useState(false);
     const {user} = useUser();
 
@@ -39,7 +40,10 @@ const Header = () => {
      */
     const onSearchIconClick = () => {
 
-        setMiniSearchFormOpen(!miniSearchFormOpen);
+
+        //set a temp state to the history when clicking
+        navigate("#search", {replace: false});
+        setMiniSearchFormOpen(true);
     }
 
 

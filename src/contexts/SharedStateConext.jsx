@@ -4,6 +4,7 @@ const SharedStateContext = createContext();
 
 export const SharedStateProvider = ({ children }) => {
     const [miniSearchFormOpen, setMiniSearchFormOpen] = useState(false);
+
     return (
         <SharedStateContext.Provider value={{ miniSearchFormOpen, setMiniSearchFormOpen }}>
             {children}
