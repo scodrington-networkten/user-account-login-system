@@ -21,7 +21,7 @@ const MiniSearchForm = () => {
     const {openMiniSearchForm, closeMiniSearchForm, miniSearchFormOpen} = useSharedState();
 
     //used for the dynamic ajax search
-    const [searchRequestLoading, setSearchRequestLoading] = useState(true);
+    const [searchRequestLoading, setSearchRequestLoading] = useState(false);
     const [searchResults, setSearchResults] = useState(null)
 
 
@@ -185,41 +185,42 @@ const MiniSearchForm = () => {
     }
 
 
+    //if the form isnt open dont show
+    if (miniSearchFormOpen === false) return;
+
     return (
         <div className="mini-search-form">
+            <div className="background-overlay backdrop-blur-sm bg-black/40" onClick={onCloseForm}></div>
+            <div className="search-form">
+                <h2>What are you searching for?</h2>
+                <div className="close-button" onClick={onCloseForm}><FontAwesomeIcon
+                    icon={faXmark}/></div>
+                <form onSubmit={handleSearchSubmit} className="">
+                    <div className="input-section">
+                        <input
+                            ref={inputRef}
+                            name="search-text-input"
+                            type="text"
+                            className=""
+                            placeholder="I'm looking for.."
+                            value={searchInput}
+                            onChange={(e) => {
+                                handleInputUpdate(e)
+                            }}
+                        />
+                        {searchRequestLoading &&
+                            <p><FontAwesomeIcon icon={faSpinner} className="loading-icon fa-spin"/></p>
+                        }
+                    </div>
 
-            <div className="background-overlay backdrop-blur-sm bg-black/40"
-                 onClick={onCloseForm}>
-                <div className="search-form">
-                    <h2>What are you searching for?</h2>
-                    <div className="close-button" onClick={onCloseForm}><FontAwesomeIcon
-                        icon={faXmark}/></div>
-                    <form onSubmit={handleSearchSubmit} className="">
-                        <div className="input-section">
-                            <input
-                                ref={inputRef}
-                                name="search-text-input"
-                                type="text"
-                                className=""
-                                placeholder="I'm looking for.."
-                                value={searchInput}
-                                onChange={(e) => {
-                                    handleInputUpdate(e)
-                                }}
-                            />
-                            {searchRequestLoading &&
-                                <p><FontAwesomeIcon icon={faSpinner} className="loading-icon fa-spin"/></p>
-                            }
-                        </div>
-
-                        <button type="submit" className="">
-                            <FontAwesomeIcon className="search-submit-icon" title="movie search"
-                                             icon={faSearch}/>
-                        </button>
-                    </form>
-                    {displaySearchResults()}
-                </div>
+                    <button type="submit" className="">
+                        <FontAwesomeIcon className="search-submit-icon" title="movie search"
+                                         icon={faSearch}/>
+                    </button>
+                </form>
+                {displaySearchResults()}
             </div>
+
         </div>
     )
 
