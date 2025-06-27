@@ -25,7 +25,7 @@ const Header = () => {
     const {user} = useUser();
 
 
-    const {miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
+    const {openMiniSearchForm, closeMiniSearchForm,  miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
 
 
 
@@ -39,13 +39,8 @@ const Header = () => {
      * When search icon clicked, toggle the form visability state
      */
     const onSearchIconClick = () => {
-
-
-        //set a temp state to the history when clicking
-        navigate("#search", {replace: false});
-        setMiniSearchFormOpen(true);
+        openMiniSearchForm();
     }
-
 
 
 

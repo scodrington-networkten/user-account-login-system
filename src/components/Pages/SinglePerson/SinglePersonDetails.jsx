@@ -16,6 +16,7 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
                 {images?.profiles?.map((item, index) => {
                     const url = Utilities.getApiImageUrl(item.file_path ?? null, 'profile', 'w185');
                     return <img
+                        key={`profile-image-${index}`}
                         className="w-full"
                         src={url}
                         alt={`Image of ${details.name}`}

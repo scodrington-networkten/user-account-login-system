@@ -32,7 +32,7 @@ const PrimaryNav = () => {
             const location = useLocation();
             const active = location.pathname === item.path;
 
-            return <Link to={item.path} className={`${active ? 'active' : ''}`}>
+            return <Link to={item.path} className={`${active ? 'active' : ''}`} key={`nav-item-${index}`}>
                 {item.name}
             </Link>
         })

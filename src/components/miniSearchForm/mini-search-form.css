@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 .mini-search-form {
+    @apply text-white;
+
     position: fixed;
 
     width: 100%;
@@ -18,32 +20,43 @@
 
     }
 
+    /** main container**/
+
     .search-form {
-
-        @apply absolute p-4 top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800;
-
+        @apply min-w-lg absolute p-4 top-1/4 left-1/2 -translate-x-1/2 bg-gray-800;
     }
 
-    h2{
+    h2 {
         @apply text-xl text-white mb-3;
     }
 
     .close-button {
-        @apply absolute -top-4 -right-8 text-white rounded-full bg-gray-800 w-[30px] h-[30px] flex items-center justify-center cursor-pointer transition-all;
+        @apply absolute top-2 right-2 text-white rounded-full w-[30px] h-[30px] flex items-center justify-center cursor-pointer transition-all;
 
         &:focus,
-        &:hover{
+        &:hover {
             @apply bg-gray-600;
         }
     }
 
+    .input-section {
+        @apply flex relative flex-grow;
+    }
+
+    .loading-icon {
+        @apply absolute text-white right-2 top-1/2 -translate-y-1/2;
+    }
+
+
+    /**main form**/
 
     form {
-        @apply flex justify-stretch items-stretch;
+        @apply flex justify-stretch items-stretch relative;
 
         &:focus-within {
 
             input {
+
                 border-color: var(--color-highlight-secondary);
             }
 
@@ -57,7 +70,7 @@
     /** search input box**/
 
     input {
-        @apply border p-1 px-2 rounded rounded-tr-none rounded-br-none transition-all flex-grow text-white;
+        @apply font-light pr-8 border p-2 px-4 rounded rounded-tr-none rounded-br-none transition-all flex-grow text-white;
 
         &::placeholder {
             @apply text-white;
@@ -80,8 +93,41 @@
         }
     }
 
-    input {
-        @apply text-sm font-light;
-        max-height: 30px;
+    .search-results {
+        @apply mt-2 flex flex-col gap-2;
+
+        .result {
+            @apply flex flex-grow bg-gray-100 text-gray-800 gap-2;
+
+            .title {
+                @apply text-xl font-semibold;
+            }
+
+            .date {
+                @apply font-light;
+            }
+
+            .vote-section {
+                @apply flex flex-grow gap-2;
+
+                .votes {
+
+                }
+
+                .score {
+
+                }
+            }
+
+            .left {
+
+            }
+
+            .right {
+                @apply flex-grow;
+            }
+
+        }
     }
+
 }
