@@ -66,6 +66,17 @@ const MiniSearchForm = () => {
         setSearchResults(null);
     }
 
+    /*** After a delay, blur the input field to de-focus the field and hide mobile keyboards*/
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            searchInputRef.current.blur();
+        }, 1000);
+
+        return () => clearTimeout(timer);
+
+    }, [searchInput])
+
     //handle the processing of the search query, using a debounce
     useEffect(() => {
 
@@ -99,7 +110,6 @@ const MiniSearchForm = () => {
                     window.showToastNotification(error.message, 'error');
                 } finally {
                     setSearchRequestLoading(false);
-                    searchInputRef.current.blur();
                 }
 
             })();
