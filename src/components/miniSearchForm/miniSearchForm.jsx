@@ -18,7 +18,7 @@ const MiniSearchForm = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const inputRef = useRef(null);
+    const searchInputRef = useRef(null);
 
     const [searchInput, setSearchInput] = useState('');
     const {openMiniSearchForm, closeMiniSearchForm, miniSearchFormOpen} = useSharedState();
@@ -99,6 +99,7 @@ const MiniSearchForm = () => {
                     window.showToastNotification(error.message, 'error');
                 } finally {
                     setSearchRequestLoading(false);
+                    searchInputRef.current.blur();
                 }
 
             })();
@@ -115,7 +116,7 @@ const MiniSearchForm = () => {
     useEffect(() => {
 
         if (miniSearchFormOpen) {
-            inputRef.current.focus();
+            searchInputRef.current.focus();
         }
 
     }, [miniSearchFormOpen]);
@@ -205,7 +206,7 @@ const MiniSearchForm = () => {
                     <form onSubmit={handleSearchSubmit} className="">
                         <div className="input-section">
                             <input
-                                ref={inputRef}
+                                ref={searchInputRef}
                                 name="search-text-input"
                                 type="text"
                                 className=""
