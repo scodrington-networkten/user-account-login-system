@@ -2,7 +2,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import slugify from "slugify";
 import {useState, useRef, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import './mini-search-form.css';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
@@ -34,14 +34,11 @@ const MiniSearchForm = () => {
     const handleSearchSubmit = (e) => {
 
         e.preventDefault();
+
         if (searchInput.trim() !== '') {
-
-            closeMiniSearchForm();
-
             let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
             navigate(`/search?q=${urlEncodedQuery}`);
-            setSearchInput('');
-
+            closeAndResetSearchForm();
         }
     }
 
@@ -53,7 +50,7 @@ const MiniSearchForm = () => {
     /**
      * On form close, set search results and field
      */
-    const onCloseForm = () => {
+    const closeAndResetSearchForm = () => {
         closeMiniSearchForm();
 
         //cleanup data
@@ -125,7 +122,7 @@ const MiniSearchForm = () => {
 
     //when navigate occurs, clear out and reset the component
     useEffect(() => {
-        onCloseForm();
+        closeAndResetSearchForm();
     }, [location]);
 
     //handle the removal of the search form when users press 'back' or 'escape', closing the UI
@@ -169,19 +166,25 @@ const MiniSearchForm = () => {
         if (searchResults.length === 0) {
             return (
                 <div className="search-results">
-                    <p>No movies found</p>
+                    <p>No movies found!</p>
                 </div>
             )
         }
 
+        let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
         return (
-            <section className="search-results">
-                {searchResults.map((item, index) => {
-                    return (
-                        <SearchResultEntry movie={item} key={`search-result-${index}`}/>
-                    )
-                })}
-            </section>
+            <>
+                <section className="view-all-results">
+                    <Link className="button view-all-button" to={`/search?q=${urlEncodedQuery}`}>View All Results</Link>
+                </section>
+                <section className="search-results">
+                    {searchResults.map((item, index) => {
+                        return (
+                            <SearchResultEntry movie={item} key={`search-result-${index}`}/>
+                        )
+                    })}
+                </section>
+            </>
         )
 
     }
@@ -192,11 +195,11 @@ const MiniSearchForm = () => {
 
     return (
         <div className="mini-search-form">
-            <div className="background-overlay backdrop-blur-sm bg-black/40" onClick={onCloseForm}></div>
+            <div className="background-overlay backdrop-blur-sm bg-black/40" onClick={closeAndResetSearchForm}></div>
             <div className="search-form">
                 <div className="inner">
                     <h2>What are you searching for?</h2>
-                    <div className="close-button" onClick={onCloseForm}>
+                    <div className="close-button" onClick={closeAndResetSearchForm}>
                         <FontAwesomeIcon icon={faXmark}/>
                     </div>
                     <form onSubmit={handleSearchSubmit} className="">
@@ -213,12 +216,12 @@ const MiniSearchForm = () => {
                                 }}
                             />
                             <div className="icons">
-
                                 {searchRequestLoading &&
                                     <FontAwesomeIcon icon={faSpinner} className="loading-icon fa-spin"/>
                                 }
                                 {searchInput &&
                                     <button
+                                        type="button"
                                         onClick={clearSearchField}
                                         className="clear-search-field-button"
                                         aria-label="Clear search input"

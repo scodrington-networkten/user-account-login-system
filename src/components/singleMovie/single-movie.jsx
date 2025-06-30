@@ -39,7 +39,6 @@ import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
  */
 const SingleMovie = ({movie}) => {
 
-    const utilities = new Utilities();
     /** @type {MovieDetails | null} */
     const [movieDetails, setMovieDetails] = useState([]);
 

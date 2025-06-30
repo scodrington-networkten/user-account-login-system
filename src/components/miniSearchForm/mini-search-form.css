@@ -19,10 +19,11 @@
     /** main container**/
 
     /** md:min-w-md lg:min-w-lg**/
+
     .search-form {
         @apply px-4 w-full absolute top-1/4 left-1/2 -translate-x-1/2 md:max-w-lg lg:max-w-2xl;
 
-        .inner{
+        .inner {
             @apply relative flex flex-col p-4  bg-gray-800;
         }
     }
@@ -43,7 +44,6 @@
     .input-section {
         @apply flex relative flex-grow min-w-0;
     }
-
 
 
     /**main form**/
@@ -95,20 +95,25 @@
 
 
     /** contains the loading / clear buttons */
+
     .icons {
         @apply absolute top-0 right-0 flex gap-2 text-white items-center pr-2 h-full;
 
-        .loading-icon{
+        .loading-icon {
             @apply bg-transparent;
         }
 
         .clear-search-field-button {
-             @apply  flex items-center bg-transparent p-2;
+            @apply flex items-center bg-transparent p-2;
         }
     }
 
+    .view-all-results {
+        @apply mt-2 mb-1;
+    }
 
     /** search results section, shows matched items**/
+
     .search-results {
         @apply mt-2 flex flex-col max-h-[50vh] overflow-y-scroll;
     }
