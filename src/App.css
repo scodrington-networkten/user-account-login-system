@@ -262,6 +262,21 @@ body {
     }
 }
 
+.button.button-simple{
+    @apply border-1 border-gray-800 bg-transparent;
+}
+
+.button.button-small{
+    @apply text-sm;
+    @apply px-2 py-1;
+
+}
+
+.button.button-tiny{
+    @apply text-xs;
+    @apply px-2 py-1;
+}
+
 .primary-button{
     @apply flex items-center justify-center gap-3 border-0 text-white font-semibold py-1 px-3 md:py-3 md:px-5 rounded-3xl transition-all;
     background-color: var(--color-highlight-secondary);

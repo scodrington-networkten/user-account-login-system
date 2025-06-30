@@ -5,12 +5,16 @@ import slugify from "slugify";
 import './genre-button.css';
 
 /**
- * Single Genre button, linking to the dedicated genre page
+ *
  * @param genre
- * @returns {JSX.Element}
+ * @param isActive
+ * @param classes
+ * @param link - if this genre is a link or not
+ * @returns {Element}
  * @constructor
  */
-const GenreButton = ({genre, isActive, classes = 'genre-button'}) => {
+
+const GenreButton = ({genre, isActive, classes = 'genre-button', link = true}) => {
 
     const [genreName, setGenreName] = useState('');
 
@@ -22,12 +26,21 @@ const GenreButton = ({genre, isActive, classes = 'genre-button'}) => {
         })
     }, []);
 
-    return (
-        <Link to={`/movies/${genreName}`}
-              className={`${classes} ${isActive ? 'active' : ''}`}>
-            {genre.name}
-        </Link>
-    )
+    //show link or a normal item
+    if (link) {
+        return (
+            <Link to={`/movies/${genreName}`}
+                  className={`${classes} ${isActive ? 'active' : ''}`}>
+                {genre.name}
+            </Link>
+        )
+    } else {
+        return (
+            <span className={`${classes}`}> {genre.name}</span>
+        )
+    }
+
+
 }
 
 export default GenreButton;

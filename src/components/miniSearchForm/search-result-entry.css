@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+
+.search-result-entry {
+    @apply flex flex-grow bg-gray-100 text-gray-800 border-b-1 border-b-gray-300;
+
+
+    img{
+        @apply max-w-[90px];
+    }
+
+    .title {
+        @apply text-lg font-semibold leading-tight;
+    }
+
+    .date {
+        @apply font-light italic text-base;
+    }
+
+    .review-section{
+        @apply flex flex-grow gap-2 text-sm mb-1;
+
+        .votes {
+
+        }
+
+        .score {
+
+        }
+    }
+
+    .genre-section{
+        @apply flex gap-1;
+    }
+
+    .left {
+
+    }
+
+    .right {
+        @apply flex-grow p-2 md:p-3 lg:p-4;
+    }
+
+}

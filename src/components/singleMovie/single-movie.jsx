@@ -128,8 +128,8 @@ const SingleMovie = ({movie}) => {
                         <p><FontAwesomeIcon icon={faCalendar}/> {Utilities.formatDate(movie.release_date)}</p>
                     </div>
                     <div className="review-section flex gap-4 mb-4">
-                        <div className="review-stars-section">{utilities.getStarsSection(movie.vote_average)}</div>
-                        <div className="review-count-section">{utilities.getVotesSection(movie.vote_count)}</div>
+                        <div className="review-stars-section">{Utilities.getStarsSection(movie.vote_average)}</div>
+                        <div className="review-count-section">{Utilities.getVotesSection(movie.vote_count)}</div>
                     </div>
 
                     <div className="overview text-1xl items-start font-light">{movie.overview}</div>

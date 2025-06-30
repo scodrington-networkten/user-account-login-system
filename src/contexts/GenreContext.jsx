@@ -46,4 +46,4 @@ export const GenreProvider = ({children}) => {
     )
 
 }
-
+export const useGenre = () => useContext(GenreContext);

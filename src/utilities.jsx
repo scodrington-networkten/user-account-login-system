@@ -13,7 +13,7 @@ class Utilities {
      * @param step
      * @returns {number}
      */
-    round(value, step) {
+    static round(value, step) {
         step || (step = 1.0);
         let inv = 1.0 / step;
         return Math.round(value * inv) / inv;
@@ -55,7 +55,7 @@ class Utilities {
      * @param date2
      * @returns {number}
      */
-    getDateDifferenceHours(date1, date2) {
+    static getDateDifferenceHours(date1, date2) {
 
         const difference = (new Date(date2)).getTime() - (new Date(date1)).getTime();
         return difference / (1000 * 60 * 60);
@@ -67,12 +67,12 @@ class Utilities {
      * @param voteAverage
      * @returns {JSX.Element}
      */
-    getStarsSection(voteAverage) {
+    static getStarsSection(voteAverage) {
 
         //convert from a score of 0-10 to 0-5
         let baseScore = (voteAverage / 2);
         //round to the nearest 0.5
-        let newScore = new Utilities().round(baseScore, 0.5);
+        let newScore = Utilities.round(baseScore, 0.5);
         //determine what icons to use
         let iconsArray = this.getStarIcons(newScore);
 
@@ -93,7 +93,7 @@ class Utilities {
      * @param rating
      * @returns {unknown[]}
      */
-    getStarIcons(rating) {
+    static getStarIcons(rating) {
 
         const result = Array.from({length: 5}, (item, index) => {
             const slot = index + 1;
@@ -113,7 +113,7 @@ class Utilities {
      * @param votes
      * @returns {JSX.Element}
      */
-    getVotesSection(votes) {
+    static getVotesSection(votes) {
 
         return (
             <section className="vote-information flex gap-2 justify-center">
@@ -130,7 +130,7 @@ class Utilities {
     }
 
 
-    getTrimmedString(string, maxCharacters = 200) {
+    static getTrimmedString(string, maxCharacters = 200) {
 
         return _.truncate(string, {
             length: maxCharacters

@@ -14,7 +14,6 @@ import {useEffect, useState, useRef} from "react";
 const MovieCard = ({movie, classes = 'movie-card'}) => {
 
     const cardRef = useRef(null);
-    const utilities = new Utilities();
     const [touched, setTouched] = useState(false);
     const {user} = useUser();
 
@@ -64,8 +63,8 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
 
         return (
             <section className="rating-information">
-                {utilities.getStarsSection(movie.vote_average)}
-                {utilities.getVotesSection(movie.vote_count)}
+                {Utilities.getStarsSection(movie.vote_average)}
+                {Utilities.getVotesSection(movie.vote_count)}
                 <div className="flex flex-1 justify-end">
                     <FavoriteMovieButton movie={movie} isFavorited={isFavorited}/>
                 </div>
@@ -76,7 +75,7 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
 
     const getSummarySection = (movie) => {
         return (
-            <p className="summary ">{utilities.getTrimmedString(movie.overview, 150)}</p>
+            <p className="summary ">{Utilities.getTrimmedString(movie.overview, 150)}</p>
         )
     }
 

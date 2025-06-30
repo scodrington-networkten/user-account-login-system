@@ -7,13 +7,16 @@ import './mini-search-form.css';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
+import SearchResultEntry from "@components/miniSearchForm/searchResultEntry.jsx";
+import {useLocation} from "react-router-dom";
+
 
 import {useSharedState} from "@contexts/SharedStateConext.jsx";
-import Utilities from "../../utilities.jsx";
 
 const MiniSearchForm = () => {
 
 
+    const location = useLocation();
     const navigate = useNavigate();
     const inputRef = useRef(null);
 
@@ -24,6 +27,47 @@ const MiniSearchForm = () => {
     const [searchRequestLoading, setSearchRequestLoading] = useState(false);
     const [searchResults, setSearchResults] = useState(null)
 
+    /**
+     * Handle search submit and move
+     * @param e
+     */
+    const handleSearchSubmit = (e) => {
+
+        e.preventDefault();
+        if (searchInput.trim() !== '') {
+
+            closeMiniSearchForm();
+
+            let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
+            navigate(`/search?q=${urlEncodedQuery}`);
+            setSearchInput('');
+
+        }
+    }
+
+    const handleInputUpdate = async (e) => {
+        const value = e.target.value;
+        setSearchInput(value);
+    }
+
+    /**
+     * On form close, set search results and field
+     */
+    const onCloseForm = () => {
+        closeMiniSearchForm();
+
+        //cleanup data
+        setSearchResults(null);
+        setSearchInput('');
+    }
+
+    /**
+     * Clear search field, empty field and results
+     */
+    const clearSearchField = () => {
+        setSearchInput('');
+        setSearchResults(null);
+    }
 
     //handle the processing of the search query, using a debounce
     useEffect(() => {
@@ -70,32 +114,7 @@ const MiniSearchForm = () => {
         }
     }, [searchInput]);
 
-
-    /**
-     * Handle search submit and move
-     * @param e
-     */
-    const handleSearchSubmit = (e) => {
-
-        e.preventDefault();
-        if (searchInput.trim() !== '') {
-
-            closeMiniSearchForm();
-
-            let urlEncodedQuery = slugify(searchInput, {lower: true, strict: true});
-            navigate(`/search?q=${urlEncodedQuery}`);
-            setSearchInput('');
-
-        }
-    }
-
-    const handleInputUpdate = async (e) => {
-        const value = e.target.value;
-        setSearchInput(value);
-    }
-
-
-    //when data changes, if the form is open auto focus the input
+    //when data changes, if the form is open auto-focus the input
     useEffect(() => {
 
         if (miniSearchFormOpen) {
@@ -103,6 +122,11 @@ const MiniSearchForm = () => {
         }
 
     }, [miniSearchFormOpen]);
+
+    //when navigate occurs, clear out and reset the component
+    useEffect(() => {
+        onCloseForm();
+    }, [location]);
 
     //handle the removal of the search form when users press 'back' or 'escape', closing the UI
     useEffect(() => {
@@ -154,34 +178,12 @@ const MiniSearchForm = () => {
             <section className="search-results">
                 {searchResults.map((item, index) => {
                     return (
-                        <article className="result">
-                            <div className="left">
-                                <img src={Utilities.getApiImageUrl(item.poster_path, 'poster', 'w92')}/>
-                            </div>
-                            <div className="right">
-                                <h3 className="title">{item.original_title}</h3>
-                                <p className="date">{Utilities.formatDate(item.release_date)}</p>
-                                <div className="vote-section">
-                                    <p className="votes">Votes: {item.vote_count}</p>
-                                    <p className="score">Score: {item.vote_average}</p>
-                                </div>
-                            </div>
-
-
-                        </article>
+                        <SearchResultEntry movie={item} key={`search-result-${index}`}/>
                     )
                 })}
             </section>
         )
 
-    }
-
-    const onCloseForm = () => {
-        closeMiniSearchForm();
-
-        //clearup data
-        setSearchResults(null);
-        setSearchInput('');
     }
 
 
@@ -192,33 +194,50 @@ const MiniSearchForm = () => {
         <div className="mini-search-form">
             <div className="background-overlay backdrop-blur-sm bg-black/40" onClick={onCloseForm}></div>
             <div className="search-form">
-                <h2>What are you searching for?</h2>
-                <div className="close-button" onClick={onCloseForm}><FontAwesomeIcon
-                    icon={faXmark}/></div>
-                <form onSubmit={handleSearchSubmit} className="">
-                    <div className="input-section">
-                        <input
-                            ref={inputRef}
-                            name="search-text-input"
-                            type="text"
-                            className=""
-                            placeholder="I'm looking for.."
-                            value={searchInput}
-                            onChange={(e) => {
-                                handleInputUpdate(e)
-                            }}
-                        />
-                        {searchRequestLoading &&
-                            <p><FontAwesomeIcon icon={faSpinner} className="loading-icon fa-spin"/></p>
-                        }
+                <div className="inner">
+                    <h2>What are you searching for?</h2>
+                    <div className="close-button" onClick={onCloseForm}>
+                        <FontAwesomeIcon icon={faXmark}/>
                     </div>
+                    <form onSubmit={handleSearchSubmit} className="">
+                        <div className="input-section">
+                            <input
+                                ref={inputRef}
+                                name="search-text-input"
+                                type="text"
+                                className=""
+                                placeholder="I'm looking for.."
+                                value={searchInput}
+                                onChange={(e) => {
+                                    handleInputUpdate(e)
+                                }}
+                            />
+                            <div className="icons">
 
-                    <button type="submit" className="">
-                        <FontAwesomeIcon className="search-submit-icon" title="movie search"
-                                         icon={faSearch}/>
-                    </button>
-                </form>
-                {displaySearchResults()}
+                                {searchRequestLoading &&
+                                    <FontAwesomeIcon icon={faSpinner} className="loading-icon fa-spin"/>
+                                }
+                                {searchInput &&
+                                    <button
+                                        onClick={clearSearchField}
+                                        className="clear-search-field-button"
+                                        aria-label="Clear search input"
+                                        title="Clear search input"
+                                    >
+                                        <FontAwesomeIcon icon={faXmark}/>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+
+                        <button type="submit" className="search">
+                            <FontAwesomeIcon className="search-submit-icon" title="movie search"
+                                             icon={faSearch}/>
+                        </button>
+                    </form>
+                    {displaySearchResults()}
+                </div>
+
             </div>
 
         </div>
