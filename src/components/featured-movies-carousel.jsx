@@ -111,7 +111,7 @@ const FeaturedMoviesCarousel = () => {
                             )
                         })}
                     </div>
-                    <div className="embla__navigation-container">
+                    <div className="embla__next-prev">
                         <div onClick={() => emblaApi?.scrollPrev()}
                              className="embla__prev ">
                             <FontAwesomeIcon
@@ -120,6 +120,8 @@ const FeaturedMoviesCarousel = () => {
                              className="embla__next ">
                             <FontAwesomeIcon
                                 icon={faAngleRight}/></div>
+                    </div>
+                    <div className="embla__navigation-container">
                         <div className="embla__dots">
                             <div className="embla__dots_inner">
                                 {scrollSnaps.map((item, index) => (

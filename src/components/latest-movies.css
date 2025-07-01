@@ -14,3 +14,38 @@
 .background-hero-image {
 
 }
+
+.latest-movies-carousel{
+
+    .embla__dots{
+        @apply top-0 h-full w-full p-0 items-end;
+
+        .embla__dots_inner{
+            @apply pb-2 md:pb-4;
+        }
+    }
+
+
+    .embla__next-prev{
+
+        .embla__prev,
+        .embla__next{
+            @apply top-auto bottom-3 translate-y-0;
+            @apply md:top-1/2 md:-translate-y-1/2;
+            @apply lg:text-3xl lg:w-[40px] lg:h-[40px];
+        }
+
+        .embla__prev{
+            @apply right-16 left-auto;
+            @apply md:left-2;
+            @apply lg:left-4;
+
+        }
+
+        .embla__next{
+            @apply md:right-2;
+            @apply lg:right-4;
+        }
+
+    }
+}

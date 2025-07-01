@@ -50,9 +50,10 @@ const SinglePerson = () => {
                 const {movie_credits, external_ids, images, ...personData} = data;
 
                 setPerson(personData);
-                setMovies(data.movie_credits);
                 setExternalLinks(data.external_ids);
                 setImages(data.images);
+                setMovies(data.movie_credits);
+
 
 
             } catch (error) {

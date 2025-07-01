@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import MoviesList from "@components/movies-list.jsx";
+import StandardSlider from "@components/standardSlider/standardSlider.jsx";
 
 /**
  * Given a movie, find similar movies to this one for the user
@@ -39,15 +40,11 @@ export default function SimilarMovies({movie}) {
         })()
     }, [movie]);
 
+    if (movies.length === 0) return null;
+
     return (
         <section className="similar-movies mt-4">
-            <h3 className="text-3xl font-light mb-2">You might also like</h3>
-            <MoviesList
-                movies={movies}
-                loading={loading}
-                cssClasses='grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
-                showPagination={false}
-            />
+            <StandardSlider data={movies} header={"You Might Also Like"}/>
         </section>
 
     )
