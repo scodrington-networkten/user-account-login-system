@@ -21,12 +21,19 @@
     /** md:min-w-md lg:min-w-lg**/
 
     .search-form {
-        @apply px-4 w-full absolute top-1/4 left-1/2 -translate-x-1/2 md:max-w-lg lg:max-w-2xl;
+        @apply px-4 transition-all w-full absolute top-1/4 left-1/2 -translate-x-1/2 md:max-w-lg lg:max-w-2xl;
 
         .inner {
             @apply relative flex flex-col p-4  bg-gray-800;
         }
     }
+
+    /** when results have been found, move the form up a bit on mobile*/
+
+    &.has-results .search-form {
+        @apply top-1/8;
+    }
+
 
     h2 {
         @apply text-xl text-white mb-3;
@@ -67,7 +74,7 @@
 
     /** search input box**/
 
-    input{
+    input {
         @apply bg-transparent font-light pr-8 border p-2 px-4 rounded rounded-tr-none rounded-br-none transition-all flex-grow text-white;
 
         &::placeholder {
@@ -81,7 +88,6 @@
 
 
     }
-
 
 
     /** search button with icon**/

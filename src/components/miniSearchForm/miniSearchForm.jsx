@@ -220,7 +220,7 @@ const MiniSearchForm = () => {
     if (miniSearchFormOpen === false) return;
 
     return (
-        <div className="mini-search-form">
+        <div className={`mini-search-form ${searchResults?.length > 0 ? 'has-results' : ''}`}>
             <div className="background-overlay backdrop-blur-sm bg-black/40" onClick={closeAndResetSearchForm}></div>
             <div className="search-form">
                 <div className="inner">
