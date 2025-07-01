@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import MoviesList from "@components/movies-list.jsx";
 import StandardSlider from "@components/standardSlider/standardSlider.jsx";
+import sampleData from "../../sampleData.js";
 
 /**
  * Given a movie, find similar movies to this one for the user
@@ -32,7 +33,7 @@ export default function SimilarMovies({movie}) {
                 return;
             }
             const data = await result.json();
-            const movieSubset = (data.results.length > 0) ? data.results.splice(0, 4) : [];
+            const movieSubset = (data.results.length > 0) ? data.results.splice(0, 10) : [];
             setLoading(false);
             setMovies(movieSubset);
             console.log(data);

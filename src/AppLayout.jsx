@@ -14,10 +14,6 @@ const AppLayout = ({children, contextOffset = false}) => {
         const updateMainContentMargin = () => {
             const header = document.getElementById("page-header");
             const mainContent = document.getElementById("page-content");
-
-            console.log(header);
-            console.log(mainContent)
-
             if (!header || !mainContent) return;
 
             const headerHeight = header.offsetHeight;

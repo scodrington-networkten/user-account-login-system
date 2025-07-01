@@ -4,6 +4,12 @@ import {useGenre} from "@contexts/GenreContext.jsx";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
+/**
+ * Single search result entry when using the mini search form
+ * @param movie
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const SearchResultEntry = ({movie}) => {
 
     const {genres} = useGenre();
@@ -39,12 +45,14 @@ const SearchResultEntry = ({movie}) => {
                         <div className="review-count-section">{Utilities.getVotesSection(movie.vote_count)}</div>
                     </div>
 
-                    <section className="genre-section">
-                        {movieGenres.map((item, index) => (
-                            <p className="genre button button-tiny button-simple"
-                               key={`genre-button-${index}`}>{item.name}</p>
-                        ))}
-                    </section>
+                    {movieGenres.length > 0 &&
+                        <section className="genre-section">
+                            {movieGenres.map((item, index) => (
+                                <p className="genre button button-disabled button-tiny button-simple"
+                                   key={`genre-button-${index}`}>{item.name}</p>
+                            ))}
+                        </section>
+                    }
                 </div>
             </article>
         </Link>

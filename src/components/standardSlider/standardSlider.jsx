@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState, useRef} from "react";
 import MovieCard from "@components/movieCard/movie-card.jsx";
 import './standard-slider.css';
 import CarouselCard from "@components/carouselCard/carousel-card.jsx";
@@ -21,6 +21,9 @@ const StandardSlider = ({data, header = ''}) => {
         }
     )
 
+    const containerRef = useRef(null);
+
+
     const prevButton = () => {
         emblaApi?.scrollPrev();
     }
@@ -35,16 +38,28 @@ const StandardSlider = ({data, header = ''}) => {
     }, [emblaApi]);
 
 
+    //Setup the slider
     useEffect(() => {
         if (!emblaApi) return;
 
         setScrollSnaps(emblaApi.scrollSnapList());
-
-
-        console.log(emblaApi.scrollSnapList());
-
         emblaApi.on('select', onSelect);
         onSelect(); // Set initial selected dot
+
+        //create a resize observer to re-init the slider when dimensions change (after images loaded)
+        if (containerRef.current) {
+            const resizeObserver = new ResizeObserver(() => {
+                emblaApi.reInit();
+                setScrollSnaps(emblaApi.scrollSnapList());
+            });
+            resizeObserver.observe(containerRef.current);
+
+            return () => {
+                resizeObserver.disconnect();
+            }
+        }
+
+
     }, [emblaApi, onSelect]);
 
 
@@ -60,7 +75,10 @@ const StandardSlider = ({data, header = ''}) => {
             <section className="standard-slider ">
                 <h2 className="slider-header">{header}</h2>
 
-                <div className="embla relative w-full" ref={emblaRef}>
+                <div className="embla relative w-full" ref={(el) => {
+                    emblaRef(el);
+                    containerRef.current = el;
+                }}>
                     <div className="embla__container">
                         {data.map((item, index) => {
                             return (
