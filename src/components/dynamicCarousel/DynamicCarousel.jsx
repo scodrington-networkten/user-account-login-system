@@ -20,10 +20,10 @@ const DynamicCarousel = ({movies}) => {
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
-            speed: 5
+            speed: 5,
+            slides: '.embla__slide'
         }
     )
-
 
     const prevButton = () => {
         emblaApi?.scrollPrev();
@@ -65,6 +65,8 @@ const DynamicCarousel = ({movies}) => {
 
         //collect scroll snaps
         setScrollSnaps(emblaApi.scrollSnapList());
+
+        console.log(emblaApi.scrollSnapList());
 
         //scroll on start
         const onCarouselSelect = () => {
@@ -116,45 +118,50 @@ const DynamicCarousel = ({movies}) => {
             <p>content before</p>
             <div className="embla dynamic-width-carousel relative w-full" ref={emblaRef}>
                 <div className="embla__container">
-                    {movies.map((item, index) => {
-                        return (
-                            <div className="embla__slide" key={`slider-${index}`}>
-                                <div className="embla__inner" onClick={() => {
-                                    if (isDragging.current) return;
-                                    onSelect(index)
-                                }}>
-                                    <MovieCard movie={item}/>
+                    <div className="flex">
+                        {movies.map((item, index) => {
+                            return (
+                                <div className="embla__slide" key={`slider-${index}`}>
+                                    <div className="embla__inner" onClick={() => {
+                                        if (isDragging.current) return;
+                                        onSelect(index)
+                                    }}>
+                                        <MovieCard movie={item}/>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </div>
                 </div>
                 <div className="gradient-left"></div>
                 <div className="gradient-right"></div>
-                <div className="embla__navigation-container">
-                    <div onClick={prevButton}
-                         className="embla__prev ">
-                        <FontAwesomeIcon
-                            icon={faAngleLeft}/></div>
-                    <div onClick={nextButton}
-                         className="embla__next ">
-                        <FontAwesomeIcon
-                            icon={faAngleRight}/></div>
+                <div className="embla__next-prev">
+                    <div className="embla__navigation-container">
+                        <div onClick={prevButton}
+                             className="embla__prev ">
+                            <FontAwesomeIcon
+                                icon={faAngleLeft}/></div>
+                        <div onClick={nextButton}
+                             className="embla__next ">
+                            <FontAwesomeIcon
+                                icon={faAngleRight}/></div>
 
-                    <div className="embla__dots">
-                        <div className="embla__dots_inner">
-                            {scrollSnaps.map((item, index) => (
-                                <button
-                                    key={index}
-                                    className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
-                                    onClick={() => {
-                                        if (isDragging.current) return;
-                                        onSelect(index)
-                                    }}
-                                />
-                            ))}
-                        </div>
+
                     </div>
+                </div>
+            </div>
+            <div className="embla__dots">
+                <div className="embla__dots_inner">
+                    {scrollSnaps.map((item, index) => (
+                        <button
+                            key={index}
+                            className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
+                            onClick={() => {
+                                if (isDragging.current) return;
+                                onSelect(index)
+                            }}
+                        />
+                    ))}
                 </div>
             </div>
             <p>content after </p>

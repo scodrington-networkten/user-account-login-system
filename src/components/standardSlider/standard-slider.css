@@ -1,34 +1,37 @@
 @import "tailwindcss";
 
 
-.standard-slider{
+/** specific slider settings **/
+.standard-slider {
     @apply mb-4 mt-4;
-    .embla{
 
-        .embla__slide{
+    .embla {
+
+        .embla__slide {
+            width: 300px !important; /* fixed width */
             max-width: 300px;
+            flex-shrink: 0;
+            flex-grow: 0; /* IMPORTANT: prevent growing */
+            flex-basis: auto;
+            display: flex;
         }
     }
 
-    .slider-header{
+    .slider-header {
         @apply text-3xl mb-2 font-light;
     }
-
 
 }
 
 .embla {
-    @apply pb-8;
     overflow: hidden;
-    position: relative;
 }
 
 .embla__container {
     display: flex;
-
 }
 
-.embla__wrapper{
+.embla__wrapper {
     @apply flex;
 }
 
@@ -41,7 +44,7 @@
 
 .embla {
     .gradient-left, .gradient-right {
-        @apply absolute h-full w-[40px] pointer-events-none mb-6;
+        @apply absolute h-full w-[40px] pointer-events-none;
     }
 
     .gradient-left {
@@ -55,8 +58,8 @@
 }
 
 
-.embla__navigation-container {
-    @apply container m-auto h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none;
+/** next and prev buttons*/
+.embla__next-prev {
 
     .embla__prev,
     .embla__next {
@@ -71,45 +74,50 @@
     }
 
     .embla__next {
-        @apply  top-1/2 right-4 -translate-y-1/2;
+        @apply top-1/2 right-4 -translate-y-1/2;
     }
 
     .embla__prev {
-        @apply  top-1/2 left-4 -translate-y-1/2;
+        @apply top-1/2 left-4 -translate-y-1/2;
     }
+}
 
-    .embla__dots {
-        @apply flex w-full absolute justify-center -bottom-0 left-0 pointer-events-auto;
+/** pagination dots**/
+.embla__dots {
+    @apply flex w-full relative justify-center pointer-events-auto pb-20 pt-2;
 
-        .embla__dots_inner {
-            @apply container flex flex-wrap gap-3 justify-center;
+    .embla__dots_inner {
+        @apply container flex flex-wrap gap-3 justify-center;
 
-            .embla__dot {
-                @apply w-[10px] h-[10px] p-[10px] border-2 rounded-full bg-gray-400 box-border opacity-90 outline-none pointer-events-auto;
+        .embla__dot {
+            @apply w-[10px] h-[10px] p-[10px] border-2 rounded-full bg-gray-400 box-border opacity-90 outline-none pointer-events-auto;
 
-                &:hover {
-                    background-color: var(--color-white);
-                }
-
-                &:focus {
-                    outline: none;
-                }
+            &:hover {
+                background-color: var(--color-white);
             }
 
-            .embla__dot.is-selected {
-                @apply bg-white opacity-100;
-                background-color: var(--color-highlight-secondary);
-                outline-color: var(--color-white);
-                outline-width: 2px;
-                outline-style: solid;
-                outline-offset: 4px;
-            }
-
-            .embla__dot:focus {
-                @apply outline-none;
+            &:focus {
+                outline: none;
             }
         }
+
+        .embla__dot.is-selected {
+            @apply bg-white opacity-100;
+            background-color: var(--color-highlight-secondary);
+            outline-color: var(--color-white);
+            outline-width: 2px;
+            outline-style: solid;
+            outline-offset: 4px;
+        }
+
+        .embla__dot:focus {
+            @apply outline-none;
+        }
     }
+}
+
+.embla__navigation-container {
+    @apply container m-auto h-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none;
 }
 
 

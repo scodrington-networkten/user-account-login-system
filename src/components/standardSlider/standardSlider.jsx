@@ -9,21 +9,25 @@ import {faAngleLeft, faAngleRight} from "@fortawesome/free-solid-svg-icons";
 
 const StandardSlider = ({data, header = ''}) => {
 
-
-    const [error, setError] = useState(false);
-
-    //slider elements here
-    const [emblaRef, emblaApi] = useEmblaCarousel(
-        {loop: true},
-        [Autoplay({
-            delay: 500000,
-            stopOnInteraction: true
-        })]
-    )
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [scrollSnaps, setScrollSnaps] = useState([]);
 
-    const [slides, setSlides] = useState([]);
+    //slider elements here
+    const [emblaRef, emblaApi] = useEmblaCarousel(
+        {
+            loop: true,
+            speed: 5,
+            slides: '.embla__slide'
+        }
+    )
+
+    const prevButton = () => {
+        emblaApi?.scrollPrev();
+    }
+
+    const nextButton = () => {
+        emblaApi?.scrollNext();
+    }
 
     const onSelect = useCallback(() => {
         if (!emblaApi) return;
@@ -31,67 +35,69 @@ const StandardSlider = ({data, header = ''}) => {
     }, [emblaApi]);
 
 
-    //create slides from the result data
-    useEffect(() => {
-
-        let temp = data.map((item, index) => {
-            return <MovieCard movie={item} key={index}/>;
-        });
-        setSlides(temp.slice(0,6));
-    }, []);
-
-
     useEffect(() => {
         if (!emblaApi) return;
 
         setScrollSnaps(emblaApi.scrollSnapList());
+
+
+        console.log(emblaApi.scrollSnapList());
+
         emblaApi.on('select', onSelect);
         onSelect(); // Set initial selected dot
     }, [emblaApi, onSelect]);
 
 
-    if (slides === []) return;
+    if (data.length === 0) {
+        return (
+            <div className="container mx-auto">Loading</div>
+        )
+    }
 
     const getOutput = () => {
 
         return (
             <section className="standard-slider ">
                 <h2 className="slider-header">{header}</h2>
-                <div className="embla relative w-full" ref={emblaRef}>
 
+                <div className="embla relative w-full" ref={emblaRef}>
                     <div className="embla__container">
-                        {slides.map((item, index) => {
+                        {data.map((item, index) => {
                             return (
                                 <div className="embla__slide" key={`carousel-${index}`}>
-                                    {item}
+                                    <div className="embla__inner">
+                                        <MovieCard movie={item} key={index}/>
+                                    </div>
                                 </div>
                             )
                         })}
                     </div>
                     <div className="gradient-left"></div>
                     <div className="gradient-right"></div>
-                    <div className="embla__navigation-container">
-                        <div onClick={() => emblaApi?.scrollPrev()}
+                    <div className="embla__next-prev">
+                        <div onClick={prevButton}
                              className="embla__prev ">
                             <FontAwesomeIcon
                                 icon={faAngleLeft}/></div>
-                        <div onClick={() => emblaApi?.scrollNext()}
+                        <div onClick={nextButton}
                              className="embla__next ">
                             <FontAwesomeIcon
                                 icon={faAngleRight}/></div>
-                        <div className="embla__dots">
-                            <div className="embla__dots_inner">
-                                {scrollSnaps.map((item, index) => (
-                                    <button
-                                        key={index}
-                                        className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
-                                        onClick={() => emblaApi.scrollTo(index)}
-                                    />
-                                ))}
-                            </div>
-                        </div>
                     </div>
                 </div>
+                <div className="embla__dots">
+                    <div className="embla__dots_inner">
+                        {scrollSnaps.map((item, index) => (
+                            <button
+                                key={index}
+                                className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
+                                onClick={() => emblaApi.scrollTo(index)}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+
             </section>
         )
     }
