@@ -1,50 +1,71 @@
 @import "tailwindcss";
 
-.background-hero-image-overlay{
+.background-hero-image-overlay {
     @apply absolute z-0 inset-0 bg-cover bg-center left-0 top-0 w-full h-full z-1;
     background-blend-mode: multiply;
 
 
     background: linear-gradient(
-        rgba(var(--color-primary-rgb), 0.5),
-        rgba(var(--color-secondary-rgb), 0.8)
+            rgba(var(--color-primary-rgb), 0.5),
+            rgba(var(--color-secondary-rgb), 0.8)
     );
 
 }
+
 .background-hero-image {
 
 }
 
 /** specific style overrides for the carousel latest movie slider*/
-.latest-movies-carousel{
+.latest-movies-carousel {
 
-    .embla__dots{
+    .embla__dots {
+        pointer-events: none;
+
         @apply top-0 h-full w-full p-0 items-end;
 
-        .embla__dots_inner{
+        .embla__dots_inner {
             @apply pb-2 md:pb-4;
+        }
+
+        .embla__dot {
+            pointer-events: all;
         }
     }
 
 
-    .embla__next-prev{
+    /*** position the next and previous boxes to fit the slider**/
+
+    .embla__next-prev {
+
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        margin: auto;
+        left: 50%;
+        right: auto;
+        /**background-color: #ff000021;**/
+        transform: translate(-50%);
+        pointer-events: none;
 
         .embla__prev,
-        .embla__next{
+        .embla__next {
             @apply top-auto bottom-3 translate-y-0;
             @apply md:top-1/2 md:-translate-y-1/2;
             @apply lg:text-3xl lg:w-[40px] lg:h-[40px];
+            pointer-events: all;
         }
 
-        .embla__prev{
+        .embla__prev {
             @apply right-16 left-auto;
-            @apply md:left-2;
+            @apply md:left-4;
             @apply lg:left-4;
 
         }
 
-        .embla__next{
-            @apply md:right-2;
+        .embla__next {
+            @apply md:right-4;
             @apply lg:right-4;
         }
 

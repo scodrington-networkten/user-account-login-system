@@ -2,7 +2,7 @@
 
 /* Carousel Card Component */
 .carousel-card {
-    @apply relative h-[450px] md:h-[450px] lg:h-[600px] bg-gray-600;
+    @apply relative h-[450px] md:h-[475px] lg:h-[600px] bg-gray-600;
 
     /* Overlay layer */
 
@@ -20,9 +20,8 @@
     /* Main content container */
     .main-container {
         @apply h-full mx-auto container flex relative z-10 p-4 gap-2;
-        @apply md:pt-22 md:gap-4;
+        @apply md:pt-22 md:gap-4 md:pl-16 md:pr-16;
         @apply lg:pt-26 lg:gap-8 lg:pl-20 lg:pr-20;
-        @apply xl:pl-4 xl:pr-4;
     }
 
     /* Poster section */

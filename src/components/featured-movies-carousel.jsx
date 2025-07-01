@@ -111,7 +111,7 @@ const FeaturedMoviesCarousel = () => {
                             )
                         })}
                     </div>
-                    <div className="embla__next-prev">
+                    <div className="embla__next-prev container">
                         <div onClick={() => emblaApi?.scrollPrev()}
                              className="embla__prev ">
                             <FontAwesomeIcon
