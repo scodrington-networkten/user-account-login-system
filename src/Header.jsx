@@ -25,6 +25,7 @@ const Header = () => {
     const {user} = useUser();
 
 
+
     const {openMiniSearchForm, closeMiniSearchForm,  miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
 
 
@@ -128,9 +129,8 @@ const Header = () => {
 
 
     return (
-        <header className="page-header" id="page-header">
+        <header className={`page-header ${location.pathname === "/" ? 'homepage' : ''}`} id="page-header">
             <div className="container mx-auto flex items-center">
-
 
                 <section className="flex flex-col md:hidden flex-1 relative">
                     <div className="inner">
