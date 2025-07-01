@@ -4,7 +4,7 @@
     @apply flex relative drop-shadow-lg border-gray-300 border-1 overflow-hidden transition-all duration-200 ease-in-out;
 
     .image-section {
-        @apply w-full object-cover transform transition-transform duration-200 ease-in-out scale-100 group-hover:scale-110 group-[.touched]:scale-110 h-full;
+        @apply w-full object-cover bg-cover transform transition-transform duration-200 ease-in-out scale-100 group-hover:scale-110 group-[.touched]:scale-110 h-full;
     }
 
     .favorite-badge {
@@ -87,7 +87,7 @@
         @apply flex-2/5 w-auto border-none pt-2;
     }
     .image-section{
-        @apply object-cover rounded;
+        @apply object-cover rounded ;
     }
 
     .main-section{

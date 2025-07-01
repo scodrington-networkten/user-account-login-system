@@ -107,6 +107,9 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
                     alt={movie.title}
                     className="image-section"
                     loading="lazy"
+                    style={{
+                        backgroundImage: `url(${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w92')})`
+                    }}
                 />
             </section>
 

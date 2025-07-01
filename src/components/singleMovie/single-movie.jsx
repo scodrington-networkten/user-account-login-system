@@ -40,7 +40,7 @@ import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
 const SingleMovie = ({movie}) => {
 
     /** @type {MovieDetails | null} */
-    const [movieDetails, setMovieDetails] = useState([]);
+    const [movieDetails, setMovieDetails] = useState(null);
 
     const [actors, setActors] = useState(null);
 
@@ -76,7 +76,9 @@ const SingleMovie = ({movie}) => {
 
     const getProductionCompanies = () => {
 
-        if (movieDetails.length === 0) {
+        if(!movieDetails ) return null;
+
+        if (movieDetails.production_companies.length === 0) {
 
             return (
                 <div className="production-companies-section mt-4">
@@ -103,17 +105,13 @@ const SingleMovie = ({movie}) => {
                             );
                         })}
                     </div>
-
                 </div>
             );
         }
-
-
     }
 
     return (
         <article className="single-movie flex gap-4 flex-grow relative p-4 w-full">
-            <div className="top-gradient-DELETE"></div>
 
             <div className="container m-auto flex mt-0 flex-wrap">
                 <section
@@ -132,7 +130,6 @@ const SingleMovie = ({movie}) => {
                     </div>
 
                     <div className="overview text-1xl items-start font-light">{movie.overview}</div>
-
 
                     <section className="genre-section mt-8 flex gap-1 md:gap-2">
                         {movie.genres.map((item, index) => (

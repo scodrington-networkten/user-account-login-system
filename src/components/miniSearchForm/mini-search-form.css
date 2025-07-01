@@ -67,8 +67,8 @@
 
     /** search input box**/
 
-    input {
-        @apply font-light pr-8 border p-2 px-4 rounded rounded-tr-none rounded-br-none transition-all flex-grow text-white;
+    input{
+        @apply bg-transparent font-light pr-8 border p-2 px-4 rounded rounded-tr-none rounded-br-none transition-all flex-grow text-white;
 
         &::placeholder {
             @apply text-white;
@@ -81,6 +81,8 @@
 
 
     }
+
+
 
     /** search button with icon**/
 

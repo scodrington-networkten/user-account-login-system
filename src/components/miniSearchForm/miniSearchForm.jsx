@@ -66,11 +66,26 @@ const MiniSearchForm = () => {
         setSearchResults(null);
     }
 
+
+    /**  When the search form opens, add an overflow hidden on body to ensure no scrolling */
+    useEffect(() => {
+
+        if (miniSearchFormOpen) {
+            document.documentElement.classList.add("no-scroll");
+        } else {
+            document.documentElement.classList.remove("no-scroll");
+        }
+
+        // optional: cleanup if component unmounts
+        return () => document.body.classList.remove("no-scroll");
+
+    }, [miniSearchFormOpen])
+
     /*** After a delay, blur the input field to de-focus the field and hide mobile keyboards*/
     useEffect(() => {
 
         const timer = setTimeout(() => {
-            searchInputRef.current.blur();
+            searchInputRef.current?.blur();
         }, 1000);
 
         return () => clearTimeout(timer);
@@ -126,7 +141,7 @@ const MiniSearchForm = () => {
     useEffect(() => {
 
         if (miniSearchFormOpen) {
-            searchInputRef.current.focus();
+            searchInputRef.current?.focus();
         }
 
     }, [miniSearchFormOpen]);
@@ -220,6 +235,7 @@ const MiniSearchForm = () => {
                                 name="search-text-input"
                                 type="text"
                                 className=""
+                                autoComplete="off"
                                 placeholder="I'm looking for.."
                                 value={searchInput}
                                 onChange={(e) => {

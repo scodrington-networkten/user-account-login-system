@@ -28,9 +28,7 @@ const CarouselCard = ({movie}) => {
             return item.id === id;
         })
 
-        if (!genre) {
-            genre = {id: 0, name: 'undefined'}
-        }
+        if(!genre) return null;
 
         //leverage the existing genre button to show these genres
         return (
