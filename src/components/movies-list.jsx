@@ -1,4 +1,4 @@
-import {useState} from "react";
+
 import MovieCard from "./movieCard/movie-card.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +19,7 @@ const MoviesList = ({
                         loading,
                         showPagination = true,
                         showHeader = false,
-                        cssClasses = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
+                        cssClasses = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                     }) => {
 
 
