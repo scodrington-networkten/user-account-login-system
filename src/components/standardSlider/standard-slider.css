@@ -15,6 +15,10 @@
             flex-basis: auto;
             display: flex;
         }
+
+        .embla__inner {
+            flex-grow: 1;
+        }
     }
 
     .slider-header {
