@@ -25,30 +25,34 @@ const SearchResults = () => {
 
         const getApiData = async () => {
 
-            setLoading(true);
-            let url = `/api/movie-search?q=${q}&page=${currentPage}`;
             try {
-
-                let response = await fetch(url);
+                setLoading(true);
+                let response = await fetch('/api/get', {
+                    headers: {
+                        'x-action': 'get-search',
+                        'q': q,
+                        'page': currentPage
+                    }
+                });
                 if (!response.ok) {
-                    throw new Error(`There was an error connecting to the ${url} endpoint`);
+                    const data = await response.json();
+                    throw new Error(data.error);
                 }
-                return await response.json();
+
+                const data = await response.json();
+
+                setMovies(data.results);
+                setTotalPages(data.total_pages);
+                setTotalResults(data.total_results);
+
 
             } catch (error) {
                 console.error(error.message);
+            } finally {
+                setLoading(false);
             }
-
-
         }
-        //access and pass back the json data to create the movie list
-        getApiData().then(json => {
-            setMovies(json.json.results);
-            setTotalPages(json.json.total_pages);
-            setLoading(false);
-            setTotalResults(json.json.total_results);
-        });
-
+        getApiData();
 
     }, [searchParams])
 

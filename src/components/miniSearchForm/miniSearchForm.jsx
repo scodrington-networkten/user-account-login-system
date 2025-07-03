@@ -105,18 +105,24 @@ const MiniSearchForm = () => {
 
                 try {
                     setSearchRequestLoading(true);
-                    const result = await fetch(`/api/movie-search?q=${searchInput}&page=1`);
+                    const result = await fetch(`/api/get`, {
+                        headers: {
+                            'x-action': 'get-search',
+                            'q': searchInput,
+                            'page': 1
+                        }
+                    });
                     if (!result.ok) {
-                        throw new Error('could not connect to the search API');
+                        const data = await result.json();
+                        throw new Error(data.error);
                     }
 
                     //collect movies matching
                     const data = await result.json();
-                    if (data.json.results.length === 0) {
+                    if (data.results.length === 0) {
                         setSearchResults([])
                     } else {
-
-                        const subset = data.json.results.slice(0, 5);
+                        const subset = data.results.slice(0, 5);
                         setSearchResults(subset);
                     }
 

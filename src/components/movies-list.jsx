@@ -1,4 +1,3 @@
-
 import MovieCard from "./movieCard/movie-card.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
@@ -130,7 +129,7 @@ const MoviesList = ({
                 <div className="results-header container m-auto">
                     <h1 className="text-3xl mt-4 mb-2">Search Results: <span
                         className="italic font-semibold">{searchQuery}</span></h1>
-                    <div className="results-data">
+                    <div className="results-data mb-2">
                         <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
                         <p>(Page <span className="font-semibold">{currentPage}</span> of <span
                             className="font-semibold">{totalPages})</span></p>
@@ -143,7 +142,7 @@ const MoviesList = ({
                 return (
                     <div className="results-header container m-auto">
                         <h1 className="text-3xl mt-4 mb-2">Movie Results</h1>
-                        <div className="results-data">
+                        <div className="results-data mb-2">
                             <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
                             <p>(Page <span className="font-semibold">{currentPage}</span> of <span
                                 className="font-semibold">{totalPages})</span></p>

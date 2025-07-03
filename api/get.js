@@ -23,7 +23,8 @@ export default async function get(request, response) {
         'get-now-playing-movies': getNowPlayingMovies,
         'get-details-for-person': getDetailsForPerson,
         'get-upcoming-movies': getUpcomingMovies,
-        'get-latest-movies': getLatestMovies
+        'get-latest-movies': getLatestMovies,
+        'get-search': getSearch
     }
 
     const handler = actionHandler[action];
@@ -447,6 +448,49 @@ const getUpcomingMovies = async (request) => {
         throw new Error(error.message);
     }
 }
+
+/**
+ * Gets the search results, extracting the seach term and current page
+ * @param request
+ * @returns {Promise<any>}
+ */
+const getSearch = async (request) => {
+
+
+    try {
+
+        let {q} = request.headers;
+        if (typeof q !== 'string' || q.trim() === '') {
+            throw new Error(`search query was not provided`);
+        }
+
+        let {page} = request.headers;
+        page = page ?? 1;
+
+        let url = `${process.env.MOVIE_API_URL_BASE}search/movie?query=${q}&page=${page}`;
+
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        let result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+
+
+    } catch (error) {
+        throw new Error(error.messages)
+    }
+
+}
+
 
 const getLatestMovies = async (request) => {
 
