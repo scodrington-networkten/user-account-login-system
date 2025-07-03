@@ -32,14 +32,11 @@ const FavoriteList = () => {
             const moviePromises = user?.favorite_movies.map(async (item) => {
 
                 try {
-
                     const result = await Utilities.getMovie(item.movie_id);
                     collection.push(result);
 
                 } catch (error) {
                     window.showToastNotification(error.message, 'error');
-                } finally {
-
                 }
 
             });

@@ -9,6 +9,7 @@ const SingleMoviePage = () => {
     //use state to manage data
     const {id} = useParams();
     const [movie, setMovie] = useState(null);
+    const [movieDetails, setMovieDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -21,6 +22,8 @@ const SingleMoviePage = () => {
                 setLoading(true);
                 const result = await Utilities.getMovie(id);
                 setMovie(result);
+
+                //now we have the movie set, fetch the movie by
 
             } catch (error) {
                 window.showToastNotification(error.message, 'error');

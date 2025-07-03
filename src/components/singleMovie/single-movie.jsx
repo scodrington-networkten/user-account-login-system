@@ -3,11 +3,8 @@ import GenreButton from "../genre-button.jsx";
 import {useEffect, useState} from "react";
 
 import './single-movie.css';
-
-import ActorProfile from "../actorProfile/actorProfile.jsx";
 import ReviewCards from "@components/reviews/reviewCards/reviewCards.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
 import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 

@@ -281,10 +281,11 @@ class Utilities {
     }
 
     /**
-     * Given a movie id, return either the movie from the cache if we have it, or fetch it from the API directly
+     * Given a movie id, return either the movie from the cache if we have it, or fetch it from the API directly.
+     * Will return the extended details about the movie,containing details
+     *
      * @param movieId
      * @returns {Promise<*>}
-     * @throws Error
      */
     static async getMovie(movieId) {
 
@@ -318,6 +319,7 @@ class Utilities {
         //return response
         return data;
     }
+
 }
 
 export default Utilities;
