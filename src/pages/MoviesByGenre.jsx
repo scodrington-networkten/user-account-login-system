@@ -30,59 +30,60 @@ const MoviesByGenre = () => {
         setLoading(true);
     }, [genre])
 
+
     /**
-     * Given the genre name (from the url), determine the internal ID to use to fetch movies with
-     * that genre ID
+     * Given the genre name (from the url), determine the ID of the genre and then do a search on that
+     * genre to find movies that match that genre
      */
     useEffect(() => {
+        (async () => {
+            try {
+                setLoading(true);
+                // Fetch genre data
+                const result = await fetch('/api/get', {
+                    headers: {'x-action': 'get-genres'}
+                });
+                const json = await result.json();
+                let allGenres = json.genres;
 
+                let matchedGenre = _.find(allGenres, (item) => {
+                    let slugifyName = slugify(item.name, {lower: true});
+                    return slugifyName === genre;
+                });
 
-        const getGenreData = async () => {
-
-            const result = await fetch('/api/get', {
-                headers: {
-                    'x-action': 'get-genres'
+                if (!matchedGenre) {
+                    throw new Error(`A genre called ${genre} could not be found`);
                 }
-            });
-            const json = await result.json();
-            let allGenres = json.genres;
 
-            //find the matched genre
-            let matchedGenre = _.find(allGenres, (item, index) => {
-                let slugifyName = slugify(item.name, {lower: true});
-                return slugifyName === genre;
-            })
-
-            if (matchedGenre !== undefined) {
                 setGenreId(matchedGenre.id);
+
+                // Now fetch movies using the matchedGenre.id directly
+                const moviesResult = await fetch('/api/get', {
+                    headers: {
+                        'genre-id': matchedGenre.id,
+                        'page': currentPage,
+                        'x-action': 'get-movies-by-genre'
+                    }
+                });
+
+                if (!moviesResult.ok) {
+                    const data = await moviesResult.json();
+                    throw new Error(data.error);
+                }
+
+                const data = await moviesResult.json();
+                setMovies(data.results);
+                setTotalPages(data.total_pages);
+
+            } catch (error) {
+                window.showToastNotification(error.message, 'error');
+            } finally {
+                setLoading(false);
             }
-        }
-        getGenreData();
-    }, [genre]);
-
-    /**
-     * Once a genre has been found, find movies for it
-     */
-    useEffect(() => {
-        const apiCall = async () => {
-
-            if (!genreId) return;
-
-            setLoading(true);
-
-            const result = await fetch(`/api/get-movies?genre_id=${genreId}&page=${currentPage}`);
-            const json = await result.json();
+        })();
+    }, [genre, searchParams]);
 
 
-            console.log(json.json);
-            setMovies(json.json.results);
-            setTotalPages(json.json.total_pages)
-
-            setLoading(false);
-        }
-        apiCall();
-
-    }, [genreId, searchParams]);
 
     const onNextButton = () => {
 

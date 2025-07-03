@@ -24,7 +24,8 @@ export default async function get(request, response) {
         'get-details-for-person': getDetailsForPerson,
         'get-upcoming-movies': getUpcomingMovies,
         'get-latest-movies': getLatestMovies,
-        'get-search': getSearch
+        'get-search': getSearch,
+        'get-movies-by-genre': getMoviesByGenre
     }
 
     const handler = actionHandler[action];
@@ -571,5 +572,43 @@ const getLatestMovies = async (request) => {
 }
 
 
+const getMoviesByGenre = async (request) => {
+
+
+    try {
+        //extract data fromm headers
+        let {'genre-id': genreId} = request.headers;
+        if (!genreId) {
+            throw new Error('A genre-id must be passed for this endpoint');
+        }
+        let {page} = request.headers;
+        page = page ?? 1;
+        if (!page) {
+            throw new Error('A page must be passed for this endpoint');
+        }
+
+        let url = `${process.env.MOVIE_API_URL_BASE}discover/movie?with_genres=${genreId}&page=${page}`;
+
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        let result = await fetch(url, options);
+        if (!result.ok) {
+            throw new error(result.statusText);
+        }
+
+        return await result.json();
+
+    } catch (error) {
+        throw new error(error.message);
+    }
+
+
+}
 
 
