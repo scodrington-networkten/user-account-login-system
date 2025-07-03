@@ -11,7 +11,6 @@ const Home = () => {
     const [movies, setMovies] = useState([])
     const [loading, setLoading] = useState(true);
 
-
     //on page load, ensure we load popular data
     useEffect(() => {
         const apiCall = async () => {
@@ -39,14 +38,6 @@ const Home = () => {
 
     }, []);
 
-
-    const onNextButton = () => {
-
-    }
-
-    const onPreviousButton = () => {
-
-    }
 
 
     /**
@@ -79,17 +70,15 @@ const Home = () => {
                         <GenreList/>
                         <MoviesList
                             movies={movies}
-                            onNextButton={onNextButton}
-                            onPrevButton={onPreviousButton}
+                            onNextButton={null}
+                            onPrevButton={null}
                             moviesLoading={false}
                             currentPage={1}
                             totalPages={1}
                             showHeader={false}
                         />
                     </div>
-
                 </>
-
             )
         }
     }

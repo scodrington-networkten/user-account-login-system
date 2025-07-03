@@ -12,6 +12,7 @@ import MovieActors from "@components/actorProfile/movie-actors.jsx";
 import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
 
 import {Helmet} from "react-helmet";
+import CollectionDetails from "@components/collections/collectionDetails.jsx";
 
 /**
  * @typedef {Object} MovieDetails
@@ -82,67 +83,72 @@ const SingleMovie = ({movie}) => {
             <Helmet>
                 <title>{Utilities.getSiteNameForPage(movie.title)}</title>
             </Helmet>
-            <article className="single-movie flex gap-4 flex-grow relative p-4 w-full">
+            <article className="single-movie">
+                <div className="container">
 
-                <div className="container m-auto flex mt-0 flex-wrap">
-                    <section
-                        className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-1 md:gap-y-2">
-                        <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
-                        {movie?.tagline &&
-                            <h3 className="tagline">{movie.tagline}</h3>
-                        }
+                    <section className="secondary">
+                        <div className="image-section">
+                            <img
+                                src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
+                                alt={movie.title}
+                                className="poster-image "
+                            />
+                        </div>
+                    </section>
+                    <section className="primary">
+                        <h1>{movie.title}</h1>
+                        {movie?.tagline && <h3 className="tagline">{movie.tagline}</h3>}
 
                         <div className="release-date">
                             <p><FontAwesomeIcon icon={faCalendar}/> {Utilities.formatDate(movie.release_date)}</p>
                         </div>
-                        <div className="review-section flex gap-4 mb-2">
+
+                        <div className="review-section">
                             <div className="review-stars-section">{Utilities.getStarsSection(movie.vote_average)}</div>
                             <div className="review-count-section">{Utilities.getVotesSection(movie.vote_count)}</div>
                         </div>
 
-                        <section className="genre-section mb-4 flex gap-1 md:gap-2">
+                        <section className="genre-section">
                             {movie.genres.map((item, index) => (
                                 <GenreButton genre={item} key={`genre-button-${index}`}/>
                             ))}
                         </section>
-
-                        <div className="overview text-1xl items-start font-light">{movie.overview}</div>
-
+                        <div className="overview">{movie.overview}</div>
                         <section className="actors-section w-full">
                             <MovieActors movie={movie}/>
                         </section>
                     </section>
 
-                    <section className="secondary hidden md:flex w-1/3 md:mt-4">
-                        <div className="image-section s">
-                            <img
-                                src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
-                                alt={movie.title}
-                                className="shadow-xl object-cover rounded-lg transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
-                            />
-                        </div>
-                    </section>
 
-                    <section className="bottom-section w-full">
-
-                        <MovieKeywords movie={movie}/>
-
-                        <SimilarMovies movie={movie}/>
-
-                        {getProductionCompanies()}
-
+                </div>
+                <div className="container">
+                    <section className="bottom-section">
                         <ReviewCards movie={movie}/>
-
+                        <CollectionDetails id={movie?.belongs_to_collection?.id}/>
+                        <SimilarMovies movie={movie}/>
+                        <MovieKeywords movie={movie}/>
+                        {getProductionCompanies()}
                     </section>
                 </div>
+
                 <img
                     src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
-                    className="absolute object-cover -z-100 opacity-5 top-0 left-0 h-full w-full -z-1"
+                    className="background-image "
                     alt="background-image"
                 />
-
             </article>
+
         </>
     )
 }
 export default SingleMovie
+
+/**
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */

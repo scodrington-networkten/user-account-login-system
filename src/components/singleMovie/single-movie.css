@@ -1,30 +1,71 @@
 @import "tailwindcss";
 
 .single-movie {
+    @apply flex gap-4 flex-grow relative p-4 w-full flex-col;
 
     .tagline {
         @apply italic font-light text-xl mb-3 md:mb-4 lg:mb-5;
         color: var(--color-highlight-secondary);
     }
-}
 
+    /**
+     * Mobile: secondary foated right, primary wraps around (block + float)
+     * Desktop: no float, primary re-ordered to 1, secondary re-ordered to 2 and then flex
+     */
+
+    .container {
+        @apply block m-auto mt-0;
+        @apply md:flex md:flex-nowrap md:gap-4;
+    }
+
+    .primary {
+        @apply block z-1 gap-2;
+        @apply md:flex-auto md:min-w-0 md:order-1;
+    }
+
+    .secondary {
+        @apply float-right ml-2 mb-2 w-1/3;
+        @apply md:float-none md:w-1/3 md:flex-shrink-0 md:m-0 md:order-2;
+
+        .poster-image {
+            @apply shadow-xl object-cover rounded-lg transform transition-transform duration-200 scale-100;
+        }
+    }
+
+    .bottom-section {
+        @apply w-full;
+        @apply md:order-3 md:w-full;
+    }
+
+    .genre-section {
+        @apply mb-4 flex gap-1 md:gap-2 flex-wrap;
+    }
+
+    .overview {
+        @apply text-xl items-start font-light;
+    }
+
+    .release-date {
+        /* No Tailwind classes, but you might style here if needed */
+    }
+
+    .review-section {
+        @apply flex gap-4 mb-2;
+    }
+
+    h1 {
+        @apply font-bold text-3xl md:text-4xl lg:text-5xl;
+    }
+
+    .background-image {
+        @apply absolute object-cover -z-1 opacity-10 top-0 left-0 h-full w-full;
+    }
+}
 
 .production-companies {
     @apply flex gap-2 mt-3 flex-wrap items-center;
 
     .production-company {
         max-height: 100px;
-    }
-}
-
-.single-movie {
-
-    .top-gradient {
-        position: absolute;
-        top: -60px;
-        left: 0px;
-        width: 100%;
-        height: 80px;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
     }
 }

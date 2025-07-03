@@ -25,7 +25,8 @@ export default async function get(request, response) {
         'get-upcoming-movies': getUpcomingMovies,
         'get-latest-movies': getLatestMovies,
         'get-search': getSearch,
-        'get-movies-by-genre': getMoviesByGenre
+        'get-movies-by-genre': getMoviesByGenre,
+        'get-collection': getCollection
     }
 
     const handler = actionHandler[action];
@@ -493,6 +494,9 @@ const getSearch = async (request) => {
 }
 
 
+/**
+ * Gets the latest movies, using a combination of filters to get recent US based release movies
+ */
 const getLatestMovies = async (request) => {
 
     const getStartDate = () => {
@@ -572,6 +576,11 @@ const getLatestMovies = async (request) => {
 }
 
 
+/**
+ * Searches for movies given a specific genre ID
+ * @param request
+ * @returns {Promise<any>}
+ */
 const getMoviesByGenre = async (request) => {
 
 
@@ -610,5 +619,38 @@ const getMoviesByGenre = async (request) => {
 
 
 }
+
+/**
+ * Return information about a given collection (via its id)
+ * @param request
+ * @returns {Promise<*>}
+ */
+const getCollection = async (request) => {
+
+    try {
+        let {'collection-id': collectionId} = request.headers;
+
+        let url = `${process.env.MOVIE_API_URL_BASE}collection/${collectionId}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${process.env.MOVIE_API_TOKEN}`
+            }
+        }
+
+        let result = await fetch(url, options);
+        if (!result.ok) {
+            throw new Error(result.statusText);
+        }
+
+        return await result.json();
+
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+
 
 
