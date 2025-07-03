@@ -41,46 +41,14 @@ import {Helmet} from "react-helmet";
  */
 const SingleMovie = ({movie}) => {
 
-    /** @type {MovieDetails | null} */
-    const [movieDetails, setMovieDetails] = useState(null);
-
     const [actors, setActors] = useState(null);
-
-    useEffect(() => {
-
-        //setup cached data
-        let cache = (sessionStorage.getItem('movie_details_cache') !== null) ? JSON.parse(sessionStorage.getItem('movie_details_cache')) : null;
-        if (cache !== null) {
-            if (cache[movie.id] !== undefined) {
-                setMovieDetails(/** @type {MovieDetails} */ cache[movie.id]);
-                return;
-            }
-        }
-
-        const getMovieDetails = async () => {
-            const response = await fetch(`/api/get`, {
-                headers: {
-                    'x-action': 'get-movie',
-                    'movie-id': movie.id
-                }
-            });
-            return response.json();
-        }
-        getMovieDetails().then(json => {
-            setMovieDetails(/** @type {MovieDetails} */ json);
-
-            let newCache = (cache !== null) ? {...cache, [movie.id]: json} : {[movie.id]: json};
-            sessionStorage.setItem('movie_details_cache', JSON.stringify(newCache));
-        });
-
-    }, [movie.id])
 
 
     const getProductionCompanies = () => {
 
-        if (!movieDetails) return null;
+        if (!movie) return null;
 
-        if (movieDetails.production_companies.length === 0) {
+        if (movie.production_companies.length === 0) {
 
             return (
                 <div className="production-companies-section mt-4">
@@ -93,7 +61,7 @@ const SingleMovie = ({movie}) => {
                 <div className="production-companies-section mt-4">
                     <h3 className="">Production Companies</h3>
                     <div className="companies">
-                        {movieDetails.production_companies.map((item, index) => {
+                        {movie.production_companies.map((item, index) => {
                             let finalUrl = Utilities.getApiImageUrl(item.logo_path, 'logo', 'w154');
                             return (
                                 item.logo_path && (
@@ -142,7 +110,7 @@ const SingleMovie = ({movie}) => {
                         </section>
 
                         <div className="overview text-1xl items-start font-light">{movie.overview}</div>
-                        
+
                         <section className="actors-section w-full">
                             <MovieActors movie={movie}/>
                         </section>

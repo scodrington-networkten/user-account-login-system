@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import {useUser} from "@contexts/UserContext.jsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import LoadingCardList from "@components/loading-card-list.jsx";
 
 
 /**
@@ -13,7 +14,7 @@ const FavoriteList = () => {
 
     const [movies, setMovies] = useState([]);
     const {user} = useUser();
-
+    const [loading, setLoading] = useState(false);
 
 
     //fetch movie data based on user favorited items
@@ -23,20 +24,35 @@ const FavoriteList = () => {
         const getMovies = async () => {
 
             const collection = [];
+
+            if (user === null) return;
+
+            setLoading(true);
             const moviePromises = user?.favorite_movies.map(async (item) => {
 
                 try {
-                    const result = await fetch(`/api/get-movie?id=${item.movie_id}`);
+                    setLoading(true);
+                    const result = await fetch(`/api/get`, {
+                        headers: {
+                            'x-action': 'get-movie',
+                            'movie-id': item.movie_id
+                        }
+                    });
+
                     if (result.ok) {
                         const movieData = await result.json();
-                        collection.push(movieData.json); // fix: just movieData, not movieData.json
+                        collection.push(movieData);
                     }
                 } catch (error) {
                     console.error('Failed to fetch movie', error);
+                } finally {
+
                 }
             });
 
             await Promise.all(moviePromises);
+
+            setLoading(false);
 
             setMovies(collection);
         }
@@ -54,15 +70,20 @@ const FavoriteList = () => {
         )
     }
 
-    if (movies.length === 0) {
+    if (loading) {
         return (
-            <p><FontAwesomeIcon className="text-lg fa-spin" icon={faSpinner}/></p>
+            <>
+                <p>Loading your favorite movies...</p>
+                <LoadingCardList cssClass={'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'} items={6}/>
+            </>
+
         )
     }
 
     //has movies to display
     return (
-        <MoviesList movies={movies} cssClasses={'grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'} showPagination={false}/>
+        <MoviesList movies={movies} cssClasses={'grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'}
+                    showPagination={false}/>
     )
 }
 export default FavoriteList;

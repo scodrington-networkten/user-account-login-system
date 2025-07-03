@@ -272,12 +272,51 @@ class Utilities {
 
     //Get the title for the page
     static getSiteNameForPage(page) {
-        if(page !== ''){
+        if (page !== '') {
             return `Movie Search - ${page}`;
-        }else{
+        } else {
             return `Movie Search`;
         }
 
+    }
+
+    /**
+     * Given a movie id, return either the movie from the cache if we have it, or fetch it from the API directly
+     * @param movieId
+     * @returns {Promise<*>}
+     * @throws Error
+     */
+    static async getMovie(movieId) {
+
+        //get the movie directly from storage cache if applicable
+        const cacheStr = sessionStorage.getItem('movie_cache');
+        if (cacheStr) {
+            const cache = JSON.parse(cacheStr);
+            const matchedRecord = cache[movieId];
+            if (matchedRecord) return matchedRecord;
+        }
+
+        //item not found in cache, use direct fetch
+
+        const response = await fetch(`/api/get`, {
+            headers: {
+                'x-action': 'get-movie',
+                'movie-id': movieId
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`There was an error fetching movie: ${movieId}, response: ${response.statusText}`)
+        }
+
+        //add data to cache
+        const data = await response.json();
+        const cache = cacheStr ? JSON.parse(cacheStr) : {};
+        const newCache = {...cache, [movieId]: data};
+        sessionStorage.setItem('movie_cache', JSON.stringify(newCache));
+
+        //return response
+        return data;
     }
 }
 

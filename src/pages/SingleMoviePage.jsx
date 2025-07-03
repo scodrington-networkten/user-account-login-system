@@ -2,6 +2,7 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SingleMovie from "../components/singleMovie/single-movie.jsx";
 import LoadingCard from "../components/loading-card.jsx";
+import Utilities from "../utilities.jsx";
 
 const SingleMoviePage = () => {
 
@@ -12,25 +13,26 @@ const SingleMoviePage = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const getMovie = async () => {
-            try {
-                const result = await fetch(`/api/get`, {
-                    headers: {
-                        'x-action': 'get-movie',
-                        'movie-id': id
-                    }
-                });
-                const data = await result.json();
-                setMovie(data);
 
-            } catch (err) {
-                setError("Failed to fetch movie.");
+        //collect movie
+        (async () => {
+
+            try {
+                setLoading(true);
+                const result = await Utilities.getMovie(id);
+                setMovie(result);
+
+            } catch (error) {
+                window.showToastNotification(error.message, 'error');
             } finally {
                 setLoading(false);
             }
-        }
-        getMovie();
-    }, [id]);
+
+        })();
+
+
+    }, [id])
+
 
     if (loading) return (
 
