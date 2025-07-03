@@ -4,6 +4,7 @@ import {useUser} from "@contexts/UserContext.jsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import LoadingCardList from "@components/loading-card-list.jsx";
+import Utilities from "../../utilities.jsx";
 
 
 /**
@@ -31,29 +32,21 @@ const FavoriteList = () => {
             const moviePromises = user?.favorite_movies.map(async (item) => {
 
                 try {
-                    setLoading(true);
-                    const result = await fetch(`/api/get`, {
-                        headers: {
-                            'x-action': 'get-movie',
-                            'movie-id': item.movie_id
-                        }
-                    });
 
-                    if (result.ok) {
-                        const movieData = await result.json();
-                        collection.push(movieData);
-                    }
+                    const result = await Utilities.getMovie(item.movie_id);
+                    collection.push(result);
+
                 } catch (error) {
-                    console.error('Failed to fetch movie', error);
+                    window.showToastNotification(error.message, 'error');
                 } finally {
 
                 }
+
             });
 
             await Promise.all(moviePromises);
 
             setLoading(false);
-
             setMovies(collection);
         }
         getMovies();
