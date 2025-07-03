@@ -18,7 +18,7 @@ const SearchResultEntry = ({movie}) => {
     //on load, correctly set up the genres for display
     useEffect(() => {
         let tempGenres = [];
-        movie.genre_ids.forEach((item, index) => {
+        movie.genre_ids.forEach((item) => {
             const matchedGenre = genres.find(genre => genre.id === item);
             if (matchedGenre) {
                 tempGenres.push(matchedGenre);
@@ -34,7 +34,10 @@ const SearchResultEntry = ({movie}) => {
             <article className="search-result-entry">
 
                 <div className="left">
-                    <img src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w92')}/>
+                    <img
+                        src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w92')}
+                        alt={movie.title}
+                    />
                 </div>
                 <div className="right">
                     <h3 className="title">{movie.original_title}</h3>

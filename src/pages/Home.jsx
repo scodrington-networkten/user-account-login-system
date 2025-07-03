@@ -3,6 +3,9 @@ import {useState, useEffect} from "react";
 import LoadingCardList from "../components/loading-card-list.jsx";
 import GenreList from "../components/genre-list.jsx";
 import FeaturedMoviesCarousel from "@components/featured-movies-carousel.jsx";
+import {Helmet} from "react-helmet";
+import Utilities from "../utilities.jsx";
+
 const Home = () => {
 
     const [movies, setMovies] = useState([])
@@ -37,7 +40,6 @@ const Home = () => {
     }, []);
 
 
-
     const onNextButton = () => {
 
     }
@@ -56,6 +58,9 @@ const Home = () => {
         if (loading) {
             return (
                 <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage('')}</title>
+                    </Helmet>
                     <FeaturedMoviesCarousel/>
                     <div className={"px-4 w-full"}>
                         <GenreList/>
@@ -66,6 +71,9 @@ const Home = () => {
         } else {
             return (
                 <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage('')}</title>
+                    </Helmet>
                     <FeaturedMoviesCarousel/>
                     <div className={"px-4 w-full"}>
                         <GenreList/>

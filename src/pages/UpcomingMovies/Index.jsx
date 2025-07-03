@@ -2,6 +2,8 @@ import LoadingCard from "@components/loading-card.jsx";
 import {useEffect, useState} from "react";
 import MoviesList from "@components/movies-list.jsx";
 import StandardLayout from "@components/Layouts/StandardLayout.jsx";
+import {Helmet} from "react-helmet";
+import Utilities from "../../utilities.jsx";
 
 /**
  * Shows upcoming movies (mostly new releases)
@@ -57,7 +59,13 @@ const UpcomingMovies = () => {
 
         if (loading) {
             return (
-                <LoadingCard/>
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage('Upcoming')}</title>
+                    </Helmet>
+                    <LoadingCard/>
+                </>
+
             )
         }
 
@@ -74,11 +82,17 @@ const UpcomingMovies = () => {
         }
 
         return (
-            <MoviesList
-                movies={movies}
-                showPagination={false}
-                showHeader={false} totalPages={1}
-            />
+            <>
+                <Helmet>
+                    <title>{Utilities.getSiteNameForPage('Upcoming')}</title>
+                </Helmet>
+                <MoviesList
+                    movies={movies}
+                    showPagination={false}
+                    showHeader={false} totalPages={1}
+                />
+            </>
+
         )
     }
 

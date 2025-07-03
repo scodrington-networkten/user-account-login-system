@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import MoviesList from "../components/movies-list.jsx";
 
 import LoadingCardList from "../components/loading-card-list.jsx";
+import {Helmet} from "react-helmet";
+import Utilities from "../utilities.jsx";
 
 
 const SearchResults = () => {
@@ -78,24 +80,35 @@ const SearchResults = () => {
         //show the loading list while we wait
         if (loading) {
             return (
-                <LoadingCardList/>
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(q)}</title>
+                    </Helmet>
+                    <LoadingCardList/>
+                </>
+
             )
         }
 
         return (
-            <div className="movie-results">
-                <MoviesList
-                    movies={movies}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    totalResults={totalResults}
-                    onPrevButton={onPrevButton}
-                    onNextButton={onNextButton}
-                    loading={loading}
-                    onPagesButton={onPageButton}
-                    searchQuery={q}
-                />
-            </div>
+            <>
+                <Helmet>
+                    <title>{Utilities.getSiteNameForPage(q)}</title>
+                </Helmet>
+                <div className="movie-results">
+                    <MoviesList
+                        movies={movies}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        totalResults={totalResults}
+                        onPrevButton={onPrevButton}
+                        onNextButton={onNextButton}
+                        loading={loading}
+                        onPagesButton={onPageButton}
+                        searchQuery={q}
+                    />
+                </div>
+            </>
         )
 
     }

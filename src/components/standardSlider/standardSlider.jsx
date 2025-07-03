@@ -1,7 +1,6 @@
 import {useCallback, useEffect, useState, useRef} from "react";
 import MovieCard from "@components/movieCard/movie-card.jsx";
 import './standard-slider.css';
-import CarouselCard from "@components/carouselCard/carousel-card.jsx";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -18,7 +17,11 @@ const StandardSlider = ({data, header = ''}) => {
             loop: true,
             speed: 5,
             slides: '.embla__slide'
-        }
+        },
+        [Autoplay({
+            delay: 3000,
+            stopOnInteraction: true
+        })]
     )
 
     const containerRef = useRef(null);
@@ -38,7 +41,7 @@ const StandardSlider = ({data, header = ''}) => {
     }, [emblaApi]);
 
 
-    //Setup the slider
+    //Set up the slider
     useEffect(() => {
         if (!emblaApi) return;
 

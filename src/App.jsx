@@ -18,7 +18,6 @@ import '@fontsource/inter/700-italic.css';
 
 
 import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
-import {useState, useEffect} from 'react';
 
 import Home from "./pages/Home";
 import MoviesByGenre from "./pages/MoviesByGenre";

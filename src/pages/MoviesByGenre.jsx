@@ -6,6 +6,7 @@ import _ from 'lodash';
 import slugify from "slugify";
 import LoadingCardList from "../components/loading-card-list.jsx";
 import Utilities from "../utilities.jsx";
+import {Helmet} from "react-helmet";
 
 const MoviesByGenre = () => {
 
@@ -111,25 +112,37 @@ const MoviesByGenre = () => {
 
         if (loading) {
             return (
-                <div className="container">
-                    <LoadingCardList/>
-                </div>
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(genre)}</title>
+                    </Helmet>
+                    <div className="container">
+                        <LoadingCardList/>
+                    </div>
+                </>
+
             )
 
         } else {
             return (
-                <div className="container">
-                    <MoviesList
-                        movies={movies}
-                        onNextButton={onNextButton}
-                        onPrevButton={onPrevButton}
-                        onPagesButton={onPageButton}
-                        moviesLoading={loading}
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        showHeader={true}
-                    />
-                </div>
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(genre)}</title>
+                    </Helmet>
+                    <div className="container">
+                        <MoviesList
+                            movies={movies}
+                            onNextButton={onNextButton}
+                            onPrevButton={onPrevButton}
+                            onPagesButton={onPageButton}
+                            moviesLoading={loading}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            showHeader={true}
+                        />
+                    </div>
+                </>
+
             )
         }
     }

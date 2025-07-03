@@ -269,6 +269,16 @@ class Utilities {
         return `https://image.tmdb.org/t/p/${size}${url}`;
 
     }
+
+    //Get the title for the page
+    static getSiteNameForPage(page) {
+        if(page !== ''){
+            return `Movie Search - ${page}`;
+        }else{
+            return `Movie Search`;
+        }
+
+    }
 }
 
 export default Utilities;

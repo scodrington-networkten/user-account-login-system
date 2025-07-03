@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import MoviesList from "@components/movies-list.jsx";
 
 import StandardLayout from "@components/Layouts/StandardLayout.jsx";
+import {Helmet} from "react-helmet";
+import Utilities from "../../utilities.jsx";
 
 const LatestMovies = () => {
 
@@ -51,7 +53,13 @@ const LatestMovies = () => {
 
         if (loading) {
             return (
-                <LoadingCard/>
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage('Latest')}</title>
+                    </Helmet>
+                    <LoadingCard/>
+                </>
+
             )
         }
 
@@ -68,12 +76,18 @@ const LatestMovies = () => {
         }
 
         return (
-            <MoviesList
-                movies={movies}
-                showPagination={false}
-                showHeader={false}
-                totalPages={1}
-            />
+            <>
+                <Helmet>
+                    <title>{Utilities.getSiteNameForPage('Latest')}</title>
+                </Helmet>
+                <MoviesList
+                    movies={movies}
+                    showPagination={false}
+                    showHeader={false}
+                    totalPages={1}
+                />
+            </>
+
         )
     }
 

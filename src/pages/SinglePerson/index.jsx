@@ -3,9 +3,10 @@ import {useEffect, useState} from "react";
 
 
 import SinglePersonMovies from "@components/Pages/SinglePerson/SinglePersonMovies.jsx";
-import SinglePersonSocialLinks from "@components/Pages/SinglePerson/SinglePersonSocialLinks.jsx";
 import SinglePersonDetails from "@components/Pages/SinglePerson/SinglePersonDetails.jsx";
 import LoadingCard from "@components/loading-card.jsx";
+import {Helmet} from "react-helmet";
+import Utilities from "../../utilities.jsx";
 
 /**
  * Shows information about a single person
@@ -84,10 +85,16 @@ const SinglePerson = () => {
     }
 
     return (
-        <div className="container px-4 mx-auto mt-2 mb-2">
-            <SinglePersonDetails details={person} movies={movies} images={images} externalLinks={externalLinks}/>
-            <SinglePersonMovies movies={movies}/>
-        </div>
+        <>
+            <Helmet>
+                <title>{Utilities.getSiteNameForPage(person.name)}</title>
+            </Helmet>
+            <div className="container px-4 mx-auto mt-2 mb-2">
+                <SinglePersonDetails details={person} movies={movies} images={images} externalLinks={externalLinks}/>
+                <SinglePersonMovies movies={movies}/>
+            </div>
+        </>
+
     )
 }
 export default SinglePerson;

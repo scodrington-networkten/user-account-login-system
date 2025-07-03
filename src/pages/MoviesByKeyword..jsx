@@ -2,6 +2,8 @@ import {useParams, useSearchParams} from "react-router-dom";
 import MoviesList from "../components/movies-list.jsx";
 import {useEffect, useState} from "react";
 import LoadingCardList from "../components/loading-card-list.jsx";
+import {Helmet} from "react-helmet";
+import Utilities from "../utilities.jsx";
 
 /**
  * Display movies associated with the provided keyword
@@ -109,26 +111,38 @@ const MoviesByKeyword = () => {
 
         if (loading) {
             return (
-                <div className="container">
-                    <LoadingCardList/>
-                </div>
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(keyword.name)}</title>
+                    </Helmet>
+                    <div className="container">
+                        <LoadingCardList/>
+                    </div>
+                </>
+
             )
 
         } else {
             return (
-                <div className="container">
-                    <p>Movies that share this keyword</p>
-                    <MoviesList
-                        movies={movies}
-                        onNextButton={onNextButton}
-                        onPrevButton={onPrevButton}
-                        onPagesButton={onPageButton}
-                        moviesLoading={loading}
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        showHeader={false}
-                    />
-                </div>
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(keyword.name)}</title>
+                    </Helmet>
+                    <div className="container">
+                        <p>Movies that share this keyword</p>
+                        <MoviesList
+                            movies={movies}
+                            onNextButton={onNextButton}
+                            onPrevButton={onPrevButton}
+                            onPagesButton={onPageButton}
+                            moviesLoading={loading}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            showHeader={false}
+                        />
+                    </div>
+                </>
+
             )
         }
     }

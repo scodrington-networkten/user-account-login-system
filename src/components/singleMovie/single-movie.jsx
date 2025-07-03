@@ -14,6 +14,8 @@ import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 import MovieActors from "@components/actorProfile/movie-actors.jsx";
 import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
 
+import {Helmet} from "react-helmet";
+
 /**
  * @typedef {Object} MovieDetails
  * @property {boolean} adult
@@ -76,7 +78,7 @@ const SingleMovie = ({movie}) => {
 
     const getProductionCompanies = () => {
 
-        if(!movieDetails ) return null;
+        if (!movieDetails) return null;
 
         if (movieDetails.production_companies.length === 0) {
 
@@ -111,67 +113,71 @@ const SingleMovie = ({movie}) => {
     }
 
     return (
-        <article className="single-movie flex gap-4 flex-grow relative p-4 w-full">
+        <>
+            <Helmet>
+                <title>{Utilities.getSiteNameForPage(movie.title)}</title>
+            </Helmet>
+            <article className="single-movie flex gap-4 flex-grow relative p-4 w-full">
 
-            <div className="container m-auto flex mt-0 flex-wrap">
-                <section
-                    className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-1 md:gap-y-2">
-                    <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
-                    {movie?.tagline &&
-                        <h3 className="tagline">{movie.tagline}</h3>
-                    }
+                <div className="container m-auto flex mt-0 flex-wrap">
+                    <section
+                        className="primary flex flex-col justify-start flex-start items-start z-1 w-1/2 flex-grow-1 md:mt-4 gap-y-1 md:gap-y-2">
+                        <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">{movie.title}</h1>
+                        {movie?.tagline &&
+                            <h3 className="tagline">{movie.tagline}</h3>
+                        }
 
-                    <div className="release-date">
-                        <p><FontAwesomeIcon icon={faCalendar}/> {Utilities.formatDate(movie.release_date)}</p>
-                    </div>
-                    <div className="review-section flex gap-4 mb-4">
-                        <div className="review-stars-section">{Utilities.getStarsSection(movie.vote_average)}</div>
-                        <div className="review-count-section">{Utilities.getVotesSection(movie.vote_count)}</div>
-                    </div>
+                        <div className="release-date">
+                            <p><FontAwesomeIcon icon={faCalendar}/> {Utilities.formatDate(movie.release_date)}</p>
+                        </div>
+                        <div className="review-section flex gap-4 mb-2">
+                            <div className="review-stars-section">{Utilities.getStarsSection(movie.vote_average)}</div>
+                            <div className="review-count-section">{Utilities.getVotesSection(movie.vote_count)}</div>
+                        </div>
 
-                    <div className="overview text-1xl items-start font-light">{movie.overview}</div>
+                        <section className="genre-section mb-4 flex gap-1 md:gap-2">
+                            {movie.genres.map((item, index) => (
+                                <GenreButton genre={item} key={`genre-button-${index}`}/>
+                            ))}
+                        </section>
 
-                    <section className="genre-section mt-8 flex gap-1 md:gap-2">
-                        {movie.genres.map((item, index) => (
-                            <GenreButton genre={item} key={`genre-button-${index}`}/>
-                        ))}
+                        <div className="overview text-1xl items-start font-light">{movie.overview}</div>
+                        
+                        <section className="actors-section w-full">
+                            <MovieActors movie={movie}/>
+                        </section>
                     </section>
 
-                    <section className="actors-section w-full">
-                        <MovieActors movie={movie}/>
+                    <section className="secondary hidden md:flex w-1/3 md:mt-4">
+                        <div className="image-section s">
+                            <img
+                                src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
+                                alt={movie.title}
+                                className="shadow-xl object-cover rounded-lg transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
+                            />
+                        </div>
                     </section>
-                </section>
 
-                <section className="secondary hidden md:flex w-1/3 md:mt-4">
-                    <div className="image-section s">
-                        <img
-                            src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
-                            alt={movie.title}
-                            className="shadow-xl object-cover rounded-lg transform transition-transform duration-200 ease-out-in scale-100 group-hover:scale-110"
-                        />
-                    </div>
-                </section>
+                    <section className="bottom-section w-full">
 
-                <section className="bottom-section w-full">
+                        <MovieKeywords movie={movie}/>
 
-                    <MovieKeywords movie={movie}/>
+                        <SimilarMovies movie={movie}/>
 
-                    <SimilarMovies movie={movie}/>
+                        {getProductionCompanies()}
 
-                    {getProductionCompanies()}
+                        <ReviewCards movie={movie}/>
 
-                    <ReviewCards movie={movie}/>
+                    </section>
+                </div>
+                <img
+                    src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
+                    className="absolute object-cover -z-100 opacity-5 top-0 left-0 h-full w-full -z-1"
+                    alt="background-image"
+                />
 
-                </section>
-            </div>
-            <img
-                src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
-                className="absolute object-cover -z-100 opacity-5 top-0 left-0 h-full w-full -z-1"
-                alt="background-image"
-            />
-
-        </article>
-
+            </article>
+        </>
     )
 }
 export default SingleMovie
