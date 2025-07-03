@@ -15,7 +15,7 @@ const MoviesByGenre = () => {
     const [movies, setMovies] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
-    const [genreId, setGenreId] = useState(null);
+    const [error, setError] = useState(false);
 
     //collect search data
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +39,7 @@ const MoviesByGenre = () => {
         (async () => {
             try {
                 setLoading(true);
+                setError(false);
                 // Fetch genre data
                 const result = await fetch('/api/get', {
                     headers: {'x-action': 'get-genres'}
@@ -55,7 +56,6 @@ const MoviesByGenre = () => {
                     throw new Error(`A genre called ${genre} could not be found`);
                 }
 
-                setGenreId(matchedGenre.id);
 
                 // Now fetch movies using the matchedGenre.id directly
                 const moviesResult = await fetch('/api/get', {
@@ -79,10 +79,10 @@ const MoviesByGenre = () => {
                 window.showToastNotification(error.message, 'error');
             } finally {
                 setLoading(false);
+                setError(false);
             }
         })();
     }, [genre, searchParams]);
-
 
 
     const onNextButton = () => {
@@ -124,6 +124,17 @@ const MoviesByGenre = () => {
 
             )
 
+        } else if (error) {
+            return (
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(genre)}</title>
+                    </Helmet>
+                    <div className="container">
+                        <p>There was an issue loading movies for <b>{genre}</b></p>
+                    </div>
+                </>
+            )
         } else {
             return (
                 <>
