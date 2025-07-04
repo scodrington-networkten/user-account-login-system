@@ -64,9 +64,9 @@ const Login = () => {
     }
 
     return (
-        <div className="signup-form flex gap-2 flex-col mx-auto container my-2">
+        <div className="signup-form flex gap-2 p-2 flex-col mx-auto container my-2">
             {loading &&
-                <p className="message-loading">Logging you into your account</p>
+                <p className="message-success">Logging you into your account</p>
             }
             {successMessage !== null &&
                 <p className="message-success">{successMessage}</p>

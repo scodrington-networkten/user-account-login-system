@@ -50,6 +50,7 @@ import PopularMovies from "./pages/PopularMovies/index.jsx";
 import LatestMovies from "./pages/LatestMovies/index.jsx";
 import {SharedStateProvider} from "@contexts/SharedStateConext.jsx";
 import NewSlider from "./pages/new-slider.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
 
@@ -94,6 +95,8 @@ function App() {
 
                                     <Route path="/new-movie-design" element={<Test/>}/>
                                     <Route path="/new-slider" element={<NewSlider/>}/>
+
+                                    <Route path="*" element={<NotFound/>}/>
                                 </Route>
                             </Routes>
 
