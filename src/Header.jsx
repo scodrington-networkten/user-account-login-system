@@ -24,11 +24,7 @@ const Header = () => {
     const [userSubmenuOpen, setUserSubmenuOpen] = useState(false);
     const {user} = useUser();
 
-
-
-    const {openMiniSearchForm, closeMiniSearchForm,  miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
-
-
+    const {openMiniSearchForm, closeMiniSearchForm, miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
 
     //handle when we change loction, close the nav
     useEffect(() => {
@@ -42,7 +38,6 @@ const Header = () => {
     const onSearchIconClick = () => {
         openMiniSearchForm();
     }
-
 
 
     //display header section based on logged in user
@@ -87,7 +82,6 @@ const Header = () => {
     }
 
 
-
     const getTitleSection = () => {
 
         return (
@@ -105,7 +99,6 @@ const Header = () => {
             </div>
         )
     }
-
 
 
     const getLinksSection = () => {
@@ -155,8 +148,6 @@ const Header = () => {
                         </div>
                     </div>
                 </section>
-
-
 
 
             </div>

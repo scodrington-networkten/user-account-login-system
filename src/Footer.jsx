@@ -38,7 +38,6 @@ const Footer = () => {
         return <PrimaryNav/>
     }
 
-
     return (
         <footer className=" bg-[var(--color-secondary)] text-gray-200 p-4 mt-4" id="page-footer">
             <div className="genres">
