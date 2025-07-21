@@ -109,27 +109,28 @@ const MoviesByKeyword = () => {
      */
     const displayMovies = () => {
 
+        const keywordName = keyword ? keyword.name : '';
+
         if (loading) {
             return (
                 <>
                     <Helmet>
-                        <title>{Utilities.getSiteNameForPage(keyword.name)}</title>
+                        <title>{Utilities.getSiteNameForPage(keywordName)}</title>
                     </Helmet>
                     <div className="container">
                         <LoadingCardList/>
                     </div>
                 </>
-
             )
 
         } else {
             return (
                 <>
                     <Helmet>
-                        <title>{Utilities.getSiteNameForPage(keyword.name)}</title>
+                        <title>{Utilities.getSiteNameForPage(keywordName)}</title>
                     </Helmet>
                     <div className="container">
-                        <p>Movies that share this keyword</p>
+                        <p>These movies have been tagged under <strong>{keywordName}</strong></p>
                         <MoviesList
                             movies={movies}
                             onNextButton={onNextButton}

@@ -81,9 +81,9 @@ const Footer = () => {
         }
 
         return (
-            <div className="popular-movies">
+            <div className="recent-movies">
                 {recentMovies.map((item, index) => (
-                    <Link to={`/movie/${item.id}`}>
+                    <Link to={`/movie/${item.id}`} key={`recent-movies-item-${index}`}>
                         {item.original_title}
                     </Link>
                 ))}

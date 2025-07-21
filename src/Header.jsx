@@ -14,6 +14,7 @@ import UserActionsSidebar from "@components/sidebar/userActionsSidebar.jsx";
 import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
 
 import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.jsx";
+import GenresNav from "@components/Nav/genresNav.jsx";
 
 
 const Header = () => {
@@ -26,7 +27,7 @@ const Header = () => {
 
     const {openMiniSearchForm, closeMiniSearchForm, miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
 
-    //handle when we change loction, close the nav
+    //handle when we change location, close the nav
     useEffect(() => {
         setUserSubmenuOpen(false);
     }, [location.pathname]);
@@ -40,7 +41,7 @@ const Header = () => {
     }
 
 
-    //display header section based on logged in user
+    //display header section based on logged-in user
     const displayUserIconSection = () => {
 
         if (user !== null) {
@@ -104,8 +105,9 @@ const Header = () => {
     const getLinksSection = () => {
 
         return (
-            <section className="links items-center">
+            <section className="links items-center flex flex-wrap w-full gap-4">
                 <PrimaryNav/>
+                <GenresNav/>
             </section>
 
         )

@@ -35,6 +35,7 @@ button {
 }
 
 
+
 button:hover {
     border-color: #646cff;
 }
@@ -42,6 +43,16 @@ button:hover {
 button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+}
+
+.unstyled-button {
+    all: unset; /* Resets everything: padding, borders, background, etc. */
+    cursor: pointer; /* Keep pointer behavior */
+    font: inherit; /* Maintain inherited font */
+    color: inherit; /* Maintain inherited text color */
+    display: inline-flex; /* or inline-block depending on your needs */
+    align-items: center;
+    justify-content: center;
 }
 
 

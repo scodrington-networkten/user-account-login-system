@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+
+/** main toggle, displayed above genre list*/
+.genres-subnav-toggle {
+
+    button {
+        @apply flex gap-1;
+        color: var(--color-white);
+
+        &.active,
+        &.hover,
+        &.focus {
+            color: var(--color-highlight-secondary);
+        }
+    }
+
+    &.active {
+        button {
+            color: var(--color-highlight-secondary);
+        }
+    }
+
+}
+
+/**genre sub-nav, showing all genres**/
+.genres-subnav {
+
+    @apply hidden;
+
+    &.genres-subnav.active {
+        @apply flex flex-wrap gap-2;
+    }
+
+}

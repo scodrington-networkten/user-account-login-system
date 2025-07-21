@@ -3,6 +3,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBookmark as faBookmarkFull, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
 import {faBookmark as faBookmarkEmpty, faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
+import {useLocation} from "react-router-dom";
+import slugify from "slugify";
+import GenreButton from "@components/genre-button.jsx";
+import React from "react";
 
 
 class Utilities {
@@ -277,7 +281,25 @@ class Utilities {
         } else {
             return `Movie Search`;
         }
+    }
 
+    /**
+     * Given a genre object (of id,name) return a formatted genre button, linking correctly to the single genre page
+     * @param genre
+     * @param index
+     * @param context
+     * @returns {Element}
+     */
+    static getGenreButton = (genre, index, context = 'genre-button-') => {
+
+        const location = useLocation();
+        const pathSegments = location.pathname.split("/").filter(Boolean);
+        const lastSegment = pathSegments[pathSegments.length - 1];
+
+        let slugifiedGenre = slugify(genre.name, {lower: true});
+        let isActive = (lastSegment === slugifiedGenre);
+
+        return <GenreButton key={`${context}${index}`} genre={genre} isActive={isActive}/>
     }
 
     /**

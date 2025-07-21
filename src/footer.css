@@ -19,8 +19,17 @@
 
     .genres,
     .primary-nav,
-    .popular-movies {
+    .recent-movies {
         @apply flex flex-col gap-2;
+
+        a:hover,
+        a:focus {
+            color: var(--color-highlight-secondary);
+        }
+
+        a.active {
+            color: var(--color-highlight-secondary);
+        }
     }
 
 
