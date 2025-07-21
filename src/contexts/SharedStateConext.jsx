@@ -4,6 +4,7 @@ const SharedStateContext = createContext();
 
 export const SharedStateProvider = ({children}) => {
     const [miniSearchFormOpen, setMiniSearchFormOpen] = useState(false);
+    const [genreSubnavOpen, setGenreSubnavOpen] = useState(false);
 
     const openMiniSearchForm = () => {
         setMiniSearchFormOpen(true);
@@ -15,6 +16,13 @@ export const SharedStateProvider = ({children}) => {
         window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
 
+    const openGenreSubnav = () => {
+        setGenreSubnavOpen(true);
+    }
+
+    const closeGenreSubnav = () => {
+        setGenreSubnavOpen(false);
+    }
 
     //on load, sync if the hash is in the URL
     useEffect(() => {
@@ -36,7 +44,16 @@ export const SharedStateProvider = ({children}) => {
 
     return (
         <SharedStateContext.Provider
-            value={{miniSearchFormOpen, openMiniSearchForm, setMiniSearchFormOpen, closeMiniSearchForm}}>
+            value={{
+                miniSearchFormOpen,
+                openMiniSearchForm,
+                setMiniSearchFormOpen,
+                closeMiniSearchForm,
+                genreSubnavOpen,
+                setGenreSubnavOpen,
+                openGenreSubnav,
+                closeGenreSubnav
+            }}>
             {children}
         </SharedStateContext.Provider>
     );

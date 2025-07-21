@@ -26,6 +26,7 @@
 /**genre sub-nav, showing all genres**/
 .genres-subnav {
 
+
     @apply hidden;
 
     &.genres-subnav.active {

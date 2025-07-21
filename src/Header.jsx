@@ -1,7 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import {faSearch, faVideo, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faSearch, faVideo, faUser,} from "@fortawesome/free-solid-svg-icons";
 
 import './components/header.css';
 import {useState, useRef, useEffect} from "react";
@@ -14,7 +14,8 @@ import UserActionsSidebar from "@components/sidebar/userActionsSidebar.jsx";
 import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
 
 import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.jsx";
-import GenresNav from "@components/Nav/genresNav.jsx";
+import GenresNavButton from "@components/Nav/genresNavButton.jsx";
+import GenreNavList from "@components/Nav/genreNavList.jsx";
 
 
 const Header = () => {
@@ -39,7 +40,6 @@ const Header = () => {
     const onSearchIconClick = () => {
         openMiniSearchForm();
     }
-
 
     //display header section based on logged-in user
     const displayUserIconSection = () => {
@@ -75,8 +75,9 @@ const Header = () => {
             );
         } else {
             return (
-                <Link to="/login">
-                    <p>Login</p>
+                <Link to="/login" className="login-button">
+                    Login
+                    <FontAwesomeIcon className="icon" icon={faUser}/>
                 </Link>
             )
         }
@@ -107,7 +108,7 @@ const Header = () => {
         return (
             <section className="links items-center flex flex-wrap w-full gap-4">
                 <PrimaryNav/>
-                <GenresNav/>
+                <GenresNavButton/>
             </section>
 
         )
@@ -125,29 +126,31 @@ const Header = () => {
 
     return (
         <header className={`page-header ${location.pathname === "/" ? 'homepage' : ''}`} id="page-header">
-            <div className="container mx-auto flex items-center">
+            <div className="container mx-auto flex items-center ">
 
                 <section className="flex flex-col md:hidden flex-1 relative">
                     <div className="inner">
-                        <div className="flex justify-between flex-1">
+                        <div className="flex justify-between items-start flex-1">
                             {getTitleSection()}
                             {getUserSection()}
                         </div>
                         <div className="flex justify-start mt-2">
                             {getLinksSection()}
                         </div>
+                        <GenreNavList/>
                     </div>
                 </section>
 
-                <section className="hidden md:flex flex-col flex-1 relative">
+                <section className="hidden md:flex flex-col flex-1 relative j">
                     <div className="inner">
-                        <div className="flex justify-between flex-1 items-center">
-                            <div className="title-and-links items-center flex md:gap-4 lg:gap-6">
+                        <div className="flex items-start justify-between">
+                            <div className="title-and-links items-start flex md:gap-4 lg:gap-6">
                                 {getTitleSection()}
                                 {getLinksSection()}
                             </div>
                             {getUserSection()}
                         </div>
+                        <GenreNavList/>
                     </div>
                 </section>
 

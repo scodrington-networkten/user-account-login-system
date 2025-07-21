@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .page-header {
-    @apply text-white shadow-md  h-auto md:h-[60px] z-1;
+    @apply text-white shadow-md  h-auto md:h-auto z-1;
     background-color: rgba(var(--color-primary-rgb), 0.7);
 
     &:not(.homepage) {
@@ -32,6 +32,21 @@
     -webkit-text-fill-color: transparent;
 }
 
+
+
+.page-header {
+
+    .login-button{
+        @apply rounded border border-gray-400 px-3 py-1 inline-block transition-all duration-200 ease-in-out;
+        @apply flex flex-wrap gap-2 items-center;
+
+        &:focus,
+        &:hover,
+        &:active{
+            background-color: var(--color-highlight-secondary);
+        }
+    }
+}
 .search-icon {
     cursor: pointer;
 

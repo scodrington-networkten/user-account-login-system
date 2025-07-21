@@ -4,12 +4,18 @@ import {useEffect, useRef} from "react";
 import {Outlet} from 'react-router-dom';
 import {useLocation} from "react-router-dom";
 import MiniSearchForm from "@components/miniSearchForm/miniSearchForm.jsx";
+import {useSharedState} from "@contexts/SharedStateConext.jsx";
 
 const AppLayout = ({children, contextOffset = false}) => {
 
     const location = useLocation();
+    const {genreSubnavOpen} = useSharedState();
 
-    //on load / location change, setup the negative margin if the main content requires it to sit under the header correctly
+    /**
+     *  set-up the negative margin if the main content requires it to sit under the header correctly
+     *  - triggers on load / location change,
+     *  - triggers when the genreSubnav has been opened or closed as it adds height to the header
+     */
     useEffect(() => {
         const updateMainContentMargin = () => {
             const header = document.getElementById("page-header");
@@ -32,7 +38,7 @@ const AppLayout = ({children, contextOffset = false}) => {
         return () => {
             window.removeEventListener("resize", updateMainContentMargin);
         };
-    }, [location.pathname]);
+    }, [location.pathname, genreSubnavOpen]);
 
 
     return (
