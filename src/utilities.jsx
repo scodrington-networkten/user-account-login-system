@@ -320,6 +320,14 @@ class Utilities {
         return data;
     }
 
+    static setUpcomingMoviesCache($movies){
+        sessionStorage.setItem('upcoming_movies', JSON.stringify($movies));
+    }
+
+    static getUpcomingMoviesCache(){
+        const stored = sessionStorage.getItem('upcoming_movies');
+        return stored ? JSON.parse(stored) : null;
+    }
 }
 
 export default Utilities;

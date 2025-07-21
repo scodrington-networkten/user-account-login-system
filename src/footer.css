@@ -17,16 +17,15 @@
         @apply flex flex-col;
     }
 
-    .genres {
+    .genres,
+    .primary-nav,
+    .popular-movies {
         @apply flex flex-col gap-2;
     }
 
-    .primary-nav {
-        @apply flex flex-col gap-2;
-    }
 
     .footer-bottom {
-        @apply container mx-auto text-center w-full;
+        @apply container mx-auto text-center w-full mt-2;
     }
 
 

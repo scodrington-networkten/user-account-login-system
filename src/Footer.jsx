@@ -5,12 +5,18 @@ import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
 import {GenreContext, useGenre} from "@contexts/GenreContext.jsx";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import Utilities from "./utilities.jsx";
 
 const Footer = () => {
 
     const {genres} = useGenre();
     const [topGenres, setTopGenres] = useState([])
 
+    //movie specifics
+    const [recentMovies, setRecentMovies] = useState([]);
+
+
+    //select the top X genres for display in footer
     useEffect(() => {
 
         if (!genres) return;
@@ -22,8 +28,27 @@ const Footer = () => {
         }
     }, [genres]);
 
+    //pull from recent movie cache (populated on homepage load)
+    useEffect(() => {
+        const recent = Utilities.getUpcomingMoviesCache();
+        if (recent != null) {
+            setRecentMovies(recent.slice(0, 5));
+        }
 
+    }, [])
+
+
+    /**
+     * Shows a sub-set of the saved genres
+     * @returns {JSX.Element}
+     */
     const getGenres = () => {
+
+        if (topGenres.length === 0) {
+            return (
+                <p>There are no current genres to display</p>
+            )
+        }
 
         return (
             <nav className="genres">
@@ -34,8 +59,38 @@ const Footer = () => {
         )
     }
 
+    /**
+     * Important links used in the header
+     * @returns {JSX.Element}
+     */
     const getImportantLinks = () => {
         return <PrimaryNav/>
+    }
+
+    /**
+     * Shows recent movies populated from the homapage
+     * @returns {JSX.Element}
+     */
+    const getRecentMovies = () => {
+
+
+        if (recentMovies.length === 0) {
+            return (
+                <p>There are no recent movies to display</p>
+            )
+        }
+
+        return (
+            <div className="popular-movies">
+                {recentMovies.map((item, index) => (
+                    <Link to={`/movie/${item.id}`}>
+                        {item.original_title}
+                    </Link>
+                ))}
+            </div>
+        )
+
+
     }
 
     return (
@@ -50,7 +105,8 @@ const Footer = () => {
                     {getImportantLinks()}
                 </div>
                 <div className="footer-links popular-movies">
-                    <h3>Popular Movies</h3>
+                    <h3>Recent Movies</h3>
+                    {getRecentMovies()}
                 </div>
             </div>
             <div className="footer-bottom">
