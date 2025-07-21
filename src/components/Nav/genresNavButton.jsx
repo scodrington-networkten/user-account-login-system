@@ -2,11 +2,14 @@ import './genres-nav-button.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown, faChevronUp} from "@fortawesome/free-solid-svg-icons";
 import {useSharedState} from "@contexts/SharedStateConext.jsx";
+import {useContext} from "react";
+import {GenreContext} from "@contexts/GenreContext.jsx";
 
 
 const GenresNavButton = () => {
 
 
+    const {genres} = useContext(GenreContext);
     const {openGenreSubnav, closeGenreSubnav, genreSubnavOpen} = useSharedState();
 
     /**
@@ -22,6 +25,9 @@ const GenresNavButton = () => {
 
 
     let activeIcon = (genreSubnavOpen) ? faChevronUp : faChevronDown;
+
+    //dont display if no genres
+    if (!genres) return null;
 
     return (
 

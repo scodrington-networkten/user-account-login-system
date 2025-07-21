@@ -14,9 +14,12 @@ const GenreNavList = () => {
     const {genres} = useContext(GenreContext);
     const {genreSubnavOpen} = useSharedState();
 
+    if(!genres) return null;
+
     return (
         <nav className={`genres-subnav mt-2 ${genreSubnavOpen ? ' active' : ''}`}>
             {
+
                 genres.map((item, index) => {
                     return Utilities.getGenreButton(item, index, 'nav-genre-button-');
                 })
