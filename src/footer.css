@@ -1,9 +1,7 @@
 @import "tailwindcss";
 
 #page-footer {
-
-    @apply w-full ;
-
+    @apply bg-[var(--color-secondary)] text-gray-200 p-4 w-full ;
 
     .inner {
         @apply container grid grid-cols-1 md:grid-cols-3 gap-2 m-auto;

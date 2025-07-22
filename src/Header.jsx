@@ -143,8 +143,8 @@ const Header = () => {
 
                 <section className="hidden md:flex flex-col flex-1 relative j">
                     <div className="inner">
-                        <div className="flex items-start justify-between">
-                            <div className="title-and-links items-start flex md:gap-4 lg:gap-6">
+                        <div className="flex items-center justify-between">
+                            <div className="title-and-links items-start flex md:gap-4 lg:gap-6 grow">
                                 {getTitleSection()}
                                 {getLinksSection()}
                             </div>

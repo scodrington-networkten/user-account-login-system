@@ -10,8 +10,8 @@
     }
 
     &:hover,
-    &:focus{
+    &:focus {
         background-color: var(--color-secondary);
-        color: var(--color-highlight-secondary);
+        color: var(--color-white);
     }
 }

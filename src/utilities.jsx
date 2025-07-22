@@ -7,6 +7,7 @@ import {useLocation} from "react-router-dom";
 import slugify from "slugify";
 import GenreButton from "@components/genre-button.jsx";
 import React from "react";
+import GenreButtonWrapper from "@components/genreButtonWrapper.jsx";
 
 
 class Utilities {
@@ -33,7 +34,6 @@ class Utilities {
     static formatDate = (dateString, showTime = false) => {
 
         if (_.isEmpty(dateString)) {
-            console.log('an empty date string was passed');
             return '';
         }
 
@@ -290,16 +290,8 @@ class Utilities {
      * @param context
      * @returns {Element}
      */
-    static getGenreButton = (genre, index, context = 'genre-button-') => {
-
-        const location = useLocation();
-        const pathSegments = location.pathname.split("/").filter(Boolean);
-        const lastSegment = pathSegments[pathSegments.length - 1];
-
-        let slugifiedGenre = slugify(genre.name, {lower: true});
-        let isActive = (lastSegment === slugifiedGenre);
-
-        return <GenreButton key={`${context}${index}`} genre={genre} isActive={isActive}/>
+    static getGenreButton = (genre, index, context = 'genre-button-', key) => {
+        return <GenreButtonWrapper genre={genre} index={index} context={context} key={key}/>
     }
 
     /**

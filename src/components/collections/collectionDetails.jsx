@@ -34,7 +34,7 @@ const CollectionDetails = ({id}) => {
 
                 const data = await result.json();
                 setCollection(data);
-                console.log(data);
+               // console.log(data);
 
             } catch (error) {
                 setError(true);

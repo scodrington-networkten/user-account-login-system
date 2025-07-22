@@ -36,7 +36,7 @@ export default function SimilarMovies({movie}) {
             const movieSubset = (data.results.length > 0) ? data.results.splice(0, 10) : [];
             setLoading(false);
             setMovies(movieSubset);
-            console.log(data);
+            //console.log(data);
 
         })()
     }, [movie]);

@@ -25,7 +25,6 @@ const ReviewCards = ({movie}) => {
                 window.showToastNotification('There was an error getting the reviews for this movie', 'error');
             } else {
                 const data = await result.json();
-                console.log(data.results);
                 //setReviews(data.results);
             }
             setLoading(false);

@@ -36,7 +36,7 @@ const Signup = () => {
 
             setError(null);
             setSuccessMessage(data.message);
-            console.log(data);
+            //console.log(data);
             navigate('/dashboard');
         }
             //catch the error and set it to our local state variable

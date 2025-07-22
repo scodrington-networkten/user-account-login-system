@@ -94,7 +94,7 @@ const Footer = () => {
     }
 
     return (
-        <footer className=" bg-[var(--color-secondary)] text-gray-200 p-4 mt-4" id="page-footer">
+        <footer className="" id="page-footer">
             <div className="inner">
                 <div className="footer-links genres">
                     <h3>Genres</h3>

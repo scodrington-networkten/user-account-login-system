@@ -4,7 +4,7 @@
     @apply flex gap-4 flex-grow relative p-4 w-full flex-col;
 
     .tagline {
-        @apply italic font-light text-xl mb-3 md:mb-4 lg:mb-5;
+        @apply italic font-light text-xl mb-3 md:mb-4 lg:mb-5 mt-2;
         color: var(--color-highlight-secondary);
     }
 
