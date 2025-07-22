@@ -1,5 +1,5 @@
 import './actorProfile.css';
-import Utilities from "../../utilities.jsx";
+import Utilities from "../../utilities";
 import {useState, useEffect, act} from "react";
 import {useNavigate} from "react-router-dom";
 import slugify from "slugify";

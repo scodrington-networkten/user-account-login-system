@@ -1,5 +1,5 @@
 import Header from "./Header.jsx";
-import Footer from "./Footer.jsx";
+import Footer from "./Footer.tsx";
 import {useEffect, useRef} from "react";
 import {Outlet} from 'react-router-dom';
 import {useLocation} from "react-router-dom";

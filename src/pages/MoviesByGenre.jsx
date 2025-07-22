@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import _ from 'lodash';
 import slugify from "slugify";
 import LoadingCardList from "../components/loading-card-list.jsx";
-import Utilities from "../utilities.jsx";
+import Utilities from "../utilities";
 import {Helmet} from "react-helmet";
 
 const MoviesByGenre = () => {

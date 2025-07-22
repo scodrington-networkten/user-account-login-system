@@ -2,7 +2,7 @@ import {useSharedState} from "@contexts/SharedStateConext.jsx";
 import {useLocation} from "react-router-dom";
 import {useContext, useEffect} from "react";
 import {GenreContext} from "@contexts/GenreContext.jsx";
-import Utilities from "../../utilities.jsx";
+import Utilities from "../../utilities";
 
 /**
  * Displays a series of genres for use in the header. Is opened / closed by shared state (a toggle button in the header)

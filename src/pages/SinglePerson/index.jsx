@@ -6,7 +6,7 @@ import SinglePersonMovies from "@components/Pages/SinglePerson/SinglePersonMovie
 import SinglePersonDetails from "@components/Pages/SinglePerson/SinglePersonDetails.jsx";
 import LoadingCard from "@components/loading-card.jsx";
 import {Helmet} from "react-helmet";
-import Utilities from "../../utilities.jsx";
+import Utilities from "../../utilities";
 
 /**
  * Shows information about a single person

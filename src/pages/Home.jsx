@@ -4,7 +4,7 @@ import LoadingCardList from "../components/loading-card-list.jsx";
 import GenreList from "../components/genre-list.jsx";
 import FeaturedMoviesCarousel from "@components/featured-movies-carousel.jsx";
 import {Helmet} from "react-helmet";
-import Utilities from "../utilities.jsx";
+import Utilities from "../utilities";
 
 const Home = () => {
 

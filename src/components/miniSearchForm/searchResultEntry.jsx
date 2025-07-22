@@ -1,5 +1,5 @@
 import './search-result-entry.css'
-import Utilities from "../../utilities.jsx";
+import Utilities from "../../utilities";
 import {useGenre} from "@contexts/GenreContext.jsx";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";

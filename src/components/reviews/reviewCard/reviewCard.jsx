@@ -1,5 +1,5 @@
-import utilities from "../../../utilities.jsx";
-import Utilities from "../../../utilities.jsx";
+
+import Utilities from "../../../utilities";
 import './review-card.css';
 
 /**

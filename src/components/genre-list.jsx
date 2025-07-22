@@ -8,7 +8,7 @@ import {useLocation} from "react-router-dom";
 import useEmblaCarousel from "embla-carousel-react";
 
 import slugify from "slugify";
-import Utilities from "../utilities.jsx";
+import Utilities from "../utilities";
 
 /**
  * Shows a list of genres, used for users to select a genre to see movies

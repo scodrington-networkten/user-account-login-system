@@ -1,0 +1,40 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        // More modern JS output
+        "module": "ESNext",
+        // Works with Vite or modern bundlers
+        "jsx": "react-jsx",
+        // Required for .tsx support (React 17+)
+        "moduleResolution": "node",
+        // Makes import resolution predictable
+        "strict": true,
+        // Keep this ✅
+        "esModuleInterop": true,
+        // Allows default imports from CommonJS
+        "forceConsistentCasingInFileNames": true,
+        // Good to keep ✅
+        "skipLibCheck": true,
+        // Speeds up builds
+        "isolatedModules": true,
+        // Required by Vite
+        "resolveJsonModule": true,
+        // Allows importing JSON files
+        "allowSyntheticDefaultImports": true,
+        // Enables easier default importing
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@contexts/*": [
+                "src/contexts/*"
+            ]
+        }
+    },
+    "include": [
+        [
+            "src"
+        ]
+    ]
+}

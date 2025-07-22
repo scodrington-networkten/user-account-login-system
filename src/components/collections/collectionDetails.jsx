@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import Utilities from "../../utilities.jsx";
+import Utilities from "../../utilities";
 import './collection-details.css';
 import MovieCard from "@components/movieCard/movie-card.jsx";
 

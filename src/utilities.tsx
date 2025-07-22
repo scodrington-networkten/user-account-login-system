@@ -6,19 +6,19 @@ import {faBookmark as faBookmarkEmpty, faStar as faStarEmpty} from '@fortawesome
 import {useLocation} from "react-router-dom";
 import slugify from "slugify";
 import GenreButton from "@components/genre-button.jsx";
-import React from "react";
+import React, {JSX} from "react";
 import GenreButtonWrapper from "@components/genreButtonWrapper.jsx";
 
 
 class Utilities {
 
+
     /**
-     * Round a given value to a step e.g 0.5
+     *
      * @param value
      * @param step
-     * @returns {number}
      */
-    static round(value, step) {
+    static round(value: number, step : number) : number {
         step || (step = 1.0);
         let inv = 1.0 / step;
         return Math.round(value * inv) / inv;
@@ -65,13 +65,13 @@ class Utilities {
         return difference / (1000 * 60 * 60);
     }
 
+
     /**
-     * gets the rating section, showing the movie score out of 5 stars
      *
      * @param voteAverage
-     * @returns {JSX.Element}
+     * @return JSX.Element
      */
-    static getStarsSection(voteAverage) {
+    static getStarsSection(voteAverage : number) : JSX.Element {
 
         //convert from a score of 0-10 to 0-5
         let baseScore = (voteAverage / 2);

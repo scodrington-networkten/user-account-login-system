@@ -1,4 +1,4 @@
-import Utilities from "../../../utilities.jsx";
+import Utilities from "../../../utilities";
 import {useEffect, useState} from "react";
 
 /**

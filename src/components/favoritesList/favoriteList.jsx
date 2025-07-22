@@ -4,7 +4,7 @@ import {useUser} from "@contexts/UserContext.jsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import LoadingCardList from "@components/loading-card-list.jsx";
-import Utilities from "../../utilities.jsx";
+import Utilities from "../../utilities";
 
 
 /**

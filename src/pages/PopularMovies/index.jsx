@@ -4,7 +4,7 @@ import MoviesList from "@components/movies-list.jsx";
 
 import StandardLayout from "@components/Layouts/StandardLayout.jsx";
 import {Helmet} from "react-helmet";
-import Utilities from "../../utilities.jsx";
+import Utilities from "../../utilities";
 
 const PopularMovies = () => {
 

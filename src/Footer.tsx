@@ -1,11 +1,12 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faVideo} from "@fortawesome/free-solid-svg-icons";
 import './footer.css';
-import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
-import {GenreContext, useGenre} from "@contexts/GenreContext.jsx";
+import PrimaryNav from "@components/Nav/PrimaryNav";
+
+import {GenreContext, useGenre} from "@contexts/GenreContext";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import Utilities from "./utilities.jsx";
+import Utilities from "./utilities";
 
 const Footer = () => {
 
