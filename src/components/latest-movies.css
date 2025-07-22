@@ -22,13 +22,14 @@
     .embla__dots {
         pointer-events: none;
 
-        @apply top-0 h-full w-full p-0 items-end;
+        @apply top-0 h-full w-full p-0 items-end ;
 
         .embla__dots_inner {
-            @apply pb-2 md:pb-4;
+            @apply pb-4 pr-4 pl-4 md:pb-4 justify-start;
         }
 
         .embla__dot {
+
             pointer-events: all;
         }
     }

@@ -2,7 +2,7 @@
 
 /* Carousel Card Component */
 .carousel-card {
-    @apply relative h-[450px] md:h-[475px] lg:h-[600px] bg-gray-600;
+    @apply relative h-[450px] md:h-[550px] lg:h-[650px] bg-gray-600;
 
     /* Overlay layer */
 

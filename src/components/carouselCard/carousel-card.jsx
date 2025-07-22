@@ -49,13 +49,14 @@ const CarouselCard = ({movie}) => {
      */
     const getSummarySection = (movie) => {
 
-        let fullSummary = movie.overview;
+
         let mobileSummary = _.truncate(movie.overview, {length: 200});
+        let longSummary = _.truncate(movie.overview, {length: 350});
 
         return (
             <>
                 <div className="movie-summary movie-summary-short ">{mobileSummary}</div>
-                <div className="movie-summary movie-summary-long ">{fullSummary}</div>
+                <div className="movie-summary movie-summary-long ">{longSummary}</div>
             </>
         )
     }
