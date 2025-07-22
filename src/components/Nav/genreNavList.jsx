@@ -19,7 +19,6 @@ const GenreNavList = () => {
     return (
         <nav className={`genres-subnav mt-2 ${genreSubnavOpen ? ' active' : ''}`}>
             {
-
                 genres.map((item, index) => {
                     return Utilities.getGenreButton(item, index, 'nav-genre-button-');
                 })
