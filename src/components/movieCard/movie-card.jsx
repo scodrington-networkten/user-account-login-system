@@ -102,13 +102,19 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
             {getFavoritedBadge()}
             <section className="image-container overflow-hidden w-full aspect-[2/3]">
                 <img
-                    src={Utilities.getApiImageUrl(movie.poster_path, {type: 'poster', size:'w342'})}
-                    srcSet={`${Utilities.getApiImageUrl(movie?.poster_path, {type:'poster',size: 'w342'})} 1x, ${Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w500')} 2x`}
+                    src={Utilities.getApiImageUrl(movie.poster_path, {type: 'poster', size: 'w342'})}
+                    srcSet={`${Utilities.getApiImageUrl(movie.poster_path, {
+                        type: 'poster',
+                        size: 'w342'
+                    })} 1x, ${Utilities.getApiImageUrl(movie.poster_path, {type: 'poster', size: 'w500'})} 2x`}
                     alt={movie.title}
                     className="image-section"
                     loading="lazy"
                     style={{
-                        backgroundImage: `url(${Utilities.getApiImageUrl(movie.poster_path, {type: 'poster', size: 'w92'})})`
+                        backgroundImage: `url(${Utilities.getApiImageUrl(movie.poster_path, {
+                            type: 'poster',
+                            size: 'w92'
+                        })})`
                     }}
                 />
             </section>

@@ -32,6 +32,9 @@ const Footer = () => {
     //pull from recent movie cache (populated on homepage load)
     useEffect(() => {
         const recent = Utilities.getUpcomingMoviesCache();
+
+        console.log(recent);
+
         if (recent != null) {
             setRecentMovies(recent.slice(0, 5));
         }

@@ -83,8 +83,8 @@ const CollectionDetails = ({id}) => {
 
             </div>
             <div className="collection-items">
-                {collection?.parts.map((item) => {
-                    return <MovieCard movie={item}/>
+                {collection?.parts.map((item, index) => {
+                    return <MovieCard movie={item} key={`collection-${index}`}/>
                 })}
             </div>
         </section>

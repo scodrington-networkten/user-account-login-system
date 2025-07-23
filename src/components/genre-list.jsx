@@ -30,7 +30,7 @@ const GenreList = () => {
 
 
     /**
-     * Horitzontal slider with embla
+     * Horizontal slider with embla
      * @returns {Element}
      */
     const getMobileGenreSlider = () => {

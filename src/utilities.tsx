@@ -13,7 +13,7 @@ import GenreButton from "@components/genre-button.jsx";
 import React, {JSX} from "react";
 import GenreButtonWrapper from "@components/genreButtonWrapper.jsx";
 import {Genre} from "./types/genre";
-
+import {MovieResult} from "./types/movieResult";
 
 
 type SocialMediaType =
@@ -44,9 +44,6 @@ type ApiImageOptions =
     | { type: "poster"; size: ApiImagePosterSizes }
     | { type: "profile"; size: ApiImageProfileSizes }
     | { type: "still"; size: ApiImageStillSizes };
-
-
-
 
 
 class Utilities {
@@ -179,7 +176,7 @@ class Utilities {
 
 
     /**
-     * Given an input string, return a trunctaed version to a set length
+     * Given an input string, return a truncated version to a set length
      * @param inputString {string}
      * @param maxCharacters {number}
      * @returns {string}
@@ -280,8 +277,7 @@ class Utilities {
      */
     static getApiImageUrl(url: string, options: ApiImageOptions): string {
 
-        //determine the url
-        if (url.trim() === '') {
+        if (typeof url !== 'string' || url.trim() === ''){
 
             //if empty or null define placeholder
             if (options.type == "poster" || options.type == "profile") {
@@ -327,7 +323,7 @@ class Utilities {
      * @param movieId
      * @returns
      */
-    static async getMovie(movieId :number | string) {
+    static async getMovie(movieId: number | string) {
 
         //get the movie directly from storage cache if applicable
         const cacheStr = sessionStorage.getItem('movie_cache');
@@ -360,13 +356,20 @@ class Utilities {
         return data;
     }
 
-    static setUpcomingMoviesCache(movies : []) {
+    /**
+     * Save the resulting upcoming movies into session storage
+     * @param movies
+     */
+    static setUpcomingMoviesCache(movies: MovieResult[]) {
         sessionStorage.setItem('upcoming_movies', JSON.stringify(movies));
     }
 
-    static getUpcomingMoviesCache() {
+    /**
+     * Collect the upcoming movies from session storage
+     */
+    static getUpcomingMoviesCache(): MovieResult[] | null {
         const stored = sessionStorage.getItem('upcoming_movies');
-        return stored ? JSON.parse(stored) : null;
+        return (stored) ? (JSON.parse(stored) as MovieResult[]) : null;
     }
 }
 
