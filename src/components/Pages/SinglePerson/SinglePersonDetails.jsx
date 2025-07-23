@@ -14,7 +14,7 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
         return (
             <div className="profile-images grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-4 w-full">
                 {images?.profiles?.map((item, index) => {
-                    const url = Utilities.getApiImageUrl(item.file_path ?? null, 'profile', 'w185');
+                    const url = Utilities.getApiImageUrl(item.file_path ?? null, {type: 'profile',size:  'w185'});
                     return <img
                         key={`profile-image-${index}`}
                         className="w-full"
@@ -32,7 +32,7 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
             <aside className="main-profile-image col-span-2 float-left mr-4">
                 <img
                     alt={`Photo of ${details.name}`}
-                    src={Utilities.getApiImageUrl(details.profile_path, 'profile', 'w185')}
+                    src={Utilities.getApiImageUrl(details.profile_path, {type: 'profile', size: 'w185'})}
                     className="profile-image w-full mb-2"
                 />
             </aside>

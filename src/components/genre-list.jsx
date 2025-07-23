@@ -40,7 +40,7 @@ const GenreList = () => {
                 <div className="embla__container flex gap-2 genres genre-slider">
                     {genres?.map((item, index) => (
                         <div key={`genre-item-${index}`} className="embla__slide flex-none !basis-auto">
-                            {Utilities.getGenreButton(item, index)}
+                            {Utilities.getGenreButton(item, `mobile-genre-button-${index}`)}
                         </div>
                     ))}
                 </div>
@@ -58,7 +58,7 @@ const GenreList = () => {
             return (
                 <div className="hidden md:flex genres justify-center gap-2 flex-wrap md:justify-start">
                     {genres?.map((item, index) => (
-                        Utilities.getGenreButton(item, index)
+                        Utilities.getGenreButton(item,  `genre-desktop-button-${index}` )
                     ))}
                 </div>
             )

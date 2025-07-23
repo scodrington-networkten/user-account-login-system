@@ -69,7 +69,7 @@ const CollectionDetails = ({id}) => {
             <div className="collection-details">
                 <div className="left">
                     <img
-                        src={Utilities.getApiImageUrl(collection.poster_path, 'poster', 'w342')}
+                        src={Utilities.getApiImageUrl(collection.poster_path, {type: 'poster',size: 'w342'})}
                         className="collection-image"
                         alt="collection image"
                     />

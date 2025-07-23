@@ -29,6 +29,12 @@
             ],
             "@contexts/*": [
                 "src/contexts/*"
+            ],
+            "@types": [
+                "src/types/index.ts"
+            ],
+            "@types/*": [
+                "src/types/*"
             ]
         }
     },

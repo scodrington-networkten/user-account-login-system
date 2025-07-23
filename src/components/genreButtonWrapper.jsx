@@ -6,12 +6,10 @@ import GenreButton from "@components/genre-button.jsx";
 /**
  * Wrapper to create a genre button (so we can access useLocation)
  * @param genre
- * @param index
- * @param context
  * @returns {JSX.Element}
  * @constructor
  */
-const GenreButtonWrapper = ({genre, index, context = 'genre-button-'}) => {
+const GenreButtonWrapper = ({genre}) => {
     const location = useLocation();
     const pathSegments = location.pathname.split("/").filter(Boolean);
     const lastSegment = pathSegments[pathSegments.length - 1];

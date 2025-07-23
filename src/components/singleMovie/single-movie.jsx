@@ -60,7 +60,7 @@ const SingleMovie = ({movie}) => {
                     <h3 className="">Production Companies</h3>
                     <div className="companies">
                         {movie.production_companies.map((item, index) => {
-                            let finalUrl = Utilities.getApiImageUrl(item.logo_path, 'logo', 'w154');
+                            let finalUrl = Utilities.getApiImageUrl(item.logo_path, {type: 'logo', size: 'w154'});
                             return (
                                 item.logo_path && (
                                     <img
@@ -89,7 +89,7 @@ const SingleMovie = ({movie}) => {
                     <section className="secondary">
                         <div className="image-section">
                             <img
-                                src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w342')}
+                                src={Utilities.getApiImageUrl(movie.poster_path, {type: 'poster', size: 'w342'})}
                                 alt={movie.title}
                                 className="poster-image "
                             />
@@ -132,7 +132,7 @@ const SingleMovie = ({movie}) => {
                 </div>
 
                 <img
-                    src={Utilities.getApiImageUrl(movie.backdrop_path, 'backdrop', 'w1280')}
+                    src={Utilities.getApiImageUrl(movie.backdrop_path, {type: 'backdrop', size: 'w1280'})}
                     className="background-image "
                     alt="background-image"
                 />

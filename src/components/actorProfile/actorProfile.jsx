@@ -44,7 +44,7 @@ const ActorProfile = ({actor}) => {
 
         let profileUrl;
         if (actor.profile_path !== null) {
-            profileUrl = Utilities.getApiImageUrl(actor.profile_path, 'profile', 'w185');
+            profileUrl = Utilities.getApiImageUrl(actor.profile_path, {type: 'profile',size:  'w185'});
 
         } else {
             profileUrl = "/profile_image_blank.webp";

@@ -20,7 +20,7 @@ const GenreNavList = () => {
         <nav className={`genres-subnav mt-2 ${genreSubnavOpen ? ' active' : ''}`}>
             {
                 genres.map((item, index) => {
-                    return Utilities.getGenreButton(item, index, 'nav-genre-button-', `genre-button-${index}`);
+                    return Utilities.getGenreButton(item,`genre-button-${index}`);
                 })
             }
         </nav>

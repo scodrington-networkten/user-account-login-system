@@ -35,7 +35,7 @@ const SearchResultEntry = ({movie}) => {
 
                 <div className="left">
                     <img
-                        src={Utilities.getApiImageUrl(movie.poster_path, 'poster', 'w92')}
+                        src={Utilities.getApiImageUrl(movie.poster_path, {type: 'poster', size: 'w92'})}
                         alt={movie.title}
                     />
                 </div>

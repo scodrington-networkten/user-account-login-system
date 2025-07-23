@@ -2,12 +2,51 @@ import _ from "lodash";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBookmark as faBookmarkFull, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
-import {faBookmark as faBookmarkEmpty, faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons';
+import {
+    faBookmark as faBookmarkEmpty,
+    faStar as faStarEmpty,
+    IconDefinition
+} from '@fortawesome/free-regular-svg-icons';
 import {useLocation} from "react-router-dom";
 import slugify from "slugify";
 import GenreButton from "@components/genre-button.jsx";
 import React, {JSX} from "react";
 import GenreButtonWrapper from "@components/genreButtonWrapper.jsx";
+import {Genre} from "./types/genre";
+
+
+
+type SocialMediaType =
+    | "freebase_mid"
+    | "freebase_id"
+    | "imdb_id"
+    | "tvrage_id"
+    | "wikidata_id"
+    | "facebook_id"
+    | "instagram_id"
+    | "tiktok_id"
+    | "twitter_id"
+    | "youtube_id";
+
+type SocialMediaInfo = {
+    url: string;
+    name: string;
+}
+
+type ApiImageBackdropSizes = "w300" | "w780" | "w1280" | "original";
+type ApiImageLogoSizes = "w45" | "w92" | "w154" | "w185" | "w300" | "w500" | "original";
+type ApiImagePosterSizes = "w92" | "w154" | "w185" | "w342" | "w500" | "w780" | "original";
+type ApiImageProfileSizes = "w45" | "w185" | "h632" | "original";
+type ApiImageStillSizes = "w92" | "w185" | "w300" | "original"
+type ApiImageOptions =
+    | { type: "backdrop"; size: ApiImageBackdropSizes }
+    | { type: "logo"; size: ApiImageLogoSizes }
+    | { type: "poster"; size: ApiImagePosterSizes }
+    | { type: "profile"; size: ApiImageProfileSizes }
+    | { type: "still"; size: ApiImageStillSizes };
+
+
+
 
 
 class Utilities {
@@ -15,10 +54,11 @@ class Utilities {
 
     /**
      *
-     * @param value
-     * @param step
+     * @param value - value to round
+     * @param step - the step to round to e.g. 0.5
+     * @returns {number}
      */
-    static round(value: number, step : number) : number {
+    static round(value: number, step: number): number {
         step || (step = 1.0);
         let inv = 1.0 / step;
         return Math.round(value * inv) / inv;
@@ -27,11 +67,12 @@ class Utilities {
     /**
      * Format the date into something more useful
      *
-     * @param dateString - raw datetime string to be converted
-     * @param showTime - append the time info such as 12:35PM
+     * @param dateString {string} - raw datetime string to be converted
+     * @param showTime {boolean} - append the time info such as 12:35PM
      * @returns {string}
+     * @returns
      */
-    static formatDate = (dateString, showTime = false) => {
+    static formatDate = (dateString: string, showTime: boolean = false): string => {
 
         if (_.isEmpty(dateString)) {
             return '';
@@ -55,11 +96,13 @@ class Utilities {
 
     /**
      * Given two dates, return the number of hours between them
-     * @param date1
-     * @param date2
-     * @returns {number}
+     * @param date1 {string|null}
+     * @param date2 {string|null}
+     * @returns {number|null}
      */
-    static getDateDifferenceHours(date1, date2) {
+    static getDateDifferenceHours(date1: string | null, date2: string | null): number | null {
+        //if dates are empty, return null
+        if (!date1 || !date2) return null;
 
         const difference = (new Date(date2)).getTime() - (new Date(date1)).getTime();
         return difference / (1000 * 60 * 60);
@@ -67,11 +110,11 @@ class Utilities {
 
 
     /**
-     *
-     * @param voteAverage
+     * Given the vote-average number (out of 10), convert it to a 5 star rating component
+     * @param voteAverage {number}
      * @return JSX.Element
      */
-    static getStarsSection(voteAverage : number) : JSX.Element {
+    static getStarsSection(voteAverage: number): JSX.Element {
 
         //convert from a score of 0-10 to 0-5
         let baseScore = (voteAverage / 2);
@@ -94,12 +137,12 @@ class Utilities {
 
     /**
      * Given a rating out of 5, determine if it should be a full, empty or half star based on its value
-     * @param rating
-     * @returns {unknown[]}
+     * @param rating {number}
+     * @returns {IconDefinition[]}
      */
-    static getStarIcons(rating) {
+    static getStarIcons(rating: number): IconDefinition[] {
 
-        const result = Array.from({length: 5}, (item, index) => {
+        return Array.from({length: 5}, (item, index) => {
             const slot = index + 1;
             if (rating >= slot) {
                 return faStarFull;
@@ -109,15 +152,16 @@ class Utilities {
                 return faStarEmpty;
             }
         });
-        return result;
+
     }
 
     /**
-     * Shows the total number of people giving this a thumbs up
-     * @param votes
+     * Shows the total number of people giving this movie a thumbs up
+     *
+     * @param votes {number}
      * @returns {JSX.Element}
      */
-    static getVotesSection(votes) {
+    static getVotesSection(votes: number): JSX.Element {
 
         return (
             <section className="vote-information flex gap-2 justify-center">
@@ -134,21 +178,25 @@ class Utilities {
     }
 
 
-    static getTrimmedString(string, maxCharacters = 200) {
-
-        return _.truncate(string, {
+    /**
+     * Given an input string, return a trunctaed version to a set length
+     * @param inputString {string}
+     * @param maxCharacters {number}
+     * @returns {string}
+     */
+    static getTrimmedString(inputString: string, maxCharacters: number = 200): string {
+        return _.truncate(inputString, {
             length: maxCharacters
         });
-
     }
 
     /**
      * Converts a word such as tv-movie to Tv Movie ensuring proper case
-     * @param initalString
+     * @param initialString {string}
      * @returns {string}
      */
-    static getProperCaseString(initalString) {
-        return _.startCase(_.toLower(initalString));
+    static getProperCaseString(initialString: string): string {
+        return _.startCase(_.toLower(initialString));
     }
 
 
@@ -158,11 +206,12 @@ class Utilities {
      * @param type {"freebase_mid"|"freebase_id"|"imdb_id"|"tvrage_id"|"wikidata_id"|"facebook_id"|"instagram_id"|"tiktok_id"|"twitter_id"|"youtube_id"}
      *
      */
-    static getSocialMediaButton(data, type) {
+
+    static getSocialMediaButton(data: string | null, type: SocialMediaType | null): JSX.Element | null {
 
         if (!data || !type) return null;
 
-        const matrix = {
+        const matrix: Record<SocialMediaType, SocialMediaInfo> = {
             freebase_mid: {
                 url: `https://www.freebase.com${data}`,
                 name: 'Freebase'
@@ -203,9 +252,9 @@ class Utilities {
                 url: `https://www.youtube.com/@${data}`,
                 name: 'Youtube'
             }
-        };
+        }
 
-        const platform = matrix[type];
+        const platform: SocialMediaInfo = matrix[type];
         if (!platform) return null;
 
         return (
@@ -226,56 +275,34 @@ class Utilities {
      * Builds a TMDB image URL using the provided image type and size.
      *
      * @param {string} url - The path of the image (e.g., "/abc123.jpg").
-     * @param {"backdrop"|"logo"|"poster"|"profile"|"still"} type - The category of the image.
-     * @param {string} size - The size of the image (e.g., "w185", "original"). Must be a valid size for the given type.
+     * @param {ApiImageOptions} options - options for the type and size of the image to collect
      * @returns {string} A fully qualified image URL.
      */
-    static getApiImageUrl(url, type, size) {
-
-        //defines the values the API expects
-        const imagesSizes = {
-            backdrop: ["w300", "w780", "w1280", "original"],
-            logo: ["w45", "w92", "w154", "w185", "w300", "w500", "original"],
-            poster: ["w92", "w154", "w185", "w342", "w500", "w780", "original"],
-            profile: ["w45", "w185", "h632", "original"],
-            still: ["w92", "w185", "w300", "original"]
-        }
-
-        //verify the type value passed
-        if (!imagesSizes.hasOwnProperty(type)) {
-            let allowedTypes = Object.keys(imagesSizes).map((item) => {
-                return item
-            });
-            throw new Error(`Invalid type of image supplied: ${type}. Allowed values include: ${allowedTypes}`);
-        }
-
-        //verify the size value passed for the given type
-        if (!imagesSizes[type].includes(size)) {
-            let allowedSizes = imagesSizes[type].map((item) => {
-                return item
-            });
-            throw new Error(`Invalid size of image supplied: ${size}. Allowed values include: ${allowedSizes}`);
-        }
+    static getApiImageUrl(url: string, options: ApiImageOptions): string {
 
         //determine the url
-        if (typeof url !== 'string' || url.trim() === '') {
+        if (url.trim() === '') {
 
-            if (['poster', 'profile'].includes(type)) {
+            //if empty or null define placeholder
+            if (options.type == "poster" || options.type == "profile") {
                 return '/portrait_default_image.svg';
             } else {
                 return '/profile_image_blank.webp';
             }
 
-            throw new Error(`url provided must be non empty and a string`);
         }
 
         //get the URL based on values
-        return `https://image.tmdb.org/t/p/${size}${url}`;
+        return `https://image.tmdb.org/t/p/${options.size}${url}`;
 
     }
 
-    //Get the title for the page
-    static getSiteNameForPage(page) {
+    /**
+     * Given a page name, return the corrected title (ensuring Movie Search is prepended)
+     * @param page {string}
+     * @returns {string}
+     */
+    static getSiteNameForPage(page: string): string {
         if (page !== '') {
             return `Movie Search - ${page}`;
         } else {
@@ -285,13 +312,12 @@ class Utilities {
 
     /**
      * Given a genre object (of id,name) return a formatted genre button, linking correctly to the single genre page
-     * @param genre
-     * @param index
-     * @param context
+     * @param {Genre} genre - object of id and name
+     * @param {string} key - unique key for the button, because they are all called as siblings
      * @returns {Element}
      */
-    static getGenreButton = (genre, index, context = 'genre-button-', key) => {
-        return <GenreButtonWrapper genre={genre} index={index} context={context} key={key}/>
+    static getGenreButton = (genre: Genre, key: string): JSX.Element => {
+        return <GenreButtonWrapper genre={genre} key={key}/>
     }
 
     /**
@@ -299,9 +325,9 @@ class Utilities {
      * Will return the extended details about the movie,containing details
      *
      * @param movieId
-     * @returns {Promise<*>}
+     * @returns
      */
-    static async getMovie(movieId) {
+    static async getMovie(movieId :number | string) {
 
         //get the movie directly from storage cache if applicable
         const cacheStr = sessionStorage.getItem('movie_cache');
@@ -316,7 +342,7 @@ class Utilities {
         const response = await fetch(`/api/get`, {
             headers: {
                 'x-action': 'get-movie',
-                'movie-id': movieId
+                'movie-id': movieId.toString()
             }
         });
 
@@ -334,11 +360,11 @@ class Utilities {
         return data;
     }
 
-    static setUpcomingMoviesCache($movies){
-        sessionStorage.setItem('upcoming_movies', JSON.stringify($movies));
+    static setUpcomingMoviesCache(movies : []) {
+        sessionStorage.setItem('upcoming_movies', JSON.stringify(movies));
     }
 
-    static getUpcomingMoviesCache(){
+    static getUpcomingMoviesCache() {
         const stored = sessionStorage.getItem('upcoming_movies');
         return stored ? JSON.parse(stored) : null;
     }

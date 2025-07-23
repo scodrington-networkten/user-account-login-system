@@ -28,6 +28,9 @@ const Home = () => {
                 const data = await result.json();
                 setMovies(data.results);
                 //set in the local cache of latest movies
+
+                console.log(data.results);
+
                 Utilities.setUpcomingMoviesCache(data.results);
 
             } catch (error) {
