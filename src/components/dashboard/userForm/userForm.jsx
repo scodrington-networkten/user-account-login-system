@@ -1,5 +1,5 @@
 import '@components/forms.css';
-import {useUser} from "@contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 import {useState, useEffect} from "react";
 
 

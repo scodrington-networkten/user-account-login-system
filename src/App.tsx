@@ -24,14 +24,14 @@ import MoviesByGenre from "./pages/MoviesByGenre";
 
 import AppLayout from "./AppLayout.jsx";
 
-import {GenreProvider} from "./contexts/GenreContext.jsx";
+import {GenreProvider} from "@contexts/GenreContext";
 
 import RouteProgressTracker from "./RouteProgressTracker.jsx";
 
 import Signup from "./pages/signup.jsx";
 import Login from "./pages/login.jsx";
 import Logout from "./pages/logout.jsx";
-import {UserProvider} from "./contexts/UserContext.jsx";
+import {UserProvider} from "./contexts/UserContext.js";
 import UserExpiredPopup from "./components/userExpiredPopup/user-expired-popup.jsx";
 
 //user dashboard pages

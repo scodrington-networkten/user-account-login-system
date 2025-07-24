@@ -4,7 +4,7 @@ import {useEffect, useRef} from "react";
 import {Outlet} from 'react-router-dom';
 import {useLocation} from "react-router-dom";
 import MiniSearchForm from "@components/miniSearchForm/miniSearchForm.jsx";
-import {useSharedState} from "@contexts/SharedStateConext.jsx";
+import {useSharedState} from "@contexts/SharedStateConext.tsx";
 
 const AppLayout = ({children, contextOffset = false}) => {
 

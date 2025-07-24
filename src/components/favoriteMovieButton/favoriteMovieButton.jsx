@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from "react";
-import {useUser} from "@contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
 import {faBookmark as faBookmarkEmpty} from "@fortawesome/free-regular-svg-icons";

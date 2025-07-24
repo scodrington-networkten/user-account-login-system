@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useUser} from "../contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 
 const Logout = () => {
 

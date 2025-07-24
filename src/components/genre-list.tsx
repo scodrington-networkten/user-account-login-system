@@ -1,24 +1,18 @@
-import React from "react";
-import GenreButton from "./genre-button.jsx";
-
+import React, {JSX} from "react";
 import {useContext} from "react";
-import {GenreContext} from "../contexts/GenreContext.jsx";
-import {useLocation} from "react-router-dom";
-
+import {GenreContext} from "../contexts/GenreContext";
 import useEmblaCarousel from "embla-carousel-react";
 
 import slugify from "slugify";
 import Utilities from "../utilities";
+import {Genre} from "../types/genre";
 
 /**
  * Shows a list of genres, used for users to select a genre to see movies
- *
- * @returns {JSX.Element}
- * @constructor
  */
 const GenreList = () => {
 
-    const {genres} = useContext(GenreContext);
+    const {genres} = useContext(GenreContext) as { genres: Genre[] };
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: false,
@@ -33,12 +27,12 @@ const GenreList = () => {
      * Horizontal slider with embla
      * @returns {Element}
      */
-    const getMobileGenreSlider = () => {
+    const getMobileGenreSlider = (): JSX.Element => {
 
         return (
             <div className="embla overflow-hidden md:hidden" ref={emblaRef}>
                 <div className="embla__container flex gap-2 genres genre-slider">
-                    {genres?.map((item, index) => (
+                    {genres?.map((item, index): JSX.Element => (
                         <div key={`genre-item-${index}`} className="embla__slide flex-none !basis-auto">
                             {Utilities.getGenreButton(item, `mobile-genre-button-${index}`)}
                         </div>
@@ -58,7 +52,7 @@ const GenreList = () => {
             return (
                 <div className="hidden md:flex genres justify-center gap-2 flex-wrap md:justify-start">
                     {genres?.map((item, index) => (
-                        Utilities.getGenreButton(item,  `genre-desktop-button-${index}` )
+                        Utilities.getGenreButton(item, `genre-desktop-button-${index}`)
                     ))}
                 </div>
             )

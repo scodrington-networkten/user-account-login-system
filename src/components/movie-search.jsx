@@ -1,4 +1,4 @@
-import GenreList from "./genre-list.jsx";
+import GenreList from "./genre-list.tsx";
 import {useState, useEffect} from "react";
 import MoviesList from "./movies-list.jsx";
 import Movie from "../classes/Movie.js";

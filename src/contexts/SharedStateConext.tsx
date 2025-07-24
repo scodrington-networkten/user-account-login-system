@@ -1,12 +1,28 @@
-import {createContext, useState, useContext, useEffect} from 'react';
-
-const SharedStateContext = createContext();
+import React, {createContext, useState, useContext, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 
-export const SharedStateProvider = ({children}) => {
+
+type SharedStateContextType = {
+    miniSearchFormOpen: boolean,
+    setMiniSearchFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    closeMiniSearchForm: () => void,
+    openMiniSearchForm: () => void,
+
+    genreSubnavOpen: boolean;
+    setGenreSubnavOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    openGenreSubnav: () => void;
+    closeGenreSubnav: () => void;
+}
+const SharedStateContext = createContext<SharedStateContextType | null>(null);
+
+
+type props = React.PropsWithChildren<{}>;
+export const SharedStateProvider = ({children}: props) => {
+
+    const location = useLocation();
     const [miniSearchFormOpen, setMiniSearchFormOpen] = useState(false);
     const [genreSubnavOpen, setGenreSubnavOpen] = useState(false);
-    const location = useLocation();
+
 
     const openMiniSearchForm = () => {
         setMiniSearchFormOpen(true);
@@ -60,8 +76,9 @@ export const SharedStateProvider = ({children}) => {
             value={{
                 miniSearchFormOpen,
                 openMiniSearchForm,
-                setMiniSearchFormOpen,
                 closeMiniSearchForm,
+                setMiniSearchFormOpen,
+
                 genreSubnavOpen,
                 setGenreSubnavOpen,
                 openGenreSubnav,

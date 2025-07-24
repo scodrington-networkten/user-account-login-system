@@ -1,7 +1,7 @@
 import MoviesList from "../components/movies-list.jsx";
 import {useState, useEffect} from "react";
 import LoadingCardList from "../components/loading-card-list.jsx";
-import GenreList from "../components/genre-list.jsx";
+import GenreList from "@components/genre-list.tsx";
 import FeaturedMoviesCarousel from "@components/featured-movies-carousel.jsx";
 import {Helmet} from "react-helmet";
 import Utilities from "../utilities";

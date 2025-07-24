@@ -1,5 +1,5 @@
 import {useParams, useSearchParams} from "react-router-dom";
-import GenreList from "../components/genre-list.jsx";
+import GenreList from "@components/genre-list.tsx";
 import MoviesList from "../components/movies-list.jsx";
 import {useEffect, useState} from "react";
 import _ from 'lodash';

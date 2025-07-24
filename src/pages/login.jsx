@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useUser} from "../contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 import '../components/forms.css';
 
 const Login = () => {

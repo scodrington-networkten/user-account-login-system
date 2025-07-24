@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {Link} from "react-router-dom";
 import Utilities from "../../utilities";
-import {useUser} from "@contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 
 import './movie-card.css';
 

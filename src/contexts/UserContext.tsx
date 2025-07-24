@@ -1,28 +1,34 @@
-import {createContext, useContext, useEffect, useState, useRef, useCallback} from "react";
+import React, {createContext, useContext, useEffect, useState, useRef, useCallback} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 
-//this context is a placeholder
-const UserContext = createContext({
-    user: null,
-    userExpired: false,
-    setUserExpired: () => {
-    },
-    login: async () => {
-    },
-    logout: () => {
-    },
-    toggleFavoriteMovie: () => {
 
+
+type UserContextType = {
+    user: null | {
+        id: number,
+        first_name: string,
+        last_name: string,
+        favorite_movies: {
+            movie_id: number
+        }[]
     }
-})
+    userExpired: boolean,
+    setUserExpired: React.Dispatch<React.SetStateAction<boolean>>,
+    login: (token: string) => Promise<void>,
+    logout: () => void,
+    toggleFavoriteMovie: (movieId: number) => Promise<{ success: boolean; message: string }>;
+}
+//this context is a placeholder
+const UserContext = createContext<UserContextType | null>(null);
 
-export const UserProvider = ({children}) => {
+type props = React.PropsWithChildren<{}>
+export const UserProvider = ({children} : props) => {
 
     const navigate = useNavigate();
     const location = useLocation();
 
     const [user, setUser] = useState(null);
-    const [userExpired, setUserExpired] = useState(false);
+    const [userExpired, setUserExpired] = useState<boolean>(false);
     const userRef = useRef(user);         // <-- ref to keep latest user
     const userExpiredRef = useRef(userExpired); // <-- ref to keep latest userExpired
 
@@ -38,11 +44,9 @@ export const UserProvider = ({children}) => {
     /**
      * Add or remove a favorite movie from a user, also setting the updated user reference as
      * the associated data has changed
-     *
      * @param movieId
-     * @returns {Promise<{success: boolean, message}>}
      */
-    const toggleFavoriteMovie = async (movieId) => {
+    const toggleFavoriteMovie = async (movieId : number) => {
 
         const isFavorite = user.favorite_movies.some(item => {
             return item.movie_id === movieId;
@@ -105,24 +109,6 @@ export const UserProvider = ({children}) => {
         }
     }, []);
 
-    /**
-     // Interval effect watching userExpired state
-     useEffect(() => {
-     if (userExpiredRef.current) return;
-
-     const intervalId = setInterval(() => {
-     if (document.visibilityState !== "visible") return;
-     if (userExpiredRef.current) return; // use ref here for latest value
-
-     handleTokenInvalidation();
-     }, 10000);
-
-     return () => clearInterval(intervalId);
-
-     }, [userExpired, handleTokenInvalidation]);
-
-     */
-
     // Visibility change event listener
     useEffect(() => {
         const handleVisibilityChange = async () => {
@@ -149,12 +135,12 @@ export const UserProvider = ({children}) => {
                 setUserExpired(false);
 
             } catch (error) {
-                console.error(error.message);
+                console.error( (error as Error).message);
                 logout();
             }
         }
 
-        loadUser();
+        void loadUser();
 
     }, []);
 
@@ -164,7 +150,7 @@ export const UserProvider = ({children}) => {
      * @param token - jwt
      * @returns {Promise<void>}
      */
-    const login = async (token) => {
+    const login = async (token : string) => {
         localStorage.setItem('jwt', token);
 
         try {
@@ -174,11 +160,11 @@ export const UserProvider = ({children}) => {
             navigate("/dashboard");
 
         } catch (error) {
-            throw new Error(error.message);
+            throw new Error((error as Error).message);
         }
     }
 
-    const validate = async (token) => {
+    const validate = async (token : string | null) => {
         if (token === null) {
             throw new Error('Token can not be null');
         }
@@ -195,12 +181,9 @@ export const UserProvider = ({children}) => {
     }
 
     const logout = () => {
-
         deleteToken();
         setUser(null);
         setUserExpired(false);
-
-        //navigate("/login");
     }
 
     return (

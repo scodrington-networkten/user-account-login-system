@@ -1,7 +1,7 @@
 import './user-expired-popup.css';
 import {useNavigate} from "react-router-dom";
 
-import {useUser} from "../../contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 
 /**
  * popup that shows a signin modal, when pressed redirects back to login and updtes user state to ensure

@@ -2,16 +2,9 @@ import _ from "lodash";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBookmark as faBookmarkFull, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/free-solid-svg-icons';
-import {
-    faBookmark as faBookmarkEmpty,
-    faStar as faStarEmpty,
-    IconDefinition
-} from '@fortawesome/free-regular-svg-icons';
-import {useLocation} from "react-router-dom";
-import slugify from "slugify";
-import GenreButton from "@components/genre-button.jsx";
+import {faStar as faStarEmpty, IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import React, {JSX} from "react";
-import GenreButtonWrapper from "@components/genreButtonWrapper.jsx";
+import GenreButtonWrapper from "@components/genreButtonWrapper";
 import {Genre} from "./types/genre";
 import {MovieResult} from "./types/movieResult";
 
@@ -277,7 +270,7 @@ class Utilities {
      */
     static getApiImageUrl(url: string, options: ApiImageOptions): string {
 
-        if (typeof url !== 'string' || url.trim() === ''){
+        if (typeof url !== 'string' || url.trim() === '') {
 
             //if empty or null define placeholder
             if (options.type == "poster" || options.type == "profile") {

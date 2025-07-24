@@ -9,11 +9,11 @@ import {useState, useRef, useEffect} from "react";
 import slugify from "slugify";
 import {useLocation} from 'react-router-dom';
 
-import {useUser} from "./contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 import UserActionsSidebar from "@components/sidebar/userActionsSidebar.jsx";
 import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
 
-import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.jsx";
+import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.tsx";
 import GenresNavButton from "@components/Nav/genresNavButton.jsx";
 import GenreNavList from "@components/Nav/genreNavList.jsx";
 

@@ -1,5 +1,5 @@
 import Utilities from "../../utilities";
-import GenreButton from "../genre-button.jsx";
+import GenreButton from "../genre-button.tsx";
 import {useEffect, useState} from "react";
 
 import './single-movie.css';

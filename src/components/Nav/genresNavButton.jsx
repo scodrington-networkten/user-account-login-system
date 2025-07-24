@@ -1,9 +1,9 @@
 import './genres-nav-button.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown, faChevronUp} from "@fortawesome/free-solid-svg-icons";
-import {useSharedState} from "@contexts/SharedStateConext.jsx";
+import {useSharedState} from "@contexts/SharedStateConext.tsx";
 import {useContext} from "react";
-import {GenreContext} from "@contexts/GenreContext.jsx";
+import {GenreContext} from "@contexts/GenreContext.tsx";
 
 
 const GenresNavButton = () => {

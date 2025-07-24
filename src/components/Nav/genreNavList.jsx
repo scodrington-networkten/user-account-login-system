@@ -1,7 +1,7 @@
-import {useSharedState} from "@contexts/SharedStateConext.jsx";
+import {useSharedState} from "@contexts/SharedStateConext.tsx";
 import {useLocation} from "react-router-dom";
 import {useContext, useEffect} from "react";
-import {GenreContext} from "@contexts/GenreContext.jsx";
+import {GenreContext} from "@contexts/GenreContext.tsx";
 import Utilities from "../../utilities";
 
 /**

@@ -1,6 +1,6 @@
 import MoviesList from "@components/movies-list.jsx";
 import {useState, useEffect} from "react";
-import {useUser} from "@contexts/UserContext.jsx";
+import {useUser} from "@contexts/UserContext.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import LoadingCardList from "@components/loading-card-list.jsx";

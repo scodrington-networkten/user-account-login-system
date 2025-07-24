@@ -1,7 +1,10 @@
-// Make this a proper React component, not a utility function:
+
 import {useLocation} from "react-router-dom";
 import slugify from "slugify";
 import GenreButton from "@components/genre-button.jsx";
+import {Genre} from "../types/genre";
+import {JSX} from "react";
+
 
 /**
  * Wrapper to create a genre button (so we can access useLocation)
@@ -9,7 +12,7 @@ import GenreButton from "@components/genre-button.jsx";
  * @returns {JSX.Element}
  * @constructor
  */
-const GenreButtonWrapper = ({genre}) => {
+const GenreButtonWrapper = ({genre}: { genre: Genre }): JSX.Element => {
     const location = useLocation();
     const pathSegments = location.pathname.split("/").filter(Boolean);
     const lastSegment = pathSegments[pathSegments.length - 1];

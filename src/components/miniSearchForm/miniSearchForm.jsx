@@ -11,7 +11,7 @@ import SearchResultEntry from "@components/miniSearchForm/searchResultEntry.jsx"
 import {useLocation} from "react-router-dom";
 
 
-import {useSharedState} from "@contexts/SharedStateConext.jsx";
+import {useSharedState} from "@contexts/SharedStateConext.tsx";
 
 const MiniSearchForm = () => {
 

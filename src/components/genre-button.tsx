@@ -1,28 +1,27 @@
-import React from "react";
+import React, {JSX} from "react";
 import {Link} from "react-router-dom";
 import {useState, useEffect} from "react";
 import slugify from "slugify";
 import './genre-button.css';
+import {Genre} from "../types/genre";
 
-/**
- *
- * @param genre
- * @param isActive
- * @param classes
- * @param link - if this genre is a link or not
- * @returns {Element}
- * @constructor
- */
 
-const GenreButton = ({genre, isActive, classes = 'genre-button', link = true}) => {
+type GenreButtonProps = {
+    genre: Genre,
+    isActive: boolean,
+    classes?: string,
+    link?: boolean
+}
 
-    const [genreName, setGenreName] = useState('');
+const GenreButton = ({genre, isActive, classes = 'genre-button', link = true}: GenreButtonProps) : JSX.Element => {
+    const [genreName, setGenreName] = useState<string | null>(null);
 
     useEffect(() => {
         setGenreName(() => {
             if (genre && genre.name) {
                 return slugify(genre.name, {lower: true, strict: true});
             }
+            return null;
         })
     }, []);
 
@@ -39,8 +38,6 @@ const GenreButton = ({genre, isActive, classes = 'genre-button', link = true}) =
             <span className={`${classes}`}> {genre.name}</span>
         )
     }
-
-
 }
 
 export default GenreButton;
