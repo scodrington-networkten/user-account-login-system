@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import {useLocation} from "react-router-dom";
 import './primary-nav.css';
+import {JSX} from "react";
 
 
 const PrimaryNav = () => {
@@ -23,9 +24,8 @@ const PrimaryNav = () => {
 
     /**
      * Return the navigation items, factoring in if they are active or not
-     * @returns {unknown[]}
      */
-    const getNavigationItems = () => {
+    const getNavigationItems = () : JSX.Element[] => {
 
         return navigationItems.map((item, index) => {
 

@@ -89,4 +89,11 @@ export const SharedStateProvider = ({children}: props) => {
     );
 };
 
-export const useSharedState = () => useContext(SharedStateContext);
+export const useSharedState = () => {
+
+    const context = useContext(SharedStateContext);
+    if(!context){
+        throw new Error("useSharedState must be called within a SharedStateProvider");
+    }
+    return context;
+}

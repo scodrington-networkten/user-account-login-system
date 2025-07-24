@@ -1,6 +1,6 @@
 import React, {JSX} from "react";
 import {useContext} from "react";
-import {GenreContext} from "../contexts/GenreContext";
+import {GenreContext, useGenre} from "../contexts/GenreContext";
 import useEmblaCarousel from "embla-carousel-react";
 
 import slugify from "slugify";
@@ -12,7 +12,7 @@ import {Genre} from "../types/genre";
  */
 const GenreList = () => {
 
-    const {genres} = useContext(GenreContext) as { genres: Genre[] };
+    const {genres} = useGenre();
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: false,

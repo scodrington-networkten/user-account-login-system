@@ -22,7 +22,7 @@ import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
 import Home from "./pages/Home";
 import MoviesByGenre from "./pages/MoviesByGenre";
 
-import AppLayout from "./AppLayout.jsx";
+import AppLayout from "./AppLayout.js";
 
 import {GenreProvider} from "@contexts/GenreContext";
 

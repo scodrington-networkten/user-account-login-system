@@ -12,7 +12,7 @@ const UserActionsSidebar = () => {
 
     const location = useLocation();
 
-    const navItemClass = (path) => {
+    const navItemClass = (path : string) : string => {
         const isActive = location.pathname === path ? 'active' : '';
         return `nav-item ${isActive}`;
     }

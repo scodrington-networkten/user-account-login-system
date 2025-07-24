@@ -2,19 +2,18 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faVideo} from "@fortawesome/free-solid-svg-icons";
 import './footer.css';
 import PrimaryNav from "@components/Nav/PrimaryNav";
-
-import {GenreContext, useGenre} from "@contexts/GenreContext";
-import {useEffect, useState} from "react";
+import {useGenre} from "@contexts/GenreContext";
+import {JSX, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import Utilities from "./utilities";
+import {Genre} from "./types/genre";
+import {MovieResult} from "./types/movieResult";
 
 const Footer = () => {
 
     const {genres} = useGenre();
-    const [topGenres, setTopGenres] = useState([])
-
-    //movie specifics
-    const [recentMovies, setRecentMovies] = useState([]);
+    const [topGenres, setTopGenres] = useState<Genre[] | null>(null);
+    const [recentMovies, setRecentMovies] = useState<MovieResult[] | null>(null);
 
 
     //select the top X genres for display in footer
@@ -31,24 +30,16 @@ const Footer = () => {
 
     //pull from recent movie cache (populated on homepage load)
     useEffect(() => {
-        const recent = Utilities.getUpcomingMoviesCache();
-
-        console.log(recent);
-
+        const recent: MovieResult[] | null = Utilities.getUpcomingMoviesCache();
         if (recent != null) {
             setRecentMovies(recent.slice(0, 5));
         }
 
     }, [])
 
+    const getGenres = (): JSX.Element => {
 
-    /**
-     * Shows a sub-set of the saved genres
-     * @returns {JSX.Element}
-     */
-    const getGenres = () => {
-
-        if (topGenres.length === 0) {
+        if (!topGenres || topGenres.length === 0) {
             return (
                 <p>There are no current genres to display</p>
             )
@@ -65,20 +56,17 @@ const Footer = () => {
 
     /**
      * Important links used in the header
-     * @returns {JSX.Element}
      */
-    const getImportantLinks = () => {
+    const getImportantLinks = (): JSX.Element => {
         return <PrimaryNav/>
     }
 
     /**
      * Shows recent movies populated from the homapage
-     * @returns {JSX.Element}
      */
-    const getRecentMovies = () => {
+    const getRecentMovies = (): JSX.Element => {
 
-
-        if (recentMovies.length === 0) {
+        if (!recentMovies || recentMovies.length === 0) {
             return (
                 <p>There are no recent movies to display</p>
             )

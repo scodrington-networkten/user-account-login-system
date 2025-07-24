@@ -22,19 +22,19 @@
         // Allows importing JSON files
         "allowSyntheticDefaultImports": true,
         // Enables easier default importing
-        "baseUrl": ".",
+        "baseUrl": "src",
         "paths": {
             "@components/*": [
-                "src/components/*"
+                "components/*"
             ],
             "@contexts/*": [
-                "src/contexts/*"
+                "contexts/*"
             ],
             "@types": [
-                "src/types/index.ts"
+                "types/index.ts"
             ],
             "@types/*": [
-                "src/types/*"
+                "types/*"
             ]
         }
     },

@@ -1,15 +1,7 @@
 import React, {createContext, useContext, useEffect, useState, useRef, useCallback} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {User} from "../types/user";
 
-
-type User = {
-    id: number,
-    first_name: string,
-    last_name: string,
-    favorite_movies: {
-        movie_id: number
-    }[]
-}
 type UserContextType = {
     user: null | User,
     userExpired: boolean,
@@ -48,7 +40,13 @@ export const UserProvider = ({children}: props) => {
      */
     const toggleFavoriteMovie = async (movieId: number) => {
 
-        if (!user) return;
+        if (!user) {
+            return {
+                success: false,
+                message: "user is not logged in"
+            }
+        }
+
 
         const isFavorite = user.favorite_movies.some(item => {
             return item.movie_id === movieId;
@@ -188,4 +186,10 @@ export const UserProvider = ({children}: props) => {
     );
 }
 
-export const useUser = () => useContext(UserContext);
+export const useUser = () => {
+    const context = useContext(UserContext);
+    if(!context){
+        throw new Error("useUser must be used within a <UserProvider>")
+    }
+    return context;
+}

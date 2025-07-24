@@ -63,4 +63,11 @@ export const GenreProvider = ({children}: props) => {
     )
 
 }
-export const useGenre = () => useContext(GenreContext);
+export const useGenre = () =>  {
+
+    const context = useContext(GenreContext);
+    if(!context){
+        throw new Error("useGenre must be used within a GenreProvider");
+    }
+    return context;
+}

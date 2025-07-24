@@ -1,4 +1,4 @@
-import UserActionsSidebar from "@components/sidebar/userActionsSidebar.jsx";
+import UserActionsSidebar from "@components/sidebar/userActionsSidebar.tsx";
 
 
 const DashboardLayout = ({children, title = 'Page title '}) => {

@@ -1,12 +1,15 @@
-import Header from "./Header.jsx";
-import Footer from "./Footer.tsx";
-import {useEffect, useRef} from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+import React, {useEffect, useRef} from "react";
 import {Outlet} from 'react-router-dom';
 import {useLocation} from "react-router-dom";
 import MiniSearchForm from "@components/miniSearchForm/miniSearchForm.jsx";
-import {useSharedState} from "@contexts/SharedStateConext.tsx";
+import {useSharedState} from "@contexts/SharedStateConext";
 
-const AppLayout = ({children, contextOffset = false}) => {
+type AppLayoutProps = {
+    contextOffset: boolean
+}
+const AppLayout = ({contextOffset = false} : AppLayoutProps) => {
 
     const location = useLocation();
     const {genreSubnavOpen} = useSharedState();

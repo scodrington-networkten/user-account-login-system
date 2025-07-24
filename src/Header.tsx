@@ -1,32 +1,28 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {faSearch, faVideo, faUser,} from "@fortawesome/free-solid-svg-icons";
 
 import './components/header.css';
-import {useState, useRef, useEffect} from "react";
-
-import slugify from "slugify";
+import {useState, useEffect, JSX} from "react";
 import {useLocation} from 'react-router-dom';
 
-import {useUser} from "@contexts/UserContext.tsx";
-import UserActionsSidebar from "@components/sidebar/userActionsSidebar.jsx";
-import PrimaryNav from "@components/Nav/PrimaryNav.jsx";
+import {useUser} from "@contexts/UserContext";
+import UserActionsSidebar from "@components/sidebar/userActionsSidebar";
+import PrimaryNav from "@components/Nav/PrimaryNav";
 
-import {SharedStateProvider, useSharedState} from "@contexts/SharedStateConext.tsx";
-import GenresNavButton from "@components/Nav/genresNavButton.jsx";
-import GenreNavList from "@components/Nav/genreNavList.jsx";
+import {useSharedState} from "@contexts/SharedStateConext";
+import GenresNavButton from "@components/Nav/genresNavButton";
+import GenreNavList from "@components/Nav/genreNavList";
 
 
-const Header = () => {
-
+const Header = (): JSX.Element => {
 
     const location = useLocation();
-    const navigate = useNavigate();
-    const [userSubmenuOpen, setUserSubmenuOpen] = useState(false);
+    const [userSubmenuOpen, setUserSubmenuOpen] = useState<Boolean>(false);
     const {user} = useUser();
 
-    const {openMiniSearchForm, closeMiniSearchForm, miniSearchFormOpen, setMiniSearchFormOpen} = useSharedState();
+    const {openMiniSearchForm} = useSharedState();
 
     //handle when we change location, close the nav
     useEffect(() => {
@@ -67,7 +63,7 @@ const Header = () => {
                                 userSubmenuOpen ? "block" : "hidden"
                             }`}
                         >
-                            <UserActionsSidebar closeMenu={() => setUserSubmenuOpen(false)}/>
+                            <UserActionsSidebar/>
                         </nav>
                     </div>
                 </div>
@@ -84,8 +80,7 @@ const Header = () => {
     }
 
 
-    const getTitleSection = () => {
-
+    const getTitleSection = (): JSX.Element => {
         return (
             <div className="header-title flex items-center gap-2">
                 <Link to={"/"} className="flex items-center gap-2" title="Home">
@@ -103,8 +98,7 @@ const Header = () => {
     }
 
 
-    const getLinksSection = () => {
-
+    const getLinksSection = (): JSX.Element => {
         return (
             <section className="links items-center flex flex-wrap w-full gap-4">
                 <PrimaryNav/>
@@ -114,8 +108,7 @@ const Header = () => {
         )
     }
 
-    const getUserSection = () => {
-
+    const getUserSection = (): JSX.Element => {
         return (
             <section className="header-links flex items-center">
                 {displayUserIconSection()}
