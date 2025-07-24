@@ -2,16 +2,16 @@ import React, {createContext, useContext, useEffect, useState, useRef, useCallba
 import {useNavigate, useLocation} from "react-router-dom";
 
 
-
+type User = {
+    id: number,
+    first_name: string,
+    last_name: string,
+    favorite_movies: {
+        movie_id: number
+    }[]
+}
 type UserContextType = {
-    user: null | {
-        id: number,
-        first_name: string,
-        last_name: string,
-        favorite_movies: {
-            movie_id: number
-        }[]
-    }
+    user: null | User,
     userExpired: boolean,
     setUserExpired: React.Dispatch<React.SetStateAction<boolean>>,
     login: (token: string) => Promise<void>,
@@ -22,12 +22,12 @@ type UserContextType = {
 const UserContext = createContext<UserContextType | null>(null);
 
 type props = React.PropsWithChildren<{}>
-export const UserProvider = ({children} : props) => {
+export const UserProvider = ({children}: props) => {
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const [userExpired, setUserExpired] = useState<boolean>(false);
     const userRef = useRef(user);         // <-- ref to keep latest user
     const userExpiredRef = useRef(userExpired); // <-- ref to keep latest userExpired
@@ -46,7 +46,9 @@ export const UserProvider = ({children} : props) => {
      * the associated data has changed
      * @param movieId
      */
-    const toggleFavoriteMovie = async (movieId : number) => {
+    const toggleFavoriteMovie = async (movieId: number) => {
+
+        if (!user) return;
 
         const isFavorite = user.favorite_movies.some(item => {
             return item.movie_id === movieId;
@@ -113,7 +115,7 @@ export const UserProvider = ({children} : props) => {
     useEffect(() => {
         const handleVisibilityChange = async () => {
             if (document.visibilityState !== "visible") return;
-            handleTokenInvalidation();
+            await handleTokenInvalidation();
         }
 
         document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -123,25 +125,18 @@ export const UserProvider = ({children} : props) => {
 
     // On initial load, try and load the user
     useEffect(() => {
-
-        const loadUser = async () => {
-
+        (async () => {
             const token = getToken();
             if (!token) return;
-
             try {
                 const validatedUser = await validate(token);
                 setUser(validatedUser.user);
                 setUserExpired(false);
-
             } catch (error) {
-                console.error( (error as Error).message);
+                console.error((error as Error).message);
                 logout();
             }
-        }
-
-        void loadUser();
-
+        })();
     }, []);
 
     /**
@@ -150,7 +145,7 @@ export const UserProvider = ({children} : props) => {
      * @param token - jwt
      * @returns {Promise<void>}
      */
-    const login = async (token : string) => {
+    const login = async (token: string) => {
         localStorage.setItem('jwt', token);
 
         try {
@@ -164,7 +159,7 @@ export const UserProvider = ({children} : props) => {
         }
     }
 
-    const validate = async (token : string | null) => {
+    const validate = async (token: string | null) => {
         if (token === null) {
             throw new Error('Token can not be null');
         }
