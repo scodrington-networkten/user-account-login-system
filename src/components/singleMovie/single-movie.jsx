@@ -12,7 +12,7 @@ import MovieActors from "@components/actorProfile/movie-actors.jsx";
 import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
 
 import {Helmet} from "react-helmet";
-import CollectionDetails from "@components/collections/collectionDetails.jsx";
+import CollectionDetails from "@components/collections/collectionDetails.tsx";
 
 /**
  * @typedef {Object} MovieDetails

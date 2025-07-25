@@ -1,39 +1,54 @@
-import MovieCard from "./movieCard/movie-card.jsx";
+import MovieCard from "./movieCard/movie-card";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import './movie-list.css';
+import LoadingCardList from "@components/loading-card-list";
+import {MovieResult} from "@contracts/movieResult";
+import {JSX} from "react";
+import {Movie} from "@contracts/movie";
 
 
-import LoadingCardList from "@components/loading-card-list.jsx";
-
+type MovieListProps = {
+    movies: MovieResult[] | Movie[],
+    onNextButton?: () => void,
+    onPrevButton?: () => void,
+    currentPage?: number,
+    totalPages?: number,
+    totalResults?: number,
+    searchQuery?: string | null,
+    onPagesButton?: (page: number) => void,
+    loading?: boolean,
+    showPagination?: boolean,
+    showHeader?: boolean,
+    cssClasses?: string
+}
 const MoviesList = ({
                         movies,
                         onNextButton,
                         onPrevButton,
-                        currentPage,
-                        totalPages,
-                        totalResults,
+                        currentPage = 1,
+                        totalPages = 0,
+                        totalResults = 0,
                         searchQuery = null,
                         onPagesButton,
                         loading,
                         showPagination = true,
                         showHeader = false,
                         cssClasses = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-                    }) => {
+                    }: MovieListProps) => {
 
 
     /***
      * Display all movies for the user
-     * @returns {JSX.Element}
      */
-    const displayMovies = () => {
+    const displayMovies = (): JSX.Element => {
 
         if (movies.length > 0) {
             return (
                 <section
                     className={`movies container m-auto grid gap-4 ${cssClasses}`}>
                     {movies.map((item, index) => (
-                        <MovieCard movie={item} className="movie" key={`movie-${index}`}/>
+                        <MovieCard movie={item} classes="movie-card" key={`movie-${index}`}/>
                     ))}
                 </section>
             )
@@ -49,10 +64,10 @@ const MoviesList = ({
 
     /**
      * Get page numbers, factoring in the current page and prev / next pages
-     * @param location
-     * @returns {JSX.Element}
      */
-    const getPageNumbers = (location) => {
+    const getPageNumbers = (pageLocation: string): JSX.Element | null => {
+
+        if (typeof onPagesButton !== 'function') return null;
 
         const range = 2; // Number of pages to show before and after current
         let pages = [];
@@ -71,7 +86,7 @@ const MoviesList = ({
                             onPagesButton(item);
                         }}
                         title={`Page ${item}`}
-                        key={`${location}-${index}`}
+                        key={`${pageLocation}-${index}`}
                         className={` page ${item === currentPage ? 'active' : ''}`}>{item}</button>
                 })}
             </>
@@ -81,10 +96,9 @@ const MoviesList = ({
 
     /**
      * Display the navigation elements, page numbers and next/prev
-     * @param location
-     * @returns {JSX.Element}
+     * @param pageLocation
      */
-    const displayNavigation = (location) => {
+    const displayNavigation = (pageLocation: string): JSX.Element | null => {
 
         if (!showPagination) return null;
 
@@ -112,7 +126,7 @@ const MoviesList = ({
 
                 </section>
                 <div className="page-numbers">
-                    {getPageNumbers(location)}
+                    {getPageNumbers(pageLocation)}
                 </div>
             </div>
         )

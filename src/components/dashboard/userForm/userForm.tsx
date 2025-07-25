@@ -1,6 +1,7 @@
 import '@components/forms.css';
-import {useUser} from "@contexts/UserContext.tsx";
-import {useState, useEffect} from "react";
+import {useUser} from "@contexts/UserContext";
+import {useState, useEffect, JSX} from "react";
+import {User} from "@contracts/user";
 
 
 /**
@@ -8,75 +9,51 @@ import {useState, useEffect} from "react";
  * @returns {JSX.Element}
  * @constructor
  */
-const UserForm = () => {
-
-    const testSubmit = async (e) => {
-        e.preventDefault();
-
-        const jwt = localStorage.getItem('jwt');
-
-        const response = await fetch('api/user/actions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${jwt}`,
-                'x-user-action': 'add-to-favorite'
-            },
-            body: JSON.stringify({movie_id: 1}),
-        })
-
-    }
-
+const UserForm = (): JSX.Element | null => {
 
 
     const {user} = useUser();
 
     // Local form state initialized with user values
-    const [formData, setFormData] = useState({
-        id: "",
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        created_at: "",
-        is_active: "",
-    });
+    const [formData, setFormData] = useState<User | null>(null);
 
     // When `user` updates, sync local state once
     useEffect(() => {
         if (user) {
-            setFormData({
-                id: user.id || "",
-                first_name: user.first_name || "",
-                last_name: user.last_name || "",
-                email: user.email || "",
-                password: user.password || "",
-                created_at: user.created_at || "",
-                is_active: user.is_active || false
-            });
+            setFormData(user);
         }
     }, [user]);
 
     //Handle changes to the form to update local state
-    function handleChange(e) {
-        const {name, value, type, checked} = e.target;
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
+        const {name, type, value, checked} = e.target;
+
+        if (!formData) return;
+
+        // Use a clear if/else chain so it's obvious what's happening
+        let newValue: string | number | boolean;
+
+        if (type === 'checkbox') {
+            newValue = checked;
+        } else if (name === 'id') {
+            newValue = Number(value);
+        } else {
+            newValue = value;
+        }
+
         setFormData(prev => ({
-            ...prev,
-            [name]: type === "checkbox" ? checked : value,
+            ...prev!,
+            [name]: newValue,
         }));
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-
-        // Now formData contains all edits — send to API/DB here
         console.log("Submit data", formData);
-
-        // After successful update, you might update your UserContext `user` state elsewhere
     }
 
 
-    if (user == null) {
+    if (user == null || formData == null) {
         return null;
     }
 
@@ -86,7 +63,7 @@ const UserForm = () => {
             <form>
                 <div className="form-group">
                     <label htmlFor="id">User ID</label>
-                    <input type="text" id="id" name="id" value={formData.id} onChange={handleChange}/>
+                    <input type="text" id="id" name="id" value={formData.id.toString()} onChange={handleChange}/>
                 </div>
 
                 <div className="form-group">
@@ -103,7 +80,8 @@ const UserForm = () => {
 
                 <div className="form-group">
                     <label htmlFor="email">Email Address</label>
-                    <input type="email" id="email" name="email" value={formData.email} required onChange={handleChange}/>
+                    <input type="email" id="email" name="email" value={formData.email} required
+                           onChange={handleChange}/>
                 </div>
 
                 <div className="form-group">
@@ -126,9 +104,6 @@ const UserForm = () => {
                 </div>
 
                 <button type="submit">Save</button>
-            </form>
-            <form onSubmit={testSubmit}>
-                <button type="submit">TEST</button>
             </form>
         </section>
 

@@ -1,23 +1,27 @@
-import _ from 'lodash';
 import {Link} from "react-router-dom";
 import Utilities from "../../utilities";
-import {useUser} from "@contexts/UserContext.tsx";
-
+import {useUser} from "@contexts/UserContext";
 import './movie-card.css';
-
-import FavoriteMovieButton from "@components/favoriteMovieButton/favoriteMovieButton.jsx";
+import FavoriteMovieButton from "@components/favoriteMovieButton/favoriteMovieButton";
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState, useRef, JSX, TouchEvent} from "react";
+import {MovieResult} from "@contracts/movieResult";
+import {Movie} from "@contracts/movie";
 
-const MovieCard = ({movie, classes = 'movie-card'}) => {
 
-    const cardRef = useRef(null);
-    const [touched, setTouched] = useState(false);
+type MovieCardProps = {
+    movie: MovieResult|Movie,
+    classes?: string
+}
+const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element => {
+
+    const cardRef = useRef<HTMLElement | null>(null);
+    const [touched, setTouched] = useState<boolean>(false);
     const {user} = useUser();
 
-    const [isFavorited, setIsFavorited] = useState(null);
+    const [isFavorited, setIsFavorited] = useState<boolean>(false);
 
     //determine if this movie is a users fav
     useEffect(() => {
@@ -38,8 +42,9 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
         if (!touched) return;
 
         // Handler for any touch on the document
-        const handleTouchOutside = (e) => {
-            if (cardRef.current && !cardRef.current.contains(e.target)) {
+        const handleTouchOutside = (e: Event) => {
+            const target = e.target as Node | null;
+            if (cardRef.current && target && !cardRef.current.contains(target)) {
                 setTouched(false);
             }
         };
@@ -57,9 +62,8 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
     /**
      * Displays both the vote count section and the rating stars
      * @param movie
-     * @returns {JSX.Element}
      */
-    const getRatingSection = (movie) => {
+    const getRatingSection = (movie: MovieResult|Movie): JSX.Element => {
 
         return (
             <section className="rating-information">
@@ -73,15 +77,15 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
     }
 
 
-    const getSummarySection = (movie) => {
+    const getSummarySection = (movie: MovieResult|Movie): JSX.Element => {
         return (
             <p className="summary ">{Utilities.getTrimmedString(movie.overview, 150)}</p>
         )
     }
 
-    const getFavoritedBadge = (movie) => {
+    const getFavoritedBadge = (): JSX.Element | null => {
 
-        if (!isFavorited) return;
+        if (!isFavorited) return null;
 
         return (
             <div className="favorite-badge">
@@ -90,9 +94,11 @@ const MovieCard = ({movie, classes = 'movie-card'}) => {
         )
     }
 
+    console.log(classes);
+
     return (
         <article
-            tabIndex="0"
+            tabIndex={0}
             onFocus={() => setTouched(true)}
             onBlur={() => setTouched(false)}
             className={` group ${touched ? 'touched' : ''} ${classes}`}

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import MovieKeyword from "@components/movieKeyword/movie-keyword.jsx";
+import MovieKeyword from "@components/movieKeyword/movie-keyword.tsx";
 
 export default function MovieKeywords({movie}) {
 

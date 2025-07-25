@@ -5,8 +5,8 @@ import {faStar as faStarFull, faStarHalfAlt as faStarHalf} from '@fortawesome/fr
 import {faStar as faStarEmpty, IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import React, {JSX} from "react";
 import GenreButtonWrapper from "@components/genreButtonWrapper";
-import {Genre} from "./types/genre";
-import {MovieResult} from "./types/movieResult";
+import {Genre} from "@contracts/genre";
+import {MovieResult} from "@contracts/movieResult";
 
 
 type SocialMediaType =
@@ -268,7 +268,7 @@ class Utilities {
      * @param {ApiImageOptions} options - options for the type and size of the image to collect
      * @returns {string} A fully qualified image URL.
      */
-    static getApiImageUrl(url: string, options: ApiImageOptions): string {
+    static getApiImageUrl(url: string|null, options: ApiImageOptions): string {
 
         if (typeof url !== 'string' || url.trim() === '') {
 

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import MoviesList from "@components/movies-list.jsx";
+import MoviesList from "@components/movies-list.tsx";
 import StandardSlider from "@components/standardSlider/standardSlider.jsx";
 import sampleData from "../../sampleData.js";
 

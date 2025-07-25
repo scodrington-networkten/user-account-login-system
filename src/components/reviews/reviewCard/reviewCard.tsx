@@ -1,6 +1,7 @@
-
 import Utilities from "../../../utilities";
 import './review-card.css';
+import React, {JSX} from "react";
+import {Review} from "@contracts/Review";
 
 /**
  * Single card for showing a review
@@ -8,17 +9,14 @@ import './review-card.css';
  * @returns {JSX.Element}
  * @constructor
  */
-const ReviewCard = ({review}) => {
 
-    const utilities = new Utilities();
+type ReviewCardProps = {
+    review: Review
+}
+const ReviewCard = ({review}: ReviewCardProps) => {
 
-    console.log(review);
 
-    /**
-     *
-     * @returns {`${*} (${*})`|`${*}`}
-     */
-    const getAuthorName = () => {
+    const getAuthorName = (): string => {
 
         let {name, username} = review.author_details;
 
@@ -29,19 +27,18 @@ const ReviewCard = ({review}) => {
         }
     }
 
+
     /**
-     *
-     * @returns {*|string}
+     * Return the review content
      */
-    const getReviewContent = () => {
+    const getReviewContent = (): string => {
         return (review.content.length > 200) ? Utilities.getTrimmedString(review.content, 200) : review.content;
     }
 
     /**
-     *
-     * @returns {string}
+     * Return the formatted review date
      */
-    const getReviewDate = () => {
+    const getReviewDate = (): string => {
 
         let createdDate = Utilities.formatDate(review.created_at, true);
         let updatedDate = (review.updated_at) ? Utilities.formatDate(review.updated_at, true) : '';
@@ -59,11 +56,11 @@ const ReviewCard = ({review}) => {
     }
 
     /**
-     * Get the review stars section
+     * Get the review stars section (out of 5 stars)
      */
-    const getStarsContent = () => {
+    const getStarsContent = (): JSX.Element | null => {
 
-        if (review.author_details.rating === null) return;
+        if (review.author_details.rating === null) return null;
 
         return (
             <div className="rating">

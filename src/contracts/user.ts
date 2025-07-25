@@ -4,5 +4,9 @@ export type User = {
     last_name: string,
     favorite_movies: {
         movie_id: number
-    }[]
+    }[],
+    email: string,
+    password: string,
+    created_at: string,
+    is_active: boolean,
 }

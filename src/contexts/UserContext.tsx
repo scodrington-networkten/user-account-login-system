@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState, useRef, useCallback} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {User} from "../types/user";
+import {User} from "@contracts/user";
 
 type UserContextType = {
     user: null | User,

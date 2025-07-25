@@ -1,21 +1,20 @@
-import MoviesList from "@components/movies-list.jsx";
-import {useState, useEffect} from "react";
-import {useUser} from "@contexts/UserContext.tsx";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import LoadingCardList from "@components/loading-card-list.jsx";
+import MoviesList from "@components/movies-list";
+import {useState, useEffect, JSX} from "react";
+import {useUser} from "@contexts/UserContext";
+import LoadingCardList from "@components/loading-card-list";
 import Utilities from "../../utilities";
+import {Movie} from "@contracts/movie";
 
 
 /**
  * A listing of all favorited movies for the user
  * @constructor
  */
-const FavoriteList = () => {
+const FavoriteList = (): JSX.Element | null => {
 
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState<Movie[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const {user} = useUser();
-    const [loading, setLoading] = useState(false);
 
 
     //fetch movie data based on user favorited items
@@ -24,7 +23,7 @@ const FavoriteList = () => {
 
         const getMovies = async () => {
 
-            const collection = [];
+            const collection: Movie[] = [];
 
             if (user === null) return;
 
@@ -36,7 +35,7 @@ const FavoriteList = () => {
                     collection.push(result);
 
                 } catch (error) {
-                    window.showToastNotification(error.message, 'error');
+                    window.showToastNotification((error as Error).message, 'error');
                 }
 
             });
@@ -46,12 +45,14 @@ const FavoriteList = () => {
             setLoading(false);
             setMovies(collection);
         }
-        getMovies();
+        void getMovies();
 
     }, [user]);
 
-    if (user === null) return;
 
+    if (user === null) {
+        return null;
+    }
 
     //no movies yet
     if (user.favorite_movies.length === 0) {
@@ -69,6 +70,9 @@ const FavoriteList = () => {
 
         )
     }
+
+
+    if (movies === null) return null;
 
     //has movies to display
     return (

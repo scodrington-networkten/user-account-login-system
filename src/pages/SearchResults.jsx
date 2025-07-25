@@ -1,8 +1,8 @@
 import {useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import MoviesList from "../components/movies-list.jsx";
+import MoviesList from "@components/movies-list.tsx";
 
-import LoadingCardList from "../components/loading-card-list.jsx";
+import LoadingCardList from "@components/loading-card-list.tsx";
 import {Helmet} from "react-helmet";
 import Utilities from "../utilities";
 

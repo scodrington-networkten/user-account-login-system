@@ -1,5 +1,5 @@
 
-import MovieCard from "@components/movieCard/movie-card.jsx";
+import MovieCard from "@components/movieCard/movie-card.tsx";
 import StandardSlider from "@components/standardSlider/standardSlider.jsx";
 import {useEffect, useState} from "react";
 import SampleData from "../sampleData.js";

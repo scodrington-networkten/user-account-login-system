@@ -1,14 +1,18 @@
 import {useEffect, useState} from "react";
 import Utilities from "../../utilities";
 import './collection-details.css';
-import MovieCard from "@components/movieCard/movie-card.jsx";
+import MovieCard from "@components/movieCard/movie-card";
+import {MovieCollection} from "@contracts/movieCollection";
 
-const CollectionDetails = ({id}) => {
+type CollectionDetailsProps = {
+    id: number
+}
+const CollectionDetails = ({id}: CollectionDetailsProps) => {
 
 
-    const [collection, setCollection] = useState(null);
-    const [loading, setLoading] = useState(null);
-    const [error, setError] = useState(null);
+    const [collection, setCollection] = useState<MovieCollection | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
 
     if (!id) return null;
 
@@ -23,7 +27,7 @@ const CollectionDetails = ({id}) => {
                 const result = await fetch('/api/get', {
                     headers: {
                         'x-action': 'get-collection',
-                        'collection-id': id
+                        'collection-id': id.toString()
                     }
                 })
 
@@ -34,17 +38,15 @@ const CollectionDetails = ({id}) => {
 
                 const data = await result.json();
                 setCollection(data);
-               // console.log(data);
+                // console.log(data);
 
             } catch (error) {
                 setError(true);
-                window.showToastNotification(error.message, 'error');
+                window.showToastNotification((error as Error).message, 'error');
             } finally {
                 setLoading(false)
             }
         })();
-
-
     }, [id]);
 
 
@@ -60,7 +62,7 @@ const CollectionDetails = ({id}) => {
         )
     }
 
-    if(!collection) return;
+    if (!collection) return;
 
 
     return (
@@ -69,14 +71,14 @@ const CollectionDetails = ({id}) => {
             <div className="collection-details">
                 <div className="left">
                     <img
-                        src={Utilities.getApiImageUrl(collection.poster_path, {type: 'poster',size: 'w342'})}
+                        src={Utilities.getApiImageUrl(collection.poster_path, {type: 'poster', size: 'w342'})}
                         className="collection-image"
                         alt="collection image"
                     />
                 </div>
                 <div className="right">
                     <h4 className="title">{collection.name}</h4>
-                    <p className="movie-count">{collection?.parts.length} Movies</p>
+                    <p className="movie-count">{collection.parts.length} Movies</p>
                     <p className="description">{collection.overview}</p>
                 </div>
 

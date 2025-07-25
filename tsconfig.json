@@ -30,11 +30,8 @@
             "@contexts/*": [
                 "contexts/*"
             ],
-            "@types": [
-                "types/index.ts"
-            ],
-            "@types/*": [
-                "types/*"
+            "@contracts/*": [
+                "contracts/*"
             ]
         }
     },

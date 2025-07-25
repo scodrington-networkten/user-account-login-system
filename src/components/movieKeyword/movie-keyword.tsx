@@ -1,7 +1,12 @@
 import {Link} from "react-router-dom";
 import slugify from "slugify";
+import {Keyword} from "@contracts/keyword";
+import {JSX} from "react";
 
-export default function MovieKeyword({keyword}){
+type MovieKeywordProps = {
+    keyword: Keyword
+}
+export default function MovieKeyword({keyword} : MovieKeywordProps): JSX.Element{
 
     const getKeywordTitle = () => {
         return keyword.name;

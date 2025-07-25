@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import MovieCard from "@components/movieCard/movie-card.jsx";
+import MovieCard from "@components/movieCard/movie-card.tsx";
 import useEmblaCarousel from "embla-carousel-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faAngleRight} from "@fortawesome/free-solid-svg-icons";

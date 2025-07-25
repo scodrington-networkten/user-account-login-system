@@ -1,4 +1,5 @@
-import LoadingCard from "./loading-card.tsx";
+import LoadingCard from "./loading-card";
+import {JSX} from "react";
 
 /**
  *
@@ -7,17 +8,21 @@ import LoadingCard from "./loading-card.tsx";
  * @returns {JSX.Element}
  * @constructor
  */
-const LoadingCardList = (
-    {
-        cssClass = 'grid-cols-2 md:grid-cols-5',
-        items = 20
-    }) => {
+
+type LoadingCardListProps = {
+    cssClass?: string,
+    items?: number
+}
+const LoadingCardList = ({
+                             cssClass = 'grid-cols-2 md:grid-cols-5',
+                             items = 20
+                         }: LoadingCardListProps) => {
 
     /**
      * Display X number of loading cards
      * @returns {*[]}
      */
-    const getLoadingCards = () => {
+    const getLoadingCards = () : JSX.Element[] => {
 
         let i = 0;
         let loadingCards = [];

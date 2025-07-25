@@ -1,14 +1,19 @@
-
-import {useEffect, useState} from "react";
-import ReviewCard from "@components/reviews/reviewCard/reviewCard.jsx";
+import {useEffect, useState, JSX} from "react";
+import ReviewCard from "@components/reviews/reviewCard/reviewCard";
 import './review-cards.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
-const ReviewCards = ({movie}) => {
+import {Review} from "@contracts/Review";
+import {Movie} from "@contracts/movie";
 
-    const [reviews, setReviews] = useState([]);
-    const [loading, setLoading] = useState(true);
+type ReviewCardsProps = {
+    movie: Movie
+}
+const ReviewCards = ({movie} : ReviewCardsProps) => {
+
+    const [reviews, setReviews] = useState<Review[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
 
@@ -18,7 +23,7 @@ const ReviewCards = ({movie}) => {
             const result = await fetch(`/api/get`, {
                 headers: {
                     'x-action': 'get-reviews-for-movie',
-                    'movie-id': movie.id
+                    'movie-id': movie.id.toString()
                 }
             });
             if (!result.ok) {
@@ -35,11 +40,10 @@ const ReviewCards = ({movie}) => {
 
     /**
      * Show review section based on current status
-     * @returns {JSX.Element}
      */
-    const showReviews = () => {
+    const showReviews = (): JSX.Element | null => {
 
-        if (reviews.length === 0) {
+        if (reviews === null || reviews.length === 0) {
             return (
                 <p>There are no reviews for this movie, check back later</p>
             )

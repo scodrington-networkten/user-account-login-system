@@ -1,6 +1,6 @@
 import SampleData from "../sampleData.js";
 import sampleData from "../sampleData.js";
-import MovieCard from "@components/movieCard/movie-card.jsx";
+import MovieCard from "@components/movieCard/movie-card.tsx";
 
 const Test = () => {
 

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import ActorProfile from "@components/actorProfile/actorProfile.jsx";
-import LoadingCardList from "@components/loading-card-list.jsx";
+import LoadingCardList from "@components/loading-card-list.tsx";
 
 /**
  * Gets a list of the movie actors for display for an associated movie

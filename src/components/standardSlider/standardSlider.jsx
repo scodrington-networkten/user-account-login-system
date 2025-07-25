@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState, useRef} from "react";
-import MovieCard from "@components/movieCard/movie-card.jsx";
+import MovieCard from "@components/movieCard/movie-card.tsx";
 import './standard-slider.css';
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";

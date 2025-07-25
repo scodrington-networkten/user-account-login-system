@@ -1,6 +1,6 @@
 export {};
 
-import {ToastNotificationFunction} from "@types/ToastNotification";
+import {ToastNotificationFunction} from "@contracts/ToastNotification";
 
 declare global {
     interface Window {

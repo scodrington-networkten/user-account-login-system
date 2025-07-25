@@ -1,10 +1,10 @@
 import {useParams, useSearchParams} from "react-router-dom";
 import GenreList from "@components/genre-list.tsx";
-import MoviesList from "../components/movies-list.jsx";
+import MoviesList from "@components/movies-list.tsx";
 import {useEffect, useState} from "react";
 import _ from 'lodash';
 import slugify from "slugify";
-import LoadingCardList from "../components/loading-card-list.jsx";
+import LoadingCardList from "@components/loading-card-list.tsx";
 import Utilities from "../utilities";
 import {Helmet} from "react-helmet";
 

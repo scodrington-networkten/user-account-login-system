@@ -1,6 +1,6 @@
 import LoadingCard from "@components/loading-card.tsx";
 import {useEffect, useState} from "react";
-import MoviesList from "@components/movies-list.jsx";
+import MoviesList from "@components/movies-list.tsx";
 import StandardLayout from "@components/Layouts/StandardLayout.tsx";
 import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
