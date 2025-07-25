@@ -94,7 +94,6 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
         )
     }
 
-    console.log(classes);
 
     return (
         <article

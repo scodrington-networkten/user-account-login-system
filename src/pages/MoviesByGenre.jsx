@@ -14,6 +14,7 @@ const MoviesByGenre = () => {
     const {genre} = useParams();
     const [movies, setMovies] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
+    const [totalResults, setTotalResults] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
@@ -74,6 +75,7 @@ const MoviesByGenre = () => {
                 const data = await moviesResult.json();
                 setMovies(data.results);
                 setTotalPages(data.total_pages);
+                setTotalResults(data.total_results);
 
             } catch (error) {
                 window.showToastNotification(error.message, 'error');
@@ -150,6 +152,7 @@ const MoviesByGenre = () => {
                             moviesLoading={loading}
                             currentPage={currentPage}
                             totalPages={totalPages}
+                            totalResults={totalResults}
                             showHeader={true}
                         />
                     </div>

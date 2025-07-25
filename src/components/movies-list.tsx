@@ -22,6 +22,22 @@ type MovieListProps = {
     showHeader?: boolean,
     cssClasses?: string
 }
+/**
+ * Main listing interface to show movies as cards
+ * @param movies
+ * @param onNextButton
+ * @param onPrevButton
+ * @param currentPage
+ * @param totalPages
+ * @param totalResults
+ * @param searchQuery
+ * @param onPagesButton
+ * @param loading
+ * @param showPagination
+ * @param showHeader
+ * @param cssClasses
+ * @constructor
+ */
 const MoviesList = ({
                         movies,
                         onNextButton,
