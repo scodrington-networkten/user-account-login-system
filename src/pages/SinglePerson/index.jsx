@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 
 import SinglePersonMovies from "@components/Pages/SinglePerson/SinglePersonMovies.jsx";
 import SinglePersonDetails from "@components/Pages/SinglePerson/SinglePersonDetails.jsx";
-import LoadingCard from "@components/loading-card.jsx";
+import LoadingCard from "@components/loading-card.tsx";
 import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
 

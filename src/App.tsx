@@ -31,7 +31,7 @@ import RouteProgressTracker from "./RouteProgressTracker.jsx";
 import Signup from "./pages/signup.jsx";
 import Login from "./pages/login.jsx";
 import Logout from "./pages/logout.jsx";
-import {UserProvider} from "./contexts/UserContext.js";
+import {UserProvider} from "./contexts/UserContext";
 import UserExpiredPopup from "./components/userExpiredPopup/user-expired-popup.jsx";
 
 //user dashboard pages
@@ -50,7 +50,7 @@ import PopularMovies from "./pages/PopularMovies/index.jsx";
 import LatestMovies from "./pages/LatestMovies/index.jsx";
 import {SharedStateProvider} from "@contexts/SharedStateConext.jsx";
 import NewSlider from "./pages/new-slider.jsx";
-import NotFound from "./pages/NotFound.jsx";
+import NotFound from "./pages/NotFound";
 
 function App() {
 

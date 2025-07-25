@@ -1,4 +1,4 @@
-import LoadingCard from "./loading-card.jsx";
+import LoadingCard from "./loading-card.tsx";
 
 /**
  *

@@ -12,6 +12,8 @@ const ReviewCard = ({review}) => {
 
     const utilities = new Utilities();
 
+    console.log(review);
+
     /**
      *
      * @returns {`${*} (${*})`|`${*}`}
@@ -32,7 +34,7 @@ const ReviewCard = ({review}) => {
      * @returns {*|string}
      */
     const getReviewContent = () => {
-        return (review.content.length > 200) ? utilities.getTrimmedString(review.content, 200) : review.content;
+        return (review.content.length > 200) ? Utilities.getTrimmedString(review.content, 200) : review.content;
     }
 
     /**
@@ -65,7 +67,7 @@ const ReviewCard = ({review}) => {
 
         return (
             <div className="rating">
-                {utilities.getStarsSection(review.author_details.rating)}
+                {Utilities.getStarsSection(review.author_details.rating)}
             </div>
         )
     }

@@ -1,4 +1,4 @@
-import exampleReviews from "@components/reviews/reviewCard/exampleReviews.js";
+
 import {useEffect, useState} from "react";
 import ReviewCard from "@components/reviews/reviewCard/reviewCard.jsx";
 import './review-cards.css';
@@ -25,7 +25,7 @@ const ReviewCards = ({movie}) => {
                 window.showToastNotification('There was an error getting the reviews for this movie', 'error');
             } else {
                 const data = await result.json();
-                //setReviews(data.results);
+                setReviews(data.results);
             }
             setLoading(false);
         })();

@@ -3,7 +3,7 @@ import GenreButton from "../genre-button.tsx";
 import {useEffect, useState} from "react";
 
 import './single-movie.css';
-import ReviewCards from "@components/reviews/reviewCards/reviewCards.jsx";
+import ReviewCards from "@components/reviews/reviewCards/reviewCards.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
 import {faCalendar} from "@fortawesome/free-regular-svg-icons";

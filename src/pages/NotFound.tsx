@@ -1,6 +1,7 @@
-import StandardLayout from "@components/Layouts/StandardLayout.jsx";
+import StandardLayout from "@components/Layouts/StandardLayout";
+import {JSX} from "react";
 
-const NotFound = () => {
+const NotFound = () : JSX.Element => {
     return (
         <StandardLayout title="Not Found">
             <p>The resource you requested could not be found, sorry about that</p>

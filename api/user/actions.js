@@ -64,7 +64,6 @@ export default async function actions(request, response) {
                 });
 
             } catch (error) {
-                console.error(error); // helpful in development
                 return response.status(500).json({
                     message: 'There was an error adding this item to your favorite list'
                 });
@@ -105,7 +104,6 @@ export default async function actions(request, response) {
                 });
 
             } catch (error) {
-                console.error(error);
                 return response.status(500).json({
                     message: 'There was an error removing this item from your favorite list'
                 });

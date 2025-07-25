@@ -219,7 +219,10 @@ const getMovieCredits = async (request) => {
             }
         }
 
+
         const result = await fetch(url, options);
+
+
         if (!result.ok) {
             throw new Error(result.statusText);
         }

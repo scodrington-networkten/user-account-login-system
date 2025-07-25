@@ -1,8 +1,5 @@
-
 /**
  * Loading card, used to show that content is loading
- * @returns {JSX.Element}
- * @constructor
  */
 const LoadingCard = () => {
     return (

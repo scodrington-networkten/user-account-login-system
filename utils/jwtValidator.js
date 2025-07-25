@@ -38,8 +38,6 @@ export async function validateJwtFromRequest(request) {
         relations: ['favorite_movies']
     });
 
-    console.log(user);
-
     if (!user) {
         throw new Error(`No user found for token ID: ${decodedToken.id}`);
     }

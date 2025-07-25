@@ -5,7 +5,12 @@
  * @returns {JSX.Element}
  * @constructor
  */
-const StandardLayout = ({children, title = 'Page title'}) => {
+import React, {JSX} from "react";
+
+type StandardLayoutPros = React.PropsWithChildren<{
+    title: string
+}>
+const StandardLayout = ({children, title = 'Page title'} : StandardLayoutPros): JSX.Element => {
 
     return (
         <div className="container mx-auto mt-2 mb-2 p-4">
