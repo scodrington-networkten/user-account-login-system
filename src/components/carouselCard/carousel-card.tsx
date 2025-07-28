@@ -1,27 +1,27 @@
+import _ from "lodash";
 import {Link} from "react-router-dom";
 import {faPlay, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {GenreContext} from "@contexts/GenreContext.tsx";
-import {useContext} from "react";
-import _ from "lodash";
-import GenreButton from "@components/genre-button.tsx";
+import {useGenre} from "@contexts/GenreContext";
+import {JSX} from "react";
+import GenreButton from "@components/genre-button";
 
 import './carousel-card.css';
+import {Movie} from "@contracts/movie";
+import {MovieResult} from "@contracts/movieResult";
 
-const CarouselCard = ({movie}) => {
+type CarouselCardProps = {
+    movie:  MovieResult
+}
+const CarouselCard = ({movie}: CarouselCardProps) => {
 
-    /**
-     * @type {{ genres: { id: number, name: string }[] }}
-     */
-    const context = useContext(GenreContext);
-    const {genres} = context;
+    const {genres} = useGenre();
 
     /**
      * Given an  ID (representing a genre id), return a button component with its correct name
      * @param id
-     * @returns {JSX.Element}
      */
-    const getGenreButton = (id) => {
+    const getGenreButton = (id: number): JSX.Element | null => {
 
         //find the associated genre given the id
         let genre = _.find(genres, (item) => {
@@ -45,10 +45,8 @@ const CarouselCard = ({movie}) => {
     /**
      * Outputs the summary section for both mobile and desktop
      * @param movie
-     * @returns {JSX.Element}
      */
-    const getSummarySection = (movie) => {
-
+    const getSummarySection = (movie: Movie | MovieResult): JSX.Element => {
 
         let mobileSummary = _.truncate(movie.overview, {length: 200});
         let longSummary = _.truncate(movie.overview, {length: 350});

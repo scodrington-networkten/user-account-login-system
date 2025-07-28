@@ -8,8 +8,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
 import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 
-import MovieActors from "@components/actorProfile/movie-actors.jsx";
-import MovieKeywords from "@components/movieKeywords/movie-keywords.jsx";
+import MovieActors from "@components/actorProfile/movie-actors.tsx";
+import MovieKeywords from "@components/movieKeywords/movie-keywords.tsx";
 
 import {Helmet} from "react-helmet";
 import CollectionDetails from "@components/collections/collectionDetails.tsx";

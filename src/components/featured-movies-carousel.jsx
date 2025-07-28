@@ -1,5 +1,5 @@
 import {useState, useEffect, useCallback} from "react";
-import CarouselCard from "./carouselCard/carousel-card.jsx";
+import CarouselCard from "./carouselCard/carousel-card.tsx";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 

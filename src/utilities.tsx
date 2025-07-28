@@ -9,7 +9,7 @@ import {Genre} from "@contracts/genre";
 import {MovieResult} from "@contracts/movieResult";
 
 
-type SocialMediaType =
+export type SocialMediaType =
     | "freebase_mid"
     | "freebase_id"
     | "imdb_id"
@@ -21,7 +21,7 @@ type SocialMediaType =
     | "twitter_id"
     | "youtube_id";
 
-type SocialMediaInfo = {
+export type SocialMediaInfo = {
     url: string;
     name: string;
 }

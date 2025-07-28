@@ -26,11 +26,11 @@ import AppLayout from "./AppLayout.js";
 
 import {GenreProvider} from "@contexts/GenreContext";
 
-import RouteProgressTracker from "./RouteProgressTracker.jsx";
+import RouteProgressTracker from "./RouteProgressTracker";
 
 import Signup from "./pages/signup.jsx";
-import Login from "./pages/login.jsx";
-import Logout from "./pages/logout.jsx";
+import Login from "./pages/login";
+import Logout from "./pages/logout";
 import {UserProvider} from "./contexts/UserContext";
 import UserExpiredPopup from "./components/userExpiredPopup/user-expired-popup.jsx";
 

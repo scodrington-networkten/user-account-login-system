@@ -1,23 +1,28 @@
 import {useEffect, useState} from "react";
-import MovieKeyword from "@components/movieKeyword/movie-keyword.tsx";
+import MovieKeyword from "@components/movieKeyword/movie-keyword";
+import {Movie} from "@contracts/movie";
+import {KeywordsApiResults} from "@contracts/KeywordsApiResults";
+import {Keyword} from "@contracts/keyword";
 
-export default function MovieKeywords({movie}) {
+type MovieKeywordsProps = {
+    movie: Movie
+}
+export default function MovieKeywords({movie}: MovieKeywordsProps) {
 
-    const [keywords, setKeywords] = useState([])
-    const [loading, setLoading] = useState(false);
+    const [keywords, setKeywords] = useState<Keyword[]>([])
+    const [loading, setLoading] = useState<boolean>(false);
 
     //on load, fetch the associated keywords for the movie
     useEffect(() => {
 
         (async () => {
-
             setLoading(true);
 
             const result = await fetch('/api/get', {
                 method: 'GET',
                 headers: {
                     'x-action': 'get-movie-keywords',
-                    'movie-id': movie.id
+                    'movie-id': movie.id.toString()
                 }
             });
 
@@ -26,11 +31,9 @@ export default function MovieKeywords({movie}) {
                 return;
             }
 
-            let data = await result.json();
-            setKeywords(data?.keywords ?? []);
+            let data: KeywordsApiResults = await result.json();
+            setKeywords(data.keywords);
             setLoading(false);
-
-
         })();
 
     }, [movie]);
@@ -65,10 +68,6 @@ export default function MovieKeywords({movie}) {
                     }
                 </div>
             </section>
-
-
         )
     }
-
-
 }

@@ -1,16 +1,21 @@
 import {useEffect, useState} from "react";
-import ActorProfile from "@components/actorProfile/actorProfile.jsx";
-import LoadingCardList from "@components/loading-card-list.tsx";
+import ActorProfile from "@components/actorProfile/actorProfile";
+import LoadingCardList from "@components/loading-card-list";
+import {Movie} from "@contracts/movie";
+import {Actor} from "@contracts/actor";
 
 /**
  * Gets a list of the movie actors for display for an associated movie
  * @param movie
  * @returns {JSX.Element}
  */
-export default function movieActors({movie}) {
+type MovieActorsProps = {
+    movie: Movie
+}
+export default function movieActors({movie}: MovieActorsProps) {
 
-    const [loading, setLoading] = useState(false);
-    const [actors, setActors] = useState([])
+    const [loading, setLoading] = useState<boolean>(false);
+    const [actors, setActors] = useState<Actor[]>([])
 
     //get information about the actors
     useEffect(() => {
@@ -23,7 +28,7 @@ export default function movieActors({movie}) {
                 const response = await fetch(apiUrl, {
                     headers: {
                         'x-action': 'get-movie-credits',
-                        'movie-id': movie.id
+                        'movie-id': movie.id.toString()
                     }
                 });
                 if (!response.ok) {
@@ -33,20 +38,21 @@ export default function movieActors({movie}) {
 
                 //collect useful information about actors and return
                 const json = await response.json();
+                const cast: Actor[] | [] = json.cast;
 
-                const sortedCast = [...json.cast].sort((a, b) => {
+                const sortedCast = cast.sort((a, b) => {
                     return b.popularity - a.popularity;
                 })
 
                 setActors(sortedCast.slice(0, 5));
             } catch (error) {
-                console.error('Fetch error:', error.message);
+                console.error('Fetch error:', (error as Error).message);
             }
 
             setLoading(false);
 
         }
-        getActorInformation();
+        void getActorInformation();
 
     }, [movie.id]);
 

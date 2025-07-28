@@ -1,5 +1,5 @@
 import Utilities from "../../../utilities";
-import SinglePersonSocialLinks from "@components/Pages/SinglePerson/SinglePersonSocialLinks.jsx";
+import SinglePersonSocialLinks from "@components/Pages/SinglePerson/SinglePersonSocialLinks";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 import {faMapPin, faBirthdayCake, faCamera, faClapperboard} from "@fortawesome/free-solid-svg-icons";

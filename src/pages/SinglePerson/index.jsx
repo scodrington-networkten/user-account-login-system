@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 
 import SinglePersonMovies from "@components/Pages/SinglePerson/SinglePersonMovies.jsx";
-import SinglePersonDetails from "@components/Pages/SinglePerson/SinglePersonDetails.jsx";
+import SinglePersonDetails from "@components/Pages/SinglePerson/SinglePersonDetails.tsx";
 import LoadingCard from "@components/loading-card.tsx";
 import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
@@ -24,6 +24,13 @@ const SinglePerson = () => {
     const [movies, setMovies] = useState(null);
     const [images, setImages] = useState(null);
     const [externalLinks, setExternalLinks] = useState(null)
+
+   // console.log('wooooo');
+   // console.log(person);
+   // console.log(movies);
+   // console.log(images);
+   // console.log(externalLinks);
+
 
     //load information about the single person
     useEffect(() => {

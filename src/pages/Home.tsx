@@ -1,8 +1,8 @@
-import MoviesList from "@components/movies-list.tsx";
+import MoviesList from "@components/movies-list";
 import {useState, useEffect} from "react";
-import LoadingCardList from "@components/loading-card-list.tsx";
-import GenreList from "@components/genre-list.tsx";
-import FeaturedMoviesCarousel from "@components/featured-movies-carousel.jsx";
+import LoadingCardList from "@components/loading-card-list";
+import GenreList from "@components/genre-list";
+import FeaturedMoviesCarousel from "@components/featured-movies-carousel";
 import {Helmet} from "react-helmet";
 import Utilities from "../utilities";
 
@@ -19,7 +19,7 @@ const Home = () => {
                 const result = await fetch('/api/get', {
                     headers: {
                         'x-action': 'get-popular-movies',
-                        'page': 1
+                        'page': "1"
                     }
                 });
                 if (!result.ok) {
@@ -31,12 +31,12 @@ const Home = () => {
                 Utilities.setUpcomingMoviesCache(data.results);
 
             } catch (error) {
-                window.showToastNotification(error.message, 'error');
+                window.showToastNotification((error as Error).message, 'error');
             } finally {
                 setLoading(false);
             }
         }
-        apiCall();
+        void apiCall();
 
     }, []);
 
@@ -72,9 +72,7 @@ const Home = () => {
                         <GenreList/>
                         <MoviesList
                             movies={movies}
-                            onNextButton={null}
-                            onPrevButton={null}
-                            moviesLoading={false}
+                            loading={false}
                             currentPage={1}
                             totalPages={1}
                             showHeader={false}

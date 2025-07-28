@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {useUser} from "@contexts/UserContext.tsx";
+import React, {useState} from "react";
+import {useUser} from "@contexts/UserContext";
 import '../components/forms.css';
 
 const Login = () => {
@@ -9,13 +9,13 @@ const Login = () => {
         password: 'password'
     })
 
-    const {user, login} = useUser();
+    const {login} = useUser();
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null)
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
-    const onFormSubmit = async (e) => {
+    const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
@@ -40,9 +40,9 @@ const Login = () => {
             setSuccessMessage("Successfully logged into your account");
         }
             //catch any errors
-        catch (e) {
-            console.error(e.message);
-            setError(e.message);
+        catch (error) {
+            console.error((error as Error).message);
+            setError((error as Error).message);
             setSuccessMessage(null);
         } finally {
             setLoading(false);
@@ -52,9 +52,8 @@ const Login = () => {
     /**
      * Sync changes to state from form
      * @param e
-     * @returns {Promise<void>}
      */
-    const uploadFormChange = async (e) => {
+    const uploadFormChange = async (e : React.ChangeEvent<HTMLInputElement>) => {
 
         setFormData(prevData => {
             return {

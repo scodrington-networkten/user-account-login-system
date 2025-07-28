@@ -1,22 +1,26 @@
 import {useParams, useSearchParams} from "react-router-dom";
-import GenreList from "@components/genre-list.tsx";
-import MoviesList from "@components/movies-list.tsx";
-import {useEffect, useState} from "react";
+import GenreList from "@components/genre-list";
+import MoviesList from "@components/movies-list";
+import {JSX, useEffect, useState} from "react";
 import _ from 'lodash';
 import slugify from "slugify";
-import LoadingCardList from "@components/loading-card-list.tsx";
+import LoadingCardList from "@components/loading-card-list";
 import Utilities from "../utilities";
 import {Helmet} from "react-helmet";
+import {Genre} from "@contracts/genre";
+import {Movie} from "@contracts/movie";
+import {MovieResult} from "@contracts/movieResult";
+import {MovieApiResults} from "@contracts/MovieApiResults";
 
 const MoviesByGenre = () => {
 
     //extract genre token from the url
-    const {genre} = useParams();
-    const [movies, setMovies] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
-    const [totalResults, setTotalResults] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const {genre = ''} = useParams<string>();
+    const [movies, setMovies] = useState<Movie[] | MovieResult[]>([]);
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [totalResults, setTotalResults] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
 
     //collect search data
     const [searchParams, setSearchParams] = useSearchParams();
@@ -30,7 +34,6 @@ const MoviesByGenre = () => {
         setMovies([]);
         setLoading(true);
     }, [genre])
-
 
     /**
      * Given the genre name (from the url), determine the ID of the genre and then do a search on that
@@ -46,9 +49,9 @@ const MoviesByGenre = () => {
                     headers: {'x-action': 'get-genres'}
                 });
                 const json = await result.json();
-                let allGenres = json.genres;
+                let allGenres: Genre[] = json.genres;
 
-                let matchedGenre = _.find(allGenres, (item) => {
+                let matchedGenre: Genre | undefined = _.find(allGenres, (item) => {
                     let slugifyName = slugify(item.name, {lower: true});
                     return slugifyName === genre;
                 });
@@ -57,12 +60,11 @@ const MoviesByGenre = () => {
                     throw new Error(`A genre called ${genre} could not be found`);
                 }
 
-
                 // Now fetch movies using the matchedGenre.id directly
                 const moviesResult = await fetch('/api/get', {
                     headers: {
-                        'genre-id': matchedGenre.id,
-                        'page': currentPage,
+                        'genre-id': matchedGenre.id.toString(),
+                        'page': currentPage.toString(),
                         'x-action': 'get-movies-by-genre'
                     }
                 });
@@ -72,13 +74,14 @@ const MoviesByGenre = () => {
                     throw new Error(data.error);
                 }
 
-                const data = await moviesResult.json();
+                const data: MovieApiResults = await moviesResult.json();
+
                 setMovies(data.results);
                 setTotalPages(data.total_pages);
                 setTotalResults(data.total_results);
 
             } catch (error) {
-                window.showToastNotification(error.message, 'error');
+                window.showToastNotification((error as Error).message, 'error');
             } finally {
                 setLoading(false);
                 setError(false);
@@ -100,7 +103,7 @@ const MoviesByGenre = () => {
         })
     }
 
-    const onPageButton = (page) => {
+    const onPageButton = (page: number) => {
 
         setSearchParams({
             page: String(page)
@@ -109,9 +112,8 @@ const MoviesByGenre = () => {
 
     /**
      * Show either loading card template or movies if ready
-     * @returns {JSX.Element}
      */
-    const displayMovies = () => {
+    const displayMovies = (): JSX.Element => {
 
         if (loading) {
             return (
@@ -149,7 +151,7 @@ const MoviesByGenre = () => {
                             onNextButton={onNextButton}
                             onPrevButton={onPrevButton}
                             onPagesButton={onPageButton}
-                            moviesLoading={loading}
+                            loading={loading}
                             currentPage={currentPage}
                             totalPages={totalPages}
                             totalResults={totalResults}

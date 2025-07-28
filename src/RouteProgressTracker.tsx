@@ -11,7 +11,7 @@ NProgress.configure({showSpinner: false});
  * @returns {null}
  * @constructor
  */
-const RouteProgressTracker = () => {
+const RouteProgressTracker = (): null => {
 
     const location = useLocation();
 
