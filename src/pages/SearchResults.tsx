@@ -1,10 +1,11 @@
 import {useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import MoviesList from "@components/movies-list.tsx";
+import MoviesList from "@components/movies-list";
 
-import LoadingCardList from "@components/loading-card-list.tsx";
+import LoadingCardList from "@components/loading-card-list";
 import {Helmet} from "react-helmet";
 import Utilities from "../utilities";
+import {MovieResult} from "@contracts/movieResult";
 
 
 const SearchResults = () => {
@@ -12,13 +13,14 @@ const SearchResults = () => {
 
     //search variables
     const [searchParams, setSearchParams] = useSearchParams();
-    const q = searchParams.get("q");
-    const currentPage = parseInt(searchParams.get('page') ?? '1', 10) || 1;
+    const q: string = searchParams.get("q") ?? '';
+    const currentPage: number = parseInt(searchParams.get('page') ?? '1', 10) || 1;
 
-    const [loading, setLoading] = useState(false);
-    const [movies, setMovies] = useState([]);
-    const [totalPages, setTotalPages] = useState(null);
-    const [totalResults, setTotalResults] = useState(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+    const [movies, setMovies] = useState<MovieResult[]>([]);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [totalResults, setTotalResults] = useState<number>(0);
 
 
     useEffect(() => {
@@ -27,11 +29,12 @@ const SearchResults = () => {
 
             try {
                 setLoading(true);
+                setError(false);
                 let response = await fetch('/api/get', {
                     headers: {
                         'x-action': 'get-search',
                         'q': q,
-                        'page': currentPage
+                        'page': currentPage.toString()
                     }
                 });
                 if (!response.ok) {
@@ -47,12 +50,13 @@ const SearchResults = () => {
 
 
             } catch (error) {
-                console.error(error.message);
+                setError(true);
+                console.error((error as Error).message);
             } finally {
                 setLoading(false);
             }
         }
-        getApiData();
+        void getApiData();
 
     }, [searchParams])
 
@@ -71,7 +75,7 @@ const SearchResults = () => {
         })
     }
 
-    const onPageButton = (page) => {
+    const onPageButton = (page: number) => {
 
         setSearchParams({
             q: q,
@@ -89,6 +93,16 @@ const SearchResults = () => {
                         <title>{Utilities.getSiteNameForPage(q)}</title>
                     </Helmet>
                     <LoadingCardList/>
+                </>
+
+            )
+        } else if (error) {
+            return (
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(q)}</title>
+                    </Helmet>
+                    <p>There was an error generating search results</p>
                 </>
 
             )

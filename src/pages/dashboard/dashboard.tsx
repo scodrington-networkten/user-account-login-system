@@ -1,6 +1,6 @@
 
-import UserForm from "@components/dashboard/userForm/userForm.tsx";
-import DashboardLayout from "./dashboardLayout.jsx";
+import UserForm from "@components/dashboard/userForm/userForm";
+import DashboardLayout from "./dashboardLayout";
 
 const Dashboard = () => {
 

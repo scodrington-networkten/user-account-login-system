@@ -4,8 +4,8 @@ import {z} from "zod";
  */
 
 import React, {createContext, useContext, useState, useEffect} from "react";
-import {Genre} from "../types/genre";
-import {GenreSchema, GenreApiResponseSchema} from "../schemas";
+import {Genre} from "@contracts/genre";
+import {GenreApiResponseSchema} from "../schemas";
 
 
 type GenreContextType = {

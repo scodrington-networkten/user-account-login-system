@@ -1,26 +1,29 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import ApiHelper from "../../utils/apihelper.js";
+import Utilities from "../utilities";
+
 
 const Signup = () => {
 
     const [formData, setFormData] = useState({
-        email: `test${ApiHelper.generateRandomString(5)}@gmail.com`,
+        email: `test${Utilities.generateRandomString(5)}@gmail.com`,
         username: 'someguy',
         password: 'password'
     })
 
     const navigate = useNavigate();
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null)
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+    const [successMessage, setSuccessMessage] = useState<string>('')
 
-    const onFormSubmit = async (e) => {
+    const onFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
 
         try {
+            setLoading(true);
+            setError(false);
+
             const response = await fetch('/api/user-signup', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -34,18 +37,16 @@ const Signup = () => {
             //collect the jwt from the payload and put it in sessions
             sessionStorage.setItem('jwt', data.token);
 
-            setError(null);
             setSuccessMessage(data.message);
-            //console.log(data);
             navigate('/dashboard');
         }
             //catch the error and set it to our local state variable
-        catch (e) {
-            setError(e.message);
-            setSuccessMessage(null);
+        catch (error) {
+            setError(true);
+            setSuccessMessage('');
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     }
 
     /**
@@ -53,7 +54,7 @@ const Signup = () => {
      * @param e
      * @returns {Promise<void>}
      */
-    const uploadFormChange = async (e) => {
+    const uploadFormChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
         setFormData(prevData => {
             return {
@@ -64,10 +65,13 @@ const Signup = () => {
 
     return (
         <div className="signup-form">
-            {setSuccessMessage !== null &&
+            {successMessage !== '' &&
                 <p>{successMessage}</p>
             }
-            {error !== null &&
+            {loading &&
+                <p>Loading...</p>
+            }
+            {error &&
                 <p>There was an error creating your account: {error}</p>
             }
             <form id="signup" onSubmit={onFormSubmit} className="border container m-auto">

@@ -1,4 +1,4 @@
-import DashboardLayout from "./dashboardLayout.jsx";
+import DashboardLayout from "./dashboardLayout";
 
 const WatchLater = () => {
 

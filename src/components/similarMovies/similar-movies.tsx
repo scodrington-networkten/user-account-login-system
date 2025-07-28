@@ -1,7 +1,6 @@
-import {useEffect, useState} from "react";
-import MoviesList from "@components/movies-list.tsx";
-import StandardSlider from "@components/standardSlider/standardSlider.tsx";
-import sampleData from "../../sampleData.js";
+import {JSX, useEffect, useState} from "react";
+import StandardSlider from "@components/standardSlider/standardSlider";
+import {Movie} from "@contracts/movie";
 
 /**
  * Given a movie, find similar movies to this one for the user
@@ -9,7 +8,10 @@ import sampleData from "../../sampleData.js";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function SimilarMovies({movie}) {
+type SimilarMoviesProps = {
+    movie: Movie
+}
+export default function SimilarMovies({movie}: SimilarMoviesProps): JSX.Element | null {
 
     const [loading, setLoading] = useState(false);
     const [movies, setMovies] = useState([]);
@@ -24,7 +26,7 @@ export default function SimilarMovies({movie}) {
                 method: 'GET',
                 headers: {
                     'x-action': 'get-related-movies',
-                    'movie-id': movie.id
+                    'movie-id': movie.id.toString()
                 }
             });
 
@@ -36,7 +38,6 @@ export default function SimilarMovies({movie}) {
             const movieSubset = (data.results.length > 0) ? data.results.splice(0, 10) : [];
             setLoading(false);
             setMovies(movieSubset);
-            //console.log(data);
 
         })()
     }, [movie]);

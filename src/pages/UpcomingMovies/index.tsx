@@ -1,17 +1,20 @@
-import LoadingCard from "@components/loading-card.tsx";
-import {useEffect, useState} from "react";
-import MoviesList from "@components/movies-list.tsx";
-
-import StandardLayout from "@components/Layouts/StandardLayout.tsx";
+import LoadingCard from "@components/loading-card";
+import {JSX, useEffect, useState} from "react";
+import MoviesList from "@components/movies-list";
+import StandardLayout from "@components/Layouts/StandardLayout";
 import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
+import {MovieResult} from "@contracts/movieResult";
 
-const LatestMovies = () => {
+/**
+ * Shows upcoming movies (mostly new releases)
+ * @constructor
+ */
+const UpcomingMovies = (): JSX.Element => {
 
-    const [loading, setLoading] = useState(false);
-    const [movies, setMovies] = useState([]);
-    const [error, setError] = useState(false);
-
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+    const [movies, setMovies] = useState<MovieResult[]>([]);
 
     /**
      * Fetch the latest movies upcoming
@@ -26,8 +29,7 @@ const LatestMovies = () => {
 
                 const result = await fetch('/api/get', {
                     headers: {
-                        'x-action': 'get-latest-movies',
-                        'page': 1
+                        'x-action': 'get-upcoming-movies'
                     }
                 })
                 if (!result.ok) {
@@ -41,8 +43,7 @@ const LatestMovies = () => {
 
             } catch (error) {
                 setError(true);
-                window.showToastNotification(error.message, 'error');
-                console.error(error);
+                window.showToastNotification((error as Error).message, 'error');
             } finally {
                 setLoading(false);
             }
@@ -55,7 +56,7 @@ const LatestMovies = () => {
             return (
                 <>
                     <Helmet>
-                        <title>{Utilities.getSiteNameForPage('Latest')}</title>
+                        <title>{Utilities.getSiteNameForPage('Upcoming')}</title>
                     </Helmet>
                     <LoadingCard/>
                 </>
@@ -71,20 +72,19 @@ const LatestMovies = () => {
 
         if (movies.length === 0) {
             return (
-                <p>There are no latest movies to show!</p>
+                <p>There are no upcoming movies to show!</p>
             )
         }
 
         return (
             <>
                 <Helmet>
-                    <title>{Utilities.getSiteNameForPage('Latest')}</title>
+                    <title>{Utilities.getSiteNameForPage('Upcoming')}</title>
                 </Helmet>
                 <MoviesList
                     movies={movies}
                     showPagination={false}
-                    showHeader={false}
-                    totalPages={1}
+                    showHeader={false} totalPages={1}
                 />
             </>
 
@@ -93,10 +93,10 @@ const LatestMovies = () => {
 
     //return the layout
     return (
-        <StandardLayout title={"Latest Movies"}>
+        <StandardLayout title={"Upcoming Movies"}>
             {Render()}
         </StandardLayout>
     )
 
 }
-export default LatestMovies;
+export default UpcomingMovies;

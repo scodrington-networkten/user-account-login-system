@@ -1,34 +1,19 @@
 import Utilities from "../../utilities";
-import GenreButton from "../genre-button.tsx";
-import {useEffect, useState} from "react";
+import GenreButton from "../genre-button";
+import {JSX, useEffect, useState} from "react";
 
 import './single-movie.css';
-import ReviewCards from "@components/reviews/reviewCards/reviewCards.tsx";
+import ReviewCards from "@components/reviews/reviewCards/reviewCards";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import SimilarMovies from "@components/similarMovies/similar-movies.jsx";
+import SimilarMovies from "@components/similarMovies/similar-movies";
 import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 
-import MovieActors from "@components/actorProfile/movie-actors.tsx";
-import MovieKeywords from "@components/movieKeywords/movie-keywords.tsx";
+import MovieActors from "@components/actorProfile/movie-actors";
+import MovieKeywords from "@components/movieKeywords/movie-keywords";
 
 import {Helmet} from "react-helmet";
-import CollectionDetails from "@components/collections/collectionDetails.tsx";
-
-/**
- * @typedef {Object} MovieDetails
- * @property {boolean} adult
- * @property {string} backdrop_path
- * @property {{id: number, name: string}[]} genres
- * @property {{id: number, logo_path: string, name: string, origin_country: string}[]} production_companies
- * @property {int} revenue
- * @property {int} budget
- * @property {string} status
- * @property {string} tagline
- * @property {string} title
- * @property {int} runtime
- * @property {string} homepage
- * @property {{english_name: string, iso_639_1: string, name: string}[]} spoken_languages
- */
+import CollectionDetails from "@components/collections/collectionDetails";
+import {Movie} from "@contracts/movie";
 
 
 /**
@@ -37,15 +22,14 @@ import CollectionDetails from "@components/collections/collectionDetails.tsx";
  * @returns {JSX.Element}
  * @constructor
  */
-const SingleMovie = ({movie}) => {
+type SingleMovieProps = {
+    movie: Movie
+}
+const SingleMovie = ({movie}: SingleMovieProps): JSX.Element => {
 
-    const [actors, setActors] = useState(null);
+    const getProductionCompanies = (): JSX.Element | null => {
 
-
-    const getProductionCompanies = () => {
-
-        if (!movie) return null;
-
+        if (!movie || !movie.production_companies) return null;
         if (movie.production_companies.length === 0) {
 
             return (
@@ -124,7 +108,9 @@ const SingleMovie = ({movie}) => {
                 <div className="container">
                     <section className="bottom-section">
                         <ReviewCards movie={movie}/>
-                        <CollectionDetails id={movie?.belongs_to_collection?.id}/>
+                        {movie.belongs_to_collection &&
+                            <CollectionDetails id={movie.belongs_to_collection.id}/>
+                        }
                         <SimilarMovies movie={movie}/>
                         <MovieKeywords movie={movie}/>
                         {getProductionCompanies()}
@@ -142,13 +128,3 @@ const SingleMovie = ({movie}) => {
     )
 }
 export default SingleMovie
-
-/**
- *
- *
- *
- *
- *
- *
- *
- */

@@ -1,9 +1,7 @@
-import {useState, useEffect, useCallback} from "react";
-import CarouselCard from "./carouselCard/carousel-card.tsx";
+import {useState, useEffect, useCallback, JSX} from "react";
+import CarouselCard from "./carouselCard/carousel-card";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-
-import sampleData from "../sampleData.js";
 import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
 import {faAngleRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -11,28 +9,30 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import './latest-movies.css';
 
 import _ from "lodash";
+import {MovieResult} from "@contracts/movieResult";
+import {MovieApiResults} from "@contracts/MovieApiResults";
+import {Movie} from "@contracts/movie";
 
 /**
  * Shows a featured movies carousel hero component
- * @returns {JSX.Element}
  * @constructor
  */
-const FeaturedMoviesCarousel = () => {
+const FeaturedMoviesCarousel = (): JSX.Element => {
 
-    const [movies, setMovies] = useState([]);
-    const [moviesLoading, setMoviesLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [movies, setMovies] = useState<MovieResult[]>([]);
+    const [moviesLoading, setMoviesLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
 
     //slider elements here
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {loop: true},
         [Autoplay({
-            delay: 10000,
+            delay: 3000,
             stopOnInteraction: true
         })]
     )
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [scrollSnaps, setScrollSnaps] = useState([]);
+    const [scrollSnaps, setScrollSnaps] = useState<Number[]>([]);
 
     const onSelect = useCallback(() => {
         if (!emblaApi) return;
@@ -41,9 +41,8 @@ const FeaturedMoviesCarousel = () => {
 
     /**
      * Scroll to the given index
-     * @type {(function(*): void)|*}
      */
-    const scrollTo = useCallback((index) => {
+    const scrollTo = useCallback((index: number): void => {
 
         if (!emblaApi) return;
         emblaApi.scrollTo(index);
@@ -64,6 +63,7 @@ const FeaturedMoviesCarousel = () => {
         const callApi = async () => {
 
             try {
+                setError(false);
                 setMoviesLoading(true);
                 const request = await fetch('/api/get', {
                     headers: {
@@ -73,17 +73,18 @@ const FeaturedMoviesCarousel = () => {
                 if (!request.ok) {
                     throw new Error("Could not connect to the feed of now playing movies")
                 } else {
-                    const data = await request.json();
-                    const subset = _.take(data.results, 5);
+                    const data: MovieApiResults = await request.json();
+                    const subset = _.take(data.results as MovieResult[], 5);
                     setMovies(subset);
                 }
             } catch (error) {
-                window.showToastNotification(error.message, 'error');
+                setError(true);
+                window.showToastNotification((error as Error).message, 'error');
             } finally {
                 setMoviesLoading(false);
             }
         }
-        callApi();
+        void callApi();
 
     }, []);
 

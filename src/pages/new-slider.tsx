@@ -1,7 +1,6 @@
 
-import MovieCard from "@components/movieCard/movie-card.tsx";
-import StandardSlider from "@components/standardSlider/standardSlider.tsx";
-import {useEffect, useState} from "react";
+import StandardSlider from "@components/standardSlider/standardSlider";
+// @ts-ignore
 import SampleData from "../sampleData.js";
 
 const NewSlider = () => {

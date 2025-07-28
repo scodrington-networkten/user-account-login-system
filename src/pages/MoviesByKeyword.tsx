@@ -1,23 +1,25 @@
 import {useParams, useSearchParams} from "react-router-dom";
-import MoviesList from "@components/movies-list.tsx";
-import {useEffect, useState} from "react";
-import LoadingCardList from "@components/loading-card-list.tsx";
+import MoviesList from "@components/movies-list";
+import {JSX, useEffect, useState} from "react";
+import LoadingCardList from "@components/loading-card-list";
 import {Helmet} from "react-helmet";
 import Utilities from "../utilities";
+import {MovieResult} from "@contracts/movieResult";
+import {Keyword} from "@contracts/keyword";
 
 /**
  * Display movies associated with the provided keyword
  * @returns {JSX.Element}
  * @constructor
  */
-const MoviesByKeyword = () => {
+const MoviesByKeyword = () : JSX.Element => {
 
-    const {keyword: keywordString} = useParams();
-    const [movies, setMovies] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(true);
-
-    const [keyword, setKeyword] = useState(null);
+    const {keyword: keywordString = ''} = useParams();
+    const [movies, setMovies] = useState<MovieResult[]>([]);
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+    const [keyword, setKeyword] = useState<Keyword | null>(null);
 
     //collect search data
     const [searchParams, setSearchParams] = useSearchParams();
@@ -33,6 +35,7 @@ const MoviesByKeyword = () => {
 
             try {
                 setLoading(true);
+                setError(false);
 
                 //find the keyword from the API
                 const keywordResult = await fetch('/api/get', {
@@ -59,8 +62,8 @@ const MoviesByKeyword = () => {
                 const moviesRequest = await fetch('/api/get', {
                     headers: {
                         'x-action': 'get-movies-by-keyword',
-                        'keyword-id': matchedKeyword.id,
-                        'page': currentPage
+                        'keyword-id': matchedKeyword.id.toString(),
+                        'page': currentPage.toString()
                     }
                 })
 
@@ -72,8 +75,9 @@ const MoviesByKeyword = () => {
                 setMovies(movieData.results);
                 setTotalPages(movieData.total_pages);
             } catch (error) {
-                window.showToastNotification(error.message, 'error');
-                console.error(error.message);
+                setError(true);
+                window.showToastNotification((error as Error).message, 'error');
+                console.error((error as Error).message);
             } finally {
                 setLoading(false);
             }
@@ -96,7 +100,7 @@ const MoviesByKeyword = () => {
         })
     }
 
-    const onPageButton = (page) => {
+    const onPageButton = (page: number) : void => {
 
         setSearchParams({
             page: String(page)
@@ -105,9 +109,8 @@ const MoviesByKeyword = () => {
 
     /**
      * Show either loading card template or movies if ready
-     * @returns {JSX.Element}
      */
-    const displayMovies = () => {
+    const displayMovies = () : JSX.Element => {
 
         const keywordName = keyword ? keyword.name : '';
 
@@ -123,6 +126,17 @@ const MoviesByKeyword = () => {
                 </>
             )
 
+        } else if (error) {
+            return (
+                <>
+                    <Helmet>
+                        <title>{Utilities.getSiteNameForPage(keywordName)}</title>
+                    </Helmet>
+                    <div className="container">
+                        <p>There was an error finding movies that match your selected keyword</p>
+                    </div>
+                </>
+            )
         } else {
             return (
                 <>
@@ -136,7 +150,7 @@ const MoviesByKeyword = () => {
                             onNextButton={onNextButton}
                             onPrevButton={onPrevButton}
                             onPagesButton={onPageButton}
-                            moviesLoading={loading}
+                            loading={loading}
                             currentPage={currentPage}
                             totalPages={totalPages}
                             showHeader={false}

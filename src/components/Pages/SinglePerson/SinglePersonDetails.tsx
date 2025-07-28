@@ -9,7 +9,6 @@ import {Image} from "@contracts/Image";
 import {MovieResult} from "@contracts/movieResult";
 import {ExternalIds} from "@contracts/externalIds";
 import {JSX} from "react";
-import {MatchKeysAndValues} from "typeorm";
 
 type SinglePersonDetailsProps = {
     details: Person,

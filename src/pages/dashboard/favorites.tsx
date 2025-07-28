@@ -1,5 +1,5 @@
-import DashboardLayout from "./dashboardLayout.jsx";
-import FavoriteList from "@components/favoritesList/favoriteList.tsx";
+import DashboardLayout from "./dashboardLayout";
+import FavoriteList from "@components/favoritesList/favoriteList";
 
 const Favorites = () => {
 

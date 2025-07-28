@@ -10,6 +10,12 @@ import {SpokenLanguage} from "@contracts/spoken-language";
 export type Movie = {
     title: string,
     backdrop_path: string,
+    belongs_to_collection: {
+        id: number,
+        name: string,
+        poster_path?: string,
+        backdrop_path?: string
+    },
     budget: number,
     genres: Genre[],
     id: number,

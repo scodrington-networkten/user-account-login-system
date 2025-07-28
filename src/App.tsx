@@ -1,7 +1,7 @@
 import './App.css'
 import './tailwind.css';
-import SingleMoviePage from "./pages/SingleMoviePage.jsx";
-import SearchResults from "./pages/SearchResults.jsx";
+import SingleMoviePage from "./pages/SingleMoviePage";
+import SearchResults from "./pages/SearchResults";
 
 //font family imports for inter
 import '@fontsource/inter';
@@ -18,38 +18,35 @@ import '@fontsource/inter/700-italic.css';
 
 
 import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
-
 import Home from "./pages/Home";
 import MoviesByGenre from "./pages/MoviesByGenre";
-
 import AppLayout from "./AppLayout.js";
-
 import {GenreProvider} from "@contexts/GenreContext";
-
 import RouteProgressTracker from "./RouteProgressTracker";
 
-import Signup from "./pages/signup.jsx";
+import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Logout from "./pages/logout";
-import {UserProvider} from "./contexts/UserContext";
-import UserExpiredPopup from "./components/userExpiredPopup/user-expired-popup.jsx";
+import {UserProvider} from "@contexts/UserContext";
+import UserExpiredPopup from "@components/userExpiredPopup/user-expired-popup";
 
 //user dashboard pages
-import Dashboard from "./pages/dashboard/dashboard.jsx";
-import WatchLater from "./pages/dashboard/watchLater.jsx";
-import Favorites from "./pages/dashboard/favorites.jsx";
-import ToastNotification from "@components/toastNotiification/toastNotification.jsx";
-import MoviesByKeyword from "./pages/MoviesByKeyword..jsx";
-import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
+import Dashboard from "./pages/dashboard/dashboard";
+import WatchLater from "./pages/dashboard/watchLater";
+import Favorites from "./pages/dashboard/favorites";
+import ToastNotification from "@components/toastNotiification/toastNotification";
+import MoviesByKeyword from "./pages/MoviesByKeyword";
+import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel";
 
+// @ts-ignore
 import SampleData from "./sampleData.js";
-import Test from "./pages/test.jsx";
+import Test from "./pages/test";
 import SinglePerson from "./pages/SinglePerson";
-import UpcomingMovies from "./pages/UpcomingMovies/Index.jsx";
-import PopularMovies from "./pages/PopularMovies/index.jsx";
-import LatestMovies from "./pages/LatestMovies/index.jsx";
+import UpcomingMovies from "./pages/UpcomingMovies";
+import PopularMovies from "./pages/PopularMovies";
+import LatestMovies from "./pages/LatestMovies";
 import {SharedStateProvider} from "@contexts/SharedStateConext.jsx";
-import NewSlider from "./pages/new-slider.jsx";
+import NewSlider from "./pages/new-slider";
 import NotFound from "./pages/NotFound";
 
 function App() {

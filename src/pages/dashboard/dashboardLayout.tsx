@@ -1,7 +1,11 @@
-import UserActionsSidebar from "@components/sidebar/userActionsSidebar.tsx";
+import UserActionsSidebar from "@components/sidebar/userActionsSidebar";
+import React from "react";
 
 
-const DashboardLayout = ({children, title = 'Page title '}) => {
+type DashboardLayoutProps = React.PropsWithChildren<{
+    title: string
+}>
+const DashboardLayout = ({children, title = 'Page title '} : DashboardLayoutProps) => {
 
     return (
         <div className="container mx-auto mt-2 mb-2 px-2">

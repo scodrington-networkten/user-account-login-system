@@ -1,7 +1,8 @@
 import './user-expired-popup.css';
 import {useNavigate} from "react-router-dom";
 
-import {useUser} from "@contexts/UserContext.tsx";
+import {useUser} from "@contexts/UserContext";
+import React, {JSX} from "react";
 
 /**
  * popup that shows a signin modal, when pressed redirects back to login and updtes user state to ensure
@@ -9,14 +10,14 @@ import {useUser} from "@contexts/UserContext.tsx";
  * @returns {JSX.Element|null}
  * @constructor
  */
-const UserExpiredPopup = () => {
+const UserExpiredPopup = () : JSX.Element | null => {
 
     const {userExpired, setUserExpired} = useUser();
     const navigate = useNavigate();
 
 
     //redirect user to the login page and reset
-    const onLoginButtonPress = (e) => {
+    const onLoginButtonPress = (e : React.MouseEvent<HTMLElement>) => {
         setUserExpired(false);
         navigate("/login");
     }

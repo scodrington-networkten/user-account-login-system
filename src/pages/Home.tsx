@@ -1,5 +1,5 @@
 import MoviesList from "@components/movies-list";
-import {useState, useEffect} from "react";
+import {useState, useEffect, JSX} from "react";
 import LoadingCardList from "@components/loading-card-list";
 import GenreList from "@components/genre-list";
 import FeaturedMoviesCarousel from "@components/featured-movies-carousel";
@@ -13,7 +13,7 @@ const Home = () => {
 
     //on page load, ensure we load popular data
     useEffect(() => {
-        const apiCall = async () => {
+        const apiCall = async ()   => {
 
             try {
                 const result = await fetch('/api/get', {
@@ -44,9 +44,8 @@ const Home = () => {
 
     /**
      * Display either loading list or the movie content when loaded
-     * @returns {JSX.Element}
      */
-    const displayHome = () => {
+    const displayHome = (): JSX.Element => {
 
         if (loading) {
             return (

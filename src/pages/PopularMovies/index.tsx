@@ -1,16 +1,18 @@
-import LoadingCard from "@components/loading-card.tsx";
-import {useEffect, useState} from "react";
-import MoviesList from "@components/movies-list.tsx";
+import LoadingCard from "@components/loading-card";
+import {JSX, useEffect, useState} from "react";
+import MoviesList from "@components/movies-list";
 
-import StandardLayout from "@components/Layouts/StandardLayout.tsx";
+import StandardLayout from "@components/Layouts/StandardLayout";
 import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
+import {MovieResult} from "@contracts/movieResult";
+import {MovieApiResults} from "@contracts/MovieApiResults";
 
-const PopularMovies = () => {
+const PopularMovies = (): JSX.Element => {
 
-    const [loading, setLoading] = useState(false);
-    const [movies, setMovies] = useState([]);
-    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+    const [movies, setMovies] = useState<MovieResult[]>([]);
 
 
     /**
@@ -27,7 +29,7 @@ const PopularMovies = () => {
                 const result = await fetch('/api/get', {
                     headers: {
                         'x-action': 'get-popular-movies',
-                        'page': 1
+                        'page': '1'
                     }
                 })
                 if (!result.ok) {
@@ -36,12 +38,12 @@ const PopularMovies = () => {
                 }
 
                 //set latest from API
-                const data = await result.json();
-                setMovies(data.results);
+                const data: MovieApiResults = await result.json();
+                setMovies(data.results as MovieResult[]);
 
             } catch (error) {
                 setError(true);
-                window.showToastNotification(error.message, 'error');
+                window.showToastNotification((error as Error).message, 'error');
                 console.error(error);
             } finally {
                 setLoading(false);
@@ -49,7 +51,7 @@ const PopularMovies = () => {
         })();
     }, []);
 
-    const Render = () => {
+    const Render = (): JSX.Element => {
 
         if (loading) {
             return (

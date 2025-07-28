@@ -1,9 +1,10 @@
 import {useEffect, useRef, useState} from "react";
-import MovieCard from "@components/movieCard/movie-card.tsx";
+import MovieCard from "@components/movieCard/movie-card";
 import useEmblaCarousel from "embla-carousel-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faAngleRight} from "@fortawesome/free-solid-svg-icons";
 import './dynamic-carousel.css';
+import {MovieResult} from "@contracts/movieResult";
 
 
 /**
@@ -11,25 +12,28 @@ import './dynamic-carousel.css';
  * @returns {JSX.Element}
  * @constructor
  */
-const DynamicCarousel = ({movies}) => {
+type DynamicCarouselProps = {
+    movies: MovieResult[]
+}
+const DynamicCarousel = ({movies}: DynamicCarouselProps) => {
 
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const [scrollSnaps, setScrollSnaps] = useState([]);
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
+    const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
     const isDragging = useRef(false);
 
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
-            speed: 5,
+            duration: 5,
             slides: '.embla__slide'
         }
     )
 
-    const prevButton = () => {
+    const prevButton = (): void => {
         emblaApi?.scrollPrev();
     }
 
-    const nextButton = () => {
+    const nextButton = (): void => {
         emblaApi?.scrollNext();
     }
 
@@ -37,7 +41,7 @@ const DynamicCarousel = ({movies}) => {
      * On select
      * @param index
      */
-    const onSelect = (index) => {
+    const onSelect = (index: number): void => {
 
         if (!emblaApi) return;
         //dont scroll to self
@@ -52,16 +56,11 @@ const DynamicCarousel = ({movies}) => {
             isDragging.current = false;
         });
 
-        emblaApi.on('pointerMove', () => {
-            isDragging.current = true;
-        });
-
         emblaApi.on('pointerUp', () => {
             setTimeout(() => {
                 isDragging.current = false;
             }, 0);
         });
-
 
         //collect scroll snaps
         setScrollSnaps(emblaApi.scrollSnapList());
@@ -74,12 +73,13 @@ const DynamicCarousel = ({movies}) => {
             const index = emblaApi.selectedScrollSnap();
             setSelectedIndex(index);
 
-            const slides = emblaApi.slideNodes()
+            const slides: HTMLElement[] = emblaApi.slideNodes()
             slides.forEach((item, i) => {
 
                 //get current slide so we can adjust classes on article
                 const currentSlide = slides[i];
                 const article = currentSlide.querySelector('article');
+                if (!article) return;
 
                 //active element
                 if (index === i) {
@@ -164,7 +164,6 @@ const DynamicCarousel = ({movies}) => {
                     ))}
                 </div>
             </div>
-            <p>content after </p>
         </div>
     )
 }
