@@ -1,18 +1,15 @@
 import React, {JSX} from "react";
-import {useContext} from "react";
-import {GenreContext, useGenre} from "../contexts/GenreContext";
+import {useGenre} from "@contexts/GenreContext";
 import useEmblaCarousel from "embla-carousel-react";
-
-import slugify from "slugify";
 import Utilities from "../utilities";
-import {Genre} from "../types/genre";
+import {Genre} from "@contracts/genre";
 
 /**
  * Shows a list of genres, used for users to select a genre to see movies
  */
 const GenreList = () => {
 
-    const {genres} = useGenre();
+    const {genres} = useGenre() as { genres: Genre[] };
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: false,

@@ -4,17 +4,32 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar} from "@fortawesome/free-regular-svg-icons";
 import {faMapPin, faBirthdayCake, faCamera, faClapperboard} from "@fortawesome/free-solid-svg-icons";
 
-const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
+import {Person} from "@contracts/Person";
+import {Image} from "@contracts/Image";
+import {MovieResult} from "@contracts/movieResult";
+import {ExternalIds} from "@contracts/externalIds";
+import {JSX} from "react";
+import {MatchKeysAndValues} from "typeorm";
+
+type SinglePersonDetailsProps = {
+    details: Person,
+    images: Image[],
+    movies: {
+        cast: MovieResult[],
+        crew: MovieResult[]
+    },
+    externalLinks: ExternalIds
+}
+const SinglePersonDetails = ({details, images, movies, externalLinks}: SinglePersonDetailsProps): JSX.Element => {
 
     /**
      * Returns multiple images of the person, these are alternative images
-     * @returns {JSX.Element}
      */
     const getProfileImages = () => {
         return (
             <div className="profile-images grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 mt-4 w-full">
-                {images?.profiles?.map((item, index) => {
-                    const url = Utilities.getApiImageUrl(item.file_path ?? null, {type: 'profile',size:  'w185'});
+                {images.map((item, index) => {
+                    const url = Utilities.getApiImageUrl(item.file_path ?? null, {type: 'profile', size: 'w185'});
                     return <img
                         key={`profile-image-${index}`}
                         className="w-full"
@@ -28,7 +43,7 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}) => {
 
     return (
         <article className="details items-start block">
-            <h1 className="text-2xl lg:text-5xl mb-2 mb-4">{details.name}</h1>
+            <h1 className="text-2xl lg:text-5xl mb-4">{details.name}</h1>
             <aside className="main-profile-image col-span-2 float-left mr-4">
                 <img
                     alt={`Photo of ${details.name}`}

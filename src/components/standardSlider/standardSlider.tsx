@@ -1,21 +1,26 @@
-import {useCallback, useEffect, useState, useRef} from "react";
-import MovieCard from "@components/movieCard/movie-card.tsx";
+import {useCallback, useEffect, useState, useRef, JSX} from "react";
+import MovieCard from "@components/movieCard/movie-card";
 import './standard-slider.css';
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faAngleRight} from "@fortawesome/free-solid-svg-icons";
+import {MovieResult} from "@contracts/movieResult";
 
-const StandardSlider = ({data, header = ''}) => {
+type StandardSlider = {
+    data: MovieResult[],
+    header: string
+}
+const StandardSlider = ({data, header = ''}: StandardSlider): JSX.Element => {
 
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const [scrollSnaps, setScrollSnaps] = useState([]);
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
+    const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
     //slider elements here
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
-            speed: 5,
+            duration: 5,
             slides: '.embla__slide'
         },
         [Autoplay({
@@ -24,8 +29,7 @@ const StandardSlider = ({data, header = ''}) => {
         })]
     )
 
-    const containerRef = useRef(null);
-
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     const prevButton = () => {
         emblaApi?.scrollPrev();
@@ -61,8 +65,6 @@ const StandardSlider = ({data, header = ''}) => {
                 resizeObserver.disconnect();
             }
         }
-
-
     }, [emblaApi, onSelect]);
 
 
@@ -72,7 +74,7 @@ const StandardSlider = ({data, header = ''}) => {
         )
     }
 
-    const getOutput = () => {
+    const getOutput = (): JSX.Element => {
 
         return (
             <section className="standard-slider ">
@@ -106,23 +108,23 @@ const StandardSlider = ({data, header = ''}) => {
                                 icon={faAngleRight}/></div>
                     </div>
                 </div>
-                <div className="embla__dots">
-                    <div className="embla__dots_inner">
-                        {scrollSnaps.map((item, index) => (
-                            <button
-                                key={index}
-                                className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
-                                onClick={() => emblaApi.scrollTo(index)}
-                            />
-                        ))}
+
+                {emblaApi &&
+                    <div className="embla__dots">
+                        <div className="embla__dots_inner">
+                            {scrollSnaps.map((item, index) => (
+                                <button
+                                    key={index}
+                                    className={`embla__dot ${index === selectedIndex ? 'is-selected' : ''}`}
+                                    onClick={() => emblaApi.scrollTo(index)}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
-
-
+                }
             </section>
         )
     }
-
 
     return (
         getOutput()

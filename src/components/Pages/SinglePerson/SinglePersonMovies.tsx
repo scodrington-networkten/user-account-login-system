@@ -1,11 +1,17 @@
-import MovieCard from "@components/movieCard/movie-card.tsx";
-import {useEffect, useState} from "react";
-import StandardSlider from "@components/standardSlider/standardSlider.jsx";
+import {JSX, useEffect, useState} from "react";
+import StandardSlider from "@components/standardSlider/standardSlider";
+import {MovieResult} from "@contracts/movieResult";
 
-const SinglePersonMovies = ({movies = []}) => {
+type SinglePersonMoviesProps = {
+    movies: {
+        cast: MovieResult[],
+        crew: MovieResult[]
+    }
+}
+const SinglePersonMovies = ({movies}: SinglePersonMoviesProps): JSX.Element | null => {
 
-    const [recentMoves, setRecentMovies] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [recentMoves, setRecentMovies] = useState<MovieResult[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         setLoading(true);
@@ -22,7 +28,7 @@ const SinglePersonMovies = ({movies = []}) => {
     }, [movies]);
 
     if (loading) {
-        return;
+        return null;
     }
 
     return (

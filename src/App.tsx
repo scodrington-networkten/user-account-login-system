@@ -44,7 +44,7 @@ import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel.jsx";
 
 import SampleData from "./sampleData.js";
 import Test from "./pages/test.jsx";
-import SinglePerson from "./pages/SinglePerson/index.jsx";
+import SinglePerson from "./pages/SinglePerson";
 import UpcomingMovies from "./pages/UpcomingMovies/Index.jsx";
 import PopularMovies from "./pages/PopularMovies/index.jsx";
 import LatestMovies from "./pages/LatestMovies/index.jsx";
