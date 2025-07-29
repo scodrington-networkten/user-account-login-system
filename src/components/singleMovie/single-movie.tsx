@@ -34,14 +34,14 @@ const SingleMovie = ({movie}: SingleMovieProps): JSX.Element => {
 
             return (
                 <div className="production-companies-section mt-4">
-                    <h3 className="">Production Companies</h3>
+                    <h3 className="section-title">Production Companies</h3>
                     <p>There are no production companies associated with this movie</p>
                 </div>
             )
         } else {
             return (
                 <div className="production-companies-section mt-4">
-                    <h3 className="">Production Companies</h3>
+                    <h3 className="section-title">Production Companies</h3>
                     <div className="companies">
                         {movie.production_companies.map((item, index) => {
                             let finalUrl = Utilities.getApiImageUrl(item.logo_path, {type: 'logo', size: 'w154'});

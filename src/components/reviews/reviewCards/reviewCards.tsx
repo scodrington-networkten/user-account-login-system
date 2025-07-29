@@ -67,7 +67,7 @@ const ReviewCards = ({movie} : ReviewCardsProps) => {
 
     return (
         <div className="review-cards mt-4">
-            <h3 className="mb-4 text-3xl font-light">Reviews</h3>
+            <h3 className="section-title">Reviews</h3>
             {showReviews()}
         </div>
     )

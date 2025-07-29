@@ -46,11 +46,11 @@
     }
 
     .release-date {
-        /* No Tailwind classes, but you might style here if needed */
+        @apply text-xl mb-2;
     }
 
     .review-section {
-        @apply flex gap-4 mb-2;
+        @apply flex gap-4 mb-4 text-xl;
     }
 
     h1 {

@@ -22,7 +22,7 @@
     }
 
     .slider-header {
-        @apply text-3xl mb-2 font-light;
+
     }
 
 }
@@ -88,7 +88,7 @@
 
 /** pagination dots**/
 .embla__dots {
-    @apply flex w-full relative justify-center pointer-events-auto pb-20 pt-2;
+    @apply flex w-full relative justify-center pointer-events-auto pb-10 pt-2;
 
     .embla__dots_inner {
         @apply container flex flex-wrap gap-3 justify-center;

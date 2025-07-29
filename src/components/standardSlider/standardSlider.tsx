@@ -11,6 +11,12 @@ type StandardSlider = {
     data: MovieResult[],
     header: string
 }
+/**
+ *
+ * @param data content to be used in the slider
+ * @param header h3 title to show at the top of the slider
+ * @constructor
+ */
 const StandardSlider = ({data, header = ''}: StandardSlider): JSX.Element => {
 
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -78,7 +84,7 @@ const StandardSlider = ({data, header = ''}: StandardSlider): JSX.Element => {
 
         return (
             <section className="standard-slider ">
-                <h2 className="slider-header">{header}</h2>
+                <h3 className="slider-header section-title">{header}</h3>
 
                 <div className="embla relative w-full" ref={(el) => {
                     emblaRef(el);

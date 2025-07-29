@@ -59,14 +59,14 @@ export default function movieActors({movie}: MovieActorsProps) {
     if (loading) {
         return (
             <div className="actors-list mt-4">
-                <h3>Cast & Crew</h3>
+                <h3 className="section-title">Cast & Crew</h3>
                 <LoadingCardList items={4}/>
             </div>
         )
     } else {
         return (
             <div className="actors-list mt-4">
-                <h3>Cast & Crew</h3>
+                <h3 className="section-title">Cast & Crew</h3>
                 <div className="actors">
                     {actors.map((item, key) => {
                         return <ActorProfile actor={item} key={`actor-profile-${key}`}/>;

@@ -13,7 +13,7 @@ const Home = () => {
 
     //on page load, ensure we load popular data
     useEffect(() => {
-        const apiCall = async ()   => {
+        const apiCall = async () => {
 
             try {
                 const result = await fetch('/api/get', {
@@ -41,7 +41,6 @@ const Home = () => {
     }, []);
 
 
-
     /**
      * Display either loading list or the movie content when loaded
      */
@@ -67,7 +66,7 @@ const Home = () => {
                         <title>{Utilities.getSiteNameForPage('')}</title>
                     </Helmet>
                     <FeaturedMoviesCarousel/>
-                    <div className={"px-4 w-full"}>
+                    <div className={"px-4 pb-4 w-full"}>
                         <GenreList/>
                         <MoviesList
                             movies={movies}

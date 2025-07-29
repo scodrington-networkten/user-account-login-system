@@ -42,7 +42,7 @@ export default function MovieKeywords({movie}: MovieKeywordsProps) {
     if (loading) {
         return (
             <section className="movie-keywords">
-                <h3 className="text-3xl font-light mb-4">Keywords</h3>
+                <h3 className="section-title">Keywords</h3>
                 <p>Loading</p>
             </section>
 
@@ -50,7 +50,7 @@ export default function MovieKeywords({movie}: MovieKeywordsProps) {
     } else if (keywords.length === 0) {
         return (
             <section className="movie-keywords">
-                <h3 className="text-3xl font-light mb-4">Keywords</h3>
+                <h3 className="section-title">Keywords</h3>
                 <p>There are no keywords associated with this movie</p>
             </section>
 
@@ -59,7 +59,7 @@ export default function MovieKeywords({movie}: MovieKeywordsProps) {
         return (
 
             <section className="movie-keywords">
-                <h3 className="text-3xl font-light mb-4">Keywords</h3>
+                <h3 className="section-title">Keywords</h3>
                 <div className="keywords flex flex-wrap gap-1 md:gap-2">
                     {
                         keywords.map((item, index) => {

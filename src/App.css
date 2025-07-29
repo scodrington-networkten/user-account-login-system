@@ -171,8 +171,16 @@ body {
 }
 
 
+/** Headings*/
+h3.section-title{
+    @apply text-3xl font-light mb-4 pb-2;
 
-/** Generic button styles*/
+    @apply border-b-3 inline-block w-fit;
+    border-bottom-color: var(--color-highlight-secondary);
+}
+
+
+    /** Generic button styles*/
 .button{
     @apply bg-white text-gray-800 rounded border border-gray-400 px-3 py-1 inline-block transition-all duration-200 ease-in-out;
 
