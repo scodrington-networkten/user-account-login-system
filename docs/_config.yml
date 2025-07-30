@@ -1,2 +1,3 @@
-theme: minima
+theme: jekyll-theme-just-the-docs
 title: Project Documentation
+description: Contains project specific info
