@@ -173,9 +173,7 @@ body {
 
 /** Headings*/
 h3.section-title{
-    @apply text-3xl font-light mb-4 pb-2;
-
-    @apply border-b-3 inline-block w-fit;
+    @apply text-3xl font-light mb-4 pb-2 border-b-3 inline-block w-fit;
     border-bottom-color: var(--color-highlight-secondary);
 }
 

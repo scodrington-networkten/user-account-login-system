@@ -3,19 +3,26 @@ import {Link} from "react-router-dom";
 import {faPlay, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useGenre} from "@contexts/GenreContext";
-import {JSX} from "react";
+import React, {JSX} from "react";
 import GenreButton from "@components/genre-button";
 
 import './carousel-card.css';
 import {Movie} from "@contracts/movie";
 import {MovieResult} from "@contracts/movieResult";
+import {useUser} from "@contexts/UserContext";
 
 type CarouselCardProps = {
-    movie:  MovieResult
+    movie: MovieResult
 }
+/**
+ * Single card to be used in the large hero slider
+ * @param movie
+ * @constructor
+ */
 const CarouselCard = ({movie}: CarouselCardProps) => {
 
     const {genres} = useGenre();
+    const {user, addWatchLater, removeWatchLater} = useUser();
 
     /**
      * Given an  ID (representing a genre id), return a button component with its correct name
@@ -59,6 +66,18 @@ const CarouselCard = ({movie}: CarouselCardProps) => {
         )
     }
 
+    /**
+     * Add to users watch later list
+     * @param e
+     */
+    const onWatchlistAdd = async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+
+        const result = await addWatchLater(movie.id);
+
+
+    }
+
     return (
         <article className="carousel-card">
             <div className="background-hero-image-overlay"></div>
@@ -99,9 +118,12 @@ const CarouselCard = ({movie}: CarouselCardProps) => {
                             <Link className="action-button watch-button" to={`/movie/${movie.id}`}>
                                 <FontAwesomeIcon icon={faPlay}/><p>Watch Now</p>
                             </Link>
-                            <Link className="action-button add-to-list-button" to={`/movie/${movie.id}`}>
-                                <FontAwesomeIcon icon={faPlus}/><p>Watchlist</p>
-                            </Link>
+
+                            {(user !== null) &&
+                                <button className="action-button add-to-list-button" onClick={onWatchlistAdd}>
+                                    <FontAwesomeIcon icon={faPlus}/><p>Watchlist</p>
+                                </button>
+                            }
                         </div>
 
                     </section>

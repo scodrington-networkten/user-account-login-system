@@ -11,7 +11,6 @@ import './latest-movies.css';
 import _ from "lodash";
 import {MovieResult} from "@contracts/movieResult";
 import {MovieApiResults} from "@contracts/MovieApiResults";
-import {Movie} from "@contracts/movie";
 
 /**
  * Shows a featured movies carousel hero component

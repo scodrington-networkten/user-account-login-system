@@ -8,7 +8,9 @@ type UserContextType = {
     setUserExpired: React.Dispatch<React.SetStateAction<boolean>>,
     login: (token: string) => Promise<void>,
     logout: () => void,
-    toggleFavoriteMovie: (movieId: number) => Promise<{ success: boolean; message: string }>;
+    toggleFavoriteMovie: (movieId: number) => Promise<{ success: boolean; message: string }>,
+    addWatchLater: (movieId: number) => Promise<{ success: boolean; message: string }>,
+    removeWatchLater: (movieId: number) => Promise<{ success: boolean; message: string }>
 }
 //this context is a placeholder
 const UserContext = createContext<UserContextType | null>(null);
@@ -80,6 +82,37 @@ export const UserProvider = ({children}: props) => {
                 success: true,
                 message: data.message
             }
+        }
+    }
+
+    const addWatchLater = async (movieId: number) => {
+
+        if (!user) {
+            return {
+                success: false,
+                message: "user is not logged in"
+            }
+        }
+
+        return {
+            success: true,
+            message: 'test from add watch later'
+        }
+
+
+    }
+
+    const removeWatchLater = async (movieId: number) => {
+        if (!user) {
+            return {
+                success: false,
+                message: "user is not logged in"
+            }
+        }
+
+        return {
+            success: true,
+            message: 'test from remove watch later'
         }
     }
 
@@ -180,7 +213,17 @@ export const UserProvider = ({children}: props) => {
     }
 
     return (
-        <UserContext.Provider value={{user, userExpired, setUserExpired, login, logout, toggleFavoriteMovie}}>
+        <UserContext.Provider
+            value={{
+                user,
+                userExpired,
+                setUserExpired,
+                login,
+                logout,
+                toggleFavoriteMovie,
+                addWatchLater,
+                removeWatchLater
+            }}>
             {children}
         </UserContext.Provider>
     );
@@ -188,7 +231,7 @@ export const UserProvider = ({children}: props) => {
 
 export const useUser = () => {
     const context = useContext(UserContext);
-    if(!context){
+    if (!context) {
         throw new Error("useUser must be used within a <UserProvider>")
     }
     return context;
