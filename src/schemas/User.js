@@ -54,6 +54,12 @@ const UserSchema = new EntitySchema({
             target: "favorite_movie",
             inverseSide: "user",
             cascade: true
+        },
+        watch_later_movies: {
+            type: "one-to-many",
+            target: "watch_later_movie",
+            inverseSide: "user",
+            cascade: true
         }
     }
 })

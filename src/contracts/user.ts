@@ -5,6 +5,9 @@ export type User = {
     favorite_movies: {
         movie_id: number
     }[],
+    watch_later_movies: {
+        movie_id: number
+    }[],
     email: string,
     password: string,
     created_at: string,

@@ -112,13 +112,7 @@ export default async function actions(request, response) {
 
         case 'add-wishlist':
 
-            try {
-
-            } catch (error) {
-
-            }
-
-
+            return response.status(200).json(user);
             break;
 
         case 'remove-wishlist':

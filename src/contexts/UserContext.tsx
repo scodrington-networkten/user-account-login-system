@@ -90,13 +90,16 @@ export const UserProvider = ({children}: props) => {
         if (!user) {
             return {
                 success: false,
-                message: "user is not logged in"
+                message: "user is not logged in",
+
             }
         }
 
+        console.log(user);
+
         return {
             success: true,
-            message: 'test from add watch later'
+            message: 'add watch later',
         }
 
 
@@ -200,7 +203,8 @@ export const UserProvider = ({children}: props) => {
         })
 
         if (!userResponse.ok) {
-            throw new Error('Invalid or expired token, can not log user in');
+            const data = await userResponse.json();
+            throw new Error(data.message);
         }
 
         return await userResponse.json();

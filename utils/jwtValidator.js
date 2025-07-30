@@ -32,16 +32,20 @@ export async function validateJwtFromRequest(request) {
         await AppDataSource.initialize();
     }
 
-    const userRepo = AppDataSource.getRepository(UserSchema);
-    const user = await userRepo.findOne({
-        where: {id: decodedToken.id},
-        relations: ['favorite_movies']
-    });
+    try {
+        const userRepo = AppDataSource.getRepository(UserSchema);
+        //collect user object with associated relations
+        const user = await userRepo.findOne({
+            where: {id: decodedToken.id},
+            relations: ['favorite_movies', 'watch_later_movies']
+        });
 
-    if (!user) {
-        throw new Error(`No user found for token ID: ${decodedToken.id}`);
+        if (!user) {
+            throw new Error(`No user found for token ID: ${decodedToken.id}`);
+        }
+
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
     }
-
-    return user;
-
 }
