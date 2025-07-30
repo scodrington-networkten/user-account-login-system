@@ -4,5 +4,6 @@ title: Home
 
 Welcome to the documentation site.
 
-- [Frontend Setup](frontend.html)
-- [Backend Setup](backend.html)
+- [Backend Setup](page1.html)
+- [Frontend Setup](page2.html)
+
