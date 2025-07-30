@@ -1,3 +1,8 @@
-# Documentation for Project
+---
+title: Home
+---
 
-Top level documentation page
+Welcome to the documentation site.
+
+- [Frontend Setup](frontend.html)
+- [Backend Setup](backend.html)
