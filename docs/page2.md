@@ -1,4 +1,6 @@
 
-# page 2 
+---
+title: Frontend Docs
+---
 
 Page 2 content here
