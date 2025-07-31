@@ -150,15 +150,14 @@ const MoviesList = ({
 
     /**
      * Displays the title and the number of overall items found
-     * @returns {JSX.Element}
      */
-    const displayHeader = () => {
+    const displayHeader = (): JSX.Element => {
 
         if (searchQuery !== null) {
             return (
                 <div className="results-header container m-auto">
-                    <h1 className="text-3xl mt-4 mb-2">Search Results: <span
-                        className="italic font-semibold">{searchQuery}</span></h1>
+                    <h2 className="text-2xl">Results for: <span
+                        className="italic font-semibold">{searchQuery}</span></h2>
                     <div className="results-data mb-2">
                         <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
                         <p>(Page <span className="font-semibold">{currentPage}</span> of <span
@@ -171,7 +170,7 @@ const MoviesList = ({
             if (showHeader) {
                 return (
                     <div className="results-header container m-auto">
-                        <h1 className="text-3xl mt-4 mb-2">Movie Results</h1>
+                        <h2 className="text-2xl">Movie Results</h2>
                         <div className="results-data mb-2">
                             <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
                             <p>(Page <span className="font-semibold">{currentPage}</span> of <span
@@ -193,7 +192,7 @@ const MoviesList = ({
         )
     } else {
         return (
-            <div className="movies-list relative container m-auto">
+            <div className="movies-list relative">
                 {displayHeader()}
                 {displayNavigation('header')}
                 {displayMovies()}

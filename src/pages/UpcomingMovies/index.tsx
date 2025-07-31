@@ -5,6 +5,7 @@ import StandardLayout from "@components/Layouts/StandardLayout";
 import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
 import {MovieResult} from "@contracts/movieResult";
+import GenreList from "@components/genre-list";
 
 /**
  * Shows upcoming movies (mostly new releases)
@@ -94,6 +95,7 @@ const UpcomingMovies = (): JSX.Element => {
     //return the layout
     return (
         <StandardLayout title={"Upcoming Movies"}>
+            <GenreList/>
             {Render()}
         </StandardLayout>
     )

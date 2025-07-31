@@ -132,7 +132,8 @@ const SearchResults = () => {
     }
 
     return (
-        <div className="search-results m-auto container flex flex-col gap-4 p-4">
+        <div className="search-results">
+            <h1>Search Results</h1>
             {displayMovieResults()}
         </div>
     )

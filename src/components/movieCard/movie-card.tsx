@@ -129,7 +129,7 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
                     <section
                         className="movie-information-section ">
                         <Link to={`/movie/${movie.id}`}>
-                            <h3 className="text-3xl mb-2 font-semibold" title={movie.title}>
+                            <h3 className="title" title={movie.title}>
                                 {movie.title}
                             </h3>
                         </Link>

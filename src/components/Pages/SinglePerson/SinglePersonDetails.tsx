@@ -9,6 +9,7 @@ import {Image} from "@contracts/Image";
 import {MovieResult} from "@contracts/movieResult";
 import {ExternalIds} from "@contracts/externalIds";
 import {JSX} from "react";
+import "./singlePersonDetails.css";
 
 type SinglePersonDetailsProps = {
     details: Person,
@@ -41,7 +42,7 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}: SinglePer
     }
 
     return (
-        <article className="details items-start block">
+        <article className="single-person-details details items-start block">
             <h1 className="text-2xl lg:text-5xl mb-4">{details.name}</h1>
             <aside className="main-profile-image col-span-2 float-left mr-4">
                 <img
@@ -86,7 +87,10 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}: SinglePer
                 <section className="social-media-links flex flex-wrap clear-left md:clear-none">
                     <SinglePersonSocialLinks links={externalLinks}/>
                 </section>
-                <section className="profile-bio col-span-full font-light">{details.biography}</section>
+                <section
+                    className="profile-bio col-span-full font-light"
+                    dangerouslySetInnerHTML={{__html: Utilities.formatString(details.biography)}}
+                ></section>
             </section>
             {getProfileImages()}
         </article>

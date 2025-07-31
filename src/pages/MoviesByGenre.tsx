@@ -165,11 +165,11 @@ const MoviesByGenre = () => {
     }
 
     return (
-        <div className="container m-auto gap-2 flex flex-col p-4">
-            <h1 className="text-4xl py-4">{Utilities.getProperCaseString(genre)}</h1>
+        <>
+            <h1 className="">{Utilities.getProperCaseString(genre)}</h1>
             <GenreList/>
             {displayMovies()}
-        </div>
+        </>
 
     )
 }

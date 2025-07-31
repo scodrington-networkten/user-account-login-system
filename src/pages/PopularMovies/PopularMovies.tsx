@@ -7,6 +7,7 @@ import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
 import {MovieResult} from "@contracts/movieResult";
 import {MovieApiResults} from "@contracts/MovieApiResults";
+import GenreList from "@components/genre-list";
 
 const PopularMovies = (): JSX.Element => {
 
@@ -95,6 +96,7 @@ const PopularMovies = (): JSX.Element => {
     //return the layout
     return (
         <StandardLayout title={"Popular Movies"}>
+            <GenreList/>
             {Render()}
         </StandardLayout>
     )

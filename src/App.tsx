@@ -41,10 +41,10 @@ import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel";
 // @ts-ignore
 import SampleData from "./sampleData.js";
 import Test from "./pages/test";
-import SinglePerson from "./pages/SinglePerson";
+import SinglePerson from "./pages/SinglePerson/SinglePerson";
 import UpcomingMovies from "./pages/UpcomingMovies";
-import PopularMovies from "./pages/PopularMovies";
-import LatestMovies from "./pages/LatestMovies";
+import PopularMovies from "./pages/PopularMovies/PopularMovies";
+import LatestMovies from "./pages/LatestMovies/LatestMovies";
 import {SharedStateProvider} from "@contexts/SharedStateConext.jsx";
 import NewSlider from "./pages/new-slider";
 import NotFound from "./pages/NotFound";

@@ -10,17 +10,22 @@ import React, {JSX} from "react";
 type StandardLayoutPros = React.PropsWithChildren<{
     title: string
 }>
-const StandardLayout = ({children, title = 'Page title'} : StandardLayoutPros): JSX.Element => {
+/**
+ * Standard layout, used by most pages with a title + content separated into a top/bottom layout
+ * @param children
+ * @param title
+ * @constructor
+ */
+const StandardLayout = ({children, title = 'Page title'}: StandardLayoutPros): JSX.Element => {
 
     return (
-        <div className="container mx-auto mt-2 mb-2 p-4">
-            <div className="flex flex-wrap  gap-4">
-                <div className="top w-full">
-                    <h1 className="text-3xl lg:text-4xl mb-2 lg:mb-4">{title}</h1>
-                </div>
-                <div className="bottom w-full">
-                    {children}
-                </div>
+
+        <div className="flex flex-wrap gap-4">
+            <div className="top w-full flex flex-col gap-4">
+                <h1 className="text-3xl lg:text-4xl mb-2 lg:mb-4">{title}</h1>
+            </div>
+            <div className="bottom w-full flex flex-col gap-4">
+                {children}
             </div>
         </div>
     )

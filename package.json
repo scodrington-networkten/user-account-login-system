@@ -26,6 +26,7 @@
         "embla-carousel": "^8.6.0",
         "embla-carousel-autoplay": "^8.6.0",
         "embla-carousel-react": "^8.6.0",
+        "he": "^1.2.0",
         "jsonwebtoken": "^9.0.2",
         "jwt-decode": "^4.0.0",
         "lodash": "^4.17.21",
@@ -43,6 +44,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.25.0",
+        "@types/he": "^1.2.3",
         "@types/lodash": "^4.17.20",
         "@types/node": "^22.15.17",
         "@types/nprogress": "^0.2.3",

@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.single-person-details{
+
+    .primary p{
+        @apply mb-1;
+    }
+
+    .profile-bio p{
+        @apply mb-2;
+    }
+}
+

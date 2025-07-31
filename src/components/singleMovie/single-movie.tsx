@@ -102,8 +102,6 @@ const SingleMovie = ({movie}: SingleMovieProps): JSX.Element => {
                             <MovieActors movie={movie}/>
                         </section>
                     </section>
-
-
                 </div>
                 <div className="container">
                     <section className="bottom-section">

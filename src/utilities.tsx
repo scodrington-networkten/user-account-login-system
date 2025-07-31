@@ -7,7 +7,7 @@ import React, {JSX} from "react";
 import GenreButtonWrapper from "@components/genreButtonWrapper";
 import {Genre} from "@contracts/genre";
 import {MovieResult} from "@contracts/movieResult";
-
+import he from "he";
 
 export type SocialMediaType =
     | "freebase_mid"
@@ -41,7 +41,26 @@ type ApiImageOptions =
 
 class Utilities {
 
-  /**
+    /**
+     * Converts a biography string with HTML entities and line breaks
+     * into safe HTML with real paragraphs and <br /> tags.
+     * @param {string} raw
+     * @returns {string} HTML
+     */
+    static formatString(raw: string): string {
+
+        const decoded = he.decode(raw || '');
+
+        // Split by double line breaks (paragraphs)
+        const paragraphs = decoded.split(/\n{2,}/g).map(p =>
+            `<p>${p.trim().replace(/\n/g, '<br />')}</p>`
+        );
+
+        return paragraphs.join('');
+    }
+
+
+    /**
      * use lodash to generate a random string
      * @param length
      * @returns {string}
@@ -278,7 +297,7 @@ class Utilities {
      * @param {ApiImageOptions} options - options for the type and size of the image to collect
      * @returns {string} A fully qualified image URL.
      */
-    static getApiImageUrl(url: string|null, options: ApiImageOptions): string {
+    static getApiImageUrl(url: string | null, options: ApiImageOptions): string {
 
         if (typeof url !== 'string' || url.trim() === '') {
 

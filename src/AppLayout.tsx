@@ -5,11 +5,12 @@ import {Outlet} from 'react-router-dom';
 import {useLocation} from "react-router-dom";
 import MiniSearchForm from "@components/miniSearchForm/miniSearchForm.jsx";
 import {useSharedState} from "@contexts/SharedStateConext";
+import "./app-layout.css";
 
 type AppLayoutProps = {
     contextOffset: boolean
 }
-const AppLayout = ({contextOffset = false} : AppLayoutProps) => {
+const AppLayout = ({contextOffset = false}: AppLayoutProps) => {
 
     const location = useLocation();
     const {genreSubnavOpen} = useSharedState();
@@ -48,9 +49,11 @@ const AppLayout = ({contextOffset = false} : AppLayoutProps) => {
         <div className="flex flex-col">
             <Header/>
             <main
-                className={`page-content flex-grow flex flex-col mx-auto w-full gap-4 items-start ${contextOffset ? 'offset' : ''}`}
+                className={`page-content flex-grow flex flex-col mx-auto w-full items-start ${contextOffset ? 'offset' : ''}`}
                 id="page-content">
-                <Outlet/>
+                <div className="container mx-auto px-4">
+                    <Outlet/>
+                </div>
             </main>
             <Footer/>
             <MiniSearchForm/>

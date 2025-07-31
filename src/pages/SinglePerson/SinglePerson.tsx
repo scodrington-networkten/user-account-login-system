@@ -106,7 +106,7 @@ const SinglePerson = (): JSX.Element => {
             <Helmet>
                 <title>{Utilities.getSiteNameForPage(person.name)}</title>
             </Helmet>
-            <div className="container px-4 mx-auto mt-2 mb-2">
+            <div className="container px-4 mx-auto">
                 <SinglePersonDetails details={person} movies={movieData} images={images} externalLinks={externalLinks}/>
                 <SinglePersonMovies movies={movieData}/>
             </div>

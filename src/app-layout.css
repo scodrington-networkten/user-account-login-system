@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/**
+Universal page layout for pages
+ */
+.page-content {
+    > .container {
+        @apply mt-4 mb-4;
+        @apply lg:mt-6 lg:mb-6;
+    }
+
+    h1{
+        @apply font-bold text-3xl mb-2;
+        @apply md:text-4xl mb-3;
+        @apply lg:text-5xl mb-4;
+    }
+}

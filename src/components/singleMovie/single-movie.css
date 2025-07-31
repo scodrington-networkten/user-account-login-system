@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .single-movie {
-    @apply flex gap-4 flex-grow relative p-4 w-full flex-col;
+    @apply flex gap-4 flex-grow relative flex-col;
 
     .tagline {
         @apply italic font-light text-xl mb-3 md:mb-4 lg:mb-5 mt-2;
@@ -54,11 +54,11 @@
     }
 
     h1 {
-        @apply font-bold text-3xl md:text-4xl lg:text-5xl;
+
     }
 
     .background-image {
-        @apply absolute object-cover -z-1 opacity-10 top-0 left-0 h-full w-full;
+        @apply fixed object-cover -z-1 opacity-10 top-0 left-0 h-full w-full;
     }
 }
 
