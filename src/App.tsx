@@ -61,11 +61,11 @@ function App() {
                         <GenreProvider>
                             <RouteProgressTracker/>
                             <Routes>
-                                <Route element={<AppLayout contextOffset={true}/>}>
+                                <Route element={<AppLayout contextOffset={true} layoutType={"homepage"}/>}>
                                     <Route path="/" element={<Home/>}/>
                                 </Route>
 
-                                <Route element={<AppLayout contextOffset={false}/>}>
+                                <Route element={<AppLayout contextOffset={false} layoutType={"standard"}/>}>
                                     <Route path="/movies/:genre" element={<MoviesByGenre/>}/>
                                     <Route path="/movie/:id" element={<SingleMoviePage/>}/>
                                     <Route path="/search" element={<SearchResults/>}/>

@@ -48,7 +48,7 @@ const Home = () => {
 
         if (loading) {
             return (
-                <>
+                <article className="hompage gap-4 flex flex-col">
                     <Helmet>
                         <title>{Utilities.getSiteNameForPage('')}</title>
                     </Helmet>
@@ -57,26 +57,24 @@ const Home = () => {
                         <GenreList/>
                         <LoadingCardList/>
                     </div>
-                </>
+                </article>
             )
         } else {
             return (
-                <>
+                <article className="hompage gap-4 flex flex-col">
                     <Helmet>
                         <title>{Utilities.getSiteNameForPage('')}</title>
                     </Helmet>
                     <FeaturedMoviesCarousel/>
-                    <div className={"px-4 pb-4 w-full"}>
-                        <GenreList/>
-                        <MoviesList
-                            movies={movies}
-                            loading={false}
-                            currentPage={1}
-                            totalPages={1}
-                            showHeader={false}
-                        />
-                    </div>
-                </>
+                    <GenreList/>
+                    <MoviesList
+                        movies={movies}
+                        loading={false}
+                        currentPage={1}
+                        totalPages={1}
+                        showHeader={false}
+                    />
+                </article>
             )
         }
     }

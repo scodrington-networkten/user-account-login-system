@@ -1,8 +1,10 @@
 import './search-result-entry.css'
 import Utilities from "../../utilities";
-import {useGenre} from "@contexts/GenreContext.tsx";
-import {useEffect, useState} from "react";
+import {useGenre} from "@contexts/GenreContext";
+import {JSX, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import {MovieResult} from "@contracts/movieResult";
+import {Genre} from "@contracts/genre";
 
 /**
  * Single search result entry when using the mini search form
@@ -10,14 +12,20 @@ import {Link} from "react-router-dom";
  * @returns {JSX.Element}
  * @constructor
  */
-const SearchResultEntry = ({movie}) => {
+type SearchResultEntryProps = {
+    movie: MovieResult
+}
+const SearchResultEntry = ({movie}: SearchResultEntryProps): JSX.Element => {
 
-    const {genres} = useGenre();
-    const [movieGenres, setMovieGenres] = useState([]);
+    const {genres} = useGenre() as { genres: Genre[] };
+    const [movieGenres, setMovieGenres] = useState<Genre[]>([]);
 
-    //on load, correctly set up the genres for display
+    /**
+     * On load, iterate through the genre_ids associated with the movie and collect the genres
+     * Required as genre_ids only contains the IDS and we want a Genre here for the name+id
+     */
     useEffect(() => {
-        let tempGenres = [];
+        let tempGenres: Genre[] = [];
         movie.genre_ids.forEach((item) => {
             const matchedGenre = genres.find(genre => genre.id === item);
             if (matchedGenre) {
@@ -25,7 +33,6 @@ const SearchResultEntry = ({movie}) => {
             }
         })
         setMovieGenres(tempGenres);
-
     }, [movie]);
 
 

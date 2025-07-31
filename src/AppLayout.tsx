@@ -7,10 +7,12 @@ import MiniSearchForm from "@components/miniSearchForm/miniSearchForm.jsx";
 import {useSharedState} from "@contexts/SharedStateConext";
 import "./app-layout.css";
 
+type AppLayoutType = "homepage" | "standard";
 type AppLayoutProps = {
-    contextOffset: boolean
+    contextOffset: boolean,
+    layoutType: AppLayoutType
 }
-const AppLayout = ({contextOffset = false}: AppLayoutProps) => {
+const AppLayout = ({contextOffset = false, layoutType = "standard"}: AppLayoutProps) => {
 
     const location = useLocation();
     const {genreSubnavOpen} = useSharedState();
@@ -45,13 +47,16 @@ const AppLayout = ({contextOffset = false}: AppLayoutProps) => {
     }, [location.pathname, genreSubnavOpen]);
 
 
+    //determine if we're using the standard template, if so we need an inner container
+    let innerClass = layoutType == "standard" ? "container mx-auto px-4" : '';
+
     return (
         <div className="flex flex-col">
             <Header/>
             <main
                 className={`page-content flex-grow flex flex-col mx-auto w-full items-start ${contextOffset ? 'offset' : ''}`}
                 id="page-content">
-                <div className="container mx-auto px-4">
+                <div className={innerClass}>
                     <Outlet/>
                 </div>
             </main>

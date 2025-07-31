@@ -6,9 +6,13 @@
  * @constructor
  */
 import React, {JSX} from "react";
+import Header from "../../Header";
+import Footer from "../../Footer";
+import MiniSearchForm from "@components/miniSearchForm/miniSearchForm";
+import "./standard-layout.css";
 
 type StandardLayoutPros = React.PropsWithChildren<{
-    title: string
+    title?: string
 }>
 /**
  * Standard layout, used by most pages with a title + content separated into a top/bottom layout
@@ -16,17 +20,20 @@ type StandardLayoutPros = React.PropsWithChildren<{
  * @param title
  * @constructor
  */
-const StandardLayout = ({children, title = 'Page title'}: StandardLayoutPros): JSX.Element => {
+const StandardLayout = ({children, title = ''}: StandardLayoutPros): JSX.Element => {
 
     return (
-
-        <div className="flex flex-wrap gap-4">
-            <div className="top w-full flex flex-col gap-4">
-                <h1 className="text-3xl lg:text-4xl mb-2 lg:mb-4">{title}</h1>
-            </div>
-            <div className="bottom w-full flex flex-col gap-4">
-                {children}
-            </div>
+        <div className="standard-layout ">
+            <main>
+                <div className="top ">
+                    {title &&
+                        <h1 className="title">{title}</h1>
+                    }
+                </div>
+                <div className="bottom">
+                    {children}
+                </div>
+            </main>
         </div>
     )
 }

@@ -1,37 +1,42 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import slugify from "slugify";
-import {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect, JSX} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import './mini-search-form.css';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
-import SearchResultEntry from "@components/miniSearchForm/searchResultEntry.jsx";
+import SearchResultEntry from "@components/miniSearchForm/searchResultEntry";
 import {useLocation} from "react-router-dom";
+import {useSharedState} from "@contexts/SharedStateConext";
+import {MovieResult} from "@contracts/movieResult";
+import {MovieApiResults} from "@contracts/MovieApiResults";
 
 
-import {useSharedState} from "@contexts/SharedStateConext.tsx";
-
+/**
+ * Search for used to search for movies
+ * @constructor
+ */
 const MiniSearchForm = () => {
 
 
     const location = useLocation();
     const navigate = useNavigate();
-    const searchInputRef = useRef(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
-    const [searchInput, setSearchInput] = useState('');
+    const [searchInput, setSearchInput] = useState<string>('');
     const {openMiniSearchForm, closeMiniSearchForm, miniSearchFormOpen} = useSharedState();
 
     //used for the dynamic ajax search
-    const [searchRequestLoading, setSearchRequestLoading] = useState(false);
-    const [searchResults, setSearchResults] = useState(null)
+    const [searchRequestLoading, setSearchRequestLoading] = useState<boolean>(false);
+    const [searchResults, setSearchResults] = useState<MovieResult[] | null>(null)
 
     /**
      * Handle search submit and move
      * @param e
      */
-    const handleSearchSubmit = (e) => {
+    const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
 
@@ -42,7 +47,7 @@ const MiniSearchForm = () => {
         }
     }
 
-    const handleInputUpdate = async (e) => {
+    const handleInputUpdate = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSearchInput(value);
     }
@@ -92,15 +97,15 @@ const MiniSearchForm = () => {
 
     }, [searchInput])
 
-    //handle the processing of the search query, using a debounce
+    //handle the processing of the search query, using debounce
     useEffect(() => {
 
-        //dont trigger when search input is empty
+        //don't trigger when search input is empty
         if (!searchInput.trim()) return;
 
         const timer = setTimeout(() => {
 
-            //search based on inpit
+            //search based on input
             (async () => {
 
                 try {
@@ -109,7 +114,7 @@ const MiniSearchForm = () => {
                         headers: {
                             'x-action': 'get-search',
                             'q': searchInput,
-                            'page': 1
+                            'page': "1"
                         }
                     });
                     if (!result.ok) {
@@ -118,24 +123,23 @@ const MiniSearchForm = () => {
                     }
 
                     //collect movies matching
-                    const data = await result.json();
+                    const data: MovieApiResults = await result.json();
                     if (data.results.length === 0) {
                         setSearchResults([])
                     } else {
-                        const subset = data.results.slice(0, 5);
+                        const movies = data.results as MovieResult[];
+                        const subset = movies.slice(0, 5);
                         setSearchResults(subset);
                     }
 
-
                 } catch (error) {
-                    window.showToastNotification(error.message, 'error');
+                    console.error((error as Error).message,);
+                    window.showToastNotification((error as Error).message, 'error');
                 } finally {
                     setSearchRequestLoading(false);
                 }
 
             })();
-
-
         }, 300);
 
         return () => {
@@ -143,11 +147,13 @@ const MiniSearchForm = () => {
         }
     }, [searchInput]);
 
-    //when data changes, if the form is open auto-focus the input
+    //when data changes, if the form is open autofocus the input
     useEffect(() => {
 
+        if (!searchInputRef.current) return;
+
         if (miniSearchFormOpen) {
-            searchInputRef.current?.focus();
+            searchInputRef.current.focus();
         }
 
     }, [miniSearchFormOpen]);
@@ -157,18 +163,14 @@ const MiniSearchForm = () => {
         closeAndResetSearchForm();
     }, [location]);
 
-    //handle the removal of the search form when users press 'back' or 'escape', closing the UI
     useEffect(() => {
-
         const handleBackButtonInput = () => {
-
-            //if open, close it and then jump back 1 state
             if (miniSearchFormOpen) {
-                closeMiniSearchForm()
+                closeMiniSearchForm();
             }
-        }
+        };
 
-        const handleKeyDown = (e) => {
+        function handleKeyDown(this: Window, e: KeyboardEvent) {
             if (e.key === 'Escape') {
                 closeMiniSearchForm();
             }
@@ -180,21 +182,21 @@ const MiniSearchForm = () => {
         return () => {
             window.removeEventListener('popstate', handleBackButtonInput);
             window.removeEventListener('keydown', handleKeyDown);
-        }
-
+        };
     }, [miniSearchFormOpen, navigate]);
 
 
     /**
      * Display the search results
-     * @returns {unknown[]}
      */
-    const displaySearchResults = () => {
+    const displaySearchResults = (): JSX.Element | null => {
 
+        //no search started yet
         if (searchResults === null) {
             return null;
         }
 
+        //show no records matched
         if (searchResults.length === 0) {
             return (
                 <div className="search-results">
@@ -222,11 +224,13 @@ const MiniSearchForm = () => {
     }
 
 
-    //if the form isnt open dont show
-    if (miniSearchFormOpen === false) return;
+    //if the form isn't open don't show
+    if (!miniSearchFormOpen) return;
+
+    const resultString = searchResults && searchResults?.length > 0 ? 'has-results' : '';
 
     return (
-        <div className={`mini-search-form ${searchResults?.length > 0 ? 'has-results' : ''}`}>
+        <div className={`mini-search-form ${resultString}`}>
             <div className="background-overlay backdrop-blur-sm bg-black/40" onClick={closeAndResetSearchForm}></div>
             <div className="search-form">
                 <div className="inner">
@@ -245,7 +249,7 @@ const MiniSearchForm = () => {
                                 placeholder="I'm looking for.."
                                 value={searchInput}
                                 onChange={(e) => {
-                                    handleInputUpdate(e)
+                                    void handleInputUpdate(e)
                                 }}
                             />
                             <div className="icons">
