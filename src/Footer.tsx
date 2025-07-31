@@ -6,8 +6,9 @@ import {useGenre} from "@contexts/GenreContext";
 import {JSX, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import Utilities from "./utilities";
-import {Genre} from "./types/genre";
-import {MovieResult} from "./types/movieResult";
+import {Genre} from "@contracts/genre";
+import {MovieResult} from "@contracts/movieResult"
+
 
 const Footer = () => {
 
@@ -15,12 +16,10 @@ const Footer = () => {
     const [topGenres, setTopGenres] = useState<Genre[] | null>(null);
     const [recentMovies, setRecentMovies] = useState<MovieResult[] | null>(null);
 
-
     //select the top X genres for display in footer
     useEffect(() => {
 
         if (!genres) return;
-
         if (genres.length > 0) {
             setTopGenres(genres.slice(0, 5));
         } else {
@@ -48,7 +47,8 @@ const Footer = () => {
         return (
             <nav className="genres">
                 {topGenres.map((item, index) => {
-                    return <Link to={`/movies/${item.id}`} key={`footer-genre-${item.id}`}>{item.name}</Link>;
+                    const name = Utilities.getSlugifiedGenreOrKeywordName(item);
+                    return <Link to={`/movies/${name}`} key={`footer-genre-${item.id}`}>{item.name}</Link>;
                 })}
             </nav>
         )

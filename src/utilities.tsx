@@ -8,6 +8,8 @@ import GenreButtonWrapper from "@components/genreButtonWrapper";
 import {Genre} from "@contracts/genre";
 import {MovieResult} from "@contracts/movieResult";
 import he from "he";
+import {Keyword} from "@contracts/keyword";
+import slugify from "slugify";
 
 export type SocialMediaType =
     | "freebase_mid"
@@ -40,6 +42,14 @@ type ApiImageOptions =
 
 
 class Utilities {
+
+    /**
+     * Given a genre or keyword, return the correct name in a slugified format to be used for URLS
+     * @param item
+     */
+    static getSlugifiedGenreOrKeywordName(item: Genre | Keyword): string {
+        return slugify(item.name, {lower: true, strict: true});
+    }
 
     /**
      * Converts a biography string with HTML entities and line breaks

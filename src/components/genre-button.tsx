@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import slugify from "slugify";
 import './genre-button.css';
 import {Genre} from "@contracts/genre";
+import Utilities from "../utilities";
 
 
 type GenreButtonProps = {
@@ -20,7 +21,7 @@ const GenreButton = ({genre, isActive, classes = 'genre-button', link = true}: G
     useEffect(() => {
         setGenreName(() => {
             if (genre && genre.name) {
-                return slugify(genre.name, {lower: true, strict: true});
+                return Utilities.getSlugifiedGenreOrKeywordName(genre);
             }
             return null;
         })
