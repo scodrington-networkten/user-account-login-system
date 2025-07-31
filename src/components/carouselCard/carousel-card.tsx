@@ -90,7 +90,7 @@ const CarouselCard = ({movie}: CarouselCardProps) => {
                 className="background-hero-image"
             ></div>
             <div
-                className="main-container ">
+                className="main-container">
                 <section className="right">
                     <div className="image-section">
                         <img

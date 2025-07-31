@@ -55,7 +55,7 @@ const ReviewCards = ({movie} : ReviewCardsProps) => {
             )
         } else {
             return (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="reviews">
                     {reviews.map((review, index) => {
                         return <ReviewCard review={review} key={`review-card-${index}`}/>
                     })}

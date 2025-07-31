@@ -48,12 +48,12 @@ const Home = () => {
 
         if (loading) {
             return (
-                <article className="hompage gap-4 flex flex-col">
+                <article className="hompage gap-4 flex flex-col max-w-full w-full">
                     <Helmet>
                         <title>{Utilities.getSiteNameForPage('')}</title>
                     </Helmet>
                     <FeaturedMoviesCarousel/>
-                    <div className={"px-4 w-full"}>
+                    <div className="container mx-auto px-4 w-full max-w-full flex flex-col gap-4">
                         <GenreList/>
                         <LoadingCardList/>
                     </div>
@@ -61,23 +61,28 @@ const Home = () => {
             )
         } else {
             return (
-                <article className="hompage gap-4 flex flex-col">
+                <article className="hompage max-w-full w-full">
                     <Helmet>
                         <title>{Utilities.getSiteNameForPage('')}</title>
                     </Helmet>
-                    <FeaturedMoviesCarousel/>
-                    <GenreList/>
-                    <MoviesList
-                        movies={movies}
-                        loading={false}
-                        currentPage={1}
-                        totalPages={1}
-                        showHeader={false}
-                    />
+                    <div className="flex flex-col gap-4">
+                        <FeaturedMoviesCarousel/>
+                        <div className="gap-4 flex flex-col px-4">
+                            <GenreList/>
+                            <MoviesList
+                                movies={movies}
+                                loading={false}
+                                currentPage={1}
+                                totalPages={1}
+                                showHeader={false}
+                            />
+                        </div>
+                    </div>
                 </article>
             )
         }
     }
+    //mx-auto w-full max-w-full flex flex-col gap-4
 
     //return <LoadingCardList/>;
     return displayHome();

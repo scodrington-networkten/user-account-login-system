@@ -50,19 +50,45 @@ const AppLayout = ({contextOffset = false, layoutType = "standard"}: AppLayoutPr
     //determine if we're using the standard template, if so we need an inner container
     let innerClass = layoutType == "standard" ? "container mx-auto px-4" : '';
 
-    return (
-        <div className="flex flex-col">
-            <Header/>
-            <main
-                className={`page-content flex-grow flex flex-col mx-auto w-full items-start ${contextOffset ? 'offset' : ''}`}
-                id="page-content">
-                <div className={innerClass}>
-                    <Outlet/>
+    /**
+     * Gets the outpt based on template typ
+     */
+    const getDisplay = () => {
+        if (layoutType == "standard") {
+
+            return (
+                <div className="flex flex-col">
+                    <Header/>
+                    <main
+                        className={`page-content flex-grow flex flex-col mx-auto w-full items-start ${contextOffset ? 'offset' : ''}`}
+                        id="page-content">
+                        <div className={innerClass}>
+                            <Outlet/>
+                        </div>
+                    </main>
+                    <Footer/>
+                    <MiniSearchForm/>
                 </div>
-            </main>
-            <Footer/>
-            <MiniSearchForm/>
-        </div>
+            )
+        } else {
+
+            return (
+                <div className="flex flex-col">
+                    <Header/>
+                    <main
+                        className={`page-content flex-grow flex flex-col mx-auto w-full items-start ${contextOffset ? 'offset' : ''}`}
+                        id="page-content">
+                        <Outlet/>
+                    </main>
+                    <Footer/>
+                    <MiniSearchForm/>
+                </div>
+            )
+        }
+    }
+
+    return (
+        getDisplay()
     )
 
 

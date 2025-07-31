@@ -26,7 +26,8 @@ const FeaturedMoviesCarousel = (): JSX.Element => {
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {loop: true},
         [Autoplay({
-            delay: 3000,
+
+            delay: 50000,
             stopOnInteraction: true
         })]
     )
