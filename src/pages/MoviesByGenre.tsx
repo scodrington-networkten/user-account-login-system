@@ -165,12 +165,11 @@ const MoviesByGenre = () => {
     }
 
     return (
-        <>
+        <article className="movies-by-genre flex flex-col gap-4">
             <h1 className="">{Utilities.getProperCaseString(genre)}</h1>
             <GenreList/>
             {displayMovies()}
-        </>
-
+        </article>
     )
 }
 export default MoviesByGenre;

@@ -2,7 +2,7 @@
 import {useLocation} from "react-router-dom";
 import slugify from "slugify";
 import GenreButton from "@components/genre-button.jsx";
-import {Genre} from "../types/genre";
+import {Genre} from "@contracts/genre";
 import {JSX} from "react";
 
 

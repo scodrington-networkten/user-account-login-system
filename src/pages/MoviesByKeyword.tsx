@@ -163,7 +163,7 @@ const MoviesByKeyword = () : JSX.Element => {
     }
 
     return (
-        <div className="container">
+        <div className="movies-by-keyword">
             <h1 className="">{Utilities.getProperCaseString(keywordString)}</h1>
             {displayMovies()}
         </div>

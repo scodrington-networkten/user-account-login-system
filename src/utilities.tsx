@@ -73,9 +73,8 @@ class Utilities {
     /**
      * use lodash to generate a random string
      * @param length
-     * @returns {string}
      */
-    static generateRandomString = (length = 10) => {
+    static generateRandomString = (length = 10): string => {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         return _.times(length, () => _.sample(chars)).join('');
     };
