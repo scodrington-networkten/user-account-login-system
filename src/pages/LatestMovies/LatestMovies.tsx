@@ -7,6 +7,7 @@ import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
 import {MovieResult} from "@contracts/movieResult";
 import {MovieApiResults} from "@contracts/MovieApiResults";
+import GenreList from "@components/genre-list";
 
 const LatestMovies = () => {
 
@@ -95,6 +96,7 @@ const LatestMovies = () => {
     //return the layout
     return (
         <StandardLayout title={"Latest Movies"}>
+            <GenreList/>
             {Render()}
         </StandardLayout>
     )

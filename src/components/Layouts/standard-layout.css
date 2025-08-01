@@ -13,9 +13,7 @@
         @apply w-full flex flex-col gap-4;
 
         h1 {
-            @apply text-2xl font-bold mt-4 mb-4;
-            @apply md:text-3xl;
-            @apply lg:text-4xl;
+
         }
     }
 

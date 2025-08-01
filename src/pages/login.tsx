@@ -53,7 +53,7 @@ const Login = () => {
      * Sync changes to state from form
      * @param e
      */
-    const uploadFormChange = async (e : React.ChangeEvent<HTMLInputElement>) => {
+    const uploadFormChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
         setFormData(prevData => {
             return {
@@ -63,7 +63,8 @@ const Login = () => {
     }
 
     return (
-        <div className="signup-form flex gap-2 p-2 flex-col mx-auto container my-2">
+        <div className="signup-form">
+            <h1 className="title">Login</h1>
             {loading &&
                 <p className="message-success">Logging you into your account</p>
             }

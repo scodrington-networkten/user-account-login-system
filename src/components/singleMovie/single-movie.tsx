@@ -80,7 +80,7 @@ const SingleMovie = ({movie}: SingleMovieProps): JSX.Element => {
                         </div>
                     </section>
                     <section className="primary">
-                        <h1>{movie.title}</h1>
+                        <h1 className="title">{movie.title}</h1>
                         {movie?.tagline && <h3 className="tagline">{movie.tagline}</h3>}
 
                         <div className="release-date">

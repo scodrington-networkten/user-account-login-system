@@ -133,7 +133,7 @@ const SearchResults = () => {
 
     return (
         <div className="search-results">
-            <h1>Search Results</h1>
+            <h1 className="title">Search Results</h1>
             {displayMovieResults()}
         </div>
     )

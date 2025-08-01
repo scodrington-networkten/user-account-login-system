@@ -43,7 +43,7 @@ const SinglePersonDetails = ({details, images, movies, externalLinks}: SinglePer
 
     return (
         <article className="single-person-details details items-start block">
-            <h1 className="text-2xl lg:text-5xl mb-4">{details.name}</h1>
+            <h1 className="title">{details.name}</h1>
             <aside className="main-profile-image col-span-2 float-left mr-4">
                 <img
                     alt={`Photo of ${details.name}`}
