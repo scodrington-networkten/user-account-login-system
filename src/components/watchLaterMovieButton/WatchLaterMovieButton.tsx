@@ -12,22 +12,27 @@ type WatchLaterMovieButtonProps = {
 }
 const WatchLaterMovieButton = ({movie, isOnWatchlist}: WatchLaterMovieButtonProps) => {
 
-    const {user, toggleFavoriteMovie} = useUser();
+    const {user, toggleWatchLaterMovie} = useUser();
     const [loading, setLoading] = useState<boolean>(false);
 
     if (!user) return;
     if (!movie) return;
 
-    const handleClick = () => {
+    const handleClick = async () => {
 
-        try{
+        try {
             setLoading(true);
-        }catch(error){
+            const result = await toggleWatchLaterMovie(movie.id);
+            if (result.success) {
+                window.showToastNotification(result.message, 'success');
+            } else {
+                window.showToastNotification(result.message, 'error');
+            }
+        } catch (error) {
 
-        }finally{
+        } finally {
             setLoading(false);
         }
-
     }
 
     const label = isOnWatchlist ? 'Remove from Watch List' : 'Add to Watch List';

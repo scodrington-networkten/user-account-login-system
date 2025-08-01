@@ -76,7 +76,6 @@ export const UserProvider = ({children}: props) => {
         } else {
 
             setUser(data.user);
-
             return {
                 success: true,
                 message: data.message
@@ -84,8 +83,11 @@ export const UserProvider = ({children}: props) => {
         }
     }
 
+    /**
+     * Toggle the selected movie for the user, either adding or removing it from their watch later list
+     * @param movieId
+     */
     const toggleWatchLaterMovie = async (movieId: number) => {
-
 
         if (!user) {
             return {
@@ -94,9 +96,37 @@ export const UserProvider = ({children}: props) => {
             }
         }
 
-        return {
-            success: true,
-            message: "response"
+        const isOnWatchList = user.watch_later_movies.some(item => {
+            return item.movie_id === movieId;
+        })
+
+        const action = (isOnWatchList) ? 'remove-watch-later' : 'add-watch-later';
+
+        const jwt = getToken();
+        const response = await fetch('/api/user/actions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`,
+                'x-user-action': action
+            },
+            body: JSON.stringify({movie_id: movieId}),
+        })
+
+        const data: UserActionsApiResult = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                message: data.message
+            }
+        } else {
+
+            setUser(data.user);
+            return {
+                success: true,
+                message: data.message
+            }
         }
 
 

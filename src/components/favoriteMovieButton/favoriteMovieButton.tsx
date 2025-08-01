@@ -31,14 +31,19 @@ const FavoriteMovieButton = ({movie, isFavorited = false}: FavoriteMovieButtonPr
      */
     const handleClick = async () => {
 
-        setLoading(true);
-        const result = await toggleFavoriteMovie(movie.id);
-        if (result.success) {
-            window.showToastNotification(result.message, 'success');
-        } else {
-            window.showToastNotification(result.message, 'error');
+        try{
+            setLoading(true);
+            const result = await toggleFavoriteMovie(movie.id);
+            if (result.success) {
+                window.showToastNotification(result.message, 'success');
+            } else {
+                window.showToastNotification(result.message, 'error');
+            }
+        }catch(error){
+
+        }finally{
+            setLoading(false);
         }
-        setLoading(false);
     }
 
     const label = isFavorited ? 'Remove from favorites' : 'Add to favorites';

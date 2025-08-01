@@ -5,7 +5,7 @@ import './movie-card.css';
 import FavoriteMovieButton from "@components/favoriteMovieButton/favoriteMovieButton";
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
-import {faListCheck} from "@fortawesome/free-solid-svg-icons"
+import {faListCheck, faList} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useState, useRef, JSX, TouchEvent} from "react";
 import {MovieResult} from "@contracts/movieResult";
@@ -14,7 +14,7 @@ import WatchLaterMovieButton from "@components/watchLaterMovieButton/WatchLaterM
 
 
 type MovieCardProps = {
-    movie: MovieResult|Movie,
+    movie: MovieResult | Movie,
     classes?: string
 }
 const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element => {
@@ -29,7 +29,7 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
     //determine if this movie is a users fav
     useEffect(() => {
 
-        if (user === null) return;
+        if (!user) return;
 
         //determine if currently favorite
         const isFavorite = user.favorite_movies.some(item => {
@@ -37,6 +37,19 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
         });
 
         setIsFavorited(isFavorite);
+
+    }, [user]);
+
+    //determine if the movie is listed on their watch later list
+    useEffect(() => {
+
+        if (!user) return;
+
+        const isOnWatchList = user.watch_later_movies.some(item => {
+            return item.movie_id === movie.id
+        });
+
+        setIsOnWatchlist(isOnWatchList);
 
     }, [user]);
 
@@ -66,7 +79,7 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
      * Displays both the vote count section and the rating stars
      * @param movie
      */
-    const getRatingSection = (movie: MovieResult|Movie): JSX.Element => {
+    const getRatingSection = (movie: MovieResult | Movie): JSX.Element => {
 
         return (
             <section className="rating-information">
@@ -82,7 +95,7 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
     }
 
 
-    const getSummarySection = (movie: MovieResult|Movie): JSX.Element => {
+    const getSummarySection = (movie: MovieResult | Movie): JSX.Element => {
         return (
             <p className="summary ">{Utilities.getTrimmedString(movie.overview, 150)}</p>
         )
@@ -99,7 +112,10 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
         )
     }
 
-    const getWatchLaterBadge = () : JSX.Element =>  {
+    const getWatchLaterBadge = (): JSX.Element | null => {
+
+        if (!isOnWatchlist) return null;
+
         return (
             <div className="watch-later-badge">
                 <FontAwesomeIcon icon={faListCheck}/>
