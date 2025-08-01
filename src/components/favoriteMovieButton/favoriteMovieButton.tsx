@@ -6,7 +6,6 @@ import {faBookmark as faBookmarkEmpty} from "@fortawesome/free-regular-svg-icons
 import './favorite-movie-button.css';
 
 import {MovieResult} from "@contracts/movieResult";
-import {User} from "@contracts/user";
 import {Movie} from "@contracts/movie";
 
 /**

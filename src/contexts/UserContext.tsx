@@ -9,8 +9,7 @@ type UserContextType = {
     login: (token: string) => Promise<void>,
     logout: () => void,
     toggleFavoriteMovie: (movieId: number) => Promise<{ success: boolean; message: string }>,
-    addWatchLater: (movieId: number) => Promise<{ success: boolean; message: string }>,
-    removeWatchLater: (movieId: number) => Promise<{ success: boolean; message: string }>
+    toggleWatchLaterMovie: (movieId: number) => Promise<{ success: boolean; message: string }>,
 }
 //this context is a placeholder
 const UserContext = createContext<UserContextType | null>(null);
@@ -49,7 +48,6 @@ export const UserProvider = ({children}: props) => {
             }
         }
 
-
         const isFavorite = user.favorite_movies.some(item => {
             return item.movie_id === movieId;
         })
@@ -85,27 +83,9 @@ export const UserProvider = ({children}: props) => {
         }
     }
 
-    const addWatchLater = async (movieId: number) => {
-
-        if (!user) {
-            return {
-                success: false,
-                message: "user is not logged in",
-
-            }
-        }
-
-        console.log(user);
-
-        return {
-            success: true,
-            message: 'add watch later',
-        }
+    const toggleWatchLaterMovie = async (movieId: number) => {
 
 
-    }
-
-    const removeWatchLater = async (movieId: number) => {
         if (!user) {
             return {
                 success: false,
@@ -115,9 +95,13 @@ export const UserProvider = ({children}: props) => {
 
         return {
             success: true,
-            message: 'test from remove watch later'
+            message: "response"
         }
+
+
+
     }
+
 
     const getToken = () => {
         return localStorage.getItem('jwt');
@@ -225,8 +209,7 @@ export const UserProvider = ({children}: props) => {
                 login,
                 logout,
                 toggleFavoriteMovie,
-                addWatchLater,
-                removeWatchLater
+                toggleWatchLaterMovie
             }}>
             {children}
         </UserContext.Provider>

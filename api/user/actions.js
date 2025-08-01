@@ -1,6 +1,7 @@
 import {AppDataSource} from "../../src/data-source.js";
 import {validateJwtFromRequest} from "../../utils/jwtValidator.js";
 import FavoriteMovieSchema from "../../src/schemas/FavoriteMovie.js";
+import WatchLaterMovieShema from "../../src/schemas/WatchLaterMovie.js";
 
 export default async function actions(request, response) {
 
@@ -11,7 +12,7 @@ export default async function actions(request, response) {
     }
 
     //verify method allowed
-    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-wishlist', 'remove-wishlist'];
+    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-watch-later', 'remove-watch-later'];
     if (!allowedMethods.includes(action)) {
         let methodMessage = `the provided action: ${action} is not a valid method, allowed methods are: ${allowedMethods.join(', ')}`;
         return response.status(400).json({error: methodMessage});
@@ -41,23 +42,23 @@ export default async function actions(request, response) {
         case 'add-favorite':
             try {
                 const {movie_id: movieId} = body;
-
                 if (!movieId) {
-                    return response.status(400).json({message: 'movie_id was not passed'});
+                    throw new Error('Movie ID not set: movie_id was not set the in request, could not add to favorite');
                 }
 
                 const favoriteMovieRepo = AppDataSource.getRepository(FavoriteMovieSchema);
-
                 const newRecord = favoriteMovieRepo.create({
                     movie_id: movieId,
                     user: user,
                 });
 
-                await favoriteMovieRepo.save(newRecord);
+                const savedRecord = await favoriteMovieRepo.save(newRecord);
+                if (!savedRecord) {
+                    throw new Error(`Save failed: Record not persisted in the ${FavoriteMovieSchema.options.name} repository`);
+                }
 
-                // Refresh user (so favorite list is current)
+                //collect updated user object as data has changed
                 user = await validateJwtFromRequest(request);
-
                 return response.status(200).json({
                     message: 'Successfully added this movie to your favorite list',
                     user: user
@@ -65,7 +66,7 @@ export default async function actions(request, response) {
 
             } catch (error) {
                 return response.status(500).json({
-                    message: 'There was an error adding this item to your favorite list'
+                    message: error.message
                 });
             }
 
@@ -73,15 +74,11 @@ export default async function actions(request, response) {
         case 'remove-favorite':
             try {
                 const {movie_id: movieId} = body;
-
                 if (!movieId) {
-                    return response.status(400).json({
-                        message: 'movie_id was not passed; could not remove from your favorite list'
-                    });
+                    throw new Error('Movie ID not set: movie_id was not set the in request, could not remove from your favorite list');
                 }
 
                 const favoriteMovieRepo = AppDataSource.getRepository(FavoriteMovieSchema);
-
                 const favRecords = await favoriteMovieRepo.find({
                     where: {
                         user: {id: user.id},
@@ -90,12 +87,10 @@ export default async function actions(request, response) {
                 });
 
                 if (favRecords.length === 0) {
-                    return response.status(404).json({
-                        message: `Movie ${movieId} is not in your favorite list`
-                    });
+                    throw new Error(`Movie ${movieId} is not in your favorite list, could not be removed`);
                 }
 
-                await favoriteMovieRepo.remove(favRecords);
+                const removedEntry = await favoriteMovieRepo.remove(favRecords);
                 user = await validateJwtFromRequest(request);
 
                 return response.status(200).json({
@@ -105,17 +100,43 @@ export default async function actions(request, response) {
 
             } catch (error) {
                 return response.status(500).json({
-                    message: 'There was an error removing this item from your favorite list'
+                    message: error.message
                 });
             }
 
 
-        case 'add-wishlist':
+        case 'add-watch-later':
 
-            return response.status(200).json(user);
-            break;
+        /*
+        try{
+            const {movie_id: movieId} = body;
+            if (!movieId) {
+                return response.status(400).json({message: 'movie_id was not passed'});
+            }
+        }catch(error){
 
-        case 'remove-wishlist':
+
+        }
+
+
+        const watchLaterRepo = AppDataSource.getRepository(WatchLaterMovieShema);
+
+        const newRecord = watchLaterRepo.create({
+            movie_id: movieId,
+            user: user,
+        });
+
+        await watchLaterRepo.save(newRecord);
+
+
+        return response.status(200).json('Called add watch later endpoint');
+
+
+         */
+
+        case 'remove-watch-later':
+
+            return response.status(200).json('Called remove watch later endpoint');
     }
 
 }

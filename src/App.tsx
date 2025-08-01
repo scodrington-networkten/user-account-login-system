@@ -48,6 +48,7 @@ import LatestMovies from "./pages/LatestMovies/LatestMovies";
 import {SharedStateProvider} from "@contexts/SharedStateConext.jsx";
 import NewSlider from "./pages/new-slider";
 import NotFound from "./pages/NotFound";
+import SingleMovieCard from "./pages/singleMovieCard";
 
 function App() {
 
@@ -90,6 +91,7 @@ function App() {
                                     <Route path="/test"
                                            element={<DynamicCarousel movies={SampleData.results.slice(6 - 14)}/>}/>
 
+                                    <Route path="/single-movie-card" element={<SingleMovieCard/>}/>
                                     <Route path="/new-movie-design" element={<Test/>}/>
                                     <Route path="/new-slider" element={<NewSlider/>}/>
 

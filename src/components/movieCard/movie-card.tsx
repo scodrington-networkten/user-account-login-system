@@ -5,10 +5,12 @@ import './movie-card.css';
 import FavoriteMovieButton from "@components/favoriteMovieButton/favoriteMovieButton";
 import {faBookmark as faBookmarkFull} from "@fortawesome/free-solid-svg-icons";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faListCheck} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useState, useRef, JSX, TouchEvent} from "react";
 import {MovieResult} from "@contracts/movieResult";
 import {Movie} from "@contracts/movie";
+import WatchLaterMovieButton from "@components/watchLaterMovieButton/WatchLaterMovieButton";
 
 
 type MovieCardProps = {
@@ -22,6 +24,7 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
     const {user} = useUser();
 
     const [isFavorited, setIsFavorited] = useState<boolean>(false);
+    const [isOnWatchlist, setIsOnWatchlist] = useState<boolean>(false);
 
     //determine if this movie is a users fav
     useEffect(() => {
@@ -69,9 +72,11 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
             <section className="rating-information">
                 {Utilities.getStarsSection(movie.vote_average)}
                 {Utilities.getVotesSection(movie.vote_count)}
-                <div className="flex flex-1 justify-end">
+                <div className="flex flex-1 justify-end gap-2">
                     <FavoriteMovieButton movie={movie} isFavorited={isFavorited}/>
+                    <WatchLaterMovieButton movie={movie} isOnWatchlist={isOnWatchlist}/>
                 </div>
+
             </section>
         )
     }
@@ -94,6 +99,14 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
         )
     }
 
+    const getWatchLaterBadge = () : JSX.Element =>  {
+        return (
+            <div className="watch-later-badge">
+                <FontAwesomeIcon icon={faListCheck}/>
+            </div>
+        )
+    }
+
 
     return (
         <article
@@ -105,6 +118,7 @@ const MovieCard = ({movie, classes = 'movie-card'}: MovieCardProps): JSX.Element
             ref={cardRef}
         >
             {getFavoritedBadge()}
+            {getWatchLaterBadge()}
             <section className="image-container overflow-hidden w-full aspect-[2/3]">
                 <img
                     src={Utilities.getApiImageUrl(movie.poster_path, {type: 'poster', size: 'w342'})}

@@ -1,4 +1,4 @@
-export {};
+
 
 import {ToastNotificationFunction} from "@contracts/ToastNotification";
 
@@ -7,3 +7,5 @@ declare global {
         showToastNotification: ToastNotificationFunction
     }
 }
+
+export {};
