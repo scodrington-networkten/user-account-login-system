@@ -3,6 +3,15 @@ import {validateJwtFromRequest} from "../../utils/jwtValidator.js";
 import FavoriteMovieSchema from "../../src/schemas/FavoriteMovie.js";
 import WatchLaterMovieShema from "../../src/schemas/WatchLaterMovie.js";
 
+/**
+ * Handles logged in user actions
+ * - Adding or removing items from favorite list
+ * - Adding or removing items from the watch later list
+ *
+ * @param request
+ * @param response
+ * @returns {Promise<*>}
+ */
 export default async function actions(request, response) {
 
     //collect auth header to extract auth
@@ -107,36 +116,75 @@ export default async function actions(request, response) {
 
         case 'add-watch-later':
 
-        /*
-        try{
-            const {movie_id: movieId} = body;
-            if (!movieId) {
-                return response.status(400).json({message: 'movie_id was not passed'});
+
+            try {
+                const {movie_id: movieId} = body;
+                if (!movieId) {
+                    return response.status(400).json({message: 'movie_id was not passed'});
+                }
+
+                const watchLaterRepo = AppDataSource.getRepository(WatchLaterMovieShema);
+                const newRecord = watchLaterRepo.create({
+                    movie_id: movieId,
+                    user: user,
+                });
+
+                const savedRecord = await watchLaterRepo.save(newRecord);
+                if (!savedRecord) {
+                    throw new Error(`Save failed: Record not persisted in the ${WatchLaterMovieShema.options.name} repository`);
+                }
+
+                user = await validateJwtFromRequest(request);
+                return response.status(200).json({
+                    message: 'Successfully added this movie to your watch later list',
+                    user: user
+                });
+
+            } catch (error) {
+                return response.status(500).json({
+                    message: error.message
+                });
             }
-        }catch(error){
 
 
-        }
+            return response.status(200).json('Called add watch later endpoint');
 
-
-        const watchLaterRepo = AppDataSource.getRepository(WatchLaterMovieShema);
-
-        const newRecord = watchLaterRepo.create({
-            movie_id: movieId,
-            user: user,
-        });
-
-        await watchLaterRepo.save(newRecord);
-
-
-        return response.status(200).json('Called add watch later endpoint');
-
-
-         */
 
         case 'remove-watch-later':
 
-            return response.status(200).json('Called remove watch later endpoint');
+            try {
+                const {movie_id: movieId} = body;
+                if (!movieId) {
+                    throw new Error('Movie ID not set: movie_id was not set the in request, could not remove from your watch later list');
+                }
+
+                const watchLaterRepo = AppDataSource.getRepository(WatchLaterMovieShema);
+                const watchLaterRecords = await watchLaterRepo.find({
+                    where: {
+                        user: {id: user.id},
+                        movie_id: movieId
+                    }
+                });
+
+                if (watchLaterRecords.length === 0) {
+                    throw new Error(`Movie ${movieId} is not in your watch later list, could not be removed`);
+                }
+
+                const removedEntry = await watchLaterRepo.remove(watchLaterRecords);
+                user = await validateJwtFromRequest(request);
+
+                return response.status(200).json({
+                    message: 'Successfully removed this movie from your watch later list',
+                    user: user
+                });
+
+            } catch (error) {
+                return response.status(500).json({
+                    message: error.message
+                });
+            }
+
+
     }
 
 }
