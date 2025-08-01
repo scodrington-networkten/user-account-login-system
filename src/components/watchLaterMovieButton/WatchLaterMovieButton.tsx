@@ -4,6 +4,7 @@ import {faList, faListCheck} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useUser} from "@contexts/UserContext";
 import {useState} from "react";
+import "./watch-later-button.css";
 
 
 type WatchLaterMovieButtonProps = {
@@ -36,11 +37,12 @@ const WatchLaterMovieButton = ({movie, isOnWatchlist}: WatchLaterMovieButtonProp
     }
 
     const label = isOnWatchlist ? 'Remove from Watch List' : 'Add to Watch List';
+    const classes = `${loading ? 'inactive' : ''} ${isOnWatchlist ? 'active' : ''}`.trim();
 
     return (
         <button
             onClick={handleClick}
-            className={`favorite-button ${loading ? 'inactive' : ''}`}
+            className={`watch-later-button ${classes}`}
             aria-label={label}
             disabled={loading}
             title={label}

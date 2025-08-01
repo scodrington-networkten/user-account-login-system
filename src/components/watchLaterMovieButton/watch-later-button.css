@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-.favorite-button {
+.watch-later-button{
     @apply transition-all;
 
     &.active,

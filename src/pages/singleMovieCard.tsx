@@ -85,7 +85,7 @@ const SingleMovieCard = () => {
             "video": false,
             "vote_average": 6.99,
             "vote_count": 49
-        },
+        } as Movie,
         {
             "adult": false,
             "backdrop_path": "/8J6UlIFcU7eZfq9iCLbgc8Auklg.jpg",
@@ -162,7 +162,7 @@ const SingleMovieCard = () => {
             "video": false,
             "vote_average": 8.065,
             "vote_count": 1375
-        }
+        } as Movie
     ]
 
     return (

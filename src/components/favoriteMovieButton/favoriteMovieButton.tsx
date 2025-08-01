@@ -47,11 +47,13 @@ const FavoriteMovieButton = ({movie, isFavorited = false}: FavoriteMovieButtonPr
     }
 
     const label = isFavorited ? 'Remove from favorites' : 'Add to favorites';
+    const classes = `${loading ? 'inactive' : ''} ${isFavorited ? 'active' : ''}`.trim();
+
 
     return (
         <button
             onClick={handleClick}
-            className={`favorite-button ${loading ? 'inactive' : ''}`}
+            className={`favorite-button ${classes}`}
             aria-label={label}
             disabled={loading}
             title={label}
