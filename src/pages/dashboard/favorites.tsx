@@ -5,6 +5,7 @@ const Favorites = () => {
 
     return (
         <DashboardLayout title="Favorites">
+            <p>These are your favorites, how fancy</p>
             <FavoriteList/>
         </DashboardLayout>
     )

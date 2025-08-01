@@ -161,6 +161,8 @@ export const UserProvider = ({children}: props) => {
 
     // Visibility change event listener
     useEffect(() => {
+
+        /* HIDDEN FOR NOW CAUSES FORCED LOGOUTS
         const handleVisibilityChange = async () => {
             if (document.visibilityState !== "visible") return;
             await handleTokenInvalidation();
@@ -168,6 +170,9 @@ export const UserProvider = ({children}: props) => {
 
         document.addEventListener('visibilitychange', handleVisibilityChange);
         return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+
+
+         */
 
     }, [handleTokenInvalidation]);
 
