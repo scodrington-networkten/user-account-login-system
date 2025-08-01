@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState, useRef, useCallback} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {User} from "@contracts/user";
+import {UserActionsApiResult} from "@contracts/userActionsApiResult";
 
 type UserContextType = {
     user: null | User,
@@ -65,7 +66,7 @@ export const UserProvider = ({children}: props) => {
             body: JSON.stringify({movie_id: movieId}),
         })
 
-        const data = await response.json();
+        const data: UserActionsApiResult = await response.json();
 
         if (!response.ok) {
             return {
@@ -97,7 +98,6 @@ export const UserProvider = ({children}: props) => {
             success: true,
             message: "response"
         }
-
 
 
     }
