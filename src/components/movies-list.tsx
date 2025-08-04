@@ -59,22 +59,16 @@ const MoviesList = ({
      */
     const displayMovies = (): JSX.Element => {
 
-        if (movies.length > 0) {
-            return (
-                <section
-                    className={`movies container m-auto grid gap-4 ${cssClasses}`}>
-                    {movies.map((item, index) => (
-                        <MovieCard movie={item} classes="movie-card" key={`movie-${index}`}/>
-                    ))}
-                </section>
-            )
-        } else {
-            return (
-                <section className={`movies container m-auto grid gap-4`}>
-                    <p>There are no movies to show</p>
-                </section>
-            )
-        }
+
+        return (
+            <section
+                className={`movies container m-auto grid gap-4 ${cssClasses}`}>
+                {movies.map((item, index) => (
+                    <MovieCard movie={item} classes="movie-card" key={`movie-${index}`}/>
+                ))}
+            </section>
+        )
+
     }
 
 
@@ -184,22 +178,23 @@ const MoviesList = ({
         }
     }
 
-    if (loading) {
-        return (
-            <div className="movies-list relative container m-auto">
-                <LoadingCardList cssClass={cssClasses} items={4}/>
-            </div>
-        )
-    } else {
-        return (
-            <div className="movies-list relative">
-                {displayHeader()}
-                {displayNavigation('header')}
-                {displayMovies()}
-                {displayNavigation('footer')}
-            </div>
-        )
-    }
+
+    return (
+        <div className="movies-list relative">
+
+            {displayHeader()}
+            {displayNavigation('header')}
+
+            {loading &&
+                <LoadingCardList cssClass={cssClasses} items={20}/>
+            }
+
+
+            {displayMovies()}
+            {displayNavigation('footer')}
+
+        </div>
+    )
 
 
 }

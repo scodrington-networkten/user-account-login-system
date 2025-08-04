@@ -12,11 +12,12 @@ import {Keyword} from "@contracts/keyword";
  * @returns {JSX.Element}
  * @constructor
  */
-const MoviesByKeyword = () : JSX.Element => {
+const MoviesByKeyword = (): JSX.Element => {
 
     const {keyword: keywordString = ''} = useParams();
     const [movies, setMovies] = useState<MovieResult[]>([]);
     const [totalPages, setTotalPages] = useState<number>(1);
+    const [totalResults, setTotalResults] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [keyword, setKeyword] = useState<Keyword | null>(null);
@@ -34,6 +35,7 @@ const MoviesByKeyword = () : JSX.Element => {
         (async () => {
 
             try {
+                setMovies([]);
                 setLoading(true);
                 setError(false);
 
@@ -74,6 +76,7 @@ const MoviesByKeyword = () : JSX.Element => {
                 const movieData = await moviesRequest.json();
                 setMovies(movieData.results);
                 setTotalPages(movieData.total_pages);
+                setTotalResults(movieData.total_results);
             } catch (error) {
                 setError(true);
                 window.showToastNotification((error as Error).message, 'error');
@@ -100,7 +103,7 @@ const MoviesByKeyword = () : JSX.Element => {
         })
     }
 
-    const onPageButton = (page: number) : void => {
+    const onPageButton = (page: number): void => {
 
         setSearchParams({
             page: String(page)
@@ -110,56 +113,38 @@ const MoviesByKeyword = () : JSX.Element => {
     /**
      * Show either loading card template or movies if ready
      */
-    const displayMovies = () : JSX.Element => {
+    const displayMovies = (): JSX.Element => {
 
         const keywordName = keyword ? keyword.name : '';
 
-        if (loading) {
-            return (
-                <>
-                    <Helmet>
-                        <title>{Utilities.getSiteNameForPage(keywordName)}</title>
-                    </Helmet>
-                    <div className="container">
-                        <LoadingCardList/>
-                    </div>
-                </>
-            )
+        return (
+            <>
+                <Helmet>
+                    <title>{Utilities.getSiteNameForPage(keywordName)}</title>
+                </Helmet>
 
-        } else if (error) {
-            return (
-                <>
-                    <Helmet>
-                        <title>{Utilities.getSiteNameForPage(keywordName)}</title>
-                    </Helmet>
+                {error &&
                     <div className="container">
                         <p>There was an error finding movies that match your selected keyword</p>
                     </div>
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <Helmet>
-                        <title>{Utilities.getSiteNameForPage(keywordName)}</title>
-                    </Helmet>
-                    <div className="container">
-                        <p>These movies have been tagged under <strong>{keywordName}</strong></p>
-                        <MoviesList
-                            movies={movies}
-                            onNextButton={onNextButton}
-                            onPrevButton={onPrevButton}
-                            onPagesButton={onPageButton}
-                            loading={loading}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            showHeader={false}
-                        />
-                    </div>
-                </>
+                }
 
-            )
-        }
+                <div className="container">
+                    <MoviesList
+                        movies={movies}
+                        onNextButton={onNextButton}
+                        onPrevButton={onPrevButton}
+                        onPagesButton={onPageButton}
+                        loading={loading}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        totalResults={totalResults}
+                        showHeader={true}
+                    />
+                </div>
+
+            </>
+        )
     }
 
     return (

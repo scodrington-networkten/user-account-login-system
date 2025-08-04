@@ -8,12 +8,19 @@ import Utilities from "../../utilities";
 import {MovieResult} from "@contracts/movieResult";
 import {MovieApiResults} from "@contracts/MovieApiResults";
 import GenreList from "@components/genre-list";
+import {useSearchParams} from "react-router-dom";
 
 const LatestMovies = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [movies, setMovies] = useState<MovieResult[]>([]);
+
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [totalResults, setTotalResults] = useState<number>(0);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentPage = parseInt(searchParams.get('page') ?? '1', 10) || 1;
 
     /**
      * Fetch the latest movies upcoming
@@ -23,6 +30,7 @@ const LatestMovies = () => {
         (async () => {
 
             try {
+                setMovies([])
                 setLoading(true);
                 setError(false);
 
@@ -40,6 +48,8 @@ const LatestMovies = () => {
                 //set latest from API
                 const data: MovieApiResults = await result.json();
                 setMovies(data.results as MovieResult[]);
+                setTotalPages(data.total_pages);
+                setTotalResults(data.total_results);
 
             } catch (error) {
                 setError(true);
@@ -49,7 +59,29 @@ const LatestMovies = () => {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [searchParams, currentPage]);
+
+
+
+    const onNextButton = () => {
+
+        setSearchParams({
+            page: String(currentPage + 1)
+        })
+    }
+
+    const onPrevButton = () => {
+        setSearchParams({
+            page: String(currentPage - 1)
+        })
+    }
+
+    const onPageButton = (page: number): void => {
+
+        setSearchParams({
+            page: String(page)
+        });
+    }
 
     const Render = () => {
 
@@ -84,9 +116,14 @@ const LatestMovies = () => {
                 </Helmet>
                 <MoviesList
                     movies={movies}
-                    showPagination={false}
+                    onNextButton={onNextButton}
+                    onPrevButton={onPrevButton}
+                    onPagesButton={onPageButton}
+                    loading={loading}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalResults={totalResults}
                     showHeader={false}
-                    totalPages={1}
                 />
             </>
 

@@ -6,6 +6,8 @@ import {Helmet} from "react-helmet";
 import Utilities from "../../utilities";
 import {MovieResult} from "@contracts/movieResult";
 import GenreList from "@components/genre-list";
+import {useSearchParams} from "react-router-dom";
+import {MovieApiResults} from "@contracts/MovieApiResults";
 
 /**
  * Shows upcoming movies (mostly new releases)
@@ -17,6 +19,12 @@ const UpcomingMovies = (): JSX.Element => {
     const [error, setError] = useState<boolean>(false);
     const [movies, setMovies] = useState<MovieResult[]>([]);
 
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [totalResults, setTotalResults] = useState<number>(0);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentPage = parseInt(searchParams.get('page') ?? '1', 10) || 1;
+
     /**
      * Fetch the latest movies upcoming
      */
@@ -25,6 +33,7 @@ const UpcomingMovies = (): JSX.Element => {
         (async () => {
 
             try {
+                setMovies([])
                 setLoading(true);
                 setError(false);
 
@@ -39,8 +48,10 @@ const UpcomingMovies = (): JSX.Element => {
                 }
 
                 //set latest from API
-                const data = await result.json();
-                setMovies(data.results);
+                const data: MovieApiResults = await result.json();
+                setMovies(data.results as MovieResult[]);
+                setTotalPages(data.total_pages);
+                setTotalResults(data.total_results);
 
             } catch (error) {
                 setError(true);
@@ -49,7 +60,28 @@ const UpcomingMovies = (): JSX.Element => {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [searchParams, currentPage]);
+
+
+    const onNextButton = () => {
+
+        setSearchParams({
+            page: String(currentPage + 1)
+        })
+    }
+
+    const onPrevButton = () => {
+        setSearchParams({
+            page: String(currentPage - 1)
+        })
+    }
+
+    const onPageButton = (page: number): void => {
+
+        setSearchParams({
+            page: String(page)
+        });
+    }
 
     const Render = () => {
 
@@ -84,8 +116,14 @@ const UpcomingMovies = (): JSX.Element => {
                 </Helmet>
                 <MoviesList
                     movies={movies}
-                    showPagination={false}
-                    showHeader={false} totalPages={1}
+                    onNextButton={onNextButton}
+                    onPrevButton={onPrevButton}
+                    onPagesButton={onPageButton}
+                    loading={loading}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalResults={totalResults}
+                    showHeader={false}
                 />
             </>
 

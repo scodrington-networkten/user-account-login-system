@@ -42,6 +42,7 @@ const MoviesByGenre = () => {
     useEffect(() => {
         (async () => {
             try {
+                setMovies([]);
                 setLoading(true);
                 setError(false);
                 // Fetch genre data
@@ -115,59 +116,47 @@ const MoviesByGenre = () => {
      */
     const displayMovies = (): JSX.Element => {
 
-        if (loading) {
-            return (
-                <>
-                    <Helmet>
-                        <title>{Utilities.getSiteNameForPage(genre)}</title>
-                    </Helmet>
-                    <div className="container">
-                        <LoadingCardList/>
-                    </div>
-                </>
 
-            )
+        return (
 
-        } else if (error) {
-            return (
-                <>
-                    <Helmet>
-                        <title>{Utilities.getSiteNameForPage(genre)}</title>
-                    </Helmet>
+            <>
+                <Helmet>
+                    <title>{Utilities.getSiteNameForPage(genre)}</title>
+                </Helmet>
+
+                {error &&
                     <div className="container">
                         <p>There was an issue loading movies for <b>{genre}</b></p>
                     </div>
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <Helmet>
-                        <title>{Utilities.getSiteNameForPage(genre)}</title>
-                    </Helmet>
-                    <div className="container">
-                        <MoviesList
-                            movies={movies}
-                            onNextButton={onNextButton}
-                            onPrevButton={onPrevButton}
-                            onPagesButton={onPageButton}
-                            loading={loading}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            totalResults={totalResults}
-                            showHeader={true}
-                        />
-                    </div>
-                </>
+                }
 
-            )
-        }
+                <div className="container">
+                    <MoviesList
+                        movies={movies}
+                        onNextButton={onNextButton}
+                        onPrevButton={onPrevButton}
+                        onPagesButton={onPageButton}
+                        loading={loading}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        totalResults={totalResults}
+                        showHeader={true}
+                    />
+                </div>
+            </>
+
+
+        )
+
+
     }
 
     return (
         <article className="movies-by-genre flex flex-col gap-4">
             <h1 className="title">{Utilities.getProperCaseString(genre)}</h1>
             <GenreList/>
+
+
             {displayMovies()}
         </article>
     )

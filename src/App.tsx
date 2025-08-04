@@ -42,7 +42,7 @@ import DynamicCarousel from "@components/dynamicCarousel/DynamicCarousel";
 import SampleData from "./sampleData.js";
 import Test from "./pages/test";
 import SinglePerson from "./pages/SinglePerson/SinglePerson";
-import UpcomingMovies from "./pages/UpcomingMovies";
+import UpcomingMovies from "./pages/UpcomingMovies/UpcomingMovies";
 import PopularMovies from "./pages/PopularMovies/PopularMovies";
 import LatestMovies from "./pages/LatestMovies/LatestMovies";
 import {SharedStateProvider} from "@contexts/SharedStateConext.jsx";
