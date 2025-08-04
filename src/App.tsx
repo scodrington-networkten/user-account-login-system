@@ -50,6 +50,9 @@ import NewSlider from "./pages/new-slider";
 import NotFound from "./pages/NotFound";
 import SingleMovieCard from "./pages/singleMovieCard";
 
+import ScrollToTop from "@components/ScrollToTopHandler";
+import ScrollToTopHandler from "@components/ScrollToTopHandler";
+
 function App() {
 
 
@@ -98,12 +101,11 @@ function App() {
                                     <Route path="*" element={<NotFound/>}/>
                                 </Route>
                             </Routes>
-
-
                         </GenreProvider>
                         <UserExpiredPopup/>
                         <ToastNotification/>
                     </UserProvider>
+                    <ScrollToTopHandler/>
                 </SharedStateProvider>
             </div>
         </BrowserRouter>

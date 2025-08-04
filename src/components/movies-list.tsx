@@ -134,7 +134,8 @@ const MoviesList = ({
                         className="next"
                         title="Next Page"
                         aria-label="Next Page"
-                        onClick={onNextButton}><FontAwesomeIcon className={loading ? ' inactive' : ''} icon={faChevronRight}/></button>
+                        onClick={onNextButton}><FontAwesomeIcon className={loading ? ' inactive' : ''}
+                                                                icon={faChevronRight}/></button>
 
                 </section>
                 <div className="page-numbers">
@@ -149,8 +150,7 @@ const MoviesList = ({
      */
     const displayHeader = (): JSX.Element | null => {
 
-        if(totalResults === 0) return null;
-
+        if (totalResults === 0) return null;
 
         if (searchQuery !== null) {
             return (
@@ -158,7 +158,8 @@ const MoviesList = ({
                     <h2 className="text-2xl">Results for: <span
                         className="italic font-semibold">{searchQuery}</span></h2>
                     <div className="results-data mb-2">
-                        <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
+                        <p><span className="records-found font-semibold">{totalResults?.toLocaleString()}</span> Movies
+                            Found</p>
                         <p>(Page <span className="font-semibold">{currentPage}</span> of <span
                             className="font-semibold">{totalPages})</span></p>
                     </div>
@@ -171,9 +172,11 @@ const MoviesList = ({
                     <div className="results-header container m-auto">
                         <h2 className="text-2xl">Movie Results</h2>
                         <div className="results-data mb-2">
-                            <p><span className="records-found font-semibold">{totalResults}</span> Movies Found</p>
-                            <p>(Page <span className="font-semibold">{currentPage}</span> of <span
-                                className="font-semibold">{totalPages})</span></p>
+                            <p><span
+                                className="records-found font-semibold">{totalResults?.toLocaleString()}</span> Movies
+                                Found</p>
+                            <p>(Page <span className="font-semibold">{currentPage?.toLocaleString()}</span> of <span
+                                className="font-semibold">{totalPages?.toLocaleString()})</span></p>
                         </div>
                     </div>
                 )
@@ -193,7 +196,6 @@ const MoviesList = ({
             {loading &&
                 <LoadingCardList cssClass={cssClasses} items={20}/>
             }
-
 
             {displayMovies()}
             {displayNavigation('footer')}
