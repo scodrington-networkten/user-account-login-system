@@ -85,35 +85,18 @@ const UpcomingMovies = (): JSX.Element => {
 
     const Render = () => {
 
-        if (loading) {
-            return (
-                <>
-                    <Helmet>
-                        <title>{Utilities.getSiteNameForPage('Upcoming')}</title>
-                    </Helmet>
-                    <LoadingCard/>
-                </>
-
-            )
-        }
-
-        if (error) {
-            return (
-                <p>There was an error retrieving movies</p>
-            )
-        }
-
-        if (movies.length === 0) {
-            return (
-                <p>There are no upcoming movies to show!</p>
-            )
-        }
-
         return (
             <>
                 <Helmet>
                     <title>{Utilities.getSiteNameForPage('Upcoming')}</title>
                 </Helmet>
+
+                {error &&
+                    <div className="container">
+                        <p>There was an error collecting the list of upcoming movies</p>
+                    </div>
+                }
+
                 <MoviesList
                     movies={movies}
                     onNextButton={onNextButton}
@@ -125,9 +108,11 @@ const UpcomingMovies = (): JSX.Element => {
                     totalResults={totalResults}
                     showHeader={false}
                 />
-            </>
 
+            </>
         )
+
+
     }
 
     //return the layout

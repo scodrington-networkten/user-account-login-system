@@ -91,13 +91,15 @@ const MoviesList = ({
         return (
             <>
                 {pages.map((item, index) => {
+
+                    const buttonClasses = `${item === currentPage ? 'active' : ''} ${loading ? 'inactive' : ''}`.trim();
                     return <button
                         onClick={() => {
                             onPagesButton(item);
                         }}
                         title={`Page ${item}`}
                         key={`${pageLocation}-${index}`}
-                        className={` page ${item === currentPage ? 'active' : ''}`}>{item}</button>
+                        className={` page ${buttonClasses}`}>{item}</button>
                 })}
             </>
 
@@ -112,7 +114,7 @@ const MoviesList = ({
 
         if (!showPagination) return null;
 
-        if (movies.length === 0) return null;
+        if (totalResults === 0) return null;
 
         if (totalPages === 1) return null;
 
@@ -125,14 +127,14 @@ const MoviesList = ({
                         title="Previous Page"
                         aria-label="Previous Page"
                         onClick={onPrevButton}>
-                        <FontAwesomeIcon className="" icon={faChevronLeft}/>
+                        <FontAwesomeIcon className={loading ? ' inactive' : ''} icon={faChevronLeft}/>
                     </button>
                     <button
                         disabled={currentPage > totalPages}
                         className="next"
                         title="Next Page"
                         aria-label="Next Page"
-                        onClick={onNextButton}><FontAwesomeIcon className="" icon={faChevronRight}/></button>
+                        onClick={onNextButton}><FontAwesomeIcon className={loading ? ' inactive' : ''} icon={faChevronRight}/></button>
 
                 </section>
                 <div className="page-numbers">
@@ -145,7 +147,10 @@ const MoviesList = ({
     /**
      * Displays the title and the number of overall items found
      */
-    const displayHeader = (): JSX.Element => {
+    const displayHeader = (): JSX.Element | null => {
+
+        if(totalResults === 0) return null;
+
 
         if (searchQuery !== null) {
             return (
