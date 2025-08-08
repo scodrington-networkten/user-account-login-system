@@ -134,8 +134,9 @@ const MoviesList = ({
                         className="next"
                         title="Next Page"
                         aria-label="Next Page"
-                        onClick={onNextButton}><FontAwesomeIcon className={loading ? ' inactive' : ''}
-                                                                icon={faChevronRight}/></button>
+                        onClick={onNextButton}>
+                        <FontAwesomeIcon className={loading ? ' inactive' : ''} icon={faChevronRight}/>
+                    </button>
 
                 </section>
                 <div className="page-numbers">

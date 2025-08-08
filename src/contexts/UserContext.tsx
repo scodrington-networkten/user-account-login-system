@@ -186,8 +186,8 @@ export const UserProvider = ({children}: props) => {
                 setUser(validatedUser.user);
                 setUserExpired(false);
             } catch (error) {
+                window.showToastNotification('There was an error automatically logging you in', 'error');
                 console.error((error as Error).message);
-                logout();
             }
         })();
     }, []);
@@ -196,7 +196,6 @@ export const UserProvider = ({children}: props) => {
      * Given a JWT, try and authenticate the user against the backend and if validated, set user and redirect them
      * to the dashboard
      * @param token - jwt
-     * @returns {Promise<void>}
      */
     const login = async (token: string) => {
         localStorage.setItem('jwt', token);
