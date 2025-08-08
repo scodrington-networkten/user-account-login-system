@@ -11,7 +11,6 @@ export default async function get(request, response) {
 
     const actionHandler = {
         'get-related-movies': getRelatedMovies,
-        'get-recommended-movies': getRecommendedMovies,
         'get-movie-keywords': getMovieKeywords,
         'get-movies-by-keyword': getMoviesByKeyword,
         'get-keyword': getKeyword,
@@ -79,9 +78,6 @@ const getRelatedMovies = async (request) => {
     }
 }
 
-const getRecommendedMovies = async (request) => {
-
-}
 
 /**
  * Given a movie ID, retreive all keywords for the associated movie
@@ -611,7 +607,7 @@ const getMoviesByGenre = async (request) => {
 
         let result = await fetch(url, options);
         if (!result.ok) {
-            throw new error(result.statusText);
+            throw new Error(result.statusText);
         }
 
         return await result.json();
