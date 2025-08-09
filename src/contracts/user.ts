@@ -1,3 +1,5 @@
+import {UserMetadata} from "@contracts/UserMetadata";
+
 export type User = {
     id: number,
     first_name: string,
@@ -12,4 +14,5 @@ export type User = {
     password: string,
     created_at: string,
     is_active: boolean,
+    metadata: UserMetadata
 }

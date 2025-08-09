@@ -69,7 +69,12 @@ export default async function signup(request, response) {
             first_name: name,
             last_name: null,
             is_active: true,
-            created_at: new Date()
+            created_at: new Date(),
+            metadata: {
+                bio: null,
+                country: null,
+                sex: null
+            }
         });
 
         await userRepo.save(newUser);

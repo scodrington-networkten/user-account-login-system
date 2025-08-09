@@ -25,7 +25,7 @@ const Signup = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
-    const [successMessage, setSuccessMessage] = useState<string>('')
+    const [message, setMessage] = useState<string>('')
     const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
     const onFormSubmit = async (e: React.FormEvent) => {
@@ -35,6 +35,8 @@ const Signup = () => {
             setLoading(true);
             setError(false);
             setErrorMessage('');
+
+            setMessage("Creating your account");
 
             const response = await fetch('api/user/signup', {
                 method: 'POST',
@@ -48,17 +50,19 @@ const Signup = () => {
 
             //collect the jwt from the payload and put it in sessions
             sessionStorage.setItem('jwt', data.token);
+            setMessage("Logging you into your account");
+
             //try and login with that token
             await login(data.token)
 
-            setSuccessMessage(data.message);
+            setMessage(data.message);
             navigate('/dashboard');
         }
             //catch the error and set it to our local state variable
         catch (error) {
             setErrorMessage((error as Error).message);
             setError(true);
-            setSuccessMessage('');
+            setMessage('');
         } finally {
             setLoading(false);
         }
@@ -89,72 +93,75 @@ const Signup = () => {
         })
     }
 
-
     return (
         <div className="signup-form">
             <h1 className="title">Signup</h1>
             <p>Create a free account today to add movies to your watch later and favorites list</p><br/>
-            {successMessage !== '' &&
-                <p>{successMessage}</p>
+
+            {message !== '' &&
+                <p className="message-success mb-4">{message}</p>
             }
-            {loading &&
-                <p>Loading...</p>
-            }
+
             {error &&
-                <p>{errorMessage}</p>
+                <p className="message-error mb-4">{errorMessage}</p>
             }
             <form id="signup" onSubmit={onFormSubmit} className={`container m-auto ${loading ? 'waiting' : ''}`}>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={uploadFormChange}
-                        autoComplete="email"
-                        required
-                    />
-                    {fieldErrors.email &&
-                        <div className="form-help error-message">This field is required</div>
-                    }
+                <fieldset disabled={loading}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={uploadFormChange}
+                                autoComplete="email"
+                                required
+                                disabled={loading}
+                            />
+                            {fieldErrors.email &&
+                                <div className="form-help error-message">This field is required</div>
+                            }
 
-                </div>
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={uploadFormChange}
-                        autoComplete="given-name"
-                        required
-                    />
-                    {fieldErrors.name &&
-                        <div className="form-help error-message">This field is required</div>
-                    }
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
+                            <input
+                                id="name"
+                                name="name"
+                                value={formData.name}
+                                onChange={uploadFormChange}
+                                autoComplete="given-name"
+                                required
+                            />
+                            {fieldErrors.name &&
+                                <div className="form-help error-message">This field is required</div>
+                            }
 
-                </div>
+                        </div>
 
-                <div className="form-group">
-                    <label htmlFor="user-password">Password</label>
-                    <input
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={uploadFormChange}
-                        required
-                        minLength={8}
-                    />
-                    {fieldErrors.password &&
-                        <div className="form-help error-message">This field is required and must be at least 8
-                            characters</div>
-                    }
-                </div>
-                <button type="submit" disabled={loading} className="text-white">
-                    {loading ? 'Signing up...' : 'Sign Up'}
-                </button>
+                        <div className="form-group">
+                            <label htmlFor="user-password">Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={uploadFormChange}
+                                required
+                                minLength={8}
+                            />
+                            {fieldErrors.password &&
+                                <div className="form-help error-message">This field is required and must be at least 8
+                                    characters</div>
+                            }
+                        </div>
+                    </div>
+                    <button type="submit" className="text-white">
+                        Sign Up
+                    </button>
+                </fieldset>
             </form>
         </div>
     )

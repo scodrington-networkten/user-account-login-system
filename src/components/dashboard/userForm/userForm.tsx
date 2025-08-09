@@ -2,6 +2,7 @@ import '@components/forms.css';
 import {useUser} from "@contexts/UserContext";
 import {useState, useEffect, JSX} from "react";
 import {User} from "@contracts/user";
+import {UserMetadata} from "@contracts/UserMetadata";
 
 
 /**
@@ -16,12 +17,16 @@ const UserForm = (): JSX.Element | null => {
 
     // Local form state initialized with user values
     const [formData, setFormData] = useState<User | null>(null);
+    const [userMetadataForm, setUserMetadataForm] = useState<UserMetadata | null>(null);
 
     // When `user` updates, sync local state once
     useEffect(() => {
         if (user) {
             setFormData(user);
+            setUserMetadataForm(user.metadata)
         }
+
+
     }, [user]);
 
     //Handle changes to the form to update local state
@@ -61,49 +66,40 @@ const UserForm = (): JSX.Element | null => {
         <section className={"user-account-section my-2"}>
             <p className={"mb-2"}>Your account information is listed below</p>
             <form>
-                <div className="form-group">
-                    <label htmlFor="id">User ID</label>
-                    <input type="text" id="id" name="id" value={formData.id.toString()} onChange={handleChange}/>
-                </div>
 
-                <div className="form-group">
-                    <label htmlFor="first_name">First Name</label>
-                    <input type="text" id="first_name" name="first_name" value={formData.first_name} required
-                           onChange={handleChange}/>
-                </div>
+                <fieldset>
+                    <h2>Primary Account Settings</h2>
+                    <hr/>
+                    <div className="form-group">
+                        <label htmlFor="first_name">First Name</label>
+                        <input type="text" id="first_name" name="first_name" value={formData.first_name}
+                               onChange={handleChange}/>
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="last_name">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" value={formData.last_name} required
-                           onChange={handleChange}/>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="last_name">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" value={formData.last_name}
+                               onChange={handleChange}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email Address</label>
+                        <input type="email" id="email" name="email" value={formData.email} required readOnly/>
+                        <span className="help-text">Your email associated with this account cannot be changed</span>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" name="password" value={formData.password}
+                               onChange={handleChange}/>
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
-                    <input type="email" id="email" name="email" value={formData.email} required
-                           onChange={handleChange}/>
-                </div>
+                </fieldset>
 
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" value={formData.password} required
-                           onChange={handleChange}/>
-                </div>
+                <fieldset>
+                    <h2>Extra Account Settings</h2>
+                    <hr/>
+                </fieldset>
 
-                <div className="form-group">
-                    <label htmlFor="created_at">Created At</label>
-                    <input type="text" id="created_at" name="created_at" value={formData.created_at} readOnly
-                           onChange={handleChange}/>
-                </div>
-
-                <div className="form-group">
-                    <label>
-                        <input type="checkbox" name="is_active" checked={formData.is_active} onChange={handleChange}/>
-                        Active User
-                    </label>
-                </div>
-
-                <button type="submit">Save</button>
+                <button type="submit">Update</button>
             </form>
         </section>
 

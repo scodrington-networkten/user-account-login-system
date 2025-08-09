@@ -37,7 +37,7 @@ export async function validateJwtFromRequest(request) {
         //collect user object with associated relations
         const user = await userRepo.findOne({
             where: {id: decodedToken.id},
-            relations: ['favorite_movies', 'watch_later_movies']
+            relations: ['favorite_movies', 'watch_later_movies', 'metadata']
         });
 
         if (!user) {

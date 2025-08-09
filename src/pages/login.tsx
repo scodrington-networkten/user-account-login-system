@@ -13,15 +13,18 @@ const Login = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const [successMessage, setsuccessMessage] = useState<string | null>(null)
 
     const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        setSuccessMessage(null)
+        setsuccessMessage(null)
 
         try {
+
+            setsuccessMessage('Logging you into your account');
+
             const response = await fetch('api/user/login', {
                 method: 'POST',
                 headers: {
@@ -34,16 +37,18 @@ const Login = () => {
                 throw new Error(data.message);
             }
 
+
+
             //collect token data and attempt login
             const token = data.token;
             await login(token);
-            setSuccessMessage("Successfully logged into your account");
+            setsuccessMessage("Successfully logged into your account");
         }
             //catch any errors
         catch (error) {
             console.error((error as Error).message);
             setError((error as Error).message);
-            setSuccessMessage(null);
+            setsuccessMessage(null);
         } finally {
             setLoading(false);
         }
@@ -65,14 +70,12 @@ const Login = () => {
     return (
         <div className="signup-form">
             <h1 className="title">Login</h1>
-            {loading &&
-                <p className="message-success">Logging you into your account</p>
-            }
+
             {successMessage !== null &&
-                <p className="message-success">{successMessage}</p>
+                <p className="message-success mb-4">{successMessage}</p>
             }
             {error !== null &&
-                <p className="message-error">There was an error logging in to your account: {error}</p>
+                <p className="message-error mb-4">There was an error logging in to your account: {error}</p>
             }
             <form id="login" onSubmit={onFormSubmit} className={`container m-auto ${loading ? 'waiting' : ''}`}>
                 <fieldset disabled={loading}>

@@ -9,21 +9,16 @@ const UserMetadataSchema = new EntitySchema({
             type: "int",
             generated: true
         },
-        email: {
-            type: "text",
-            nullable: false
-        },
         bio: {
             type: "text",
             nullable: true
         },
-        avatar_url: {
-            name: "avatar_url",
+        country: {
             type: "varchar",
             nullable: true
         },
-        country: {
-            type: "varchar",
+        sex: {
+            type: "text",
             nullable: true
         }
     },
