@@ -24,19 +24,26 @@ export default async function signup(request, response) {
     }
 
     //destructure into variables for processing
-    let {email = '', password = ''} = body;
+    let {email = '', password = '', name=''} = body;
 
-    //validate user data
+    //validate email
     if (!validator.isEmail(email) || validator.isEmpty(email)) {
         return response.status(400).json({message: "The provided email was either empty or invalid"});
     }
 
+    //validate pasword
     if (validator.isEmpty(password)) {
         return response.status(400).json({message: "The provided password was invalid or empty"});
     }
-    if (!validator.isLength(password, {min: 1, max: 100})) {
-        return response.status(400).json({message: "The provided password was not the right length"});
+    if (!validator.isLength(password, {min: 8, max: 100})) {
+        return response.status(400).json({message: "The provided password must be at least 8 characters"});
     }
+
+    //validate name
+    if(validator.isEmpty(name)){
+        return response.status(400).json({message: "The provided name was invalid or empty"});
+    }
+
     /*
     if (!validator.isStrongPassword(password)) {
         return response.status(400).json({message: "The provided password is not strong enough"})
@@ -59,8 +66,8 @@ export default async function signup(request, response) {
         const newUser = userRepo.create({
             email: email,
             password: password,
-            first_name: "John",
-            last_name: "",
+            first_name: name,
+            last_name: null,
             is_active: true,
             created_at: new Date()
         });

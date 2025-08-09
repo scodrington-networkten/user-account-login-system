@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Utilities from "../utilities";
+import {useUser} from "@contexts/UserContext";
 
 
 type FieldErrors = {
@@ -10,6 +11,8 @@ type FieldErrors = {
 }
 
 const Signup = () => {
+
+    const {login} = useUser();
 
     const [formData, setFormData] = useState({
         email: `test${Utilities.generateRandomString(5)}@gmail.com`,
@@ -21,6 +24,7 @@ const Signup = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const [successMessage, setSuccessMessage] = useState<string>('')
     const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
@@ -30,8 +34,9 @@ const Signup = () => {
         try {
             setLoading(true);
             setError(false);
+            setErrorMessage('');
 
-            const response = await fetch('/api/user-signup', {
+            const response = await fetch('api/user/signup', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(formData)
@@ -43,12 +48,15 @@ const Signup = () => {
 
             //collect the jwt from the payload and put it in sessions
             sessionStorage.setItem('jwt', data.token);
+            //try and login with that token
+            await login(data.token)
 
             setSuccessMessage(data.message);
             navigate('/dashboard');
         }
             //catch the error and set it to our local state variable
         catch (error) {
+            setErrorMessage((error as Error).message);
             setError(true);
             setSuccessMessage('');
         } finally {
@@ -62,8 +70,6 @@ const Signup = () => {
      * @returns {Promise<void>}
      */
     const uploadFormChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-
-        console.log('ive been called');
 
         const {name, value} = e.target;
 
@@ -95,7 +101,7 @@ const Signup = () => {
                 <p>Loading...</p>
             }
             {error &&
-                <p>There was an error creating your account: {error}</p>
+                <p>{errorMessage}</p>
             }
             <form id="signup" onSubmit={onFormSubmit} className={`container m-auto ${loading ? 'waiting' : ''}`}>
                 <div className="form-group">
@@ -142,7 +148,8 @@ const Signup = () => {
                         minLength={8}
                     />
                     {fieldErrors.password &&
-                        <div className="form-help error-message">This field is required and must be at least 8 characters</div>
+                        <div className="form-help error-message">This field is required and must be at least 8
+                            characters</div>
                     }
                 </div>
                 <button type="submit" disabled={loading} className="text-white">
