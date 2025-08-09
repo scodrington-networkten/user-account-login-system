@@ -17,11 +17,11 @@ form {
             @apply w-full py-2 px-2 border-1 border-gray-300 rounded transition-all mb-1 outline-none;
 
             &:focus {
-                border-color: var(--color-highlight-secondary);
+                border-color: var(--color-secondary);
                 outline: none;
             }
 
-            &:invalid {
+            &:invalid{
                 outline: none;
                 @apply border-red-500;
             }

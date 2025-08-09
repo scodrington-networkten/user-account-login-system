@@ -6,13 +6,15 @@ import Utilities from "../utilities";
 type FieldErrors = {
     email?: boolean;
     password?: boolean;
+    name?: boolean
 }
 
 const Signup = () => {
 
     const [formData, setFormData] = useState({
         email: `test${Utilities.generateRandomString(5)}@gmail.com`,
-        password: 'password'
+        password: '',
+        name: ''
     })
 
     const navigate = useNavigate();
@@ -61,6 +63,8 @@ const Signup = () => {
      */
     const uploadFormChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
+        console.log('ive been called');
+
         const {name, value} = e.target;
 
         setFormData(prevData => {
@@ -95,37 +99,50 @@ const Signup = () => {
             }
             <form id="signup" onSubmit={onFormSubmit} className={`container m-auto ${loading ? 'waiting' : ''}`}>
                 <div className="form-group">
-                    <label htmlFor="user-email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
-                        id="user-email"
+                        id="email"
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={uploadFormChange}
                         autoComplete="email"
-                        className="border"
                         required
                     />
                     {fieldErrors.email &&
-                        <div className="form-help error-message">This field is invalid</div>
+                        <div className="form-help error-message">This field is required</div>
+                    }
+
+                </div>
+                <div className="form-group">
+                    <label htmlFor="name">Name</label>
+                    <input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={uploadFormChange}
+                        autoComplete="given-name"
+                        required
+                    />
+                    {fieldErrors.name &&
+                        <div className="form-help error-message">This field is required</div>
                     }
 
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="user-password">Password:</label>
+                    <label htmlFor="user-password">Password</label>
                     <input
-                        id="user-password"
+                        id="password"
                         type="password"
                         name="password"
                         value={formData.password}
                         onChange={uploadFormChange}
-                        className="border"
                         required
                         minLength={8}
                     />
                     {fieldErrors.password &&
-                        <div className="form-help error-message">This field is invalid</div>
+                        <div className="form-help error-message">This field is required and must be at least 8 characters</div>
                     }
                 </div>
                 <button type="submit" disabled={loading} className="text-white">

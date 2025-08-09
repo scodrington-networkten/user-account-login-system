@@ -16,7 +16,7 @@ const UserSchema = new EntitySchema({
         last_name: {
             type: String,
             length: 100,
-            nullable: false
+            nullable: true
         },
         created_at: {
             type: 'timestamptz',

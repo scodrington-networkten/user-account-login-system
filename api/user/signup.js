@@ -60,7 +60,7 @@ export default async function signup(request, response) {
             email: email,
             password: password,
             first_name: "John",
-            last_name: "Smith",
+            last_name: "",
             is_active: true,
             created_at: new Date()
         });
