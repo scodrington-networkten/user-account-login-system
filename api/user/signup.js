@@ -24,17 +24,11 @@ export default async function signup(request, response) {
     }
 
     //destructure into variables for processing
-    let {email = '', username = '', password = ''} = body;
+    let {email = '', password = ''} = body;
 
     //validate user data
     if (!validator.isEmail(email) || validator.isEmpty(email)) {
         return response.status(400).json({message: "The provided email was either empty or invalid"});
-    }
-    if (validator.isEmpty(username)) {
-        return response.status(400).json({message: "The provided username was invalid or empty"});
-    }
-    if (!validator.isLength(username, {min: 1, max: 100})) {
-        return response.status(400).json({message: "The provided username was not the right length"});
     }
 
     if (validator.isEmpty(password)) {
@@ -56,7 +50,7 @@ export default async function signup(request, response) {
 
     const existingUser = await userRepo.findOneBy({email: email});
     if (existingUser) {
-        return response.status(400).json({message: `An account already exists using ${email}`});
+        return response.status(400).json({message: `An account already exists using ${email}. Consider resetting your password.`});
     }
 
     //try and create the user account
@@ -74,7 +68,7 @@ export default async function signup(request, response) {
         await userRepo.save(newUser);
 
         //create the JWT to send back to the user
-        const token = jwt.sign(newUser, process.env.JWT_SECRET_KEY,  { expiresIn: '1m' })
+        const token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {expiresIn: '6h'})
 
         const data = {
             token: token,

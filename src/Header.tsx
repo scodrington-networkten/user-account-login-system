@@ -71,10 +71,15 @@ const Header = (): JSX.Element => {
             );
         } else {
             return (
-                <Link to="/login" className="login-button">
-                    Login
-                    <FontAwesomeIcon className="icon" icon={faUser}/>
-                </Link>
+                <div className="user-buttons">
+                    <Link to="/login" className="login-button">
+                        Login
+                    </Link>
+                    <Link to="/signup" className="signup-button">
+                        Signup
+                    </Link>
+                </div>
+
             )
         }
     }

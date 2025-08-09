@@ -3,11 +3,15 @@ import {useNavigate} from "react-router-dom";
 import Utilities from "../utilities";
 
 
+type FieldErrors = {
+    email?: boolean;
+    password?: boolean;
+}
+
 const Signup = () => {
 
     const [formData, setFormData] = useState({
         email: `test${Utilities.generateRandomString(5)}@gmail.com`,
-        username: 'someguy',
         password: 'password'
     })
 
@@ -16,6 +20,7 @@ const Signup = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [successMessage, setSuccessMessage] = useState<string>('')
+    const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
     const onFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -56,15 +61,29 @@ const Signup = () => {
      */
     const uploadFormChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
+        const {name, value} = e.target;
+
         setFormData(prevData => {
             return {
-                ...prevData, [e.target.name]: e.target.value
+                ...prevData,
+                [name]: value
+            }
+        })
+
+        //check validity of fields
+        setFieldErrors(prevData => {
+            return {
+                ...prevData,
+                [name]: !e.target.checkValidity()
             }
         })
     }
 
+
     return (
         <div className="signup-form">
+            <h1 className="title">Signup</h1>
+            <p>Create a free account today to add movies to your watch later and favorites list</p><br/>
             {successMessage !== '' &&
                 <p>{successMessage}</p>
             }
@@ -74,44 +93,40 @@ const Signup = () => {
             {error &&
                 <p>There was an error creating your account: {error}</p>
             }
-            <form id="signup" onSubmit={onFormSubmit} className="border container m-auto">
-                <div>
-                    <label>Username:</label><br/>
+            <form id="signup" onSubmit={onFormSubmit} className={`container m-auto ${loading ? 'waiting' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="user-email">Email</label>
                     <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={uploadFormChange}
-
-                        autoComplete="username"
-                        className="border"
-                    />
-                </div>
-
-                <div>
-                    <label>Email:</label><br/>
-                    <input
+                        id="user-email"
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={uploadFormChange}
-
                         autoComplete="email"
                         className="border"
+                        required
                     />
+                    {fieldErrors.email &&
+                        <div className="form-help error-message">This field is invalid</div>
+                    }
+
                 </div>
 
-                <div>
-                    <label>Password:</label><br/>
+                <div className="form-group">
+                    <label htmlFor="user-password">Password:</label>
                     <input
+                        id="user-password"
                         type="password"
                         name="password"
                         value={formData.password}
                         onChange={uploadFormChange}
-
-                        autoComplete="new-password"
                         className="border"
+                        required
+                        minLength={8}
                     />
+                    {fieldErrors.password &&
+                        <div className="form-help error-message">This field is invalid</div>
+                    }
                 </div>
                 <button type="submit" disabled={loading} className="text-white">
                     {loading ? 'Signing up...' : 'Sign Up'}
