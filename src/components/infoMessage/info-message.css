@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.info-message{
+    @apply flex p-4 mb-4 mt-2 bg-gray-200 shadow-md align-middle gap-2;
+
+    span{
+        @apply inline-block;
+
+        .icon{
+            @apply mr-2;
+        }
+    }
+}

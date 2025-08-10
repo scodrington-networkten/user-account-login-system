@@ -4,6 +4,7 @@ import {useUser} from "@contexts/UserContext";
 import Utilities from "../../utilities";
 import LoadingCardList from "@components/loading-card-list";
 import MoviesList from "@components/movies-list";
+import InfoMessage from "@components/infoMessage/infoMessage";
 
 const WatchLaterList = () => {
 
@@ -48,7 +49,7 @@ const WatchLaterList = () => {
     //no movies yet
     if (user.watch_later_movies.length === 0) {
         return (
-            <p>You currently dont have any movies you've added to your watch later list</p>
+            <InfoMessage message={"You currently dont have any movies you've added to your watch later list"}/>
         )
     }
 

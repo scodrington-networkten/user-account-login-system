@@ -4,6 +4,7 @@ import {useUser} from "@contexts/UserContext";
 import LoadingCardList from "@components/loading-card-list";
 import Utilities from "../../utilities";
 import {Movie} from "@contracts/movie";
+import InfoMessage from "@components/infoMessage/infoMessage";
 
 
 /**
@@ -57,7 +58,7 @@ const FavoriteList = (): JSX.Element | null => {
     //no movies yet
     if (user.favorite_movies.length === 0) {
         return (
-            <p>You currently dont have any movies you've marked as a favorite</p>
+            <InfoMessage message="You currently dont have any movies you've marked as a favorite"/>
         )
     }
 
