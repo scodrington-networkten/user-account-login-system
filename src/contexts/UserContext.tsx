@@ -5,6 +5,7 @@ import {UserActionsApiResult} from "@contracts/userActionsApiResult";
 
 type UserContextType = {
     user: null | User,
+    userLoading: boolean,
     userExpired: boolean,
     setUserExpired: React.Dispatch<React.SetStateAction<boolean>>,
     login: (token: string) => Promise<void>,
@@ -21,6 +22,7 @@ export const UserProvider = ({children}: props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [userLoading, setUserLoading] = useState<boolean>(true);
     const [user, setUser] = useState<User | null>(null);
     const [userExpired, setUserExpired] = useState<boolean>(false);
     const userRef = useRef(user);         // <-- ref to keep latest user
@@ -177,8 +179,10 @@ export const UserProvider = ({children}: props) => {
     }, [handleTokenInvalidation]);
 
     // On initial load, try and load the user
+
     useEffect(() => {
         (async () => {
+            setUserLoading(true);
             const token = getToken();
             if (!token) return;
             try {
@@ -188,6 +192,8 @@ export const UserProvider = ({children}: props) => {
             } catch (error) {
                 window.showToastNotification('There was an error automatically logging you in', 'error');
                 console.error((error as Error).message);
+            } finally {
+                setUserLoading(false);
             }
         })();
     }, []);
@@ -238,6 +244,7 @@ export const UserProvider = ({children}: props) => {
         <UserContext.Provider
             value={{
                 user,
+                userLoading,
                 userExpired,
                 setUserExpired,
                 login,

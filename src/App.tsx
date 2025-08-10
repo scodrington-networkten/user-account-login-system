@@ -52,6 +52,7 @@ import SingleMovieCard from "./pages/singleMovieCard";
 
 import ScrollToTop from "@components/ScrollToTopHandler";
 import ScrollToTopHandler from "@components/ScrollToTopHandler";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
 
@@ -80,9 +81,9 @@ function App() {
 
                                     <Route path="/keyword/:keyword" element={<MoviesByKeyword/>}/>
 
-                                    <Route path="/dashboard" element={<Dashboard/>}/>
-                                    <Route path="/dashboard/watch-later" element={<WatchLater/>}/>
-                                    <Route path="/dashboard/favorites" element={<Favorites/>}/>
+
+
+
 
                                     <Route path="/person/:id/:name" element={<SinglePerson/>}/>
 
@@ -99,6 +100,14 @@ function App() {
                                     <Route path="/new-slider" element={<NewSlider/>}/>
 
                                     <Route path="*" element={<NotFound/>}/>
+
+                                    <Route element={<PrivateRoute />}>
+                                        <Route path="/dashboard" element={<Dashboard/>}/>
+                                        <Route path="/dashboard/watch-later" element={<WatchLater/>}/>
+                                        <Route path="/dashboard/favorites" element={<Favorites/>}/>
+                                    </Route>
+
+
                                 </Route>
                             </Routes>
                         </GenreProvider>

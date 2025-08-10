@@ -17,17 +17,20 @@ const UserForm = (): JSX.Element | null => {
 
     // Local form state initialized with user values
     const [formData, setFormData] = useState<User | null>(null);
-    const [userMetadataForm, setUserMetadataForm] = useState<UserMetadata | null>(null);
+
 
     // When `user` updates, sync local state once
     useEffect(() => {
         if (user) {
             setFormData(user);
-            setUserMetadataForm(user.metadata)
         }
 
 
     }, [user]);
+
+    useEffect(() => {
+        console.log("Form data updated:", formData);
+    }, [formData]);
 
     //Handle changes to the form to update local state
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -52,9 +55,28 @@ const UserForm = (): JSX.Element | null => {
         }));
     }
 
+    function handleMetadataFiedldChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
+
+        const {name, type, value, checked} = e.target;
+
+        //update metadata state
+        setFormData((prev) => ({
+            ...prev!,
+            metadata: {
+                ...prev!.metadata,
+                [name]: value
+            }
+        }));
+
+    }
+
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        console.log("Submit data", formData);
+
+
+        //submit the updated user data to the endpoint to update the record
+
+
     }
 
 
@@ -66,7 +88,6 @@ const UserForm = (): JSX.Element | null => {
         <section className={"user-account-section my-2"}>
             <p className={"mb-2"}>Your account information is listed below</p>
             <form>
-
                 <fieldset>
                     <h2>Primary Account Settings</h2>
                     <hr/>
@@ -83,7 +104,7 @@ const UserForm = (): JSX.Element | null => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="email">Email Address</label>
-                        <input type="email" id="email" name="email" value={formData.email} required readOnly/>
+                        <input type="email" id="email" name="email" value={formData.email} readOnly/>
                         <span className="help-text">Your email associated with this account cannot be changed</span>
                     </div>
                     <div className="form-group">
@@ -97,6 +118,43 @@ const UserForm = (): JSX.Element | null => {
                 <fieldset>
                     <h2>Extra Account Settings</h2>
                     <hr/>
+
+                    <div className="form-group">
+                        <label htmlFor="bio">Bio</label>
+                        <textarea id="bio" name="bio" value={formData.metadata?.bio}
+                                  onChange={handleMetadataFiedldChange}/>
+                    </div>
+                    <div className="form-group checkbox-group">
+                        <label>Sex</label>
+
+                        <div className="options">
+                            <div className="option">
+                                <label htmlFor="sex_male">Male</label>
+                                <input type="radio" id="sex_male" name="sex" value="male"
+                                       checked={formData.metadata?.sex
+                                           == "male"}
+                                       onChange={handleMetadataFiedldChange}/>
+                            </div>
+                            <div className="option">
+                                <label htmlFor="sex_female">Female</label>
+                                <input type="radio" id="sex_female" name="sex" value="female"
+                                       checked={formData.metadata?.sex
+                                           == "female"}
+                                       onChange={handleMetadataFiedldChange}/>
+                            </div>
+                            <div className="option">
+                                <label htmlFor="sex_unknown">Unknown</label>
+                                <input type="radio" id="sex_unknown" name="sex" value="unknown"
+                                       checked={formData.metadata?.sex
+                                           == "unknown"}
+                                       onChange={handleMetadataFiedldChange}/>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
                 </fieldset>
 
                 <button type="submit">Update</button>

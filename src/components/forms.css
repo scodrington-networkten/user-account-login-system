@@ -3,12 +3,16 @@
 form {
     @apply m-auto;
 
-    h2{
+    h2 {
         @apply text-2xl mb-2;
     }
 
-    hr{
+    hr {
         @apply border-gray-400 mb-3;
+    }
+
+    fieldset {
+        @apply mb-2;
     }
 
     .form-group {
@@ -29,12 +33,12 @@ form {
                 outline: none;
             }
 
-            &:invalid{
+            &:invalid {
                 outline: none;
                 @apply border-red-500;
             }
 
-            &[readonly]{
+            &[readonly] {
                 @apply text-gray-400;
             }
         }
@@ -44,12 +48,39 @@ form {
             color: #666;
         }
 
-        .help-text{
+        .help-text {
             @apply text-sm text-gray-600 italic;
         }
 
         .error-message {
             @apply text-red-500;
+        }
+
+        /**group of checkbox items*/
+
+        &.checkbox-group {
+
+
+            > label {
+
+            }
+
+            .options {
+                @apply flex;
+            }
+
+            .option {
+
+                @apply flex gap-2 align-middle mb-2;
+
+                label {
+                    @apply text-sm;
+                }
+
+                input, label {
+                    @apply mb-0;
+                }
+            }
         }
     }
 
@@ -69,7 +100,8 @@ form {
     }
 
     /**when form is loading**/
-    &.waiting{
+
+    &.waiting {
         @apply opacity-50 pointer-events-none;
     }
 }
