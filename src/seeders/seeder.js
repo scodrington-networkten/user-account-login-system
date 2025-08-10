@@ -2,13 +2,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import {AppDataSource} from "./data-source.js";
-import * as bcrypt from "bcrypt"
-import UserSchema from "./schemas/User.js";
-import UserMetdataSchema from "./schemas/UserMetdata.js";
 
-
-////"seed": "node src/seed.js",
+import {AppDataSource} from "../data-source.js";
+import UserSchema from "../schemas/User.js";
 
 const seed = async () => {
 
@@ -21,18 +17,28 @@ const seed = async () => {
     //const adminPassword = await bcrypt.hash("password", 10);
     const adminPassword = "password";
 
+
+    const userData = {
+        first_name: "John",
+        last_name: "Smith",
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date(),
+        email: adminEmail,
+        password: adminPassword,
+        metadata: {
+            bio: "This is the bio",
+            sex: "male",
+            country: "AU"
+        }
+    }
+
     const existing = await userRepo.findOneBy({email: adminEmail});
     if (existing) {
-        console.log("Admin account exists in DB already, updating record");
-
-        existing.password = adminPassword; // You might want to hash this if needed
-        existing.first_name = "John";
-        existing.last_name = "Smith";
-        existing.is_active = true;
-        existing.updated_at = new Date(); // If you're tracking updates
+        console.log("Admin account exists in DB already, updating record with default data");
 
         try {
-            await userRepo.save(existing);
+            await userRepo.save(userData);
             console.log(`Successfully updated the user: ${adminEmail}`);
         } catch (error) {
             console.error("There was an error updating the admin account", error);
@@ -43,15 +49,8 @@ const seed = async () => {
         console.log("Admin account doesnt exist in the DB, creating");
 
         try {
-            const user = userRepo.create({
-                email: adminEmail,
-                password: adminPassword,
-                first_name: "John",
-                last_name: "Smith",
-                is_active: true,
-                created_at: new Date()
-            });
-            await userRepo.save(user);
+
+            await userRepo.save(userData);
             console.log(`Successfully created the user: ${adminEmail}`);
 
         } catch (error) {

@@ -7,10 +7,10 @@
         "dev": "vite",
         "prebuild": "npx typeorm migration:run -d src/data-source.js && node src/seed.js",
         "migrate": "npx typeorm migration:run -d",
-        "seed": "node src/seed.js",
         "build": "vite build",
         "lint": "eslint .",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "seed": "node ./src/seeders/seeder.js"
     },
     "dependencies": {
         "@fontsource/inter": "^5.2.5",
