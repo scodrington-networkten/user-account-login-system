@@ -10,8 +10,8 @@ const PrivateRoute = () => {
 
     const {user, userLoading} = useUser();
 
-    console.log(userLoading);
-    console.log(user);
+   // console.log(userLoading);
+   // console.log(user);
 
     //user state still loading
     if (userLoading) return (

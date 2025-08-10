@@ -2,6 +2,7 @@ import {AppDataSource} from "../../src/data-source.js";
 import {validateJwtFromRequest} from "../../utils/jwtValidator.js";
 import FavoriteMovieSchema from "../../src/schemas/FavoriteMovie.js";
 import WatchLaterMovieShema from "../../src/schemas/WatchLaterMovie.js";
+import UserSchema from "../../src/schemas/User.js";
 
 /**
  * Handles logged in user actions
@@ -21,7 +22,7 @@ export default async function actions(request, response) {
     }
 
     //verify method allowed
-    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-watch-later', 'remove-watch-later'];
+    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-watch-later', 'remove-watch-later', 'update-information'];
     if (!allowedMethods.includes(action)) {
         let methodMessage = `the provided action: ${action} is not a valid method, allowed methods are: ${allowedMethods.join(', ')}`;
         return response.status(400).json({error: methodMessage});
@@ -184,6 +185,43 @@ export default async function actions(request, response) {
                 });
             }
 
+
+        case 'update-information':
+
+
+            try {
+
+                //collect form data for use
+                const updatedUserData = body;
+
+                //collect user for the request
+                user = await validateJwtFromRequest(request);
+
+                //update the user based on new data (merging new data onto the old one)
+                const userRepo = AppDataSource.getRepository(UserSchema);
+                const updatedUser = await userRepo.save({
+                    ...user, // includes id, so TypeORM knows it's an update
+                    first_name: updatedUserData.first_name,
+                    last_name: updatedUserData.last_name,
+                    password: updatedUserData.password,
+                    metadata: updatedUserData.metadata
+                });
+
+                return response.status(200).json({
+                    success: true,
+                    message: "Updated your account",
+                    user: updatedUser
+                });
+
+            } catch (error) {
+                return response.status(500).json({
+                    message: error.message,
+                    success: false,
+                    user: null
+                });
+            } finally {
+
+            }
 
     }
 

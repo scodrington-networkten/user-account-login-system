@@ -3,34 +3,34 @@ import {useUser} from "@contexts/UserContext";
 import {useState, useEffect, JSX} from "react";
 import {User} from "@contracts/user";
 import {UserMetadata} from "@contracts/UserMetadata";
-
+import {UserActionsApiResult} from "@contracts/userActionsApiResult";
+import {UpdateUserApiResponse} from "@contracts/updateUserApiResponse";
 
 /**
- * Shows the user their details and allows updating it
+ * Shows the user their details and allows updating it (passing it to backend
+ * for the updation of the user)
  * @returns {JSX.Element}
  * @constructor
  */
 const UserForm = (): JSX.Element | null => {
 
 
-    const {user} = useUser();
+    const {user, setUser, updateUserInformation} = useUser();
 
     // Local form state initialized with user values
     const [formData, setFormData] = useState<User | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
 
-    // When `user` updates, sync local state once
+    // When `user` updates, sync the formdata
     useEffect(() => {
         if (user) {
             setFormData(user);
-            console.log(user);
         }
-
-
     }, [user]);
 
     useEffect(() => {
-        console.log("Form data updated:", formData);
+        ///console.log("Form data updated:", formData);
     }, [formData]);
 
     //Handle changes to the form to update local state
@@ -56,9 +56,13 @@ const UserForm = (): JSX.Element | null => {
         }));
     }
 
+    /**
+     * Handle updating the metadata specifically, such as bio and sex
+     * @param e
+     */
     function handleMetadataFiedldChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
 
-        const {name, type, value, checked} = e.target;
+        const {name, type, value} = e.target;
 
         //update metadata state
         setFormData((prev) => ({
@@ -71,25 +75,34 @@ const UserForm = (): JSX.Element | null => {
 
     }
 
-    function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+        if (formData === null) return;
 
+        setLoading(true);
 
-        //submit the updated user data to the endpoint to update the record
+        //pass updated user form data to backend for saving
+        const result: UpdateUserApiResponse = await updateUserInformation(formData);
 
+        //on success, show message + set user to the updated user to refesh the UI
+        if (result.success) {
+            window.showToastNotification(result.message, 'success');
+            setUser(result.user);
+        } else {
+            window.showToastNotification(result.message, 'error');
+        }
+
+        setLoading(false);
 
     }
 
-
-    if (user == null || formData == null) {
-        return null;
-    }
+    if (!user || !formData) return null;
 
     return (
         <section className={"user-account-section my-2"}>
             <p className={"mb-2"}>Your account information is listed below</p>
-            <form>
-                <fieldset>
+            <form onSubmit={handleSubmit}>
+                <fieldset disabled={loading}>
                     <h2>Primary Account Settings</h2>
                     <hr/>
                     <div className="form-group">
@@ -116,7 +129,7 @@ const UserForm = (): JSX.Element | null => {
 
                 </fieldset>
 
-                <fieldset>
+                <fieldset disabled={loading}>
                     <h2>Extra Account Settings</h2>
                     <hr/>
 
@@ -155,10 +168,11 @@ const UserForm = (): JSX.Element | null => {
 
                     </div>
 
-
+                </fieldset>
+                <fieldset disabled={loading}>
+                    <button type="submit">Update</button>
                 </fieldset>
 
-                <button type="submit">Update</button>
             </form>
         </section>
 

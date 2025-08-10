@@ -5,8 +5,10 @@ import {UserActionsApiResult} from "@contracts/userActionsApiResult";
 
 type UserContextType = {
     user: null | User,
+    setUser: React.Dispatch<React.SetStateAction<User | null>>,
     userLoading: boolean,
     userExpired: boolean,
+    updateUserInformation: (userData: User) => Promise<{success: boolean, message: string, user: null|User}>,
     setUserExpired: React.Dispatch<React.SetStateAction<boolean>>,
     login: (token: string) => Promise<void>,
     logout: () => void,
@@ -84,6 +86,45 @@ export const UserProvider = ({children}: props) => {
             }
         }
     }
+
+    /**
+     * Take in new information from the user (from the edit user form) and update the user itself
+     * @param userData
+     */
+    const updateUserInformation = async (userData: User): Promise<{success: boolean, message: string, user: null|User}> => {
+
+        //submit the updated user data to the endpoint to update the record
+        const jwt = getToken();
+        const response = await fetch('/api/user/actions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`,
+                'x-user-action': 'update-information'
+            },
+            body: JSON.stringify(userData),
+        })
+
+        if(!response.ok){
+            const errorData = await response.json();
+            return {
+                success: false,
+                message: errorData.message || 'Update failed',
+                user: null
+            };
+        }
+
+        const data: UserActionsApiResult = await response.json();
+
+        // Assuming your API returns a 'message' and updated 'user'
+        return {
+            success: true,
+            message: data.message || 'Update successful',
+            user: data.user
+        };
+
+    }
+
 
     /**
      * Toggle the selected movie for the user, either adding or removing it from their watch later list
@@ -234,6 +275,7 @@ export const UserProvider = ({children}: props) => {
         return await userResponse.json();
     }
 
+
     const logout = () => {
         deleteToken();
         setUser(null);
@@ -244,8 +286,10 @@ export const UserProvider = ({children}: props) => {
         <UserContext.Provider
             value={{
                 user,
+                setUser,
                 userLoading,
                 userExpired,
+                updateUserInformation,
                 setUserExpired,
                 login,
                 logout,

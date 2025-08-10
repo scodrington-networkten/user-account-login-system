@@ -13,6 +13,10 @@ form {
 
     fieldset {
         @apply mb-2;
+
+        &:disabled{
+            @apply opacity-50;
+        }
     }
 
     .form-group {
