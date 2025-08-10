@@ -2,6 +2,7 @@ import validator from "validator";
 import {AppDataSource} from "../../src/data-source.js";
 import UserSchema from "../../src/schemas/User.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 /**
  * Given a post request with username + password, sign the user in and generate a JWT to use
@@ -21,10 +22,10 @@ export default async function login(request, response) {
     let {email = '', password = ''} = body;
 
     //validate email + password before login check
-    if (!validator.isEmail(email) || validator.isEmpty(email)) {
+    if (!validator.isEmail(email)) {
         return response.status(400).json({message: "The provided email was either empty or invalid"});
     }
-    if (validator.isEmpty(password) || validator.isEmpty(password)) {
+    if (validator.isEmpty(password)) {
         return response.status(400).json({message: "The provided password was invalid or empty"});
     }
 
@@ -38,14 +39,15 @@ export default async function login(request, response) {
         return response.status(400).json({message: `No account exists for this email: ${email}`});
     }
 
-    //user exists with that email, verify against db
-    const validUser = await userRepo.findOneBy({email: email, password: password});
-    if (!validUser) {
-        return response.status(400).json({message: "Username or email invalid, unable to sign in"});
+    //check matched user to compared password
+    const validPassword = await bcrypt.compare(password, existingUser.password);
+    if (!validPassword) {
+        return response.status(400).json({message: "Unable to sign in with those credentials"});
     }
 
+
     //good response, generate JWT for it
-    const token = jwt.sign({id: validUser.id}, process.env.JWT_SECRET_KEY, {expiresIn: '6h'})
+    const token = jwt.sign({id: existingUser.id}, process.env.JWT_SECRET_KEY, {expiresIn: '6h'})
     return response.status(200).json({token: token});
 
 }
