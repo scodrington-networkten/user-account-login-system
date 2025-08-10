@@ -23,6 +23,7 @@ const UserForm = (): JSX.Element | null => {
     useEffect(() => {
         if (user) {
             setFormData(user);
+            console.log(user);
         }
 
 
