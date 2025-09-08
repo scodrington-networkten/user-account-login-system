@@ -22,7 +22,7 @@ export default async function actions(request, response) {
     }
 
     //verify method allowed
-    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-watch-later', 'remove-watch-later', 'update-information'];
+    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-watch-later', 'remove-watch-later', 'update-information', 'create-movie-list', 'delete-movie-list'];
     if (!allowedMethods.includes(action)) {
         let methodMessage = `the provided action: ${action} is not a valid method, allowed methods are: ${allowedMethods.join(', ')}`;
         return response.status(400).json({error: methodMessage});
@@ -48,6 +48,23 @@ export default async function actions(request, response) {
     }
 
     switch (action) {
+
+        case 'create-movie-list':
+
+            try {
+
+                user = await validateJwtFromRequest(request);
+                return response.status(200).json({
+                    message: 'created a new movie list',
+                    user: user
+                })
+
+            } catch (error) {
+
+            }
+
+        case 'delete-movie-list':
+
 
         case 'add-favorite':
             try {

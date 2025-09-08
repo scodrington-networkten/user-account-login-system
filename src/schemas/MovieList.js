@@ -20,6 +20,18 @@ const entitySchema = new EntitySchema({
             type: "text",
             nullable: true,
         }
+    },
+    relations: {
+        user: {
+            type: "many-to-one",
+            target: "user",
+            joinColumn: {
+                name: "user_id",
+                referencedColumnName: "id"
+            },
+            nullable: false,
+            onDelete: "CASCADE"
+        }
     }
 
 
