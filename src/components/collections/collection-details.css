@@ -12,8 +12,7 @@
         @apply md:flex-nowrap md:gap-4;
 
         .left{
-            @apply flex flex-grow;
-
+            @apply flex ;
             img{
 
             }

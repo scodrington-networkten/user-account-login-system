@@ -53,6 +53,7 @@ import SingleMovieCard from "./pages/singleMovieCard";
 import ScrollToTop from "@components/ScrollToTopHandler";
 import ScrollToTopHandler from "@components/ScrollToTopHandler";
 import PrivateRoute from "./PrivateRoute";
+import Lists from "./pages/dashboard/lists";
 
 function App() {
 
@@ -105,6 +106,7 @@ function App() {
                                         <Route path="/dashboard" element={<Dashboard/>}/>
                                         <Route path="/dashboard/watch-later" element={<WatchLater/>}/>
                                         <Route path="/dashboard/favorites" element={<Favorites/>}/>
+                                        <Route path="/dashboard/lists" element={<Lists/>}/>
                                     </Route>
 
 

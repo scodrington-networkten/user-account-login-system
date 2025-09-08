@@ -202,25 +202,8 @@ export const UserProvider = ({children}: props) => {
         }
     }, []);
 
-    // Visibility change event listener
-    useEffect(() => {
-
-        /* HIDDEN FOR NOW CAUSES FORCED LOGOUTS
-        const handleVisibilityChange = async () => {
-            if (document.visibilityState !== "visible") return;
-            await handleTokenInvalidation();
-        }
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-
-
-         */
-
-    }, [handleTokenInvalidation]);
 
     // On initial load, try and load the user
-
     useEffect(() => {
         (async () => {
             setUserLoading(true);

@@ -43,14 +43,15 @@ const Header = (): JSX.Element => {
         if (user !== null) {
             return (
                 <div className="flex items-center justify-center gap-3">
-                    <div className="first-name">
-                        <p>{user.first_name}</p>
-                    </div>
+
                     <div
-                        className="relative"
+                        className="relative flex gap-2"
                         onMouseEnter={() => setUserSubmenuOpen(true)}   // open submenu on hover (desktop)
                         onMouseLeave={() => setUserSubmenuOpen(false)}  // close submenu on hover out
                     >
+                        <div className="first-name">
+                            <p>{user.first_name}</p>
+                        </div>
                         <div
                             className="user-icon cursor-pointer"
                             onClick={() => setUserSubmenuOpen(!userSubmenuOpen)}  // toggle on click (mobile)

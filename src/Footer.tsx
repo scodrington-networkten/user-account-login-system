@@ -62,7 +62,7 @@ const Footer = () => {
     }
 
     /**
-     * Shows recent movies populated from the homapage
+     * Shows recent movies populated from the homepage
      */
     const getRecentMovies = (): JSX.Element => {
 

@@ -7,6 +7,7 @@ import UserSchema from "./schemas/User.js";
 import UserMetdata from "./schemas/UserMetdata.js";
 import FavoriteMovieSchema from "./schemas/FavoriteMovie.js";
 import WatchLaterMovieShema from "./schemas/WatchLaterMovie.js";
+import MovieListSchema from "./schemas/MovieList.js";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -21,6 +22,6 @@ export const AppDataSource = new DataSource({
     database: process.env.PGDATABASE,
     synchronize: false,
     logging: isProd,
-    entities: [UserSchema, UserMetdata, FavoriteMovieSchema, WatchLaterMovieShema],
+    entities: [UserSchema, UserMetdata, FavoriteMovieSchema, WatchLaterMovieShema, MovieListSchema],
     migrations: ["src/migrations/*.cjs"],  // <---- notice .cjs extension here
 });

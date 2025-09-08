@@ -26,11 +26,11 @@ const StandardSlider = ({data, header = ''}: StandardSlider): JSX.Element => {
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
-            duration: 5,
+            duration: 10,
             slides: '.embla__slide'
         },
         [Autoplay({
-            delay: 3000,
+            delay: 5000,
             stopOnInteraction: true
         })]
     )
