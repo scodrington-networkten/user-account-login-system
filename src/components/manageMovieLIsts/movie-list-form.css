@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+.movie-list-form{
+
+    border: solid 2px red;
+}

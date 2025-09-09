@@ -54,6 +54,7 @@ import ScrollToTop from "@components/ScrollToTopHandler";
 import ScrollToTopHandler from "@components/ScrollToTopHandler";
 import PrivateRoute from "./PrivateRoute";
 import Lists from "./pages/dashboard/lists";
+import MovieListForm from "@components/manageMovieLIsts/movieListForm";
 
 function App() {
 
@@ -114,6 +115,7 @@ function App() {
                             </Routes>
                         </GenreProvider>
                         <UserExpiredPopup/>
+                        <MovieListForm/>
                         <ToastNotification/>
                     </UserProvider>
                     <ScrollToTopHandler/>

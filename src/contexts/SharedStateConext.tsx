@@ -8,10 +8,15 @@ type SharedStateContextType = {
     closeMiniSearchForm: () => void,
     openMiniSearchForm: () => void,
 
-    genreSubnavOpen: boolean;
-    setGenreSubnavOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    openGenreSubnav: () => void;
-    closeGenreSubnav: () => void;
+    genreSubnavOpen: boolean,
+    setGenreSubnavOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    openGenreSubnav: () => void,
+    closeGenreSubnav: () => void,
+
+    movieListFormOpen: boolean,
+    setMovieListFormOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    openMovieListForm: () => void,
+    closeMovieListForm: () => void,
 }
 const SharedStateContext = createContext<SharedStateContextType | null>(null);
 
@@ -22,6 +27,14 @@ export const SharedStateProvider = ({children}: props) => {
     const location = useLocation();
     const [miniSearchFormOpen, setMiniSearchFormOpen] = useState(false);
     const [genreSubnavOpen, setGenreSubnavOpen] = useState(false);
+    const [movieListFormOpen, setMovieListFormOpen] = useState(false);
+
+    const openMovieListForm = () => {
+        setMovieListFormOpen(true);
+    }
+    const closeMovieListForm = () => {
+        setMovieListFormOpen(false);
+    }
 
 
     const openMiniSearchForm = () => {
@@ -82,7 +95,12 @@ export const SharedStateProvider = ({children}: props) => {
                 genreSubnavOpen,
                 setGenreSubnavOpen,
                 openGenreSubnav,
-                closeGenreSubnav
+                closeGenreSubnav,
+
+                movieListFormOpen,
+                openMovieListForm,
+                closeMovieListForm,
+                setMovieListFormOpen
             }}>
             {children}
         </SharedStateContext.Provider>

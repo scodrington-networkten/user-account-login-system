@@ -14,6 +14,7 @@ import MovieKeywords from "@components/movieKeywords/movie-keywords";
 import {Helmet} from "react-helmet";
 import CollectionDetails from "@components/collections/collectionDetails";
 import {Movie} from "@contracts/movie";
+import OpenMovieListButton from "@components/manageMovieLIsts/openMovieListButton";
 
 
 /**
@@ -97,6 +98,9 @@ const SingleMovie = ({movie}: SingleMovieProps): JSX.Element => {
                                 <GenreButton genre={item} key={`genre-button-${index}`}/>
                             ))}
                         </section>
+
+                        <OpenMovieListButton movie={movie}/>
+
                         <div className="overview">{movie.overview}</div>
                         <section className="actors-section w-full">
                             <MovieActors movie={movie}/>
