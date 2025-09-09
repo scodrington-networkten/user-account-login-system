@@ -23,7 +23,17 @@ export default async function actions(request, response) {
     }
 
     //verify method allowed
-    const allowedMethods = ['add-favorite', 'remove-favorite', 'add-watch-later', 'remove-watch-later', 'update-information', 'create-movie-list', 'delete-movie-list'];
+    const allowedMethods = [
+        'add-favorite',
+        'remove-favorite',
+        'add-watch-later',
+        'remove-watch-later',
+        'update-information',
+        'create-movie-list',
+        'delete-movie-list',
+        'add-movie-to-list',
+        'remove-movie-from-list'
+    ];
     if (!allowedMethods.includes(action)) {
         let methodMessage = `the provided action: ${action} is not a valid method, allowed methods are: ${allowedMethods.join(', ')}`;
         return response.status(400).json({error: methodMessage});
@@ -50,6 +60,7 @@ export default async function actions(request, response) {
 
     switch (action) {
 
+        //create a new movie list, to add movies to
         case 'create-movie-list':
 
             try {
@@ -57,7 +68,6 @@ export default async function actions(request, response) {
                 //extract data about the movie list
                 const {title} = body;
                 const {description} = body;
-
 
                 //create a new list
                 const movieListRepo = AppDataSource.getRepository(MovieListSchema);
@@ -85,6 +95,95 @@ export default async function actions(request, response) {
                 });
             }
 
+        //add a singular movie to the list
+        case 'add-movie-to-list':
+
+            try {
+
+                const {id: movieListId} = body;
+                const {movie_id: movieId} = body;
+
+                //find the associated list
+                const movieListRepo = AppDataSource.getRepository(MovieListSchema);
+                const existingMovieList = await movieListRepo.findOneBy({id: movieListId})
+                if (!existingMovieList) {
+                    throw new Error(`Movie not found: ${movieListId}`);
+                }
+
+                //add a movie to this list
+                let movieIds = existingMovieList.movie_ids || [];
+                movieIds.push(movieId);
+
+                //update and save
+                existingMovieList.movie_ids = movieIds;
+                const savedMovieList = await movieListRepo.save(existingMovieList);
+
+                //get an updated copy of the user with this new movie list data
+                user = await validateJwtFromRequest(request);
+
+                return response.status(200).json({
+                    message: 'added a movie to your list',
+                    user: user
+                })
+
+
+            } catch (error) {
+                return response.status(500).json({
+                    message: error.message
+                });
+            }
+
+        //remove a movie from the list
+        case 'remove-movie-from-list':
+
+            try {
+
+
+                const {id: movieListId, movie_id: movieId} = body;
+
+                if (!movieListId) {
+                    throw new Error(`id was not passed in the request`);
+                }
+                if (!movieId) {
+                    throw new Error('movie_id was not passed in the request')
+                }
+
+                //collect a movie list via that id
+                const movieListRepo = AppDataSource.getRepository(MovieListSchema);
+                const existingMovieList = await movieListRepo.findOneBy({id: movieListId})
+                if (!existingMovieList) {
+                    throw new Error(`Movie not found: ${movieListId}`);
+                }
+
+                let movieIds = existingMovieList.movie_ids || [];
+
+                //ensure movieId exists in that list
+                if (!movieIds.includes(String(movieId))) {
+                    throw new Error(`Movie with id of  ${movieId} does not exist within that list`);
+                }
+
+                //remove from the list
+                movieIds = movieIds.filter(id => id !== String(movieId));
+
+                //update movie references and save
+                existingMovieList.movie_ids = movieIds;
+                const savedMovieList = await movieListRepo.save(existingMovieList);
+
+                user = await validateJwtFromRequest(request);
+                return response.status(200).json({
+                    message: 'Successfully removed that movie from your list',
+                    user: user
+                });
+
+
+            } catch (error) {
+                return response.status(500).json({
+                    message: error.message
+                });
+            }
+
+
+        //delete a singular movie list
         case 'delete-movie-list':
 
 
