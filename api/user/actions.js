@@ -89,6 +89,35 @@ export default async function actions(request, response) {
                 })
             }
 
+            //delete a singular movie list
+            case 'delete-movie-list': {
+
+                const {id: movieListId} = body;
+                if (!movieListId) {
+                    throw new Error(`id is missing in the request`);
+                }
+
+                const movieListRepo = AppDataSource.getRepository(MovieListSchema);
+                const existingMovieList = await movieListRepo.findOne({
+                    where: {
+                        id: movieListId,
+                        user: {id: user.id}
+                    }
+                });
+                if (!existingMovieList) {
+                    throw new Error(`No movie list with id: ${movieListId} could be found associated with your user account`);
+                }
+
+                const removedMovieList = await movieListRepo.remove({id: movieListId})
+
+                user = await validateJwtFromRequest(request);
+                return response.status(200).json({
+                    message: 'Successfully removed your movie list',
+                    user: user
+                })
+
+            }
+
             //add a singular movie to the list
             case 'add-movie-to-list': {
 
@@ -97,9 +126,15 @@ export default async function actions(request, response) {
 
                 //find the associated list
                 const movieListRepo = AppDataSource.getRepository(MovieListSchema);
-                const existingMovieList = await movieListRepo.findOneBy({id: movieListId})
+                const existingMovieList = await movieListRepo.findOne({
+                    where: {
+                        id: movieListId,
+                        user: {id: user.id}
+                    }
+                });
+
                 if (!existingMovieList) {
-                    throw new Error(`Movie not found: ${movieListId}`);
+                    throw new Error(`No movie list with id: ${movieListId} could be found associated with your user account`);
                 }
 
                 //add a movie to this list
@@ -135,9 +170,14 @@ export default async function actions(request, response) {
 
                 //collect a movie list via that id
                 const movieListRepo = AppDataSource.getRepository(MovieListSchema);
-                const existingMovieList = await movieListRepo.findOneBy({id: movieListId})
+                const existingMovieList = await movieListRepo.findOne({
+                    where: {
+                        id: movieListId,
+                        user: {id: user.id}
+                    }
+                });
                 if (!existingMovieList) {
-                    throw new Error(`Movie not found: ${movieListId}`);
+                    throw new Error(`No movie list with id: ${movieListId} could be found associated with your user account`);
                 }
 
                 let movieIds = existingMovieList.movie_ids || [];
@@ -163,10 +203,6 @@ export default async function actions(request, response) {
 
             }
 
-            //delete a singular movie list
-            case 'delete-movie-list': {
-
-            }
 
             case 'add-favorite': {
 
