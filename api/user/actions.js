@@ -3,6 +3,7 @@ import {validateJwtFromRequest} from "../../utils/jwtValidator.js";
 import FavoriteMovieSchema from "../../src/schemas/FavoriteMovie.js";
 import WatchLaterMovieShema from "../../src/schemas/WatchLaterMovie.js";
 import UserSchema from "../../src/schemas/User.js";
+import MovieListSchema from "../../src/schemas/MovieList.js";
 
 /**
  * Handles logged in user actions
@@ -53,14 +54,35 @@ export default async function actions(request, response) {
 
             try {
 
+                //extract data about the movie list
+                const {title} = body;
+                const {description} = body;
+
+
+                //create a new list
+                const movieListRepo = AppDataSource.getRepository(MovieListSchema);
+                const newRecord = await movieListRepo.create({
+                    title: title,
+                    description: description,
+                    user: user,
+                });
+                //save list
+                const savedRecord = await movieListRepo.save(newRecord);
+                if (!savedRecord) {
+                    throw new Error(`Save failed: Record not persisted in the ${MovieListSchema.options.name} repository`);
+                }
+
+                //get a fresh version of the user, with this new data
                 user = await validateJwtFromRequest(request);
                 return response.status(200).json({
                     message: 'created a new movie list',
-                    user: user
+                    user: user,
                 })
 
             } catch (error) {
-
+                return response.status(500).json({
+                    message: error.message
+                });
             }
 
         case 'delete-movie-list':

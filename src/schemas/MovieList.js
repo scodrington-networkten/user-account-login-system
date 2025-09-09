@@ -1,6 +1,6 @@
 import {EntitySchema} from "typeorm";
 
-const entitySchema = new EntitySchema({
+const MovieListSchema = new EntitySchema({
 
     name: "movie_list",
     columns: {
@@ -36,4 +36,4 @@ const entitySchema = new EntitySchema({
 
 
 });
-export default entitySchema;
+export default MovieListSchema;
