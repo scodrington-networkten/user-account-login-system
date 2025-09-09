@@ -58,12 +58,11 @@ export default async function actions(request, response) {
         return response.status(500).json({message: "The request body is either empty or undefined"})
     }
 
-    switch (action) {
+    try {
+        switch (action) {
 
-        //create a new movie list, to add movies to
-        case 'create-movie-list':
-
-            try {
+            //create a new movie list, to add movies to
+            case 'create-movie-list': {
 
                 //extract data about the movie list
                 const {title} = body;
@@ -88,17 +87,10 @@ export default async function actions(request, response) {
                     message: 'created a new movie list',
                     user: user,
                 })
-
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message
-                });
             }
 
-        //add a singular movie to the list
-        case 'add-movie-to-list':
-
-            try {
+            //add a singular movie to the list
+            case 'add-movie-to-list': {
 
                 const {id: movieListId} = body;
                 const {movie_id: movieId} = body;
@@ -127,16 +119,9 @@ export default async function actions(request, response) {
                 })
 
 
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message
-                });
             }
-
-        //remove a movie from the list
-        case 'remove-movie-from-list':
-
-            try {
+            //remove a movie from the list
+            case 'remove-movie-from-list': {
 
 
                 const {id: movieListId, movie_id: movieId} = body;
@@ -176,19 +161,15 @@ export default async function actions(request, response) {
                 });
 
 
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message
-                });
             }
 
+            //delete a singular movie list
+            case 'delete-movie-list': {
 
-        //delete a singular movie list
-        case 'delete-movie-list':
+            }
 
+            case 'add-favorite': {
 
-        case 'add-favorite':
-            try {
                 const {movie_id: movieId} = body;
                 if (!movieId) {
                     throw new Error('Movie ID not set: movie_id was not set the in request, could not add to favorite');
@@ -212,15 +193,11 @@ export default async function actions(request, response) {
                     user: user
                 });
 
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message
-                });
+
             }
 
+            case 'remove-favorite': {
 
-        case 'remove-favorite':
-            try {
                 const {movie_id: movieId} = body;
                 if (!movieId) {
                     throw new Error('Movie ID not set: movie_id was not set the in request, could not remove from your favorite list');
@@ -246,17 +223,12 @@ export default async function actions(request, response) {
                     user: user
                 });
 
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message
-                });
             }
 
 
-        case 'add-watch-later':
+            case 'add-watch-later': {
 
 
-            try {
                 const {movie_id: movieId} = body;
                 if (!movieId) {
                     return response.status(400).json({message: 'movie_id was not passed'});
@@ -279,19 +251,12 @@ export default async function actions(request, response) {
                     user: user
                 });
 
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message
-                });
+
             }
 
+            case 'remove-watch-later': {
 
-            return response.status(200).json('Called add watch later endpoint');
 
-
-        case 'remove-watch-later':
-
-            try {
                 const {movie_id: movieId} = body;
                 if (!movieId) {
                     throw new Error('Movie ID not set: movie_id was not set the in request, could not remove from your watch later list');
@@ -317,17 +282,10 @@ export default async function actions(request, response) {
                     user: user
                 });
 
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message
-                });
             }
 
+            case 'update-information': {
 
-        case 'update-information':
-
-
-            try {
 
                 //collect form data for use
                 const updatedUserData = body;
@@ -351,16 +309,14 @@ export default async function actions(request, response) {
                     user: updatedUser
                 });
 
-            } catch (error) {
-                return response.status(500).json({
-                    message: error.message,
-                    success: false,
-                    user: null
-                });
-            } finally {
-
             }
 
+        }
+    } catch (error) {
+        return response.status(500).json({
+            message: error.message
+        });
     }
+
 
 }
