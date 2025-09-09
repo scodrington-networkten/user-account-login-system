@@ -115,7 +115,7 @@ function App() {
                             </Routes>
                         </GenreProvider>
                         <UserExpiredPopup/>
-                        <MovieListForm/>
+
                         <ToastNotification/>
                     </UserProvider>
                     <ScrollToTopHandler/>
